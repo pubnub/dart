@@ -1,0 +1,26 @@
+language: dart
+dist: xenial
+os: linux
+dart: stable
+
+
+before_script: 
+  - pub run build_runner build
+
+
+stages:
+  - name: "test"
+    if: |
+      tag IS blank
+  - name: Validate
+    if: tag IS blank
+
+jobs:
+  include:
+    - stage: "test"
+      script: pub run test
+    - stage: Validate
+      name: Analyzer
+      script: dartanalyzer --fatal-warnings lib
+    - name: Formatter
+      script: dartfmt -n --set-exit-if-changed lib

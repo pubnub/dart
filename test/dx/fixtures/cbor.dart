@@ -1,0 +1,13 @@
+part of '../cbor_test.dart';
+
+final _tokenWithUserResource =
+    'p0F2AkF0Gl2Bd7BDdHRsGQWgQ3Jlc6REY2hhbqBDZ3JwoEN1c3KhZXVzZXIxAUNzcGOgQ3BhdKREY2hhbqBDZ3JwoEN1c3KgQ3NwY6BEbWV0YaBDc2lnWCABo0jeW03hedEyKmtzJBZZijmt5J7GYJ3X_7VuKbYu7Q==';
+
+final _tokenWithUserPattern =
+    'p0F2AkF0Gl2Be3RDdHRsGQWgQ3Jlc6REY2hhbqBDZ3JwoEN1c3KgQ3NwY6BDcGF0pERjaGFuoENncnCgQ3VzcqFiLioBQ3NwY6BEbWV0YaBDc2lnWCCst3N4W6YywI9H-fdvfkYxBOu10wz4CvS6qhfIgaS0fg==';
+
+final _tokenWithSpaceResource =
+    'p0F2AkF0Gl2BeLhDdHRsGQWgQ3Jlc6REY2hhbqBDZ3JwoEN1c3KgQ3NwY6Jmc3BhY2UxAWZzcGFjZTIBQ3BhdKREY2hhbqBDZ3JwoEN1c3KgQ3NwY6BEbWV0YaBDc2lnWCB8acyHBpil-K7GFp-MOmwlGpl9_6OlWuZa5t8BM4B_CQ==';
+
+final _tokenWithSpaceResourcePattern =
+    'p0F2AkF0Gl2BgxZDdHRsGQWgQ3Jlc6REY2hhbqBDZ3JwoEN1c3KhZXVzZXIxAUNzcGOhZnNwYWNlMQFDcGF0pERjaGFuoENncnCgQ3VzcqFiLioBQ3NwY6FiLioBRG1ldGGgQ3NpZ1ggG1j7rl-TpxtWYDIcPFvR-cqFGXVWvm8r5YBaCLhy5-Y=';
