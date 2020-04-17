@@ -3,6 +3,16 @@ changelog:
   -
     changes:
       -
+        text: "Add backward synchronization to private repository for `pubspec.yaml` and `lib/src/core/core.dart`."
+        type: improvement
+      -
+        text: "Prevent tests from breaking when version is bumped."
+        type: improvement
+    date: Apr 18, 20
+    version: v1.0.2
+  -
+    changes:
+      -
         text: "Refactor PAM, hide logger instances and clean up tests."
         type: improvement
       -
@@ -133,4 +143,4 @@ supported-platforms:
       - "Flutter"
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
-version: "1.0.1"
+version: "1.0.2"

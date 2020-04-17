@@ -1,3 +1,11 @@
+## [v1.0.2](https://github.com/pubnub/dart/releases/tag/v1.0.2)
+April 18 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.0.1...v1.0.2)
+
+- ⭐️️ Add backward synchronization to private repository for `pubspec.yaml` and `lib/src/core/core.dart`. 
+- ⭐️️ Prevent tests from breaking when version is bumped. 
+
 ## [v1.0.1](https://github.com/pubnub/dart/releases/tag/v1.0.1)
 April 18 2020
 

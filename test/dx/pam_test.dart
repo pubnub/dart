@@ -12,7 +12,11 @@ part './fixtures/pam.dart';
 void main() {
   PubNub pubnub;
   group('DX [PAM]', () {
+    final currentVersion = PubNub.version;
+
     setUp(() {
+      PubNub.version = '1.0.0';
+      Core.version = '1.0.0';
       Time.mock(DateTime.fromMillisecondsSinceEpoch(1234567890000));
 
       pubnub = PubNub(networking: FakeNetworkingModule())
@@ -23,6 +27,8 @@ void main() {
     });
 
     tearDown(() {
+      PubNub.version = currentVersion;
+      Core.version = currentVersion;
       Time.unmock();
     });
 
