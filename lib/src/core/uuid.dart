@@ -7,7 +7,7 @@ class UUID {
   /// in certain contexts.
   final Map<String, dynamic> state;
 
-  const UUID(this.value, {this.state = null});
+  const UUID(this.value, {this.state});
 
   @override
   String toString() => '$value';

@@ -19,7 +19,7 @@ class Core {
   ParserModule parser;
   Logger log;
 
-  static final String version = '1.0.0';
+  static final String version = '1.0.1';
 
   Core({Keyset defaultKeyset, this.networking, this.parser}) {
     if (defaultKeyset != null) {

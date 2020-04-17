@@ -18,16 +18,17 @@ class SubscribeParams extends Parameters {
       this.heartbeat,
       this.region});
 
+  @override
   Request toRequest() {
     String channelsString;
 
-    if (channels != null || channels.length == 0) {
+    if (channels != null || channels.isEmpty) {
       channelsString = ',';
     } else {
       channelsString = channels.join(',');
     }
 
-    List<String> pathSegments = [
+    var pathSegments = [
       'v2',
       'subscribe',
       keyset.subscribeKey,
@@ -35,11 +36,11 @@ class SubscribeParams extends Parameters {
       '0'
     ];
 
-    Map<String, String> queryParameters = {
+    var queryParameters = {
       'tt': timetoken.toString(),
       if (state != null) 'state': state,
       if (region != null) 'tr': region.toString(),
-      if (channelGroups != null && channelGroups.length > 0)
+      if (channelGroups != null && channelGroups.isNotEmpty)
         'channel-group': channelGroups.join(','),
       if (keyset.authKey != null) 'auth': keyset.authKey,
       if (keyset.uuid != null) 'uuid': keyset.uuid.value,
@@ -47,9 +48,8 @@ class SubscribeParams extends Parameters {
         'filter-expr': keyset.filterExpression
     };
 
-    return Request(
-        type: RequestType.subscribe,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters),
+    return Request(RequestType.subscribe, pathSegments,
+        queryParameters: queryParameters,
         headers: {'Content-Type': 'application/json'});
   }
 }

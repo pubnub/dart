@@ -8,7 +8,7 @@ import 'package:pubnub/src/dx/_endpoints/history.dart';
 import 'channel.dart';
 import 'message.dart';
 
-final log = Logger('pubnub.channel.history');
+final _log = Logger('pubnub.channel.history');
 
 enum ChannelHistoryOrder { ascending, descending }
 
@@ -26,9 +26,9 @@ extension ChannelHistoryOrderExtension on ChannelHistoryOrder {
 }
 
 class ChannelHistory {
-  PubNub _core;
-  Channel _channel;
-  Keyset _keyset;
+  final PubNub _core;
+  final Channel _channel;
+  final Keyset _keyset;
 
   /// Lower bound on the messages timetoken.
   ///
@@ -54,7 +54,7 @@ class ChannelHistory {
   /// [to] parameter is disregarded.
   Future<int> count() async {
     var result = await defaultFlow(
-        log: log,
+        log: _log,
         core: _core,
         params: CountMessagesParams(_keyset,
             channels: {_channel.name}, timetoken: from ?? Timetoken(1)),
@@ -71,7 +71,7 @@ class ChannelHistory {
   /// * if both [to] and [from] are defined, then it will work on messages that were sent between [from] and [to].
   Future<void> delete() async {
     await defaultFlow(
-      log: log,
+      log: _log,
       core: _core,
       params:
           DeleteMessagesParams(_keyset, _channel.name, end: from, start: to),
@@ -91,7 +91,7 @@ class ChannelHistory {
 
     do {
       var result = await defaultFlow(
-          log: log,
+          log: _log,
           core: _core,
           params: FetchHistoryParams(_keyset, _channel.name,
               reverse: true,
@@ -110,13 +110,13 @@ class ChannelHistory {
 }
 
 class PaginatedChannelHistory {
-  PubNub _core;
-  Channel _channel;
-  Keyset _keyset;
+  final PubNub _core;
+  final Channel _channel;
+  final Keyset _keyset;
 
   /// Readonly list of messages. It will be empty before first [more] call.
   List<Message> get messages => _messages;
-  List<Message> _messages = [];
+  final List<Message> _messages = [];
 
   /// Lower bound of fetched messages timetokens. Readonly.
   Timetoken get startTimetoken => _startTimetoken;
@@ -128,11 +128,11 @@ class PaginatedChannelHistory {
 
   /// Order in which messages are fetched.
   ChannelHistoryOrder get order => _order;
-  ChannelHistoryOrder _order;
+  final ChannelHistoryOrder _order;
 
   /// Maximum number of fetched messages when calling [more].
   int get chunkSize => _chunkSize;
-  int _chunkSize;
+  final int _chunkSize;
 
   PaginatedChannelHistory(
       this._core, this._channel, this._keyset, this._order, this._chunkSize);
@@ -149,7 +149,7 @@ class PaginatedChannelHistory {
   /// Fetches more messages and stores them in [messages].
   Future<FetchHistoryResult> more() async {
     var result = await defaultFlow(
-        log: log,
+        log: _log,
         core: _core,
         params: FetchHistoryParams(_keyset, _channel.name,
             reverse: _order.choose(ascending: true, descending: false),

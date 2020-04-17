@@ -29,7 +29,7 @@ class PubNub extends Core
         SignalDx,
         MessageActionDx,
         PushNotificationDx,
-        PamDX {
+        PamDx {
   /// [BatchDx] contains methods that allow running batch operations on channels,
   /// channel groups and other features.
   BatchDx batch;
@@ -46,6 +46,9 @@ class PubNub extends Core
   /// [MembershipDX] contains methods that allow managing members of spaces and
   /// their user's memberships
   MembershipDx memberships;
+
+  /// Version of library.
+  static String version = Core.version;
 
   PubNub({Keyset defaultKeyset, NetworkingModule networking})
       : super(
@@ -96,10 +99,10 @@ class PubNub extends Core
       String profileUrl,
       Keyset keyset,
       String using}) async {
-    keyset ??= this.keysets.get(using, defaultIfNameIsNull: true);
+    keyset ??= keysets.get(using, defaultIfNameIsNull: true);
 
-    User usr = null;
-    var result = await this.users.create(
+    User usr;
+    var result = await users.create(
         UserDetails(userId, name,
             email: email,
             externalId: externalId,
@@ -119,10 +122,10 @@ class PubNub extends Core
   /// can be used to perform that channel specific operations
   Future<Space> space(String spaceId, String name,
       {String description, dynamic custom, Keyset keyset, String using}) async {
-    keyset ??= this.keysets.get(using, defaultIfNameIsNull: true);
+    keyset ??= keysets.get(using, defaultIfNameIsNull: true);
 
-    Space space = null;
-    var result = await this.spaces.create(
+    Space space;
+    var result = await spaces.create(
         SpaceDetails(spaceId, name, description: description, custom: custom),
         keyset: keyset);
 
@@ -137,7 +140,7 @@ class PubNub extends Core
   /// to receive Push notification from channel(s).
   /// You should provide valid non empty [deviceId]
   Device device(String deviceId, {Keyset keyset, String using}) {
-    keyset ??= this.keysets.get(using, defaultIfNameIsNull: true);
+    keyset ??= keysets.get(using, defaultIfNameIsNull: true);
     return Device(this, keyset, deviceId);
   }
 }

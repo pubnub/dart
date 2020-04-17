@@ -20,8 +20,9 @@ class FetchHistoryParams extends Parameters {
       this.includeMeta,
       this.includeToken});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v2',
       'history',
       'sub-key',
@@ -30,7 +31,7 @@ class FetchHistoryParams extends Parameters {
       channel,
     ];
 
-    Map<String, String> queryParameters = {
+    var queryParameters = {
       if (count != null) 'count': '$count',
       if (reverse != null) 'reverse': '$reverse',
       if (start != null) 'start': '$start',
@@ -41,9 +42,8 @@ class FetchHistoryParams extends Parameters {
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -79,10 +79,11 @@ class BatchHistoryParams extends Parameters {
 
   BatchHistoryParams(this.keyset, this.channels,
       {this.max, this.reverse, this.start, this.end, this.includeMeta})
-      : assert(channels.length != 0);
+      : assert(channels.isNotEmpty);
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v3',
       'history',
       'sub-key',
@@ -91,7 +92,7 @@ class BatchHistoryParams extends Parameters {
       channels.join(',')
     ];
 
-    Map<String, String> queryParameters = {
+    var queryParameters = {
       if (max != null) 'max': '$max',
       if (reverse != null) 'reverse': '$reverse',
       if (start != null) 'start': '$start',
@@ -101,9 +102,8 @@ class BatchHistoryParams extends Parameters {
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -148,6 +148,7 @@ class CountMessagesParams extends Parameters {
   CountMessagesParams(this.keyset,
       {this.channelsTimetoken, this.timetoken, this.channels});
 
+  @override
   Request toRequest() {
     var pathSegments = [
       'v3',
@@ -168,9 +169,8 @@ class CountMessagesParams extends Parameters {
         'timetoken': '$timetoken',
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -197,6 +197,7 @@ class DeleteMessagesParams extends Parameters {
 
   DeleteMessagesParams(this.keyset, this.channel, {this.start, this.end});
 
+  @override
   Request toRequest() {
     var pathSegments = [
       'v3',
@@ -212,9 +213,8 @@ class DeleteMessagesParams extends Parameters {
       if (end != null) 'end': '$end',
     };
 
-    return Request(
-        type: RequestType.delete,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.delete, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 

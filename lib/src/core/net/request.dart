@@ -1,7 +1,12 @@
-import 'package:meta/meta.dart';
-
 import '../core.dart';
 import 'request_type.dart';
+
+typedef SignFunction = String Function(
+    RequestType type,
+    List<String> pathSegments,
+    Map<String, String> queryParameters,
+    Map<String, String> headers,
+    String body);
 
 class Request {
   static Map<String, String> defualtQueryParameters = {
@@ -12,14 +17,30 @@ class Request {
   };
 
   RequestType type;
-  Uri uri;
-  Map<String, String> headers = {};
-  String body = null;
+  List<String> pathSegments;
 
-  Request({@required this.type, @required this.uri, this.headers, this.body});
+  Map<String, String> queryParameters;
+  Map<String, String> headers;
+  String body;
 
-  @override
-  String toString() => """($type) $uri""";
+  Request(this.type, this.pathSegments,
+      {Map<String, String> queryParameters,
+      Map<String, String> headers,
+      String body,
+      SignFunction signWith}) {
+    pathSegments = pathSegments;
+    this.queryParameters = {
+      ...(queryParameters ?? {}),
+      ...defualtQueryParameters
+    };
+    this.headers = {...(headers ?? {}), ...defaultHeaders};
+    this.body = body;
+
+    if (signWith != null) {
+      this.queryParameters['signature'] = signWith(
+          type, pathSegments, this.queryParameters, this.headers, this.body);
+    }
+  }
 }
 
 abstract class RequestHandler {

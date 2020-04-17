@@ -10,8 +10,8 @@ import 'package:pubnub/src/dx/subscribe/subscription.dart';
 import 'channel_history.dart';
 
 class Channel {
-  PubNub _core;
-  Keyset _keyset;
+  final PubNub _core;
+  final Keyset _keyset;
   String name;
 
   Channel(this._core, this._keyset, this.name);

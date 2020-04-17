@@ -59,10 +59,10 @@ class Envelope {
 enum PresenceAction { join, leave, timeout, stateChange }
 
 PresenceAction fromString(String action) => const {
-      "join": PresenceAction.join,
-      "leave": PresenceAction.leave,
-      "timeout": PresenceAction.timeout,
-      "state-change": PresenceAction.stateChange
+      'join': PresenceAction.join,
+      'leave': PresenceAction.leave,
+      'timeout': PresenceAction.timeout,
+      'state-change': PresenceAction.stateChange
     }[action];
 
 class PresenceEvent {

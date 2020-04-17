@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 
+import 'package:pubnub/pubnub.dart';
 import 'package:pubnub/src/core/core.dart';
-import 'package:pubnub/src/default.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/message_action.dart';
 
@@ -35,18 +35,17 @@ void main() {
           throwsA(TypeMatcher<InvariantException>()));
     });
     test('add message action throws when message timetoken is null', () async {
-      var messageTimetoken = null;
       var value = 'value';
       var type = 'type';
       var channel = 'test';
-      expect(pubnub.addMessageAction(type, value, channel, messageTimetoken),
+      expect(pubnub.addMessageAction(type, value, channel, null),
           throwsA(TypeMatcher<InvariantException>()));
     });
     test('add message action throws if there is no available keyset', () async {
       pubnub.keysets.remove('default');
       var messageTimetoken = Timetoken(15610547826970050);
       var actionValue = 'smiley_face';
-      var actionType = "reaction";
+      var actionType = 'reaction';
       var channel = 'test';
       expect(
           pubnub.addMessageAction(
@@ -57,13 +56,13 @@ void main() {
     test('add message action should give valid response type', () async {
       var messageTimetoken = Timetoken(15610547826970050);
       var actionValue = 'smiley_face';
-      var actionType = "reaction";
+      var actionType = 'reaction';
       when(
-          method: 'POST',
-          path:
-              'v1/message-actions/test/channel/test/message/15610547826970050?',
-          body: _addMessageActionBody,
-          then: FakeResult(_addMessageActionResponse));
+        method: 'POST',
+        path:
+            'v1/message-actions/test/channel/test/message/15610547826970050?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        body: _addMessageActionBody,
+      ).then(status: 200, body: _addMessageActionResponse);
       expect(
           await pubnub.addMessageAction(
               actionType, actionValue, 'test', messageTimetoken),
@@ -73,13 +72,13 @@ void main() {
     test('add message action failed to publish response', () async {
       var messageTimetoken = Timetoken(15610547826970050);
       var actionValue = 'smiley_face';
-      var actionType = "reaction";
+      var actionType = 'reaction';
       when(
-          method: 'POST',
-          path:
-              'v1/message-actions/test/channel/test/message/15610547826970050?',
-          body: _addMessageActionBody,
-          then: FakeResult(_failedToPublishErrorResponse));
+        method: 'POST',
+        path:
+            'v1/message-actions/test/channel/test/message/15610547826970050?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        body: _addMessageActionBody,
+      ).then(status: 200, body: _failedToPublishErrorResponse);
       var response = await pubnub.addMessageAction(
           actionType, actionValue, 'test', messageTimetoken);
       expect(response.status, 207);
@@ -88,13 +87,13 @@ void main() {
     test('add message action invalid parameter response', () async {
       var messageTimetoken = Timetoken(15610547826970050);
       var actionValue = 'smiley_face';
-      var actionType = "reaction";
+      var actionType = 'reaction';
       when(
-          method: 'POST',
-          path:
-              'v1/message-actions/test/channel/test/message/15610547826970050?',
-          body: _addMessageActionBody,
-          then: FakeResult(_invalidParameterErrorResponse));
+        method: 'POST',
+        path:
+            'v1/message-actions/test/channel/test/message/15610547826970050?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        body: _addMessageActionBody,
+      ).then(status: 200, body: _invalidParameterErrorResponse);
       var response = await pubnub.addMessageAction(
           actionType, actionValue, 'test', messageTimetoken);
       expect(response.status, 400);
@@ -102,13 +101,13 @@ void main() {
     test('add message action invalid parameter response', () async {
       var messageTimetoken = Timetoken(15610547826970050);
       var actionValue = 'smiley_face';
-      var actionType = "reaction";
+      var actionType = 'reaction';
       when(
-          method: 'POST',
-          path:
-              'v1/message-actions/test/channel/test/message/15610547826970050?',
-          body: _addMessageActionBody,
-          then: FakeResult(_unauthorizeErrorResponse));
+        method: 'POST',
+        path:
+            'v1/message-actions/test/channel/test/message/15610547826970050?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        body: _addMessageActionBody,
+      ).then(status: 200, body: _unauthorizeErrorResponse);
       var response = await pubnub.addMessageAction(
           actionType, actionValue, 'test', messageTimetoken);
       expect(response.status, 403);
@@ -121,9 +120,10 @@ void main() {
 
     test('fetch message action returns valid response', () async {
       when(
-          method: 'GET',
-          path: 'v1/message-actions/test/channel/test?',
-          then: FakeResult(_fetchMessageActionsResponse));
+        method: 'GET',
+        path:
+            'v1/message-actions/test/channel/test?pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: _fetchMessageActionsResponse);
 
       expect(await pubnub.fetchMessageActions('test'),
           isA<FetchMessageActionsResult>());
@@ -139,23 +139,25 @@ void main() {
     test('fetch message action returns valid response with multiple page',
         () async {
       when(
-          method: 'GET',
-          path: 'v1/message-actions/test/channel/test?',
-          then: FakeResult(_fetchMessageActionsResponsePage1));
+        method: 'GET',
+        path:
+            'v1/message-actions/test/channel/test?pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: _fetchMessageActionsResponsePage1);
       when(
-          method: 'GET',
-          path:
-              'v1/message-actions/test/channel/test?start=15610547826970050&end=15645905639093361&limit=2',
-          then: FakeResult(_fetchMessageActionsResponsePage2));
+        method: 'GET',
+        path:
+            'v1/message-actions/test/channel/test?start=15610547826970050&end=15645905639093361&limit=2&pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: _fetchMessageActionsResponsePage2);
       var response = await pubnub.fetchMessageActions('test');
       expect(response.actions.length, 3);
     });
 
     test('fetch message action returns Error', () async {
       when(
-          method: 'GET',
-          path: 'v1/message-actions/test/channel/test?',
-          then: FakeResult(_fetchMessageActionError));
+        method: 'GET',
+        path:
+            'v1/message-actions/test/channel/test?pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: _fetchMessageActionError);
       var response = await pubnub.fetchMessageActions('test');
       expect(response.status, 400);
     });
@@ -172,22 +174,16 @@ void main() {
     });
     test('delete message action throws when message timetoken is null',
         () async {
-      var messageTimetoken = null;
       var channel = 'test';
       var actionTimetoken = Timetoken(15645905639093361);
-      expect(
-          pubnub.deleteMessageAction(
-              channel, messageTimetoken, actionTimetoken),
+      expect(pubnub.deleteMessageAction(channel, null, actionTimetoken),
           throwsA(TypeMatcher<InvariantException>()));
     });
     test('delete message action throws when action timetoken is null',
         () async {
       var messageTimetoken = Timetoken(15610547826970050);
       var channel = 'test';
-      var actionTimetoken = null;
-      expect(
-          pubnub.deleteMessageAction(
-              channel, messageTimetoken, actionTimetoken),
+      expect(pubnub.deleteMessageAction(channel, messageTimetoken, null),
           throwsA(TypeMatcher<InvariantException>()));
     });
     test('delete message actions throws if there is no available keyset',
@@ -206,11 +202,12 @@ void main() {
       var messageTimetoken = Timetoken(15610547826970050);
       var channel = 'test';
       var actionTimetoken = Timetoken(15645905639093361);
+
       when(
-          method: 'DELETE',
-          path:
-              'v1/message-actions/test/channel/test/message/15610547826970050/action/15645905639093361?',
-          then: FakeResult(_deleteMessageActionResponse));
+        method: 'DELETE',
+        path:
+            'v1/message-actions/test/channel/test/message/15610547826970050/action/15645905639093361?pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: _deleteMessageActionResponse);
 
       expect(
           await pubnub.deleteMessageAction(
@@ -223,10 +220,10 @@ void main() {
       var channel = 'test';
       var actionTimetoken = Timetoken(15645905639093361);
       when(
-          method: 'DELETE',
-          path:
-              'v1/message-actions/test/channel/test/message/15610547826970050/action/15645905639093361?',
-          then: FakeResult(_unauthorizeErrorResponse));
+        method: 'DELETE',
+        path:
+            'v1/message-actions/test/channel/test/message/15610547826970050/action/15645905639093361?pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: _unauthorizeErrorResponse);
       var response = await pubnub.deleteMessageAction(
           channel, messageTimetoken, actionTimetoken);
       expect(response.status, 403);

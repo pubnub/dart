@@ -18,12 +18,12 @@ class StateMachine<State, Context> {
 
   StateMachine parent;
 
-  Map<Symbol, Map<List<State>, State>> _defs = {};
-  Map<State, Map<Symbol, List<Effect<State, Context>>>> _effects = {};
-  Map<String, StateMachine> _submachines = {};
-  Map<String, StreamSubscription> _subs = {};
+  final Map<Symbol, Map<List<State>, State>> _defs = {};
+  final Map<State, Map<Symbol, List<Effect<State, Context>>>> _effects = {};
+  final Map<String, StateMachine> _submachines = {};
+  final Map<String, StreamSubscription> _subs = {};
 
-  StreamController<TransitionChange<dynamic, dynamic, dynamic>>
+  final StreamController<TransitionChange<dynamic, dynamic, dynamic>>
       _transitionsController = StreamController.broadcast();
   Stream<TransitionChange<dynamic, dynamic, dynamic>> get transitions =>
       _transitionsController.stream;
@@ -113,7 +113,7 @@ class StateMachine<State, Context> {
     _defs[event][from] = to;
   }
 
-  when(State state, Symbol edge, Effect<State, Context> effect) {
+  void when(State state, Symbol edge, Effect<State, Context> effect) {
     _effects[state] ??= {};
     _effects[state][edge] ??= [];
     _effects[state][edge].add(effect);

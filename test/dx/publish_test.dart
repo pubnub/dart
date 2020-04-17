@@ -1,9 +1,7 @@
-import 'package:pubnub/src/core/core.dart';
-import 'package:pubnub/src/core/keyset.dart';
-import 'package:pubnub/src/net/exceptions.dart';
 import 'package:test/test.dart';
+
 import 'package:pubnub/pubnub.dart';
-import 'package:pubnub/src/dx/_endpoints/publish.dart';
+import 'package:pubnub/src/core/core.dart';
 
 import '../net/fake_net.dart';
 
@@ -31,27 +29,28 @@ void main() {
 
     test('publish returns PublishResult with correct data', () async {
       when(
-          path: 'publish/demo/demo/0/test/0',
-          method: 'POST',
-          body: '{"hello":"world"}',
-          then: FakeResult(_publishSuccessResponse));
+        path:
+            'publish/demo/demo/0/test/0?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'POST',
+        body: '{"hello":"world"}',
+      ).then(status: 200, body: _publishSuccessResponse);
 
       var response = await pubnub.publish('test', {'hello': 'world'});
 
-      expect(response, isA<PublishResult>());
       expect(response.isError, equals(false));
       expect(response.description, equals('Sent'));
     });
 
     test('publish throws an exception when non-200 status code', () async {
       when(
-          path: 'publish/demo/demo/0/test/0',
-          method: 'POST',
-          body: '{"hello":"world"}',
-          throws: PubNubRequestFailureException(_publishFailureResponse));
+        path:
+            'publish/demo/demo/0/test/0?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'POST',
+        body: '{"hello":"world"}',
+      ).then(status: 400, body: _publishFailureResponse);
 
       expect(pubnub.publish('test', {'hello': 'world'}),
-          throwsA(TypeMatcher<PubNubException>()));
+          throwsA(TypeMatcher<PublishException>()));
     });
   });
 }

@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 
 void main() {
   KeysetStore store;
-  group('core [keyset]', () {
+  group('Core [keyset]', () {
     group('#add', () {
       setUp(() {
         store = KeysetStore();

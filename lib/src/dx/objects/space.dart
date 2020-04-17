@@ -8,10 +8,10 @@ import 'package:pubnub/src/dx/_endpoints/objects/membership.dart';
 import 'package:pubnub/src/dx/_endpoints/objects/space.dart';
 import 'schema.dart';
 
-final log = Logger('pubnub.dx.objects.space');
+final _log = Logger('pubnub.dx.objects.space');
 
 class SpaceDx {
-  Core _core;
+  final Core _core;
   SpaceDx(this._core);
 
   /// Creates a space with the specified attributes.
@@ -27,16 +27,15 @@ class SpaceDx {
   /// Returns 409 if a space already exists with the specified ID
   Future<CreateSpaceResult> create(SpaceDetails space,
       {List<String> include, Keyset keyset, String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(space).isNotNull("space information can not be null");
-    var payload = await this._core.parser.encode(space);
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(space).isNotNull('space details');
+    var payload = await _core.parser.encode(space);
     var params = CreateSpaceParams(payload, keyset, include: include);
 
     return defaultFlow<CreateSpaceParams, CreateSpaceResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => CreateSpaceResult.fromJson(object));
   }
@@ -76,9 +75,8 @@ class SpaceDx {
       List<String> sort,
       Keyset keyset,
       String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
     var params = GetAllSpacesParams(keyset,
         include: include,
         limit: limit,
@@ -89,8 +87,8 @@ class SpaceDx {
         sort: sort);
 
     return defaultFlow<GetAllSpacesParams, GetAllSpacesResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => GetAllSpacesResult.fromJson(object));
   }
@@ -107,17 +105,15 @@ class SpaceDx {
   /// If that fails as well, then it will throw [EnsureException].
   Future<GetSpaceResult> getSpace(String spaceId,
       {Keyset keyset, String using, List<String> include}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(spaceId).isNotEmpty(
-        "spaceId can not be empty. Provide spaceId to get a specific space details");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(spaceId).isNotEmpty('spaceId');
 
     var params = GetSpaceParams(keyset, spaceId, include: include);
 
     return defaultFlow<GetSpaceParams, GetSpaceResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => GetSpaceResult.fromJson(object));
   }
@@ -137,20 +133,18 @@ class SpaceDx {
   /// If that fails as well, then it will throw [EnsureException].
   Future<UpdateSpaceResult> updateSpace(SpaceDetails space, String spaceId,
       {Keyset keyset, String using, List<String> include}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(space).isNotNull("space information can not be null");
-    Ensure(spaceId).isNotEmpty(
-        "spaceId can not be empty. Provide spaceId to update space details");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(space).isNotNull('space details');
+    Ensure(spaceId).isNotEmpty('spaceId');
 
-    var payload = await this._core.parser.encode(space);
+    var payload = await _core.parser.encode(space);
 
     var params = UpdateSpaceParams(keyset, payload, spaceId, include: include);
 
     return defaultFlow<UpdateSpaceParams, UpdateSpaceResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => UpdateSpaceResult.fromJson(object));
   }
@@ -164,16 +158,14 @@ class SpaceDx {
   /// If that fails as well, then it will throw [EnsureException].
   Future<DeleteSpaceResult> deleteSpace(String spaceId,
       {Keyset keyset, String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(spaceId).isNotEmpty(
-        "spaceId can not be empty. Provide spaceId to delete a space");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(spaceId).isNotEmpty('spaceId');
     var params = DeleteSpaceParams(keyset, spaceId);
 
     return defaultFlow<DeleteSpaceParams, DeleteSpaceResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => DeleteSpaceResult.fromJson(object));
   }
@@ -181,9 +173,9 @@ class SpaceDx {
 
 /// Represents a Space object
 class Space {
-  PubNub _core;
-  Keyset _keyset;
-  String _id;
+  final PubNub _core;
+  final Keyset _keyset;
+  final String _id;
 
   Space(this._core, this._keyset, this._id);
 

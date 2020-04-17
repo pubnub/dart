@@ -7,12 +7,12 @@ import 'package:pubnub/src/dx/_utils/utils.dart';
 
 import 'package:pubnub/src/dx/_endpoints/channel_group.dart';
 
-final logger = Logger('pubnub.dx.channel_group');
+final _log = Logger('pubnub.dx.channel_group');
 
 /// Representation of a channel group.
 class ChannelGroup {
-  PubNub _core;
-  Keyset _keyset;
+  final PubNub _core;
+  final Keyset _keyset;
   String name;
 
   /// Contains methods that manipulate and get channels in this channel group.
@@ -27,9 +27,9 @@ class ChannelGroup {
 }
 
 class ChannelSet {
-  PubNub _core;
-  Keyset _keyset;
-  String _name;
+  final PubNub _core;
+  final Keyset _keyset;
+  final String _name;
 
   ChannelSet(this._core, this._keyset, this._name);
 
@@ -52,7 +52,7 @@ class ChannelSet {
 }
 
 class ChannelGroupDx {
-  Core _core;
+  final Core _core;
 
   ChannelGroupDx(this._core);
 
@@ -62,7 +62,7 @@ class ChannelGroupDx {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
     return defaultFlow<ChannelGroupListChannelsParams,
             ChannelGroupListChannelsResult>(
-        log: logger,
+        log: _log,
         core: _core,
         params: ChannelGroupListChannelsParams(keyset, group),
         serialize: (object, [_]) =>
@@ -76,7 +76,7 @@ class ChannelGroupDx {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
     return defaultFlow<ChannelGroupChangeChannelsParams,
             ChannelGroupChangeChannelsResult>(
-        log: logger,
+        log: _log,
         core: _core,
         params: ChannelGroupChangeChannelsParams(keyset, group, add: channels),
         serialize: (object, [_]) =>
@@ -90,7 +90,7 @@ class ChannelGroupDx {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
     return defaultFlow<ChannelGroupChangeChannelsParams,
             ChannelGroupChangeChannelsResult>(
-        log: logger,
+        log: _log,
         core: _core,
         params:
             ChannelGroupChangeChannelsParams(keyset, group, remove: channels),
@@ -103,7 +103,7 @@ class ChannelGroupDx {
       {Keyset keyset, String using}) {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
     return defaultFlow<ChannelGroupDeleteParams, ChannelGroupDeleteResult>(
-        log: logger,
+        log: _log,
         core: _core,
         params: ChannelGroupDeleteParams(keyset, group),
         serialize: (object, [_]) => ChannelGroupDeleteResult.fromJson(object));

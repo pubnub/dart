@@ -3,10 +3,10 @@ import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/history.dart';
 
-final log = Logger('pubnub.batch.history');
+final _log = Logger('pubnub.batch.history');
 
 class BatchDx {
-  Core _core;
+  final Core _core;
 
   BatchDx(this._core);
 
@@ -22,7 +22,7 @@ class BatchDx {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
 
     return defaultFlow<BatchHistoryParams, BatchHistoryResult>(
-        log: log,
+        log: _log,
         core: _core,
         params: BatchHistoryParams(keyset, channels,
             max: count,
@@ -61,7 +61,7 @@ class BatchDx {
     }
 
     return defaultFlow(
-        log: log,
+        log: _log,
         core: _core,
         params: params,
         serialize: (object, [_]) => CountMessagesResult.fromJson(object));

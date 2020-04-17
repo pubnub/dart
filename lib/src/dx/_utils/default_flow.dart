@@ -5,10 +5,10 @@ import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/net/exceptions.dart';
 
-typedef R Serialize<R extends Result>(dynamic object,
+typedef Serialize<R> = R Function(dynamic object,
     [Map<String, List<String>> headers]);
 
-Future<R> defaultFlow<P extends Parameters, R extends Result>(
+Future<R> defaultFlow<P extends Parameters, R>(
     {@required Logger log,
     @required Core core,
     @required P params,

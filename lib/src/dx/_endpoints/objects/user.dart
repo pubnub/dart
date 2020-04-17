@@ -10,21 +10,17 @@ class CreateUserParams extends Parameters {
 
   CreateUserParams(this.user, this.keyset, {this.include});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = ['v1', 'objects', keyset.subscribeKey, 'users'];
+    var pathSegments = ['v1', 'objects', keyset.subscribeKey, 'users'];
 
-    Map<String, String> queryParameters = {
-      if (include != null && include.length > 0)
-        'include': this.include.join(','),
+    var queryParameters = {
+      if (include != null && include.isNotEmpty) 'include': include.join(','),
       if (keyset.authKey != null) 'auth': keyset.authKey,
     };
 
-    return Request(
-        type: RequestType.post,
-        uri: Uri(
-            pathSegments: pathSegments,
-            queryParameters:
-                queryParameters.length > 0 ? queryParameters : null),
+    return Request(RequestType.post, pathSegments,
+        queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
         headers: {'Content-Type': 'application/json'},
         body: user);
   }
@@ -39,27 +35,17 @@ class UpdateUserParams extends Parameters {
 
   UpdateUserParams(this.keyset, this.user, this.userId, {this.include});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
-      'v1',
-      'objects',
-      keyset.subscribeKey,
-      'users',
-      userId
-    ];
+    var pathSegments = ['v1', 'objects', keyset.subscribeKey, 'users', userId];
 
-    Map<String, String> queryParameters = {
-      if (include != null && include.length > 0)
-        'include': this.include.join(','),
+    var queryParameters = {
+      if (include != null && include.isNotEmpty) 'include': include.join(','),
       if (keyset.authKey != null) 'auth': keyset.authKey,
     };
 
-    return Request(
-        type: RequestType.patch,
-        uri: Uri(
-            pathSegments: pathSegments,
-            queryParameters:
-                queryParameters.length > 0 ? queryParameters : null),
+    return Request(RequestType.patch, pathSegments,
+        queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
         headers: {'Content-Type': 'application/json'},
         body: user);
   }
@@ -71,22 +57,16 @@ class DeleteUserParams extends Parameters {
 
   DeleteUserParams(this.keyset, this.userId);
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
-      'v1',
-      'objects',
-      keyset.subscribeKey,
-      'users',
-      userId
-    ];
+    var pathSegments = ['v1', 'objects', keyset.subscribeKey, 'users', userId];
 
-    Map<String, String> queryParameters = {
+    var queryParameters = {
       if (keyset.authKey != null) 'auth': keyset.authKey,
     };
 
-    return Request(
-        type: RequestType.delete,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters),
+    return Request(RequestType.delete, pathSegments,
+        queryParameters: queryParameters,
         headers: {'Content-Type': 'application/json'});
   }
 }
@@ -99,21 +79,16 @@ class GetUserParams extends Parameters {
 
   GetUserParams(this.keyset, this.userid, {this.include});
 
+  @override
   Request toRequest() {
-    Map<String, String> queryParameters = {
+    var pathSegments = ['v1', 'objects', keyset.subscribeKey, 'users', userid];
+    var queryParameters = {
       if (keyset.authKey != null) 'auth': keyset.authKey,
-      if (include != null && include.length > 0) 'include': include.join(','),
+      if (include != null && include.isNotEmpty) 'include': include.join(','),
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: [
-          'v1',
-          'objects',
-          keyset.subscribeKey,
-          'users',
-          userid
-        ], queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -137,23 +112,23 @@ class GetAllUsersParams extends Parameters {
       this.filter,
       this.sort});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = ['v1', 'objects', keyset.subscribeKey, 'users'];
+    var pathSegments = ['v1', 'objects', keyset.subscribeKey, 'users'];
 
-    Map<String, String> queryParameters = {
-      if (include != null && include.length > 0) 'include': include.join(','),
+    var queryParameters = {
+      if (include != null && include.isNotEmpty) 'include': include.join(','),
       if (limit != null) 'limit': limit.toString(),
       if (start != null) 'start': start,
       if (end != null) 'end': end,
       if (keyset.authKey != null) 'auth': keyset.authKey,
       if (count != null) 'count': count.toString(),
       if (filter != null && filter != '') 'filter': filter,
-      if (sort != null && sort.length > 0) 'sort': sort.join(',')
+      if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters),
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters,
         headers: {'Content-Type': 'application/json'});
   }
 }
@@ -222,7 +197,7 @@ class GetAllUsersResult extends Result {
   Map<String, dynamic> _error;
 
   int get status => _status;
-  List<UserInfo> get data => _data ?? List<UserInfo>();
+  List<UserInfo> get data => _data ?? <UserInfo>[];
   int get totalCount => _totalCount;
   Map<String, dynamic> get error => _error;
 
@@ -277,7 +252,7 @@ class DeleteUserResult extends Result {
     return DeleteUserResult()
       .._status = result.status
       .._error = result.error
-      .._data = result.data == null ? null : result.data;
+      .._data = result.data;
   }
 }
 
@@ -297,7 +272,6 @@ class CreateUserResult extends Result {
     return CreateUserResult()
       .._status = result.status as int
       .._error = result.error
-      .._data =
-          result.error.length == 0 ? UserInfo.fromJson(result.data) : null;
+      .._data = result.error.isEmpty ? UserInfo.fromJson(result.data) : null;
   }
 }

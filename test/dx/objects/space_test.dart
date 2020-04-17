@@ -6,7 +6,7 @@ part 'fixtures/space.dart';
 
 void main() {
   PubNub pubnub;
-  group('[spaces]', () {
+  group('DX [objects] [spaces]', () {
     setUp(() {
       pubnub = PubNub(networking: FakeNetworkingModule())
         ..keysets.add(Keyset(subscribeKey: 'demo', publishKey: 'demo'),
@@ -22,10 +22,10 @@ void main() {
       var space = SpaceDetails('my-channel', 'My space',
           description: 'A space that is mine');
       when(
-          path: 'v1/objects/demo/spaces',
-          method: 'POST',
-          body: _createSpaceBody,
-          then: FakeResult(_createSpaceSuccessResponse));
+        path: 'v1/objects/demo/spaces?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'POST',
+        body: _createSpaceBody,
+      ).then(status: 200, body: _createSpaceSuccessResponse);
       var response = await pubnub.spaces.create(space);
 
       expect(response, isA<CreateSpaceResult>());
@@ -36,10 +36,10 @@ void main() {
       var space = SpaceDetails('my-channel', 'My space',
           description: 'A space that is mine');
       when(
-          path: 'v1/objects/demo/spaces',
-          method: 'POST',
-          body: _createSpaceBody,
-          then: FakeResult(_httpError400));
+        path: 'v1/objects/demo/spaces?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'POST',
+        body: _createSpaceBody,
+      ).then(status: 200, body: _httpError400);
       var response = await pubnub.spaces.create(space);
 
       expect(response, isA<CreateSpaceResult>());
@@ -50,10 +50,10 @@ void main() {
       var space = SpaceDetails('my-channel', 'My space',
           description: 'A space that is mine');
       when(
-          path: 'v1/objects/demo/spaces',
-          method: 'POST',
-          body: _createSpaceBody,
-          then: FakeResult(_commonObjectError));
+        path: 'v1/objects/demo/spaces?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'POST',
+        body: _createSpaceBody,
+      ).then(status: 200, body: _commonObjectError);
       var response = await pubnub.spaces.create(space);
       expect(response, isA<CreateSpaceResult>());
       expect(response.status, equals(500));
@@ -71,9 +71,10 @@ void main() {
     test('getAllSpaces should return valid response', () async {
       var id = 'my-channel';
       when(
-          path: 'v1/objects/demo/spaces?limit=10',
-          method: 'GET',
-          then: FakeResult(_getAllSpacesSuccessResponse));
+        path:
+            'v1/objects/demo/spaces?limit=10&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: _getAllSpacesSuccessResponse);
       var response = await pubnub.spaces.getAllSpaces(limit: 10);
       expect(response.status, 200);
       expect(response, isA<GetAllSpacesResult>());
@@ -82,9 +83,10 @@ void main() {
     });
     test('getAllSpaces sends error response', () async {
       when(
-          path: 'v1/objects/demo/spaces?limit=10',
-          method: 'GET',
-          then: FakeResult(_commonObjectError));
+        path:
+            'v1/objects/demo/spaces?limit=10&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: _commonObjectError);
       var response = await pubnub.spaces.getAllSpaces(limit: 10);
       expect(response.status, equals(500));
       expect(response.error['message'],
@@ -98,9 +100,10 @@ void main() {
     test('getSpace should return valid response', () async {
       var spaceId = 'space-1';
       when(
-          path: 'v1/objects/demo/spaces/space-1?',
-          method: 'GET',
-          then: FakeResult(_getSpaceSuccessResponse));
+        path:
+            'v1/objects/demo/spaces/space-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: _getSpaceSuccessResponse);
       var response = await pubnub.spaces.getSpace(spaceId);
       expect(response, isA<GetSpaceResult>());
       expect(response.data.id, spaceId);
@@ -127,8 +130,7 @@ void main() {
     });
 
     test('updateSpace throws when space object is null', () async {
-      var space = null;
-      expect(pubnub.spaces.updateSpace(space, 'space-1'),
+      expect(pubnub.spaces.updateSpace(null, 'space-1'),
           throwsA(TypeMatcher<InvariantException>()));
     });
 
@@ -146,10 +148,11 @@ void main() {
           description: 'A space that is mine');
       var spaceId = 'space-1';
       when(
-          path: 'v1/objects/demo/spaces/space-1',
-          method: 'PATCH',
-          body: _updateSpaceBody,
-          then: FakeResult(_updateSpaceSuccessResponse));
+        path:
+            'v1/objects/demo/spaces/space-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'PATCH',
+        body: _updateSpaceBody,
+      ).then(status: 200, body: _updateSpaceSuccessResponse);
       var response = await pubnub.spaces.updateSpace(space, spaceId);
       expect(response, isA<UpdateSpaceResult>());
       expect(response.status, 200);
@@ -161,10 +164,11 @@ void main() {
           description: 'A space that is mine');
       var spaceId = 'space-1';
       when(
-          path: 'v1/objects/demo/spaces/space-1',
-          method: 'PATCH',
-          body: _updateSpaceBody,
-          then: FakeResult(_commonObjectError));
+        path:
+            'v1/objects/demo/spaces/space-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'PATCH',
+        body: _updateSpaceBody,
+      ).then(status: 200, body: _commonObjectError);
       var response = await pubnub.spaces.updateSpace(space, spaceId);
       expect(response, isA<UpdateSpaceResult>());
       expect(response.status, equals(500));
@@ -187,12 +191,13 @@ void main() {
       var spaceId = 'space-1';
       var expectedThen = '{"status": "0","data": {}}';
       when(
-          path: 'v1/objects/demo/spaces/space-1?',
-          method: 'DELETE',
-          then: FakeResult(expectedThen));
+        path:
+            'v1/objects/demo/spaces/space-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'DELETE',
+      ).then(status: 200, body: expectedThen);
       var response = await pubnub.spaces.deleteSpace(spaceId);
       expect(response, isA<DeleteSpaceResult>());
-      expect(response.status, "0");
+      expect(response.status, '0');
       expect(response.data, {});
     });
 
@@ -200,18 +205,19 @@ void main() {
       var spaceId = 'space-1';
       var expectedThen = '{"status": "0","data": {}}';
       when(
-          path: 'v1/objects/demo/spaces/space-1?',
-          method: 'DELETE',
-          then: FakeResult(expectedThen));
+        path:
+            'v1/objects/demo/spaces/space-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'DELETE',
+      ).then(status: 200, body: expectedThen);
       var response = await pubnub.spaces.deleteSpace(spaceId);
       expect(response, isA<DeleteSpaceResult>());
-      expect(response.status, "0");
+      expect(response.status, '0');
       expect(response.data, {});
     });
     test('space() should delegate to spaces.create()', () async {
       var fakePubnub = FakePubNub();
       var keyset = Keyset(subscribeKey: 'test', publishKey: 'test');
-      fakePubnub.space('space-1', 'space-name', keyset: keyset);
+      await fakePubnub.space('space-1', 'space-name', keyset: keyset);
 
       var invocation = fakePubnub.invocations[0];
 

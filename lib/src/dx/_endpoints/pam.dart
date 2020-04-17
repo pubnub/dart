@@ -1,19 +1,57 @@
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
-class GrantParams extends Parameters {
-  Keyset keyset;
+class PamGrantTokenParams extends Parameters {
+  final Keyset keyset;
 
-  Set<String> authKeys;
-  int ttl;
-  Set<String> channels;
-  Set<String> channelGroups;
-  bool write;
-  bool read;
-  bool manage;
-  bool delete;
+  final String payload;
+  final String timestamp;
 
-  GrantParams(this.keyset, this.authKeys,
+  PamGrantTokenParams(this.keyset, this.payload, this.timestamp);
+
+  @override
+  Request toRequest() {
+    var pathSegments = ['v3', 'pam', keyset.subscribeKey, 'grant'];
+    var queryParameters = <String, String>{
+      if (keyset.uuid != null) 'uuid': '${keyset.uuid.value}',
+      'timestamp': timestamp,
+    };
+
+    return Request(RequestType.post, pathSegments,
+        queryParameters: queryParameters,
+        body: payload,
+        signWith: (t, p, q, h, b) => computeV2Signature(keyset, t, p, q, b));
+  }
+}
+
+class PamGrantTokenResult extends Result {
+  final String message;
+  final String token;
+
+  PamGrantTokenResult._(this.message, this.token);
+
+  factory PamGrantTokenResult.fromJson(dynamic object) {
+    var result = DefaultResult.fromJson(object);
+    var data = result.otherKeys['data'];
+
+    return PamGrantTokenResult._(data['message'], data['token']);
+  }
+}
+
+class PamGrantParams extends Parameters {
+  final Keyset keyset;
+
+  final Set<String> authKeys;
+  final int ttl;
+  final String timestamp;
+  final Set<String> channels;
+  final Set<String> channelGroups;
+  final bool write;
+  final bool read;
+  final bool manage;
+  final bool delete;
+
+  PamGrantParams(this.keyset, this.authKeys, this.timestamp,
       {this.ttl,
       this.channels,
       this.channelGroups,
@@ -22,151 +60,88 @@ class GrantParams extends Parameters {
       this.manage,
       this.delete});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
-      'v2',
-      'auth',
-      'grant',
-      'sub-key',
-      keyset.subscribeKey
-    ];
-    Map<String, String> queryParameters = {
-      if (authKeys != null && authKeys.length > 0) 'auth': authKeys.join(','),
-      if ((channels != null && channels.length > 0))
+    var pathSegments = ['v2', 'auth', 'grant', 'sub-key', keyset.subscribeKey];
+
+    var queryParameters = {
+      if (authKeys != null && authKeys.isNotEmpty) 'auth': authKeys.join(','),
+      if ((channels != null && channels.isNotEmpty))
         'channel': channels.join(','),
-      if ((channelGroups != null && channelGroups.length > 0))
+      if ((channelGroups != null && channelGroups.isNotEmpty))
         'channel-group': channelGroups.join(','),
-      'd': delete != null ? (delete ? '1' : '0') : '0',
-      'm': manage != null ? (manage ? '1' : '0') : '0',
-      'r': read != null ? (read ? '1' : '0') : '0',
       if (ttl != null) 'ttl': '$ttl',
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}',
-      'w': write != null ? (write ? '1' : '0') : '0'
+      'timestamp': timestamp,
+      if (delete != null) 'd': delete ? '1' : '0',
+      if (manage != null) 'm': manage ? '1' : '0',
+      if (read != null) 'r': read ? '1' : '0',
+      if (write != null) 'w': write ? '1' : '0',
     };
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters,
+        signWith: (t, p, q, h, b) => computeSignature(keyset, p, q));
   }
 }
 
-class GrantResult extends Result {
-  int _status;
-  String _message;
-  Payload _payload;
-  String _service;
-  Map<String, dynamic> _error;
+class Permission {
+  final String channel;
+  final String authKey;
 
-  int get status => _status;
-  String get message => _message;
-  Payload get payload => _payload;
-  String get service => _service;
-  Map<String, dynamic> get error => _error;
+  final bool read;
+  final bool write;
+  final bool manage;
+  final bool delete;
 
-  GrantResult();
-
-  factory GrantResult.fromJson(dynamic object) {
-    var result = DefaultObjectResult.fromJson(object);
-
-    return GrantResult()
-      .._status = result.status
-      .._payload = result.otherKeys['payload'] != null
-          ? Payload.fromJson(result.otherKeys['payload'])
-          : null
-      .._service = result.otherKeys['service']
-      .._message = result.otherKeys['message']
-      .._error = result.error;
-  }
+  const Permission(this.channel, this.authKey,
+      {this.read, this.write, this.manage, this.delete});
 }
 
-class Payload {
-  int _ttl;
-  Auths _auths;
-  String _subscribe_key;
-  String _level;
-  String _channel;
+class PamGrantResult extends Result {
+  final bool warning;
+  final String message;
+  final String level;
+  final int ttl;
 
-  int get ttl => _ttl;
-  Auths get auths => _auths;
-  String get subscribe_key => _subscribe_key;
-  String get level => _level;
-  String get channel => _channel;
+  final List<Permission> permissions;
 
-  Payload();
+  PamGrantResult(
+      this.warning, this.message, this.level, this.ttl, this.permissions);
 
-  factory Payload.fromJson(dynamic object) {
-    return Payload()
-      .._ttl = object['ttl'] as int
-      .._auths =
-          object['auths'] == null ? null : Auths.fromJson(object['auths'])
-      .._subscribe_key = object['subscribe_key'] as String
-      .._level = object['level'] as String
-      .._channel = object['channel'] as String;
-  }
-}
+  factory PamGrantResult.fromJson(dynamic object) {
+    var result = DefaultResult.fromJson(object);
 
-class Auths {
-  Map<String, dynamic> _password;
+    var hasWarning = result.otherKeys['warning'] != null &&
+        result.otherKeys['warning'] == true;
 
-  Map<String, dynamic> get password => _password;
+    var payload = result.otherKeys['payload'];
+    var permissions = <Permission>[];
 
-  Auths();
+    void addPermissions(String channel, Map auths) {
+      for (var entry in auths.entries) {
+        permissions.add(Permission(channel, entry.key,
+            read: entry.value['r'] == 1 ? true : false,
+            write: entry.value['w'] == 1 ? true : false,
+            manage: entry.value['m'] == 1 ? true : false,
+            delete: entry.value['d'] == 1 ? true : false));
+      }
+    }
 
-  factory Auths.fromJson(dynamic object) =>
-      Auths().._password = object['password'] as Map<String, dynamic>;
-}
+    if (payload['channel'] != null) {
+      String channel = payload['channel'];
 
-class GrantTokenParams extends Parameters {
-  Keyset keyset;
-  String grantObject;
+      addPermissions(channel, payload['auths']);
+    }
 
-  GrantTokenParams(this.keyset, this.grantObject);
+    if (payload['channels'] != null) {
+      var channels = payload['channels'];
 
-  Request toRequest() {
-    List<String> pathSegments = ['v3', 'pam', keyset.subscribeKey, 'grant'];
+      for (var entry in channels.entries) {
+        addPermissions(entry.key, entry.value['auths']);
+      }
+    }
 
-    return Request(
-        type: RequestType.post,
-        uri: Uri(pathSegments: pathSegments),
-        body: grantObject);
-  }
-}
-
-class GrantTokenResult extends Result {
-  int _status;
-  GrantTokenData _data;
-  String _service;
-  Map<String, dynamic> _error;
-
-  int get status => _status;
-  GrantTokenData get data => _data;
-  String get service => _service;
-  Map<String, dynamic> get error => _error;
-
-  GrantTokenResult();
-
-  factory GrantTokenResult.fromJson(dynamic object) {
-    var result = DefaultObjectResult.fromJson(object);
-    return GrantTokenResult()
-      .._status = result.status
-      .._data =
-          result.data != null ? GrantTokenData.fromJson(result.data) : null
-      .._error = result.error
-      .._service = result.otherKeys['service'];
-  }
-}
-
-class GrantTokenData {
-  String _message;
-  String _token;
-
-  String get message => _message;
-  String get token => _token;
-
-  GrantTokenData();
-
-  factory GrantTokenData.fromJson(dynamic object) {
-    return GrantTokenData()
-      .._message = object['message'] as String
-      .._token = object['token'] as String;
+    return PamGrantResult(hasWarning, result.message, payload['level'],
+        payload['ttl'], permissions);
   }
 }

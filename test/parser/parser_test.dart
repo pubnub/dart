@@ -15,7 +15,7 @@ void main() {
         var input = '{"hello": "world", "answer": 42}';
 
         expect(await parser.decode(input),
-            allOf(equals({"hello": "world", "answer": 42}), isA<Map>()));
+            allOf(equals({'hello': 'world', 'answer': 42}), isA<Map>()));
       });
 
       test('returns List if json is an array', () async {

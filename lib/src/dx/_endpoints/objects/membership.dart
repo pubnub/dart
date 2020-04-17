@@ -24,30 +24,30 @@ class GetMembershipsParams extends Parameters {
       this.filter,
       this.sort});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v1',
       'objects',
       keyset.subscribeKey,
       'users',
-      this.userId,
+      userId,
       'spaces'
     ];
 
-    Map<String, String> queryParameters = {
-      if (include != null && include.length > 0) 'include': include.join(','),
+    var queryParameters = {
+      if (include != null && include.isNotEmpty) 'include': include.join(','),
       if (limit != null) 'limit': limit.toString(),
       if (start != null) 'start': start,
       if (end != null) 'end': end,
       if (keyset.authKey != null) 'auth': keyset.authKey,
       if (count != null) 'count': count.toString(),
       if (filter != null && filter != '') 'filter': filter,
-      if (sort != null && sort.length > 0) 'sort': sort.join(',')
+      if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -60,7 +60,7 @@ class MembershipsResult extends Result {
   Map<String, dynamic> _error;
 
   int get status => _status;
-  List<MembershipInfo> get data => _data ?? List<MembershipInfo>();
+  List<MembershipInfo> get data => _data ?? <MembershipInfo>[];
   int get totalCount => _totalCount;
   String get next => _next;
   String get prev => _prev;
@@ -134,35 +134,34 @@ class ManageMembershipsParams extends Parameters {
       this.filter,
       this.sort});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v1',
       'objects',
       keyset.subscribeKey,
       'users',
-      this.userId,
+      userId,
       'spaces'
     ];
 
-    Map<String, String> queryParameters = {
-      if (include != null && include.length > 0) 'include': include.join(','),
+    var queryParameters = {
+      if (include != null && include.isNotEmpty) 'include': include.join(','),
       if (limit != null) 'limit': limit.toString(),
       if (start != null) 'start': start,
       if (end != null) 'end': end,
       if (keyset.authKey != null) 'auth': keyset.authKey,
       if (count != null) 'count': count.toString(),
       if (filter != null && filter != '') 'filter': filter,
-      if (sort != null && sort.length > 0) 'sort': sort.join(',')
+      if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
     };
 
     return Request(
-        type: RequestType.patch,
-        uri: Uri(
-            pathSegments: pathSegments,
-            queryParameters:
-                queryParameters.length > 0 ? queryParameters : null),
-        body: membershipChanges,
-        headers: {'Content-Type': 'application/json'});
+      RequestType.patch,
+      pathSegments,
+      queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
+      body: membershipChanges,
+    );
   }
 }
 
@@ -187,29 +186,32 @@ class GetSpaceMembersParams extends Parameters {
       this.filter,
       this.sort});
 
+  @override
   Request toRequest() {
-    Map<String, String> queryParameters = {
-      if (include != null && include.length > 0) 'include': include.join(','),
+    var pathSegments = [
+      'v1',
+      'objects',
+      keyset.subscribeKey,
+      'spaces',
+      spaceId,
+      'users',
+    ];
+    var queryParameters = {
+      if (include != null && include.isNotEmpty) 'include': include.join(','),
       if (limit != null) 'limit': limit.toString(),
       if (start != null) 'start': start,
       if (end != null) 'end': end,
       if (keyset.authKey != null) 'auth': keyset.authKey,
       if (count != null) 'count': count.toString(),
       if (filter != null && filter != '') 'filter': filter,
-      if (sort != null && sort.length > 0) 'sort': sort.join(',')
+      if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
     };
 
     return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: [
-          'v1',
-          'objects',
-          keyset.subscribeKey,
-          'spaces',
-          this.spaceId,
-          'users',
-        ], queryParameters: queryParameters),
-        headers: {'Content-Type': 'application/json'});
+      RequestType.get,
+      pathSegments,
+      queryParameters: queryParameters,
+    );
   }
 }
 
@@ -222,7 +224,7 @@ class SpaceMembersResult extends Result {
   Map<String, dynamic> _error;
 
   int get status => _status;
-  List<SpaceMemberInfo> get data => _data ?? List<SpaceMemberInfo>();
+  List<SpaceMemberInfo> get data => _data ?? <SpaceMemberInfo>[];
   int get totalCount => _totalCount;
   String get next => _next;
   String get prev => _prev;
@@ -296,34 +298,33 @@ class ManageSpaceMembersParams extends Parameters {
       this.filter,
       this.sort});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v1',
       'objects',
       keyset.subscribeKey,
       'spaces',
-      this.spaceId,
+      spaceId,
       'users'
     ];
 
-    Map<String, String> queryParameters = {
-      if (include != null && include.length > 0) 'include': include.join(','),
+    var queryParameters = {
+      if (include != null && include.isNotEmpty) 'include': include.join(','),
       if (limit != null) 'limit': limit.toString(),
       if (start != null) 'start': start,
       if (end != null) 'end': end,
       if (keyset.authKey != null) 'auth': keyset.authKey,
       if (count != null) 'count': count.toString(),
       if (filter != null && filter != '') 'filter': filter,
-      if (sort != null && sort.length > 0) 'sort': sort.join(',')
+      if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
     };
 
     return Request(
-        type: RequestType.patch,
-        uri: Uri(
-            pathSegments: pathSegments,
-            queryParameters:
-                queryParameters.length > 0 ? queryParameters : null),
-        body: spaceMembersChanges,
-        headers: {'Content-Type': 'application/json'});
+      RequestType.patch,
+      pathSegments,
+      queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
+      body: spaceMembersChanges,
+    );
   }
 }

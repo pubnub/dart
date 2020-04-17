@@ -53,8 +53,8 @@ class BlueprintFactory<State, Context> {
 }
 
 class Blueprint<State, Context> {
-  List<Definition<State>> _definitions = [];
-  List<ReporterDefinition> _effects = [];
+  final List<Definition<State>> _definitions = [];
+  final List<ReporterDefinition> _effects = [];
 
   Blueprint();
 

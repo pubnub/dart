@@ -23,36 +23,22 @@ void main() {
         expect(result.otherKeys, equals({'channels': {}}));
       });
     });
-    group('computeSignature', () {
-      test('computeSignature should return valid signature', () {
-        var keyset =
-            Keyset(subscribeKey: 'test', publishKey: 'test', authKey: 'test');
+    group('computeV2Signature', () {
+      test('computeV2Signature should return valid signature', () {
+        var keyset = Keyset(
+            subscribeKey: 'test',
+            publishKey: 'test',
+            secretKey: 'test',
+            uuid: UUID('test'));
         var requestType = RequestType.post;
-        var queryParams = {'test': 'test'};
+        var queryParams = {'b': 'second', 'c': 'third', 'a': 'first'};
         var path = ['test', 'test'];
-        var payload = 'test';
-        var expectedSign =
-            "v2.3932952f437cb9d755ec069ec0f59869340d014233ec9ef780046beda716d0d6";
+        var body = 'test';
+        var expectedSign = 'v2.oJhS84g84BXVr3QwKIAt0w7MnlB-kCW3RF5jJgZWufM';
 
-        var response = computeSignature(keyset, requestType, queryParams, path,
-            payload: payload);
-        expect(response, expectedSign);
-      });
-      test(
-          'computeSignature should return valid signature for multiple query params',
-          () {
-        var keyset =
-            Keyset(subscribeKey: 'test', publishKey: 'test', authKey: 'test');
-        var requestType = RequestType.post;
-        var queryParams = {'test': 'test', 'time': '1234'};
-        var path = ['test', 'test'];
-        var payload = 'test';
-        var expectedSign =
-            "v2.030378a517843a7a32c798ac5bb61851cc620458af92d00215417a469e255974";
-
-        var response = computeSignature(keyset, requestType, queryParams, path,
-            payload: payload);
-        expect(response, expectedSign);
+        var response =
+            computeV2Signature(keyset, requestType, path, queryParams, body);
+        expect(response, equals(expectedSign));
       });
     });
   });

@@ -1,6 +1,6 @@
 import 'state_machine.dart';
 
-typedef Context Updater<Context>(Context ctx);
+typedef Updater<Context> = Context Function(Context ctx);
 
 abstract class Effect<State, Context> {
   void execute(

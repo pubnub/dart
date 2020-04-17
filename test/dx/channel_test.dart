@@ -1,8 +1,6 @@
 import 'package:pubnub/pubnub.dart';
 import 'package:test/test.dart';
 
-import 'package:pubnub/src/default.dart';
-import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/channel/channel.dart';
 import 'package:pubnub/src/dx/channel/channel_history.dart';
 
@@ -72,9 +70,10 @@ void main() {
 
         test('#count should send correct request and return an int', () async {
           when(
-              method: 'GET',
-              path: 'v3/history/sub-key/test/message-counts/test?timetoken=1',
-              then: FakeResult(_historyMessagesCountResponse));
+            method: 'GET',
+            path:
+                'v3/history/sub-key/test/message-counts/test?timetoken=1&pnsdk=PubNub-Dart%2F${PubNub.version}',
+          ).then(status: 200, body: _historyMessagesCountResponse);
 
           var count = await history.count();
 
@@ -83,19 +82,20 @@ void main() {
 
         test('#delete should send correct request', () async {
           when(
-              method: 'DELETE',
-              path: 'v3/history/sub-key/test/channel/test?',
-              then: FakeResult(_historyMessagesDeleteResponse));
+            method: 'DELETE',
+            path:
+                'v3/history/sub-key/test/channel/test?pnsdk=PubNub-Dart%2F${PubNub.version}',
+          ).then(status: 200, body: _historyMessagesDeleteResponse);
 
           await history.delete();
         });
 
         test('#fetch should send correct request', () async {
           when(
-              method: 'GET',
-              path:
-                  'v2/history/sub-key/test/channel/test?count=100&reverse=true&include_token=true',
-              then: FakeResult(_historyMessagesFetchResponse));
+            method: 'GET',
+            path:
+                'v2/history/sub-key/test/channel/test?count=100&reverse=true&include_token=true&pnsdk=PubNub-Dart%2F${PubNub.version}',
+          ).then(status: 200, body: _historyMessagesFetchResponse);
 
           await history.fetch();
 
@@ -116,10 +116,10 @@ void main() {
         });
         test('#more should fetch messages', () async {
           when(
-              method: 'GET',
-              path:
-                  'v2/history/sub-key/test/channel/test?count=100&reverse=false&include_token=true',
-              then: FakeResult(_historyMoreSuccessResponse));
+            method: 'GET',
+            path:
+                'v2/history/sub-key/test/channel/test?count=100&reverse=false&include_token=true&pnsdk=PubNub-Dart%2F${PubNub.version}',
+          ).then(status: 200, body: _historyMoreSuccessResponse);
 
           var history = channel.history();
 

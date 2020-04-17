@@ -8,27 +8,17 @@ class CreateSpaceParams extends Parameters {
 
   CreateSpaceParams(this.space, this.keyset, {this.include});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
-      'v1',
-      'objects',
-      keyset.subscribeKey,
-      'spaces'
-    ];
+    var pathSegments = ['v1', 'objects', keyset.subscribeKey, 'spaces'];
 
-    Map<String, String> queryParameters = {
-      if (include != null && include.length > 0)
-        'include': this.include.join(','),
+    var queryParameters = {
+      if (include != null && include.isNotEmpty) 'include': include.join(','),
       if (keyset.authKey != null) 'auth': keyset.authKey,
     };
 
-    return Request(
-        type: RequestType.post,
-        uri: Uri(
-            pathSegments: pathSegments,
-            queryParameters:
-                queryParameters.length > 0 ? queryParameters : null),
-        headers: {'Content-Type': 'application/json'},
+    return Request(RequestType.post, pathSegments,
+        queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
         body: space);
   }
 }
@@ -41,8 +31,9 @@ class UpdateSpaceParams extends Parameters {
 
   UpdateSpaceParams(this.keyset, this.space, this.spaceId, {this.include});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v1',
       'objects',
       keyset.subscribeKey,
@@ -50,20 +41,14 @@ class UpdateSpaceParams extends Parameters {
       spaceId
     ];
 
-    Map<String, String> queryParameters = {
-      if (include != null && include.length > 0)
-        'include': this.include.join(','),
+    var queryParameters = {
+      if (include != null && include.isNotEmpty) 'include': include.join(','),
       if (keyset.authKey != null) 'auth': keyset.authKey,
     };
 
-    return Request(
-        type: RequestType.patch,
-        uri: Uri(
-            pathSegments: pathSegments,
-            queryParameters:
-                queryParameters.length > 0 ? queryParameters : null),
-        body: space,
-        headers: {'Content-Type': 'application/json'});
+    return Request(RequestType.patch, pathSegments,
+        queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
+        body: space);
   }
 }
 
@@ -73,8 +58,9 @@ class DeleteSpaceParams extends Parameters {
 
   DeleteSpaceParams(this.keyset, this.spaceId);
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v1',
       'objects',
       keyset.subscribeKey,
@@ -82,13 +68,12 @@ class DeleteSpaceParams extends Parameters {
       spaceId
     ];
 
-    Map<String, String> queryParameters = {
+    var queryParameters = {
       if (keyset.authKey != null) 'auth': keyset.authKey,
     };
 
-    return Request(
-        type: RequestType.delete,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.delete, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -100,22 +85,22 @@ class GetSpaceParams extends Parameters {
 
   GetSpaceParams(this.keyset, this.spaceId, {this.include});
 
+  @override
   Request toRequest() {
-    Map<String, String> queryParameters = {
+    var pathSegments = [
+      'v1',
+      'objects',
+      keyset.subscribeKey,
+      'spaces',
+      spaceId,
+    ];
+    var queryParameters = {
       if (keyset.authKey != null) 'auth': keyset.authKey,
-      if (include != null && include.length > 0) 'include': include.join(','),
+      if (include != null && include.isNotEmpty) 'include': include.join(','),
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: [
-          'v1',
-          'objects',
-          keyset.subscribeKey,
-          'spaces',
-          spaceId,
-        ], queryParameters: queryParameters),
-        headers: {'Content-Type': 'application/json'});
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -138,29 +123,23 @@ class GetAllSpacesParams extends Parameters {
       this.filter,
       this.sort});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
-      'v1',
-      'objects',
-      keyset.subscribeKey,
-      'spaces'
-    ];
+    var pathSegments = ['v1', 'objects', keyset.subscribeKey, 'spaces'];
 
-    Map<String, String> queryParameters = {
-      if (include != null && include.length > 0) 'include': include.join(','),
+    var queryParameters = {
+      if (include != null && include.isNotEmpty) 'include': include.join(','),
       if (limit != null) 'limit': limit.toString(),
       if (start != null) 'start': start,
       if (end != null) 'end': end,
       if (keyset.authKey != null) 'auth': keyset.authKey,
       if (count != null) 'count': count.toString(),
       if (filter != null && filter != '') 'filter': filter,
-      if (sort != null && sort.length > 0) 'sort': sort.join(',')
+      if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters),
-        headers: {'Content-Type': 'application/json'});
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -211,7 +190,7 @@ class GetSpaceResult extends Result {
     return GetSpaceResult()
       .._status = result.status as int
       .._error = result.error
-      .._data = result.error.length == 0 ? SpaceInfo.fromJson(result.data) : {};
+      .._data = result.error.isEmpty ? SpaceInfo.fromJson(result.data) : {};
   }
 }
 
@@ -224,7 +203,7 @@ class GetAllSpacesResult extends Result {
   Map<String, dynamic> _error;
 
   int get status => _status;
-  List<SpaceInfo> get data => _data ?? List<SpaceInfo>();
+  List<SpaceInfo> get data => _data ?? <SpaceInfo>[];
   int get totalCount => _totalCount;
   String get next => _next;
   String get prev => _prev;
@@ -283,7 +262,7 @@ class DeleteSpaceResult extends Result {
     return DeleteSpaceResult()
       .._status = result.status as String
       .._error = result.error
-      .._data = result.error.length == 0 ? result.data : {};
+      .._data = result.error.isEmpty ? result.data : {};
   }
 }
 
@@ -303,7 +282,6 @@ class CreateSpaceResult extends Result {
     return CreateSpaceResult()
       .._status = result.status as int
       .._error = result.error
-      .._data =
-          result.error.length == 0 ? SpaceInfo.fromJson(result.data) : null;
+      .._data = result.error.isEmpty ? SpaceInfo.fromJson(result.data) : null;
   }
 }

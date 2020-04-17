@@ -2,7 +2,6 @@ import 'package:test/test.dart';
 
 import 'objects/objects.dart';
 
-import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/default.dart';
 import 'package:pubnub/src/dx/_endpoints/push.dart';
 import 'package:pubnub/src/dx/push/push.dart';
@@ -19,25 +18,26 @@ void main() {
             name: 'default', useAsDefault: true);
     }); // Setup ends
 
-    test("listPushChannels throws for empty deviceId", () {
+    test('listPushChannels throws for empty deviceId', () {
       expect(pubnub.listPushChannels('', PushGateway.gcm),
           throwsA(TypeMatcher<InvariantException>()));
     });
 
     test('listPushChannels throws if no keyset found', () async {
       pubnub.keysets.remove('default');
-      String deviceId = 'A332C23D';
+      var deviceId = 'A332C23D';
       expect(pubnub.listPushChannels(deviceId, PushGateway.gcm),
           throwsA(TypeMatcher<KeysetException>()));
     });
 
     test('listPushChannels returns valid response for non apns2 gateway',
         () async {
-      String deviceId = 'A332C23D';
+      var deviceId = 'A332C23D';
       when(
-          path: 'v2/push/sub-key/test/devices/A332C23D?type=gcm',
-          method: 'GET',
-          then: FakeResult('["ch1","ch2"]'));
+        path:
+            'v2/push/sub-key/test/devices/A332C23D?type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: '["ch1", "ch2"]');
       var response = await pubnub.listPushChannels(deviceId, PushGateway.gcm);
       expect(response, isA<ListPushChannelsResult>());
     });
@@ -45,7 +45,7 @@ void main() {
     test(
         'listPushChannels throws when topic is not provided with apns2 gateway',
         () async {
-      String deviceId = 'A332C23D';
+      var deviceId = 'A332C23D';
       expect(pubnub.listPushChannels(deviceId, PushGateway.apns2),
           throwsA(TypeMatcher<InvariantException>()));
     });
@@ -53,13 +53,13 @@ void main() {
     test(
         'listPushChannels should return valid response for apns2 with default development env',
         () async {
-      String deviceId = 'A332C23D';
-      String topic = 'topic';
+      var deviceId = 'A332C23D';
+      var topic = 'topic';
       when(
-          path:
-              'v2/push/sub-key/test/device-apns2/A332C23D?environment=development&topic=topic',
-          method: 'GET',
-          then: FakeResult('["ch1","ch2"]'));
+        path:
+            'v2/push/sub-key/test/device-apns2/A332C23D?environment=development&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: '["ch1", "ch2"]');
       var response = await pubnub.listPushChannels(deviceId, PushGateway.apns2,
           topic: topic);
       expect(response, isA<ListPushChannelsResult>());
@@ -68,13 +68,13 @@ void main() {
     test(
         'listPushChannels should return valid response for apns2 with mentioned development env',
         () async {
-      String deviceId = 'A332C23D';
-      String topic = 'topic';
+      var deviceId = 'A332C23D';
+      var topic = 'topic';
       when(
-          path:
-              'v2/push/sub-key/test/device-apns2/A332C23D?environment=production&topic=topic',
-          method: 'GET',
-          then: FakeResult('["ch1","ch2"]'));
+        path:
+            'v2/push/sub-key/test/device-apns2/A332C23D?environment=production&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: '["ch1", "ch2"]');
       var response = await pubnub.listPushChannels(deviceId, PushGateway.apns2,
           topic: topic, environment: Environment.production);
       expect(response, isA<ListPushChannelsResult>());
@@ -83,46 +83,47 @@ void main() {
 
     test('addPushChannels throws if no keyset found', () async {
       pubnub.keysets.remove('default');
-      String deviceId = 'A332C23D';
+      var deviceId = 'A332C23D';
       var channels = <String>{'ch1', 'ch2'};
       expect(pubnub.addPushChannels(deviceId, PushGateway.gcm, channels),
           throwsA(TypeMatcher<KeysetException>()));
     });
 
-    test("addPushChannels throws for empty deviceId", () {
-      String deviceId = '';
+    test('addPushChannels throws for empty deviceId', () {
+      var deviceId = '';
       var channels = <String>{'ch1', 'ch2'};
       expect(pubnub.addPushChannels(deviceId, PushGateway.gcm, channels),
           throwsA(TypeMatcher<InvariantException>()));
     });
 
-    test("addPushChannels returns valid response", () async {
-      String deviceId = 'A332C23D';
+    test('addPushChannels returns valid response', () async {
+      var deviceId = 'A332C23D';
       var channels = <String>{'ch1', 'ch2'};
       when(
-          path: 'v2/push/sub-key/test/devices/A332C23D?add=ch1%2Cch2&type=gcm',
-          method: 'GET',
-          then: FakeResult('[1,"ch1,ch2"]'));
+        path:
+            'v2/push/sub-key/test/devices/A332C23D?add=ch1%2Cch2&type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: '[1, "ch1", "ch2"]');
       var response =
           await pubnub.addPushChannels(deviceId, PushGateway.gcm, channels);
       expect(response, isA<AddPushChannelsResult>());
     });
 
-    test("addPushChannels throws when topic null with apns2", () {
-      String deviceId = 'A332C23D';
+    test('addPushChannels throws when topic null with apns2', () {
+      var deviceId = 'A332C23D';
       var channels = <String>{'ch1', 'ch2'};
       expect(pubnub.addPushChannels(deviceId, PushGateway.apns2, channels),
           throwsA(TypeMatcher<InvariantException>()));
     });
-    test("addPushChannels returns valid response with apns2", () async {
-      String deviceId = 'A332C23D';
+    test('addPushChannels returns valid response with apns2', () async {
+      var deviceId = 'A332C23D';
       var channels = <String>{'ch1', 'ch2'};
       var topic = 'topic';
       when(
-          path:
-              'v2/push/sub-key/test/device-apns2/A332C23D?add=ch1%2Cch2&environment=production&topic=topic',
-          method: 'GET',
-          then: FakeResult('[1,"ch1,ch2"]'));
+        path:
+            'v2/push/sub-key/test/device-apns2/A332C23D?add=ch1%2Cch2&environment=production&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: '[1,"ch1,ch2"]');
       var response = await pubnub.addPushChannels(
           deviceId, PushGateway.apns2, channels,
           topic: topic, environment: Environment.production);
@@ -131,47 +132,47 @@ void main() {
 
     test('removePushChannels throws if no keyset found', () async {
       pubnub.keysets.remove('default');
-      String deviceId = 'A332C23D';
+      var deviceId = 'A332C23D';
       var channels = <String>{'ch1', 'ch2'};
       expect(pubnub.removePushChannels(deviceId, PushGateway.gcm, channels),
           throwsA(TypeMatcher<KeysetException>()));
     });
 
-    test("removePushChannels throws for empty deviceId", () {
-      String deviceId = '';
+    test('removePushChannels throws for empty deviceId', () {
+      var deviceId = '';
       var channels = <String>{'ch1', 'ch2'};
       expect(pubnub.removePushChannels(deviceId, PushGateway.gcm, channels),
           throwsA(TypeMatcher<InvariantException>()));
     });
 
-    test("removePushChannels returns valid response", () async {
-      String deviceId = 'A332C23D';
+    test('removePushChannels returns valid response', () async {
+      var deviceId = 'A332C23D';
       var channels = <String>{'ch1', 'ch2'};
       when(
-          path:
-              'v2/push/sub-key/test/devices/A332C23D?remove=ch1%2Cch2&type=gcm',
-          method: 'GET',
-          then: FakeResult('[1,"ch1,ch2"]'));
+        path:
+            'v2/push/sub-key/test/devices/A332C23D?remove=ch1%2Cch2&type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: '[1, "ch1", "ch2"]');
       var response =
           await pubnub.removePushChannels(deviceId, PushGateway.gcm, channels);
       expect(response, isA<RemovePushChannelsResult>());
     });
 
-    test("removePushChannels throws when topic null with apns2", () {
-      String deviceId = 'A332C23D';
+    test('removePushChannels throws when topic null with apns2', () {
+      var deviceId = 'A332C23D';
       var channels = <String>{'ch1', 'ch2'};
       expect(pubnub.removePushChannels(deviceId, PushGateway.apns2, channels),
           throwsA(TypeMatcher<InvariantException>()));
     });
-    test("removePushChannels returns valid response with apns2", () async {
-      String deviceId = 'A332C23D';
+    test('removePushChannels returns valid response with apns2', () async {
+      var deviceId = 'A332C23D';
       var channels = <String>{'ch1', 'ch2'};
       var topic = 'topic';
       when(
-          path:
-              'v2/push/sub-key/test/device-apns2/A332C23D?remove=ch1%2Cch2&environment=production&topic=topic',
-          method: 'GET',
-          then: FakeResult('[1,"ch1,ch2"]'));
+        path:
+            'v2/push/sub-key/test/device-apns2/A332C23D?remove=ch1%2Cch2&environment=production&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: '[1, "ch1", "ch2"]');
       var response = await pubnub.removePushChannels(
           deviceId, PushGateway.apns2, channels,
           topic: topic, environment: Environment.production);
@@ -180,40 +181,41 @@ void main() {
 
     test('removeDevice throws if no keyset found', () async {
       pubnub.keysets.remove('default');
-      String deviceId = 'A332C23D';
+      var deviceId = 'A332C23D';
       expect(pubnub.removeDevice(deviceId, PushGateway.gcm),
           throwsA(TypeMatcher<KeysetException>()));
     });
 
-    test("removeDevice throws for empty deviceId", () {
-      String deviceId = '';
+    test('removeDevice throws for empty deviceId', () {
+      var deviceId = '';
       expect(pubnub.removeDevice(deviceId, PushGateway.gcm),
           throwsA(TypeMatcher<InvariantException>()));
     });
 
-    test("removeDevice returns valid response", () async {
-      String deviceId = 'A332C23D';
+    test('removeDevice returns valid response', () async {
+      var deviceId = 'A332C23D';
       when(
-          path: 'v2/push/sub-key/test/devices/A332C23D/remove?type=gcm',
-          method: 'GET',
-          then: FakeResult('[]'));
+        path:
+            'v2/push/sub-key/test/devices/A332C23D/remove?type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: '[]');
       var response = await pubnub.removeDevice(deviceId, PushGateway.gcm);
       expect(response, isA<RemoveDeviceResult>());
     });
 
-    test("removeDevice throws when topic is null with apns2", () {
-      String deviceId = 'A332C23D';
+    test('removeDevice throws when topic is null with apns2', () {
+      var deviceId = 'A332C23D';
       expect(pubnub.removeDevice(deviceId, PushGateway.apns2),
           throwsA(TypeMatcher<InvariantException>()));
     });
-    test("removeDevice returns valid response with apns2", () async {
-      String deviceId = 'A332C23D';
+    test('removeDevice returns valid response with apns2', () async {
+      var deviceId = 'A332C23D';
       var topic = 'topic';
       when(
-          path:
-              'v2/push/sub-key/test/device-apns2/A332C23D/remove?environment=production&topic=topic',
-          method: 'GET',
-          then: FakeResult('[]'));
+        path:
+            'v2/push/sub-key/test/device-apns2/A332C23D/remove?environment=production&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: '[]');
       var response = await pubnub.removeDevice(deviceId, PushGateway.apns2,
           topic: topic, environment: Environment.production);
       expect(response, isA<RemoveDeviceResult>());

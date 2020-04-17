@@ -16,7 +16,8 @@ void main() {
     });
 
     test('time successfully returns TimeResult', () async {
-      when(path: 'time/0', method: 'GET', then: FakeResult('[123]'));
+      when(path: 'time/0?pnsdk=PubNub-Dart%2F${PubNub.version}', method: 'GET')
+          .then(status: 200, body: '[123]');
 
       var response = await pubnub.time();
 

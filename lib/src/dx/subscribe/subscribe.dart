@@ -11,7 +11,7 @@ import 'package:pubnub/src/dx/_endpoints/presence.dart';
 
 export 'extensions/keyset.dart';
 
-final logger = Logger('pubnub.dx.subscribe');
+final _log = Logger('pubnub.dx.subscribe');
 
 mixin SubscribeDx on Core {
   /// Subscribes to [channels] and [channelGroups]. Returns [Subscription].
@@ -55,11 +55,10 @@ mixin SubscribeDx on Core {
   }) {
     keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
 
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
+    Ensure(keyset).isNotNull('keyset');
 
     return defaultFlow<LeaveParams, LeaveResult>(
-        log: logger,
+        log: _log,
         core: this,
         params: LeaveParams(keyset,
             channels: channels, channelGroups: channelGroups),
@@ -75,11 +74,10 @@ mixin SubscribeDx on Core {
       int heartbeat}) {
     keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
 
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
+    Ensure(keyset).isNotNull('keyset');
 
     return defaultFlow<HeartbeatParams, HeartbeatResult>(
-        log: logger,
+        log: _log,
         core: this,
         params: HeartbeatParams(keyset,
             channels: channels,

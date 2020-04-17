@@ -12,8 +12,9 @@ class FetchMessageActionsParams extends Parameters {
   FetchMessageActionsParams(this.keyset, this.channel,
       {this.start, this.end, this.limit});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v1',
       'message-actions',
       keyset.subscribeKey,
@@ -21,16 +22,15 @@ class FetchMessageActionsParams extends Parameters {
       channel,
     ];
 
-    Map<String, String> queryParameters = {
+    var queryParameters = {
       if (start != null) 'start': '$start',
       if (end != null) 'end': '$end',
       if (limit != null) 'limit': limit.toString(),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -111,8 +111,9 @@ class AddMessageActionParams extends Parameters {
   AddMessageActionParams(
       this.keyset, this.channel, this.messageTimetoken, this.messageAction);
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v1',
       'message-actions',
       keyset.subscribeKey,
@@ -122,15 +123,13 @@ class AddMessageActionParams extends Parameters {
       '$messageTimetoken'
     ];
 
-    Map<String, String> queryParameters = {
+    var queryParameters = {
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
     };
 
-    return Request(
-        type: RequestType.post,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters),
-        body: messageAction);
+    return Request(RequestType.post, pathSegments,
+        queryParameters: queryParameters, body: messageAction);
   }
 }
 
@@ -164,8 +163,9 @@ class DeleteMessageActionParams extends Parameters {
   DeleteMessageActionParams(
       this.keyset, this.channel, this.messageTimetoken, this.actionTimetoken);
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v1',
       'message-actions',
       keyset.subscribeKey,
@@ -182,9 +182,8 @@ class DeleteMessageActionParams extends Parameters {
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
     };
 
-    return Request(
-        type: RequestType.delete,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.delete, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 

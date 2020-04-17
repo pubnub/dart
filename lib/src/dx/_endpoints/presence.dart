@@ -12,6 +12,7 @@ class HeartbeatParams extends Parameters {
   HeartbeatParams(this.keyset,
       {this.channels, this.channelGroups, this.heartbeat, this.state});
 
+  @override
   Request toRequest() {
     var pathSegments = [
       'v2',
@@ -19,7 +20,7 @@ class HeartbeatParams extends Parameters {
       'sub_key',
       keyset.subscribeKey,
       'channel',
-      channels.length > 0 ? channels.join(',') : ',',
+      channels.isNotEmpty ? channels.join(',') : ',',
       'heartbeat'
     ];
 
@@ -30,9 +31,8 @@ class HeartbeatParams extends Parameters {
       if (state != null) 'state': '$state'
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -52,6 +52,7 @@ class SetUserStateParams extends Parameters {
   SetUserStateParams(this.keyset, this.state,
       {this.channels, this.channelGroups});
 
+  @override
   Request toRequest() {
     var pathSegments = [
       'v2',
@@ -59,7 +60,7 @@ class SetUserStateParams extends Parameters {
       'sub-key',
       keyset.subscribeKey,
       'channel',
-      channels.length > 0 ? channels.join(',') : ',',
+      channels.isNotEmpty ? channels.join(',') : ',',
       'uuid',
       keyset.uuid.value,
       'data'
@@ -70,9 +71,8 @@ class SetUserStateParams extends Parameters {
       'state': '$state',
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -96,6 +96,7 @@ class GetUserStateParams extends Parameters {
 
   GetUserStateParams(this.keyset, {this.channels, this.channelGroups});
 
+  @override
   Request toRequest() {
     var pathSegments = [
       'v2',
@@ -103,7 +104,7 @@ class GetUserStateParams extends Parameters {
       'sub-key',
       keyset.subscribeKey,
       'channel',
-      channels.length > 0 ? channels.join(',') : ',',
+      channels.isNotEmpty ? channels.join(',') : ',',
       'uuid',
       keyset.uuid.value
     ];
@@ -112,9 +113,8 @@ class GetUserStateParams extends Parameters {
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -138,6 +138,7 @@ class LeaveParams extends Parameters {
 
   LeaveParams(this.keyset, {this.channels, this.channelGroups});
 
+  @override
   Request toRequest() {
     var pathSegments = [
       'v2',
@@ -145,7 +146,7 @@ class LeaveParams extends Parameters {
       'sub_key',
       keyset.subscribeKey,
       'channel',
-      channels.length > 0 ? channels.join(',') : ',',
+      channels.isNotEmpty ? channels.join(',') : ',',
       'leave'
     ];
 
@@ -155,9 +156,8 @@ class LeaveParams extends Parameters {
       if (keyset.uuid != null) 'uuid': '${keyset.uuid.value}',
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -189,6 +189,7 @@ class HereNowParams extends Parameters {
       this.channelGroups,
       this.stateInfo = StateInfo.onlyUUIDs});
 
+  @override
   Request toRequest() {
     var pathSegments = global == true
         ? ['v2', 'presence', 'sub_key', keyset.subscribeKey]
@@ -198,11 +199,11 @@ class HereNowParams extends Parameters {
             'sub_key',
             keyset.subscribeKey,
             'channel',
-            channels.length > 0 ? channels.join(',') : ','
+            channels.isNotEmpty ? channels.join(',') : ','
           ];
 
     var queryParameters = {
-      if (global != true && channelGroups != null && channelGroups.length > 0)
+      if (global != true && channelGroups != null && channelGroups.isNotEmpty)
         'channel-group': channelGroups.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
       if (keyset.uuid != null) 'uuid': '${keyset.uuid.value}',
@@ -211,9 +212,8 @@ class HereNowParams extends Parameters {
       if (stateInfo == StateInfo.all) 'state': '1'
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -281,6 +281,7 @@ class WhereNowParams extends Parameters {
 
   WhereNowParams(this.keyset, this.uuid);
 
+  @override
   Request toRequest() {
     var pathSegments = [
       'v2',
@@ -296,9 +297,8 @@ class WhereNowParams extends Parameters {
       if (keyset.authKey != null) 'auth': keyset.authKey
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 

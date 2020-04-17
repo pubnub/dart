@@ -5,7 +5,7 @@ import 'package:pubnub/src/dx/_utils/utils.dart';
 
 import 'package:pubnub/src/dx/_endpoints/signal.dart';
 
-final log = Logger('pubnub.dx.signal');
+final _log = Logger('pubnub.dx.signal');
 
 mixin SignalDx on Core {
   /// Publishes signal [message] to a [channel].
@@ -17,7 +17,7 @@ mixin SignalDx on Core {
     var params = SignalParams(keyset, channel, payload);
 
     return defaultFlow(
-        log: log,
+        log: _log,
         core: this,
         params: params,
         serialize: (object, [_]) => SignalResult.fromJson(object));

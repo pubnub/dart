@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:pubnub/src/default.dart';
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/pubnub.dart';
 import 'package:pubnub/src/dx/_endpoints/history.dart';
 
 import '../net/fake_net.dart';
@@ -18,9 +17,10 @@ void main() {
 
     test('.batch#fetchMessages correctly fetches messages', () async {
       when(
-          path: 'v3/history/sub-key/test/channel/test-1,test-2?max=10',
-          method: 'GET',
-          then: FakeResult(_batchFetchMessagesSuccessResponse));
+        path:
+            'v3/history/sub-key/test/channel/test-1,test-2?max=10&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: _batchFetchMessagesSuccessResponse);
 
       var result =
           await pubnub.batch.fetchMessages({'test-1', 'test-2'}, count: 10);
@@ -36,10 +36,10 @@ void main() {
     test('.batch#countMessages correctly fetches counts when passed in Set',
         () async {
       when(
-          method: 'GET',
-          path:
-              'v3/history/sub-key/test/message-counts/test-1,test-2?timetoken=100',
-          then: FakeResult(_batchCountMessagesSuccessResponse));
+        method: 'GET',
+        path:
+            'v3/history/sub-key/test/message-counts/test-1,test-2?timetoken=100&pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: _batchCountMessagesSuccessResponse);
 
       var result = await pubnub.batch
           .countMessages({'test-1', 'test-2'}, timetoken: Timetoken(100));

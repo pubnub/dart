@@ -15,7 +15,8 @@ class CallbackContext<State, Context> {
       this.edge, this.context, this.machine, this.update);
 }
 
-typedef void Callback<State, Context>(CallbackContext<State, Context> ctx);
+typedef Callback<State, Context> = void Function(
+    CallbackContext<State, Context> ctx);
 
 class CallbackEffect<State, Context> extends Effect<State, Context> {
   covariant Callback<State, Context> callback;

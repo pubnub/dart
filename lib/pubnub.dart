@@ -14,9 +14,12 @@ export './src/dx/channel/channel_group.dart' show ChannelGroup;
 export './src/dx/_endpoints/publish.dart' show PublishResult;
 export './src/dx/_endpoints/presence.dart' show HeartbeatResult, LeaveResult;
 export './src/dx/_endpoints/signal.dart' show SignalResult;
-export './src/dx/subscribe/subscription.dart' show Subscription;
 
+export './src/dx/subscribe/subscription.dart' show Subscription;
 export './src/dx/channel/channel_history.dart'
     show PaginatedChannelHistory, ChannelHistory;
+
+export './src/dx/pam/pam.dart'
+    show Resource, ResourceType, ResourceTypeExtension, TokenRequest, Token;
 
 export './src/default.dart';

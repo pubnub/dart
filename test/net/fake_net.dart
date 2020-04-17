@@ -1,75 +1,136 @@
 import 'dart:async';
 
+import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/core/net/net.dart';
 import 'package:pubnub/src/net/exceptions.dart';
+
+class MockException extends PubNubException {
+  MockException(String message) : super(message);
+}
 
 class FakeRequestHandler extends RequestHandler {
   Request request;
 
-  Completer<FakeResult> _contents = Completer();
+  final Completer<MockResponse> _contents = Completer();
 
-  FakeRequestHandler(this.request, Map<String, dynamic> result) {
-    Future.delayed(Duration(milliseconds: 100), () {
-      if (result['method'] == request.type.method &&
-          ((request.body == null && result['body'] == null) ||
-              request.body == result['body']) &&
-          request.uri.toString() == result['path']) {
-        if (result['exception'] != null) {
-          _contents.completeError(result['exception']);
+  FakeRequestHandler(this.request, Mock mock) {
+    var uri = Uri(
+        pathSegments: request.pathSegments,
+        queryParameters: request.queryParameters);
+
+    var doesMethodMatch =
+        mock.request.method.toUpperCase() == request.type.method.toUpperCase();
+
+    var doesBodyMatch = mock.request.body == request.body;
+
+    var doesUriMatch = mock.request.path == uri.toString();
+
+    Future.microtask(() {
+      if (doesMethodMatch && doesBodyMatch && doesUriMatch) {
+        if (mock.response.status != 200) {
+          _contents
+              .completeError(PubNubRequestFailureException(mock.response.body));
         } else {
-          _contents.complete(result['result']);
+          _contents.complete(mock.response);
         }
       } else {
-        print('''
-Expected - actual
-${result['method']} - ${request.type.method}
-${result['path']} - ${request.uri}
-${result['body']} - ${request.body}
-''');
-        _contents.completeError(PubNubRequestOtherException(result));
+        var exceptionBody = '';
+        if (!doesMethodMatch) {
+          exceptionBody +=
+              '\n* method:\n| EXPECTED: ${mock.request.method.toUpperCase()}\n| ACTUAL: ${request.type.method.toUpperCase()}';
+        }
+        if (!doesUriMatch) {
+          exceptionBody +=
+              '\n* uri:\n| EXPECTED: ${mock.request.path}\n| ACTUAL: ${uri.toString()}';
+        }
+        if (!doesBodyMatch) {
+          exceptionBody +=
+              '\n* body:\n| EXPECTED:\n${mock.request.body}\n| ACTUAL:\n${request.body}';
+        }
+
+        _contents.completeError(MockException(
+            'mock request does not match the expected request$exceptionBody'));
       }
     });
   }
 
+  @override
   Future<String> text() async {
-    return (await _contents.future).response;
+    return (await _contents.future).body;
   }
 
+  @override
   Future<Map<String, List<String>>> headers() async {
     return (await _contents.future).headers;
   }
 
+  @override
   void cancel([dynamic reason]) {}
 }
 
-List<Map<String, dynamic>> _queue = [];
+class MockRequest {
+  final String method;
+  final String path;
+  final String body;
+  final Map<String, List<String>> headers;
 
-class FakeResult {
-  String response;
-  Map<String, List<String>> headers = {};
-
-  FakeResult(this.response, [this.headers]);
+  const MockRequest(this.method, this.path,
+      [this.headers = const {}, this.body]);
 }
 
-void when(
+class MockResponse {
+  final int status;
+  final String body;
+  final Map<String, List<String>> headers;
+
+  const MockResponse(this.status, [this.headers = const {}, this.body]);
+}
+
+class Mock {
+  final MockRequest request;
+  final MockResponse response;
+
+  Mock(this.request, this.response);
+}
+
+class MockBuilder {
+  final List<Mock> _queue;
+  final MockRequest _request;
+
+  MockBuilder(this._queue, this._request);
+
+  void then(
+      {int status,
+      Map<String, List<String>> headers,
+      String body,
+      MockResponse response}) {
+    var mock = Mock(_request, response ?? MockResponse(status, headers, body));
+
+    _queue.add(mock);
+  }
+}
+
+List<Mock> _queue = [];
+
+MockBuilder when(
     {String method,
     String path,
+    Map<String, List<String>> headers,
     String body,
-    FakeResult then,
-    Exception throws}) {
-  _queue.add({
-    'method': method,
-    'path': path,
-    'body': body,
-    'result': then,
-    'exception': throws
-  });
+    MockRequest request}) {
+  return MockBuilder(
+      _queue, request ?? MockRequest(method, path, headers, body));
 }
 
 class FakeNetworkingModule implements NetworkingModule {
+  FakeNetworkingModule() {
+    _queue.clear();
+  }
+
+  @override
   Future<RequestHandler> handle(Request request) async {
-    if (_queue.length == 0) {
-      throw Exception('Please set up the fake response first.');
+    if (_queue.isEmpty) {
+      throw MockException('set up the mock first');
     }
 
     return FakeRequestHandler(request, _queue.removeAt(0));

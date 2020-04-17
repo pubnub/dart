@@ -3,10 +3,12 @@ import '../effect.dart';
 import '../blueprint.dart';
 import '../state_machine.dart';
 
-typedef void MachineCallback<S, C, SS, SC>(
+typedef MachineCallback<S, C, SS, SC> = void Function(
     StateMachine<S, C> machine, StateMachine<SS, SC> submachine);
-typedef void MachineCallbackWithCtx<S, C, SS, SC>(CallbackContext<SS, SC> ctx,
-    StateMachine<S, C> machine, StateMachine<SS, SC> submachine);
+typedef MachineCallbackWithCtx<S, C, SS, SC> = void Function(
+    CallbackContext<SS, SC> ctx,
+    StateMachine<S, C> machine,
+    StateMachine<SS, SC> submachine);
 
 class MachineEffect<State, Context, SubState, SubContext>
     extends Effect<State, Context> {
@@ -18,7 +20,7 @@ class MachineEffect<State, Context, SubState, SubContext>
   MachineCallback<State, Context, SubState, SubContext> onBuild;
 
   MachineEffect(this.name, this.blueprint,
-      {this.onExit, this.onEnter, this.onBuild}) {}
+      {this.onExit, this.onEnter, this.onBuild});
 
   @override
   void execute(

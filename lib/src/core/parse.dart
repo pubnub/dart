@@ -1,9 +1,7 @@
 import 'exceptions.dart';
 
 class ParserException extends PubNubException {
-  String message;
-
-  ParserException([this.message]);
+  ParserException([String message]) : super(message);
 }
 
 abstract class ParserModule {

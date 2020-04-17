@@ -1,3 +1,18 @@
+## [v1.0.1](https://github.com/pubnub/dart/releases/tag/v1.0.1)
+April 18 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.0.0...v1.0.1)
+
+- ⭐️️ Refactor PAM, hide logger instances and clean up tests. 
+- ⭐️️ Add `package:pedantic` config to analysis, fix lint issues. 
+- ⭐️️ Removes dummy changelog entry. 
+- ⭐️️ Add simple example. 
+- ⭐️️ Improve package description. 
+- ⭐️️ Clean up test prefixes. 
+- 🐛 Ensure()isEqual now uses correct template. 
+- 🐛 Add PAM to library exports. 
+- 🐛 Consistently use PubNubversion in tests. 
+
 ## [v1.0.0](https://github.com/pubnub/dart/releases/tag/v1.0.0)
 April 15 2020
 
@@ -9,7 +24,3 @@ April 15 2020
 - 🌟️ Add ability to manage device registration for Push Notification Service. 
 - 🌟️ Add ability to add, delete and retrieve message actions. 
 - 🌟️ Add channel and channel group abstractions to allow using History. 
-
-## [0.0.1] - TODO: Add release date.
-
-* TODO: Describe initial release.

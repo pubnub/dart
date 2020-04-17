@@ -8,23 +8,25 @@ class SignalParams extends Parameters {
 
   SignalParams(this.keyset, this.channel, this.payload);
 
+  @override
   Request toRequest() {
-    Map<String, String> queryParameters = {
+    var pathSegments = [
+      'signal',
+      keyset.publishKey,
+      keyset.subscribeKey,
+      '0',
+      channel,
+      '0',
+      payload
+    ];
+
+    var queryParameters = {
       if (keyset.authKey != null) 'auth': keyset.authKey,
       if (keyset.uuid != null) 'uuid': keyset.uuid.value,
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: [
-          'signal',
-          keyset.publishKey,
-          keyset.subscribeKey,
-          '0',
-          channel,
-          '0',
-          payload
-        ], queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 

@@ -4,17 +4,17 @@ import 'envelope.dart';
 import 'extensions/keyset.dart';
 
 class Subscription {
+  final Keyset _keyset;
+  Stream<Envelope> _stream;
+
   /// List of channels that this subscription represents.
   Set<String> channels;
 
   /// List of channel groups that this subscription represents.
   Set<String> channelGroups;
-  Keyset _keyset;
 
   /// Indicates if presence is turned on for this subscription.
   final bool withPresence;
-
-  Stream<Envelope> _stream;
 
   /// A broadcast stream of presence events. Will only emit when [withPresence]
   /// is true.
@@ -39,10 +39,7 @@ class Subscription {
 
   Subscription(this.channels, this.channelGroups, this._keyset,
       {this.withPresence}) {
-    _stream = this
-        ._keyset
-        .subscriptionManager
-        .messages
+    _stream = _keyset.subscriptionManager.messages
         .where((envelope) =>
             channels.contains(envelope['c']) ||
             channelGroups.contains(envelope['b']) ||

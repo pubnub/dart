@@ -22,13 +22,13 @@ extension PushGatewayExtension on PushGateway {
   String value() {
     switch (this) {
       case PushGateway.gcm:
-        return "gcm";
+        return 'gcm';
       case PushGateway.apns:
-        return "apns";
+        return 'apns';
       case PushGateway.mpns:
-        return "apns";
+        return 'apns';
       case PushGateway.apns2:
-        return "apns2";
+        return 'apns2';
       default:
         throw Exception('Invalid Gateway Type');
     }
@@ -46,8 +46,9 @@ class ListPushChannelsParams extends Parameters {
   ListPushChannelsParams(this.keyset, this.deviceId, this.pushGateway,
       {this.topic, this.environment});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v2',
       'push',
       'sub-key',
@@ -56,7 +57,7 @@ class ListPushChannelsParams extends Parameters {
       deviceId,
     ];
 
-    Map<String, String> queryParameters = {
+    var queryParameters = {
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}',
       'type': pushGateway.value()
@@ -67,9 +68,8 @@ class ListPushChannelsParams extends Parameters {
       queryParameters['topic'] = topic;
       queryParameters.remove('type');
     }
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -99,8 +99,9 @@ class AddPushChannelsParams extends Parameters {
       this.keyset, this.deviceId, this.pushGateway, this.channels,
       {this.topic, this.environment});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v2',
       'push',
       'sub-key',
@@ -108,8 +109,8 @@ class AddPushChannelsParams extends Parameters {
       pushGateway == PushGateway.apns2 ? 'device-apns2' : 'devices',
       deviceId,
     ];
-    Map<String, String> queryParameters = {
-      if (channels.length > 0) 'add': channels.join(','),
+    var queryParameters = {
+      if (channels.isNotEmpty) 'add': channels.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}',
       'type': pushGateway.value()
@@ -120,9 +121,8 @@ class AddPushChannelsParams extends Parameters {
       queryParameters['topic'] = topic;
       queryParameters.remove('type');
     }
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -153,8 +153,9 @@ class RemovePushChannelsParams extends Parameters {
       this.keyset, this.deviceId, this.pushGateway, this.channels,
       {this.topic, this.environment});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v2',
       'push',
       'sub-key',
@@ -162,8 +163,8 @@ class RemovePushChannelsParams extends Parameters {
       pushGateway == PushGateway.apns2 ? 'device-apns2' : 'devices',
       deviceId,
     ];
-    Map<String, String> queryParameters = {
-      if (channels.length > 0) 'remove': channels.join(','),
+    var queryParameters = {
+      if (channels.isNotEmpty) 'remove': channels.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}',
       'type': pushGateway.value()
@@ -174,9 +175,8 @@ class RemovePushChannelsParams extends Parameters {
       queryParameters['topic'] = topic;
       queryParameters.remove('type');
     }
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -206,8 +206,9 @@ class RemoveDeviceParams extends Parameters {
   RemoveDeviceParams(this.keyset, this.deviceId, this.pushGateway,
       {this.topic, this.environment});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'v2',
       'push',
       'sub-key',
@@ -217,7 +218,7 @@ class RemoveDeviceParams extends Parameters {
       'remove'
     ];
 
-    Map<String, String> queryParameters = {
+    var queryParameters = {
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}',
       'type': pushGateway.value()
@@ -228,9 +229,8 @@ class RemoveDeviceParams extends Parameters {
       queryParameters['topic'] = topic;
       queryParameters.remove('type');
     }
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 

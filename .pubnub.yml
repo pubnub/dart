@@ -3,6 +3,25 @@ changelog:
   -
     changes:
       -
+        text: "Refactor PAM, hide logger instances and clean up tests."
+        type: improvement
+      -
+        text: "Add `package:pedantic` config to analysis, fix lint issues."
+        type: improvement
+      -
+        text: "Ensure()isEqual now uses correct template."
+        type: bug
+      -
+        text: "Add PAM to library exports."
+        type: bug
+      -
+        text: "Consistently use PubNubversion in tests."
+        type: bug
+    date: Apr 18, 20
+    version: v1.0.1
+  -
+    changes:
+      -
         text: "Add ability to fetch current PubNub timetoken."
         type: feature
       -
@@ -105,13 +124,6 @@ features:
     - MESSAGE-ACTIONS-REMOVE
   time:
     - TIME-TIME
-  token-management:
-    - TOKEN-PARSE-TOKEN
-    - TOKEN-SET-TOKEN
-    - TOKEN-SET-TOKENS
-    - TOKEN-GET-TOKEN
-    - TOKEN-GET-TOKENS
-    - TOKEN-CLEAR-TOKENS
 name: dart
 schema: 1
 scm: github.com/pubnub/dart
@@ -121,4 +133,4 @@ supported-platforms:
       - "Flutter"
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
-version: "1.0.0"
+version: "1.0.1"

@@ -7,6 +7,7 @@ class ChannelGroupListChannelsParams extends Parameters {
 
   ChannelGroupListChannelsParams(this.keyset, this.name);
 
+  @override
   Request toRequest() {
     var pathSegments = [
       'v1',
@@ -19,9 +20,8 @@ class ChannelGroupListChannelsParams extends Parameters {
 
     var queryParameters = {'auth': keyset.authKey, 'uuid': keyset.uuid.value};
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -47,6 +47,7 @@ class ChannelGroupChangeChannelsParams extends Parameters {
   ChannelGroupChangeChannelsParams(this.keyset, this.name,
       {this.add, this.remove});
 
+  @override
   Request toRequest() {
     var pathSegments = [
       'v1',
@@ -64,9 +65,8 @@ class ChannelGroupChangeChannelsParams extends Parameters {
       if (remove != null) 'remove': remove.join(',')
     };
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 
@@ -80,6 +80,7 @@ class ChannelGroupDeleteParams extends Parameters {
 
   ChannelGroupDeleteParams(this.keyset, this.name);
 
+  @override
   Request toRequest() {
     var pathSegments = [
       'v1',
@@ -93,9 +94,8 @@ class ChannelGroupDeleteParams extends Parameters {
 
     var queryParameters = {'auth': keyset.authKey, 'uuid': keyset.uuid.value};
 
-    return Request(
-        type: RequestType.get,
-        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    return Request(RequestType.get, pathSegments,
+        queryParameters: queryParameters);
   }
 }
 

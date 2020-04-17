@@ -10,11 +10,12 @@ class SubscriptionManager {
   Core core;
   Keyset keyset;
 
-  StreamController<dynamic> _messagesController = StreamController.broadcast();
+  final StreamController<dynamic> _messagesController =
+      StreamController.broadcast();
   Stream<dynamic> get messages => _messagesController.stream;
 
-  Blueprint<Symbol, Map<Symbol, dynamic>> _RequestMachine;
-  Blueprint<Symbol, Map<Symbol, dynamic>> _SubscriptionMachine;
+  final Blueprint<Symbol, Map<Symbol, dynamic>> _RequestMachine;
+  final Blueprint<Symbol, Map<Symbol, dynamic>> _SubscriptionMachine;
 
   StateMachine<Symbol, Map<Symbol, dynamic>> _machine;
 
@@ -100,8 +101,8 @@ class SubscriptionManager {
     _machine = _SubscriptionMachine.build();
 
     _machine.enter(#state.idle, {
-      #channels: Set<String>(),
-      #channelGroups: Set<String>(),
+      #channels: <String>{},
+      #channelGroups: <String>{},
       #timetoken: Timetoken(0),
       #region: null,
     });

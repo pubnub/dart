@@ -6,10 +6,10 @@ import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/objects/membership.dart';
 import 'schema.dart';
 
-final log = Logger('pubnub.dx.objects.membership');
+final _log = Logger('pubnub.dx.objects.membership');
 
 class MembershipDx {
-  Core _core;
+  final Core _core;
   MembershipDx(this._core);
 
   /// Returns the specified user's space memberships,
@@ -44,12 +44,10 @@ class MembershipDx {
       Set<String> sort,
       Keyset keyset,
       String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
 
-    Ensure(userId).isNotEmpty(
-        "userId can not be empty. Provide userId to get user's list of space memberships");
+    Ensure(userId).isNotEmpty('userId');
 
     var params = GetMembershipsParams(keyset, userId,
         include: include,
@@ -61,8 +59,8 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<GetMembershipsParams, MembershipsResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
   }
@@ -111,28 +109,26 @@ class MembershipDx {
       Set<String> sort,
       Keyset keyset,
       String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
 
-    Ensure(userId).isNotEmpty(
-        "userId can not be empty. Provide userId to manage user's memberships");
+    Ensure(userId).isNotEmpty('userId');
 
-    var updates = Map<String, dynamic>();
-    if (add != null && add.length > 0) {
-      List<IdInfo> addIds = [];
+    var updates = <String, dynamic>{};
+    if (add != null && add.isNotEmpty) {
+      var addIds = <IdInfo>[];
       add.forEach((id) => addIds.add(IdInfo(id)));
       updates['add'] = addIds;
     }
-    if (update != null && update.length > 0) {
+    if (update != null && update.isNotEmpty) {
       updates['update'] = update;
     }
-    if (remove != null && remove.length > 0) {
-      List<IdInfo> removeIds = [];
+    if (remove != null && remove.isNotEmpty) {
+      var removeIds = <IdInfo>[];
       remove.forEach((id) => removeIds.add(IdInfo(id)));
       updates['remove'] = removeIds;
     }
-    var membershipChanges = await this._core.parser.encode(updates);
+    var membershipChanges = await _core.parser.encode(updates);
     var params = ManageMembershipsParams(keyset, userId, membershipChanges,
         include: include,
         limit: limit,
@@ -143,8 +139,8 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
   }
@@ -187,20 +183,18 @@ class MembershipDx {
       Set<String> sort,
       Keyset keyset,
       String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
 
-    Ensure(userId).isNotEmpty(
-        "userId can not be empty. Provide userId to manage user's memberships");
+    Ensure(userId).isNotEmpty('userId');
 
-    var updates = Map<String, dynamic>();
-    if (spaceIds.length > 0) {
-      List<IdInfo> addIds = [];
+    var updates = <String, dynamic>{};
+    if (spaceIds.isNotEmpty) {
+      var addIds = [];
       spaceIds.forEach((id) => addIds.add(IdInfo(id)));
       updates['add'] = addIds;
     }
-    var membershipChanges = await this._core.parser.encode(updates);
+    var membershipChanges = await _core.parser.encode(updates);
     var params = ManageMembershipsParams(keyset, userId, membershipChanges,
         include: include,
         limit: limit,
@@ -211,8 +205,8 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
   }
@@ -258,20 +252,18 @@ class MembershipDx {
       Set<String> sort,
       Keyset keyset,
       String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
 
-    Ensure(userId).isNotEmpty(
-        "userId can not be empty. Provide userId to manage user's memberships");
+    Ensure(userId).isNotEmpty('userId');
 
-    var updates = Map<String, dynamic>();
-    if (spaceIds.length > 0) {
-      List<IdInfo> removeIds = [];
+    var updates = <String, dynamic>{};
+    if (spaceIds.isNotEmpty) {
+      var removeIds = <IdInfo>[];
       spaceIds.forEach((id) => removeIds.add(IdInfo(id)));
       updates['remove'] = removeIds;
     }
-    var membershipChanges = await this._core.parser.encode(updates);
+    var membershipChanges = await _core.parser.encode(updates);
     var params = ManageMembershipsParams(keyset, userId, membershipChanges,
         include: include,
         limit: limit,
@@ -282,8 +274,8 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
   }
@@ -330,18 +322,16 @@ class MembershipDx {
       Set<String> sort,
       Keyset keyset,
       String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
 
-    Ensure(userId).isNotEmpty(
-        "userId can not be empty. Provide userId to manage user's memberships");
+    Ensure(userId).isNotEmpty('userId');
 
-    var updates = Map<String, dynamic>();
-    if (update.length > 0) {
+    var updates = <String, dynamic>{};
+    if (update.isNotEmpty) {
       updates['update'] = update;
     }
-    var membershipChanges = await this._core.parser.encode(updates);
+    var membershipChanges = await _core.parser.encode(updates);
     var params = ManageMembershipsParams(keyset, userId, membershipChanges,
         include: include,
         limit: limit,
@@ -352,8 +342,8 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
   }
@@ -391,12 +381,10 @@ class MembershipDx {
       Set<String> sort,
       Keyset keyset,
       String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
 
-    Ensure(spaceId).isNotEmpty(
-        "spaceId can not be empty. Provide spaceId to get members of the space");
+    Ensure(spaceId).isNotEmpty('spaceId');
     var params = GetSpaceMembersParams(keyset, spaceId,
         include: include,
         limit: limit,
@@ -407,8 +395,8 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<GetSpaceMembersParams, SpaceMembersResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => SpaceMembersResult.fromJson(object));
   }
@@ -456,29 +444,27 @@ class MembershipDx {
       Set<String> sort,
       Keyset keyset,
       String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
 
-    Ensure(spaceId).isNotEmpty(
-        "spaceId can not be empty. Provide spaceId to manage members of the space");
+    Ensure(spaceId).isNotEmpty('spaceId');
 
-    var updates = Map<String, dynamic>();
-    if (add != null && add.length > 0) {
-      List<IdInfo> addIds = [];
+    var updates = <String, dynamic>{};
+    if (add != null && add.isNotEmpty) {
+      var addIds = <IdInfo>[];
       add.forEach((id) => addIds.add(IdInfo(id)));
       updates['add'] = addIds;
     }
-    if (update != null && update.length > 0) {
+    if (update != null && update.isNotEmpty) {
       updates['update'] = update;
     }
-    if (remove != null && remove.length > 0) {
-      List<IdInfo> removeIds = [];
+    if (remove != null && remove.isNotEmpty) {
+      var removeIds = <IdInfo>[];
       remove.forEach((id) => removeIds.add(IdInfo(id)));
       updates['remove'] = removeIds;
     }
 
-    var spaceMembersChanges = await this._core.parser.encode(updates);
+    var spaceMembersChanges = await _core.parser.encode(updates);
     var params = ManageSpaceMembersParams(keyset, spaceId, spaceMembersChanges,
         include: include,
         limit: limit,
@@ -489,8 +475,8 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<ManageSpaceMembersParams, SpaceMembersResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => SpaceMembersResult.fromJson(object));
   }

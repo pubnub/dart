@@ -1,6 +1,9 @@
 part of '../pam_test.dart';
 
-final _grantSuccessResponse = '''
+final _grantRequest = MockRequest('GET',
+    'v2/auth/grant/sub-key/test?auth=authKey&channel=my_channel&ttl=1440&timestamp=1234567890&m=0&r=1&w=0&pnsdk=PubNub-Dart%2F${PubNub.version}&signature=7IQCgpg73TUef0vywNJLvK27qrYKxKgvWUueR_Kej9U%3D');
+
+final _grantSuccessResponse = MockResponse(200, {}, '''
 {
     "status": 200,
     "message": "Success",
@@ -20,38 +23,24 @@ final _grantSuccessResponse = '''
     },
     "service": "Access Manager"
 }
-''';
+''');
 
-final _grantTokenBody =
-    '{"ttl":1440,"resources":{"channels":{"inbox-jay":3},"groups":{},"users":{},"spaces":{}},"patterns":{"channels":{},"groups":{},"users":{},"spaces":{}},"meta":{"user-id":"jay@example.com","contains-unicode":"The 來 test."}}';
+final _grantTokenRequest = MockRequest(
+    'POST',
+    'v3/pam/test/grant?timestamp=1234567890&pnsdk=PubNub-Dart%2F${PubNub.version}&signature=v2.FL8sKKLo_xIlZnTV47foJdbUYUIWCtvYP4IqJzKVnKU',
+    {},
+    '{"ttl":1440,"permissions":{"resources":{"channels":{"inbox-jay":3},"groups":{},"users":{},"spaces":{}},"patterns":{"channels":{},"groups":{},"users":{},"spaces":{}},"meta":{"user-id":"jay@example.com","contains-unicode":"The 來 test."}}}');
 
-final _grantTokenSuccessResponse = '''
-{
-    "ttl": 1440,
-    "permissions": {
-        "resources" : {
-            "channels": {
-                "inbox-jay": 3
-            },
-            "groups": {},
-            "users": {},
-            "spaces": {}
-        },
-        "patterns" : {
-            "channels": {},
-            "groups": {},
-            "users": {},
-            "spaces": {}
-        },
-        "meta": {
-            "user-id": "jay@example.com",
-            "contains-unicode": "The 來 test."
-        }
-    }
-}
-''';
+final _grantTokenSuccessResponse = MockResponse(200, {}, '''{
+  "status": 200,
+  "data": {
+    "message": "Success",
+    "token": "p0F2AkF0Gl6ZkldDdHRsGQWgQ3Jlc6REY2hhbqFpaW5ib3gtamF5A0NncnCgQ3VzcqBDc3BjoENwYXSkRGNoYW6gQ2dycKBDdXNyoENzcGOgRG1ldGGiZ3VzZXItaWRvamF5QGV4YW1wbGUuY29tcGNvbnRhaW5zLXVuaWNvZGVtVGhlIOS-hiB0ZXN0LkNzaWdYID3ahuVZSAmm-P4eR2KPay9KqahygKQbB9Uldx0LW2em"
+  },
+  "service": "Access Manager"
+}''');
 
-final _grantTokenErrorResponse = '''
+final _grantTokenFailureResponse = MockResponse(400, {}, '''
 {
     "status": 400,
     "error": {
@@ -66,26 +55,4 @@ final _grantTokenErrorResponse = '''
         ]
     },
     "service": "Access Manager"
-}''';
-
-final _tokenWithUserandSpaceInfo =
-    'p0F2AkF0Gl2BgxZDdHRsGQWgQ3Jlc6REY2hhbqBDZ3JwoEN1c3KhZXVzZXIxAUNzcGOhZnNwYWNlMQFDcGF0pERjaGFuoENncnCgQ3VzcqFiLioBQ3NwY6FiLioBRG1ldGGgQ3NpZ1ggG1j7rl-TpxtWYDIcPFvR-cqFGXVWvm8r5YBaCLhy5-Y=';
-
-final _multipleTokensSet = <String>{
-  'p0F2AkF0Gl2Bd7BDdHRsGQWgQ3Jlc6REY2hhbqBDZ3JwoEN1c3KhZXVzZXIxAUNzcGOgQ3BhdKREY2hhbqBDZ3JwoEN1c3KgQ3NwY6BEbWV0YaBDc2lnWCABo0jeW03hedEyKmtzJBZZijmt5J7GYJ3X_7VuKbYu7Q==',
-  'p0F2AkF0Gl2Bd_VDdHRsGQWgQ3Jlc6REY2hhbqBDZ3JwoEN1c3KgQ3NwY6Fmc3BhY2UxAUNwYXSkRGNoYW6gQ2dycKBDdXNyoENzcGOgRG1ldGGgQ3NpZ1gg6CscU5C58NHVuuQnW8oFkf8BAZ4VbdCuuWtwZRS6lnY='
-};
-
-final _userPermissionToken =
-    'p0F2AkF0Gl2Bd7BDdHRsGQWgQ3Jlc6REY2hhbqBDZ3JwoEN1c3KhZXVzZXIxAUNzcGOgQ3BhdKREY2hhbqBDZ3JwoEN1c3KgQ3NwY6BEbWV0YaBDc2lnWCABo0jeW03hedEyKmtzJBZZijmt5J7GYJ3X_7VuKbYu7Q==';
-
-final _userInfoNewToken =
-    'p0F2AkF0Gl2BgxZDdHRsGQWgQ3Jlc6REY2hhbqBDZ3JwoEN1c3KhZXVzZXIxAUNzcGOhZnNwYWNlMQFDcGF0pERjaGFuoENncnCgQ3VzcqFiLioBQ3NwY6FiLioBRG1ldGGgQ3NpZ1ggG1j7rl-TpxtWYDIcPFvR-cqFGXVWvm8r5YBaCLhy5-Y=';
-
-final _multipleUsersTokensSet = <String>{
-  'p0F2AkF0Gl2Bd7BDdHRsGQWgQ3Jlc6REY2hhbqBDZ3JwoEN1c3KhZXVzZXIxAUNzcGOgQ3BhdKREY2hhbqBDZ3JwoEN1c3KgQ3NwY6BEbWV0YaBDc2lnWCABo0jeW03hedEyKmtzJBZZijmt5J7GYJ3X_7VuKbYu7Q==',
-  'p0F2AkF0Gl2BeUVDdHRsGQWgQ3Jlc6REY2hhbqBDZ3JwoEN1c3KhZXVzZXIyAUNzcGOgQ3BhdKREY2hhbqBDZ3JwoEN1c3KgQ3NwY6BEbWV0YaBDc2lnWCBJvm-ZwNdKLcS8vaoq2SAcvZ0HOI2OY6G6nGC-xKuzIg=='
-};
-
-final _tokenWithMultipleResourceTypes =
-    'p0F2AkF0Gl2Be_hDdHRsGQWgQ3Jlc6REY2hhbqBDZ3JwoEN1c3KgQ3NwY6BDcGF0pERjaGFuoENncnCgQ3VzcqFiLioBQ3NwY6FiLioBRG1ldGGgQ3NpZ1ggF985UuGyc1TXUaEK3pPBNaPc642ynEFHB4hNDUJ3dBs=';
+}''');

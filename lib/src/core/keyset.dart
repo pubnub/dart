@@ -4,12 +4,11 @@ import 'exceptions.dart';
 import 'uuid.dart';
 
 class KeysetException extends PubNubException {
-  String message;
-  KeysetException(this.message);
+  KeysetException(String message) : super(message);
 }
 
 class KeysetStore {
-  Map<String, Keyset> _store = {};
+  final Map<String, Keyset> _store = {};
   String _defaultName;
 
   /// Adds a [keyset] named [name] to the store.
@@ -98,6 +97,9 @@ class Keyset {
   /// Publish key.
   final String publishKey;
 
+  /// Secret key used for administrative tasks.
+  final String secretKey;
+
   /// If PAM is enabled, authentication key is required to access channels.
   final String authKey;
 
@@ -110,6 +112,7 @@ class Keyset {
   Keyset(
       {@required this.subscribeKey,
       this.publishKey,
+      this.secretKey,
       this.authKey,
-      @required this.uuid});
+      this.uuid});
 }

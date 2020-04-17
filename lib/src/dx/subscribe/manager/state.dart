@@ -9,13 +9,13 @@ class StateChange<KeyType, ValueType> {
   Map<KeyType, ValueType> after;
 }
 
-typedef Map<KeyType, ValueType> StateUpdateFunction<KeyType, ValueType>(
-    Map<KeyType, ValueType> state);
+typedef StateUpdateFunction<KeyType, ValueType> = Map<KeyType, ValueType>
+    Function(Map<KeyType, ValueType> state);
 
 class State<KeyType, ValueType> {
   Map<KeyType, ValueType> _state;
 
-  StreamController<StateChange<KeyType, ValueType>> _changes =
+  final StreamController<StateChange<KeyType, ValueType>> _changes =
       StreamController.broadcast();
   Stream<StateChange<KeyType, ValueType>> get changes => _changes.stream;
 
@@ -43,5 +43,6 @@ class State<KeyType, ValueType> {
 
   ValueType get(KeyType key) => _state[key];
 
+  @override
   String toString() => '$_state';
 }

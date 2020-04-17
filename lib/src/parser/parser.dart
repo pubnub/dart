@@ -3,6 +3,7 @@ import 'dart:convert';
 import '../core/parse.dart';
 
 class PubNubParserModule implements ParserModule {
+  @override
   Future<dynamic> decode(String input) async {
     try {
       return json.decode(input);
@@ -11,6 +12,7 @@ class PubNubParserModule implements ParserModule {
     }
   }
 
+  @override
   Future<String> encode(dynamic input) async {
     try {
       return json.encode(input);

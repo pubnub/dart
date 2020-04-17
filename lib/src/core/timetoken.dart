@@ -13,9 +13,9 @@ class Timetoken implements Result {
   @override
   bool operator ==(dynamic other) {
     if (other is Timetoken) {
-      return this.value == other.value;
+      return value == other.value;
     } else {
-      return this.value == other;
+      return value == other;
     }
   }
 
@@ -23,7 +23,7 @@ class Timetoken implements Result {
   ///
   /// Beware, as it drops the granurality to microseconds.
   DateTime toDateTime() {
-    return DateTime.fromMicrosecondsSinceEpoch((this.value / 10).round());
+    return DateTime.fromMicrosecondsSinceEpoch((value / 10).round());
   }
 
   /// Creates a Timetoken from [DateTime].

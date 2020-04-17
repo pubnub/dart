@@ -9,10 +9,10 @@ import 'package:pubnub/src/dx/objects/schema.dart';
 
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
-final log = Logger('pubnub.dx.objects.user');
+final _log = Logger('pubnub.dx.objects.user');
 
 class UserDx {
-  Core _core;
+  final Core _core;
   UserDx(this._core);
 
   /// Creates a user with specified deatils [UserDetails]
@@ -24,16 +24,15 @@ class UserDx {
   /// Returns 409 if a user already exists with the specified ID.
   Future<CreateUserResult> create(UserDetails user,
       {List<String> include, Keyset keyset, String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(user).isNotNull("User information can not be null");
-    var payload = await this._core.parser.encode(user);
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(user).isNotNull('user details');
+    var payload = await _core.parser.encode(user);
     var params = CreateUserParams(payload, keyset, include: include);
 
     return defaultFlow<CreateUserParams, CreateUserResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => CreateUserResult.fromJson(object));
   }
@@ -66,9 +65,8 @@ class UserDx {
       List<String> sort,
       Keyset keyset,
       String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
 
     var params = GetAllUsersParams(keyset,
         include: include,
@@ -80,8 +78,8 @@ class UserDx {
         sort: sort);
 
     return defaultFlow<GetAllUsersParams, GetAllUsersResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => GetAllUsersResult.fromJson(object));
   }
@@ -90,15 +88,13 @@ class UserDx {
   /// [userId] is unique user identifier to fetch the user object
   Future<GetUserResult> getUser(String userId,
       {Keyset keyset, String using, List<String> include}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(userId).isNotEmpty(
-        "userId can not be empty. Provide userId to get a specific user details");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(userId).isNotEmpty('userId');
     var params = GetUserParams(keyset, userId, include: include);
     return defaultFlow<GetUserParams, GetUserResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => GetUserResult.fromJson(object));
   }
@@ -113,20 +109,18 @@ class UserDx {
   ///  The custom object can only contain scalar values.
   Future<UpdateUserResult> updateUser(UserDetails user, String userId,
       {Keyset keyset, String using, List<String> include}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(user).isNotNull("user update details can not be null");
-    Ensure(userId)
-        .isNotEmpty("user id can not be empty. Please provide valid user id");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(user).isNotNull('user update details');
+    Ensure(userId).isNotEmpty('userId');
 
-    var payload = await this._core.parser.encode(user);
+    var payload = await _core.parser.encode(user);
 
     var params = UpdateUserParams(keyset, payload, userId, include: include);
 
     return defaultFlow<UpdateUserParams, UpdateUserResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => UpdateUserResult.fromJson(object));
   }
@@ -134,17 +128,15 @@ class UserDx {
   /// Deletes the specified [userId] user.
   Future<DeleteUserResult> deleteUser(String userId,
       {Keyset keyset, String using}) async {
-    keyset ??= this._core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(userId)
-        .isNotEmpty("user id can not be empty. Please provide valid user id");
+    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(userId).isNotEmpty('userId');
 
     var params = DeleteUserParams(keyset, userId);
 
     return defaultFlow<DeleteUserParams, DeleteUserResult>(
-        log: log,
-        core: this._core,
+        log: _log,
+        core: _core,
         params: params,
         serialize: (object, [_]) => DeleteUserResult.fromJson(object));
   }
@@ -152,11 +144,11 @@ class UserDx {
 
 /// Representation of a user object
 class User {
-  PubNub _core;
-  Keyset _keyset;
-  String _id;
+  final PubNub _core;
+  final Keyset _keyset;
+  final String _id;
 
-  User(this._core, this._keyset, this._id) {}
+  User(this._core, this._keyset, this._id);
 
   /// Adds user to space
   /// It registers the user to the spaces [spaceIds]

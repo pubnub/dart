@@ -1,8 +1,8 @@
 import 'package:pubnub/src/core/core.dart';
 
 class TimeParams extends Parameters {
+  @override
   Request toRequest() {
-    return Request(
-        type: RequestType.get, uri: Uri(pathSegments: ['time', '0']));
+    return Request(RequestType.get, ['time', '0']);
   }
 }

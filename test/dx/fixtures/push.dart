@@ -6,7 +6,7 @@ class FakePubNub implements PubNub {
   FakePubNub();
 
   @override
-  noSuchMethod(Invocation invocation) {
+  void noSuchMethod(Invocation invocation) {
     invocations.add(invocation);
   }
 }

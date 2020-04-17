@@ -7,12 +7,14 @@ PubNubException getExceptionFromAny(dynamic error) {
   }
 
   if (error is List) {
-    if (error.length == 0) {
+    if (error.isEmpty) {
       return UnknownException();
+    } else if (error.length == 3) {
+      return PublishException(error[1]);
     }
   }
 
-  return PubNubException();
+  return PubNubException('unknown exception');
 }
 
 PubNubException getExceptionFromDefaultResult(DefaultResult result) {
@@ -25,6 +27,5 @@ PubNubException getExceptionFromDefaultResult(DefaultResult result) {
     return MethodDisabledException(result.message);
   }
 
-  print('${result.status} error: ${result.message}');
-  return PubNubException();
+  return PubNubException('${result.status} error: ${result.message}');
 }

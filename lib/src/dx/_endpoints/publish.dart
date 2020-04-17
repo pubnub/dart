@@ -11,8 +11,9 @@ class PublishParams extends Parameters {
   PublishParams(this.keyset, this.channel, this.message,
       {this.storeMessage, this.ttl});
 
+  @override
   Request toRequest() {
-    List<String> pathSegments = [
+    var pathSegments = [
       'publish',
       keyset.publishKey,
       keyset.subscribeKey,
@@ -21,7 +22,7 @@ class PublishParams extends Parameters {
       '0'
     ];
 
-    Map<String, String> queryParameters = {
+    var queryParameters = {
       if (storeMessage == true)
         'store': '1'
       else if (storeMessage == false)
@@ -31,12 +32,8 @@ class PublishParams extends Parameters {
       if (ttl != null) 'ttl': ttl.toString()
     };
 
-    return Request(
-        type: RequestType.post,
-        uri: Uri(
-            pathSegments: pathSegments,
-            queryParameters:
-                queryParameters.length > 0 ? queryParameters : null),
+    return Request(RequestType.post, pathSegments,
+        queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
         body: message);
   }
 }

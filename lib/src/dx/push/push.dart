@@ -5,7 +5,7 @@ import 'package:pubnub/src/default.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/push.dart';
 
-final log = Logger('pubnub.dx.push');
+final _log = Logger('pubnub.dx.push');
 
 // Managing device registrations for Push Notification Service
 mixin PushNotificationDx on Core {
@@ -31,16 +31,14 @@ mixin PushNotificationDx on Core {
       Keyset keyset,
       String using}) async {
     keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(deviceId).isNotEmpty("deviceId can not be empty");
-    if (gateway == PushGateway.apns2)
-      Ensure(topic).isNotNull("provide topic for apns2");
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(deviceId).isNotEmpty('deviceId');
+    if (gateway == PushGateway.apns2) Ensure(topic).isNotNull('topic');
 
     var params = ListPushChannelsParams(keyset, deviceId, gateway,
         topic: topic, environment: environment);
     return defaultFlow<ListPushChannelsParams, ListPushChannelsResult>(
-        log: log,
+        log: _log,
         core: this,
         params: params,
         serialize: (object, [_]) => ListPushChannelsResult.fromJson(object));
@@ -68,16 +66,14 @@ mixin PushNotificationDx on Core {
       Keyset keyset,
       String using}) async {
     keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(deviceId).isNotEmpty("deviceId can not be empty");
-    if (gateway == PushGateway.apns2)
-      Ensure(topic).isNotNull("provide topic for apns2");
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(deviceId).isNotEmpty('deviceId');
+    if (gateway == PushGateway.apns2) Ensure(topic).isNotNull('topic');
 
     var params = AddPushChannelsParams(keyset, deviceId, gateway, channels,
         topic: topic, environment: environment);
     return defaultFlow<AddPushChannelsParams, AddPushChannelsResult>(
-        log: log,
+        log: _log,
         core: this,
         params: params,
         serialize: (object, [_]) => AddPushChannelsResult.fromJson(object));
@@ -105,16 +101,14 @@ mixin PushNotificationDx on Core {
       Keyset keyset,
       String using}) async {
     keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(deviceId).isNotEmpty("deviceId can not be empty");
-    if (gateway == PushGateway.apns2)
-      Ensure(topic).isNotNull("provide topic for apns2");
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(deviceId).isNotEmpty('deviceId');
+    if (gateway == PushGateway.apns2) Ensure(topic).isNotNull('topic');
 
     var params = RemovePushChannelsParams(keyset, deviceId, gateway, channels,
         topic: topic, environment: environment);
     return defaultFlow<RemovePushChannelsParams, RemovePushChannelsResult>(
-        log: log,
+        log: _log,
         core: this,
         params: params,
         serialize: (object, [_]) => RemovePushChannelsResult.fromJson(object));
@@ -141,16 +135,14 @@ mixin PushNotificationDx on Core {
       Keyset keyset,
       String using}) async {
     keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(deviceId).isNotEmpty("deviceId can not be empty");
-    if (gateway == PushGateway.apns2)
-      Ensure(topic).isNotNull("provide topic for apns2");
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(deviceId).isNotEmpty('deviceId');
+    if (gateway == PushGateway.apns2) Ensure(topic).isNotNull('topic');
 
     var params = RemoveDeviceParams(keyset, deviceId, gateway,
         topic: topic, environment: environment);
     return defaultFlow<RemoveDeviceParams, RemoveDeviceResult>(
-        log: log,
+        log: _log,
         core: this,
         params: params,
         serialize: (object, [_]) => RemoveDeviceResult.fromJson(object));
@@ -158,8 +150,8 @@ mixin PushNotificationDx on Core {
 }
 
 class Device {
-  PubNub _core;
-  Keyset _keyset;
+  final PubNub _core;
+  final Keyset _keyset;
   String deviceId;
 
   Device(this._core, this._keyset, this.deviceId);
@@ -171,8 +163,8 @@ class Device {
   Future<AddPushChannelsResult> registerToChannels(
       Set<String> channels, PushGateway gateway,
       {String topic, Environment environment}) {
-    return this._core.addPushChannels(this.deviceId, gateway, channels,
-        topic: topic, environment: environment, keyset: this._keyset);
+    return _core.addPushChannels(deviceId, gateway, channels,
+        topic: topic, environment: environment, keyset: _keyset);
   }
 
   /// Use this method to deregister the device [deviceId] from recieve push notifications for [channels]
@@ -182,8 +174,8 @@ class Device {
   Future<RemovePushChannelsResult> deregisterFromChannels(
       Set<String> channels, PushGateway gateway,
       {String topic, Environment environment}) {
-    return this._core.removePushChannels(this.deviceId, gateway, channels,
-        topic: topic, environment: environment, keyset: this._keyset);
+    return _core.removePushChannels(deviceId, gateway, channels,
+        topic: topic, environment: environment, keyset: _keyset);
   }
 
   /// Use this method to deregister the device [deviceId] from all push notification channels
@@ -193,7 +185,7 @@ class Device {
   /// In case of apns2 gateway please provide topic and environment(default: development) values
   Future<RemoveDeviceResult> remove(PushGateway gateway,
       {String topic, Environment environment}) {
-    return this._core.removeDevice(this.deviceId, gateway,
-        topic: topic, environment: environment, keyset: this._keyset);
+    return _core.removeDevice(deviceId, gateway,
+        topic: topic, environment: environment, keyset: _keyset);
   }
 }

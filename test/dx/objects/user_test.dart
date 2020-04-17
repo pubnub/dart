@@ -7,7 +7,7 @@ part 'fixtures/user.dart';
 void main() {
   PubNub pubnub;
 
-  group('[objects.users]', () {
+  group('DX [objects] [users]', () {
     setUp(() {
       pubnub = PubNub(networking: FakeNetworkingModule())
         ..keysets.add(Keyset(subscribeKey: 'demo', publishKey: 'demo'),
@@ -26,10 +26,10 @@ void main() {
     test('create successfully creates user', () async {
       var usr = UserDetails('user-1', 'Name 1', email: 'email@email.com');
       when(
-          path: 'v1/objects/demo/users',
-          method: 'POST',
-          body: _createuserBody,
-          then: FakeResult(_createUserSuccessResponse));
+        path: 'v1/objects/demo/users?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'POST',
+        body: _createuserBody,
+      ).then(status: 200, body: _createUserSuccessResponse);
       var response = await pubnub.users.create(usr);
 
       expect(response, isA<CreateUserResult>());
@@ -40,10 +40,10 @@ void main() {
     test('create user response 400', () async {
       var usr = UserDetails('user-1', 'Name 1', email: 'email@email.com');
       when(
-          path: 'v1/objects/demo/users',
-          method: 'POST',
-          body: _createuserBody,
-          then: FakeResult(_httpError400));
+        path: 'v1/objects/demo/users?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'POST',
+        body: _createuserBody,
+      ).then(status: 200, body: _httpError400);
       var response = await pubnub.users.create(usr);
 
       expect(response, isA<CreateUserResult>());
@@ -53,10 +53,10 @@ void main() {
     test('create user error response', () async {
       var usr = UserDetails('user-1', 'Name 1', email: 'email@email.com');
       when(
-          path: 'v1/objects/demo/users',
-          method: 'POST',
-          body: _createuserBody,
-          then: FakeResult(_commonObjectError));
+        path: 'v1/objects/demo/users?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'POST',
+        body: _createuserBody,
+      ).then(status: 200, body: _commonObjectError);
       var response = await pubnub.users.create(usr);
       expect(response, isA<CreateUserResult>());
       expect(response.status, equals(500));
@@ -67,9 +67,10 @@ void main() {
     test('getAllUsers should return valid response', () async {
       var userId = 'user-1';
       when(
-          path: 'v1/objects/demo/users?limit=10',
-          method: 'GET',
-          then: FakeResult(_getAllUserSuccessResponse));
+        path:
+            'v1/objects/demo/users?limit=10&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: _getAllUserSuccessResponse);
       var response = await pubnub.users.getAllUsers(limit: 10);
       expect(response, isA<GetAllUsersResult>());
       expect(response.data[0], isA<UserInfo>());
@@ -77,9 +78,10 @@ void main() {
     });
     test('getAllUsers sends error response', () async {
       when(
-          path: 'v1/objects/demo/users?limit=10',
-          method: 'GET',
-          then: FakeResult(_commonObjectError));
+        path:
+            'v1/objects/demo/users?limit=10&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: _commonObjectError);
       var response = await pubnub.users.getAllUsers(limit: 10);
       expect(response.status, equals(500));
       expect(response.error['message'],
@@ -95,9 +97,10 @@ void main() {
     test('getUser should return valid response', () async {
       var userId = 'user-1';
       when(
-          path: 'v1/objects/demo/users/user-1?',
-          method: 'GET',
-          then: FakeResult(_getUserSuccessResponse));
+        path:
+            'v1/objects/demo/users/user-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: _getUserSuccessResponse);
       var response = await pubnub.users.getUser(userId);
       expect(response, isA<GetUserResult>());
       expect(response.data.id, userId);
@@ -106,9 +109,10 @@ void main() {
     test('getUser should return valid response', () async {
       var userId = 'user-1';
       when(
-          path: 'v1/objects/demo/users/user-1?',
-          method: 'GET',
-          then: FakeResult(_commonObjectError));
+        path:
+            'v1/objects/demo/users/user-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: _commonObjectError);
       var response = await pubnub.users.getUser(userId);
       expect(response, isA<GetUserResult>());
       expect(response.status, equals(500));
@@ -139,8 +143,7 @@ void main() {
           throwsA(TypeMatcher<KeysetException>()));
     });
     test('update user throws when user object is null', () async {
-      var usr = null;
-      expect(pubnub.users.updateUser(usr, 'user-1'),
+      expect(pubnub.users.updateUser(null, 'user-1'),
           throwsA(TypeMatcher<InvariantException>()));
     });
 
@@ -148,10 +151,11 @@ void main() {
       var usr = UserDetails('user-1', 'Name 1', email: 'email@email.com');
       var userId = 'user-1';
       when(
-          path: 'v1/objects/demo/users/user-1',
-          method: 'PATCH',
-          body: _updateUserBody,
-          then: FakeResult(_updateUserSuccessResponse));
+        path:
+            'v1/objects/demo/users/user-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'PATCH',
+        body: _updateUserBody,
+      ).then(status: 200, body: _updateUserSuccessResponse);
       var response = await pubnub.users.updateUser(usr, userId);
       expect(response, isA<UpdateUserResult>());
       expect(response.status, 200);
@@ -162,10 +166,11 @@ void main() {
       var usr = UserDetails('user-1', 'Name 1', email: 'email@email.com');
       var userId = 'user-1';
       when(
-          path: 'v1/objects/demo/users/user-1',
-          method: 'PATCH',
-          body: _updateUserBody,
-          then: FakeResult(_commonObjectError));
+        path:
+            'v1/objects/demo/users/user-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'PATCH',
+        body: _updateUserBody,
+      ).then(status: 200, body: _commonObjectError);
       var response = await pubnub.users.updateUser(usr, userId);
       expect(response, isA<UpdateUserResult>());
       expect(response.status, 500);
@@ -188,20 +193,22 @@ void main() {
       var userId = 'user-1';
       var expectedThen = '{"status": "0","data": {}}';
       when(
-          path: 'v1/objects/demo/users/user-1?',
-          method: 'DELETE',
-          then: FakeResult(expectedThen));
+        path:
+            'v1/objects/demo/users/user-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'DELETE',
+      ).then(status: 200, body: expectedThen);
       var response = await pubnub.users.deleteUser(userId);
       expect(response, isA<DeleteUserResult>());
-      expect(response.status, "0");
+      expect(response.status, '0');
       expect(response.data, {});
     });
     test('delete user returns error', () async {
       var userId = 'user-1';
       when(
-          path: 'v1/objects/demo/users/user-1?',
-          method: 'DELETE',
-          then: FakeResult(_commonObjectError));
+        path:
+            'v1/objects/demo/users/user-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'DELETE',
+      ).then(status: 200, body: _commonObjectError);
       var response = await pubnub.users.deleteUser(userId);
       expect(response, isA<DeleteUserResult>());
       expect(response.status, equals(500));
@@ -211,7 +218,7 @@ void main() {
     test('user() should delegate to users.create()', () async {
       var fakePubnub = FakePubNub();
       var keyset = Keyset(subscribeKey: 'test', publishKey: 'test');
-      fakePubnub.user('user-1', 'name', keyset: keyset);
+      await fakePubnub.user('user-1', 'name', keyset: keyset);
 
       var invocation = fakePubnub.invocations[0];
 

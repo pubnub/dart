@@ -1,7 +1,10 @@
+import 'package:logging/logging.dart';
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
 import 'package:pubnub/src/dx/_endpoints/message_action.dart';
+
+final _log = Logger('pubnub.dx.messageAction');
 
 mixin MessageActionDx on Core {
   /// Fetches all message actions of a given [channel]
@@ -25,16 +28,15 @@ mixin MessageActionDx on Core {
       String using}) async {
     keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
 
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(channel).isNotEmpty("channel can not be empty");
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(channel).isNotEmpty('channel');
 
-    FetchMessageActionsResult fetchMessageActionsResult =
-        FetchMessageActionsResult()..actions = [];
+    var fetchMessageActionsResult = FetchMessageActionsResult()..actions = [];
+
     var loopResult;
     do {
       loopResult = await defaultFlow(
-          log: log,
+          log: _log,
           core: this,
           params: FetchMessageActionsParams(keyset, channel,
               start: start, end: end, limit: limit),
@@ -71,14 +73,12 @@ mixin MessageActionDx on Core {
       {Keyset keyset, String using}) async {
     keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
 
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(type).isNotEmpty("message action type can not be empty");
-    Ensure(value).isNotEmpty("message action value can not be empty");
-    Ensure(messageTimetoken)
-        .isNotNull("message timetoken value can not be null");
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(type).isNotEmpty('message action type');
+    Ensure(value).isNotEmpty('message action value');
+    Ensure(messageTimetoken).isNotNull('message timetoken');
 
-    var payload = Map<String, String>();
+    var payload = <String, String>{};
     payload['type'] = type;
     payload['value'] = value;
     var addMessageActionbody = await super.parser.encode(payload);
@@ -87,7 +87,7 @@ mixin MessageActionDx on Core {
         keyset, channel, messageTimetoken, addMessageActionbody);
 
     return defaultFlow<AddMessageActionParams, AddMessageActionResult>(
-        log: log,
+        log: _log,
         core: this,
         params: params,
         serialize: (object, [_]) => AddMessageActionResult.fromJson(object));
@@ -107,17 +107,16 @@ mixin MessageActionDx on Core {
       {Keyset keyset, String using}) async {
     keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
 
-    Ensure(keyset).isNotNull(
-        "Keyset cannot be null. Either add a default one or pass an instance to this method");
-    Ensure(channel).isNotEmpty("channel can not be empty");
-    Ensure(messageTimetoken).isNotNull("message timetoken can not be null");
-    Ensure(actionTimetoken).isNotNull("action timetoken can not be null");
+    Ensure(keyset).isNotNull('keyset');
+    Ensure(channel).isNotEmpty('channel');
+    Ensure(messageTimetoken).isNotNull('message timetoken');
+    Ensure(actionTimetoken).isNotNull('action timetoken');
 
     var params = DeleteMessageActionParams(
         keyset, channel, messageTimetoken, actionTimetoken);
 
     return defaultFlow<DeleteMessageActionParams, DeleteMessageActionResult>(
-        log: log,
+        log: _log,
         core: this,
         params: params,
         serialize: (object, [_]) => DeleteMessageActionResult.fromJson(object));

@@ -1,40 +1,52 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:pubnub/src/core/core.dart';
 
-String encodeString(String paramValue) =>
-    Uri.encodeComponent(paramValue).replaceAllMapped(
-        RegExp(r"/[!~*'()]/g"),
-        (str) =>
-            '%${str.group(0).codeUnitAt(0).toRadixString(16).toUpperCase()}');
+String _encodeQueryParameters(Map<String, String> queryParameters) => SplayTreeMap
+        .from(queryParameters)
+    .entries
+    .map((entry) =>
+        '${entry.key}=${Uri.encodeQueryComponent(entry.value).replaceAll(RegExp(r"\+"), '%20')}')
+    .join('&');
 
-String computeSignature(Keyset keyset, RequestType requestType,
-    Map<String, String> queryParameters, List<String> pathSegments,
-    {String payload}) {
-  Set<String> queryString = <String>{};
-  var sortedMap = Map.fromEntries(queryParameters.entries.toList()
-    ..sort((e1, e2) => e1.key.compareTo(e2.key)));
-  sortedMap.forEach((paramKey, paramValue) =>
-      queryString.add('$paramKey=${encodeString(paramValue)}'));
-  var signString =
-      '${requestType.method}\n${keyset.publishKey}\n${pathSegments.join('/')}\n${queryString.join('&')}\n';
-  if ((requestType.method == 'POST' || requestType.method == 'PATCH') &&
-      payload != null) {
-    signString += payload;
-  }
-  var signature = 'v2.${hmacSHA256(signString, keyset.authKey)}';
-  signature = signature.replaceAll(RegExp(r"/\+/g"), '-');
-  signature = signature.replaceAll(RegExp(r"/\//g"), '_');
-  signature = signature.replaceAll(RegExp(r"/=+$/"), '');
-  return signature;
+String computeSignature(Keyset keyset, List<String> pathSegments,
+    Map<String, String> queryParameters) {
+  var queryParams = _encodeQueryParameters(queryParameters);
+
+  var plaintext = '''${keyset.subscribeKey}
+${keyset.publishKey}
+/${pathSegments.join('/')}
+${queryParams}''';
+
+  var hmac = Hmac(sha256, utf8.encode(keyset.secretKey));
+  var digest = hmac.convert(utf8.encode(plaintext));
+  var ciphertext = base64Url.encode(digest.bytes);
+
+  return ciphertext;
 }
 
-String hmacSHA256(String input, String encriptionKey) {
-  var key = utf8.encode(encriptionKey);
-  var bytes = utf8.encode(input);
+String computeV2Signature(
+    Keyset keyset,
+    RequestType type,
+    List<String> pathSegments,
+    Map<String, String> queryParameters,
+    String body) {
+  var queryString = _encodeQueryParameters(queryParameters);
 
-  var hmacSha256 = new Hmac(sha256, key); // HMAC-SHA256
-  var digest = hmacSha256.convert(bytes);
-  return '$digest';
+  var plaintext = '''${type.method.toUpperCase()}
+${keyset.publishKey}
+/${pathSegments.join('/')}
+${queryString}
+${body}''';
+
+  var hmac = Hmac(sha256, utf8.encode(keyset.secretKey));
+  var digest = hmac.convert(utf8.encode(plaintext));
+  var ciphertext = base64.encode(digest.bytes);
+
+  return 'v2.${ciphertext}'
+      .replaceAll(RegExp(r'\+'), '-')
+      .replaceAll(RegExp(r'\/'), '_')
+      .replaceAll(RegExp(r'\=*$'), '');
 }
