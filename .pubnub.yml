@@ -3,6 +3,13 @@ changelog:
   -
     changes:
       -
+        text: "Change all Symbols to Strings to support Flutter better, fix a typo in SubscribeParams preventing subscribe from working."
+        type: bug
+    date: Apr 22, 20
+    version: v1.0.3
+  -
+    changes:
+      -
         text: "Add backward synchronization to private repository for `pubspec.yaml` and `lib/src/core/core.dart`."
         type: improvement
       -

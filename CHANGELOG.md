@@ -1,3 +1,11 @@
+## [v1.0.3](https://github.com/pubnub/dart/releases/tag/v1.0.3)
+April 22 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.0.2...v1.0.3)
+
+- ⭐️️ Fix a typo in UserDx docstring. 
+- 🐛 Change all Symbols to Strings to support Flutter better, fix a typo in SubscribeParams preventing subscribe from working. 
+
 ## [v1.0.2](https://github.com/pubnub/dart/releases/tag/v1.0.2)
 April 18 2020
 
