@@ -9,12 +9,12 @@ import 'effects/callback.dart';
 class Definition<State> {
   List<State> from;
   State to;
-  Symbol event;
+  String event;
   Blueprint machine;
 }
 
 class ReporterDefinition {
-  Symbol edge;
+  String edge;
   dynamic state;
   Effect effect;
 }
@@ -22,7 +22,7 @@ class ReporterDefinition {
 class BlueprintFactory<State, Context> {
   Blueprint blueprint;
   State state;
-  List<Symbol> edges;
+  List<String> edges;
 
   BlueprintFactory(this.blueprint, this.state, this.edges);
 
@@ -37,7 +37,7 @@ class BlueprintFactory<State, Context> {
 
   void callback(Callback<State, Context> callback) =>
       _addEffect(CallbackEffect<State, Context>(callback));
-  void send(Symbol event, {dynamic payload, Duration after}) => _addEffect(
+  void send(String event, {dynamic payload, Duration after}) => _addEffect(
       SendEffect<State, Context>(event, payload: payload, after: after));
   void exit({Duration after, bool withPayload}) => _addEffect(
       ExitEffect<State, Context>(after: after, withPayload: withPayload));
@@ -73,7 +73,7 @@ class Blueprint<State, Context> {
     return machine;
   }
 
-  void define(Symbol event, {List<State> from, State to, Blueprint machine}) {
+  void define(String event, {List<State> from, State to, Blueprint machine}) {
     _definitions.add(Definition<State>()
       ..from = from
       ..to = to
@@ -81,9 +81,9 @@ class Blueprint<State, Context> {
       ..machine = machine);
   }
 
-  BlueprintFactory<State, Context> when<Payload>(State state, [Symbol edge]) {
+  BlueprintFactory<State, Context> when<Payload>(State state, [String edge]) {
     if (edge == null) {
-      return BlueprintFactory<State, Context>(this, state, [#enters, #exits]);
+      return BlueprintFactory<State, Context>(this, state, ['enters', 'exits']);
     } else {
       return BlueprintFactory<State, Context>(this, state, [edge]);
     }

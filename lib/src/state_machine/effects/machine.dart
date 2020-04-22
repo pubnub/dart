@@ -26,27 +26,28 @@ class MachineEffect<State, Context, SubState, SubContext>
   void execute(
       {State exiting,
       State entering,
-      Symbol event,
+      String event,
       payload,
-      Symbol edge,
+      String edge,
       StateMachine machine,
       Updater<Context> updater}) {
-    if (edge == #enters) {
+    if (edge == 'enters') {
       var submachine = blueprint.build(machine);
 
       machine.register(name, submachine);
 
       if (onBuild != null) onBuild(machine, submachine);
 
-      submachine.when(null, #exits, CallbackEffect<SubState, SubContext>((ctx) {
+      submachine.when(null, 'exits',
+          CallbackEffect<SubState, SubContext>((ctx) {
         if (onEnter != null) onEnter(ctx, machine, submachine);
       }));
 
-      submachine.when(null, #enters,
+      submachine.when(null, 'enters',
           CallbackEffect<SubState, SubContext>((ctx) {
         if (onExit != null) onExit(ctx, machine, submachine);
       }));
-    } else if (edge == #exits) {
+    } else if (edge == 'exits') {
       var submachine = machine.get(name);
 
       if (submachine.state != null) {

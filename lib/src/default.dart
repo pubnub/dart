@@ -37,7 +37,7 @@ class PubNub extends Core
   /// [ChannelGroupDx] contains method that allow manipulating channel groups.
   ChannelGroupDx channelGroups;
 
-  /// [UserDx] conntains methods that provide functionality to manage users
+  /// [UserDx] contains methods that provide functionality to manage users
   UserDx users;
 
   /// [SpaceDX] contains methods that allow manipulating spaces

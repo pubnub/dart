@@ -62,8 +62,8 @@ class Subscription {
   /// Resubscribe to [channels] and [channelGroups].
   void subscribe() {
     _keyset.subscriptionManager.update((state) => {
-          #channels: state[#channels].union(channels).union(presenceChannels),
-          #channelGroups: state[#channelGroups]
+          'channels': state['channels'].union(channels).union(presenceChannels),
+          'channelGroups': state['channelGroups']
               .union(channelGroups)
               .union(presenceChannelGroups),
         });
@@ -72,10 +72,10 @@ class Subscription {
   /// Unsubscribe from [channels] and [channelGroups].
   void unsubscribe() {
     _keyset.subscriptionManager.update((state) => {
-          #channels: state[#channels]
+          'channels': state['channels']
               .difference(channels)
               .difference(presenceChannels),
-          #channelGroups: state[#channelGroups]
+          'channelGroups': state['channelGroups']
               .difference(channelGroups)
               .difference(presenceChannelGroups),
         });

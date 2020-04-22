@@ -22,7 +22,7 @@ class SubscribeParams extends Parameters {
   Request toRequest() {
     String channelsString;
 
-    if (channels != null || channels.isEmpty) {
+    if (channels == null || channels.isEmpty) {
       channelsString = ',';
     } else {
       channelsString = channels.join(',');

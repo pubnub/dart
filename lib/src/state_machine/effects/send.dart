@@ -2,7 +2,7 @@ import '../effect.dart';
 import '../state_machine.dart';
 
 class SendEffect<State, Context> extends Effect<State, Context> {
-  Symbol event;
+  String event;
   dynamic payload;
   Duration after;
 
@@ -12,9 +12,9 @@ class SendEffect<State, Context> extends Effect<State, Context> {
   void execute(
       {State exiting,
       State entering,
-      Symbol event,
+      String event,
       payload,
-      Symbol edge,
+      String edge,
       StateMachine machine,
       Updater<Context> updater}) {
     if (after != null) {

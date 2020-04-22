@@ -107,7 +107,7 @@ class Keyset {
   final UUID uuid;
 
   /// A map of settings that can be set and used by specific DX extensions.
-  Map<Symbol, dynamic> settings = {};
+  Map<String, dynamic> settings = {};
 
   Keyset(
       {@required this.subscribeKey,

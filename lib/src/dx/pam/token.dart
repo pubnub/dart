@@ -12,8 +12,6 @@ class Token {
     if (_memoizedData == null) {
       var object = parseToken(_stringToken);
 
-      print(object);
-
       _memoizedData = {
         'v': object['v'],
         't': object['t'],

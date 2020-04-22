@@ -4,9 +4,9 @@ import '../state_machine.dart';
 class CallbackContext<State, Context> {
   State exiting;
   State entering;
-  Symbol event;
+  String event;
   dynamic payload;
-  Symbol edge;
+  String edge;
   Context context;
   StateMachine<State, Context> machine;
   Updater<Context> update;
@@ -26,9 +26,9 @@ class CallbackEffect<State, Context> extends Effect<State, Context> {
   void execute(
       {State exiting,
       State entering,
-      Symbol event,
+      String event,
       payload,
-      Symbol edge,
+      String edge,
       StateMachine machine,
       Updater<Context> updater}) {
     callback(CallbackContext(exiting, entering, event, payload, edge,

@@ -14,85 +14,86 @@ class SubscriptionManager {
       StreamController.broadcast();
   Stream<dynamic> get messages => _messagesController.stream;
 
-  final Blueprint<Symbol, Map<Symbol, dynamic>> _RequestMachine;
-  final Blueprint<Symbol, Map<Symbol, dynamic>> _SubscriptionMachine;
+  final Blueprint<String, Map<String, dynamic>> _RequestMachine;
+  final Blueprint<String, Map<String, dynamic>> _SubscriptionMachine;
 
-  StateMachine<Symbol, Map<Symbol, dynamic>> _machine;
+  StateMachine<String, Map<String, dynamic>> _machine;
 
   SubscriptionManager(this.core, this.keyset)
-      : _RequestMachine = Blueprint<Symbol, Map<Symbol, dynamic>>()
-          ..define(#reject, from: [#pending], to: #rejected)
-          ..define(#resolve, from: [#pending], to: #resolved)
-          ..define(#timeout, from: [#pending], to: #rejected)
-          ..when(#resolved, #enters).exit(withPayload: true)
-          ..when(#rejected, #enters).exit(withPayload: true)
-          ..when(null, #exits).send(#timeout,
+      : _RequestMachine = Blueprint<String, Map<String, dynamic>>()
+          ..define('reject', from: ['pending'], to: 'rejected')
+          ..define('resolve', from: ['pending'], to: 'resolved')
+          ..define('timeout', from: ['pending'], to: 'rejected')
+          ..when('resolved', 'enters').exit(withPayload: true)
+          ..when('rejected', 'enters').exit(withPayload: true)
+          ..when(null, 'exits').send('timeout',
               payload: SubscribeTimeoutException(),
               after: Duration(seconds: 270))
-          ..when(#pending, #enters).callback((ctx) async {
+          ..when('pending', 'enters').callback((ctx) async {
             SubscribeParams params = ctx.payload;
 
             var handler = await core.networking.handle(params.toRequest());
 
-            ctx.update({#handler: handler});
+            ctx.update({'handler': handler});
 
             handler.text().then((result) {
-              ctx.machine.send(#resolve, result);
+              ctx.machine.send('resolve', result);
             }).catchError((error) {
-              ctx.machine.send(#reject, error);
+              ctx.machine.send('reject', error);
             });
           })
-          ..when(null, #enters).callback((ctx) {
-            ctx.context[#handler]?.cancel();
+          ..when(null, 'enters').callback((ctx) {
+            ctx.context['handler']?.cancel();
           }),
-        _SubscriptionMachine = Blueprint<Symbol, Map<Symbol, dynamic>>()
-          ..define(#fetch,
-              from: [#state.idle, #state.fetching], to: #state.fetching)
-          ..define(#idle, from: [#state.fetching, #state.idle], to: #state.idle)
-          ..define(#update,
-              from: [#state.idle, #state.fetching], to: #state.idle)
-          ..when(null, #exits).callback((ctx) {
+        _SubscriptionMachine = Blueprint<String, Map<String, dynamic>>()
+          ..define('fetch',
+              from: ['state.idle', 'state.fetching'], to: 'state.fetching')
+          ..define('idle',
+              from: ['state.fetching', 'state.idle'], to: 'state.idle')
+          ..define('update',
+              from: ['state.idle', 'state.fetching'], to: 'state.idle')
+          ..when(null, 'exits').callback((ctx) {
             ctx.update(ctx.payload);
           })
-          ..when(#state.idle, #enters).callback((ctx) {
-            if (ctx.event == #update) {
-              var newContext = <Symbol, dynamic>{
+          ..when('state.idle', 'enters').callback((ctx) {
+            if (ctx.event == 'update') {
+              var newContext = <String, dynamic>{
                 ...ctx.context,
                 ...ctx.payload
               };
               ctx.update(newContext);
 
-              if (newContext[#isEnabled] == true &&
-                  (newContext[#channels].length > 0 ||
-                      newContext[#channelGroups].length > 0)) {
-                ctx.machine.send(#fetch);
+              if (newContext['isEnabled'] == true &&
+                  (newContext['channels'].length > 0 ||
+                      newContext['channelGroups'].length > 0)) {
+                ctx.machine.send('fetch');
               }
             }
           }) {
     _SubscriptionMachine
-      ..when(#state.fetching).machine('request', _RequestMachine,
+      ..when('state.fetching').machine('request', _RequestMachine,
           onBuild: (m, sm) {
-        var params = SubscribeParams(keyset, m.context[#timetoken].value,
-            region: m.context[#region],
-            channels: m.context[#channels],
-            channelGroups: m.context[#channelGroups]);
+        var params = SubscribeParams(keyset, m.context['timetoken'].value,
+            region: m.context['region'],
+            channels: m.context['channels'],
+            channelGroups: m.context['channelGroups']);
 
-        sm.enter(#pending, params);
+        sm.enter('pending', params);
       }, onExit: (ctx, m, sm) async {
         switch (ctx.exiting) {
-          case #resolved:
+          case 'resolved':
             var object = await core.parser.decode(ctx.payload);
             var result = SubscribeResult.fromJson(object);
 
             await _messagesController
                 .addStream(Stream.fromIterable(result.messages));
 
-            m.send(#update,
-                {#timetoken: result.timetoken, #region: result.region});
+            m.send('update',
+                {'timetoken': result.timetoken, 'region': result.region});
             break;
-          case #rejected:
+          case 'rejected':
             if (ctx.payload is SubscribeTimeoutException) {
-              m.send(#update, {});
+              m.send('update', {});
             }
             break;
         }
@@ -100,19 +101,19 @@ class SubscriptionManager {
 
     _machine = _SubscriptionMachine.build();
 
-    _machine.enter(#state.idle, {
-      #channels: <String>{},
-      #channelGroups: <String>{},
-      #timetoken: Timetoken(0),
-      #region: null,
+    _machine.enter('state.idle', {
+      'channels': <String>{},
+      'channelGroups': <String>{},
+      'timetoken': Timetoken(0),
+      'region': null,
     });
   }
 
-  void update(Map<Symbol, dynamic> Function(Map<Symbol, dynamic> ctx) cb) {
-    if (_machine.state != #state.idle) {
-      _machine.send(#fail, SubscribeOutdatedException());
+  void update(Map<String, dynamic> Function(Map<String, dynamic> ctx) cb) {
+    if (_machine.state != 'state.idle') {
+      _machine.send('fail', SubscribeOutdatedException());
     }
 
-    _machine.send(#update, cb(_machine.context));
+    _machine.send('update', cb(_machine.context));
   }
 }

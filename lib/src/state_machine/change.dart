@@ -17,7 +17,7 @@ class TransitionChange<State, Context, Payload> {
   State from;
   State to;
 
-  Symbol event;
+  String event;
   Payload payload;
 
   @override

@@ -10,6 +10,7 @@ export 'endpoint.dart';
 export 'uuid.dart';
 export 'timetoken.dart';
 export 'exceptions.dart';
+export 'package:logging/logging.dart' show Level;
 
 class Core {
   /// Allows to have multiple [Keyset] associated with one instance of [PubNub].
@@ -19,7 +20,7 @@ class Core {
   ParserModule parser;
   Logger log;
 
-  static String version = '1.0.2';
+  static String version = '1.0.3';
 
   Core({Keyset defaultKeyset, this.networking, this.parser}) {
     if (defaultKeyset != null) {

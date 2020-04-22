@@ -18,8 +18,8 @@ class StateMachine<State, Context> {
 
   StateMachine parent;
 
-  final Map<Symbol, Map<List<State>, State>> _defs = {};
-  final Map<State, Map<Symbol, List<Effect<State, Context>>>> _effects = {};
+  final Map<String, Map<List<State>, State>> _defs = {};
+  final Map<State, Map<String, List<Effect<State, Context>>>> _effects = {};
   final Map<String, StateMachine> _submachines = {};
   final Map<String, StreamSubscription> _subs = {};
 
@@ -44,7 +44,7 @@ class StateMachine<State, Context> {
 
   StateMachine get(String name) => _submachines[name];
 
-  void _report(State previous, State next, Symbol edge, Symbol event,
+  void _report(State previous, State next, String edge, String event,
       [dynamic payload]) {
     var actions = _effects[state] ?? {};
     var effects = actions[edge] ?? [];
@@ -62,9 +62,9 @@ class StateMachine<State, Context> {
     }
   }
 
-  void _reportPass(Symbol event, [dynamic payload]) {}
+  void _reportPass(String event, [dynamic payload]) {}
 
-  void _transition(State to, Symbol event, [dynamic payload]) {
+  void _transition(State to, String event, [dynamic payload]) {
     _transitionsController.add(TransitionChange<State, Context, dynamic>()
       ..machine = this
       ..event = event
@@ -75,16 +75,16 @@ class StateMachine<State, Context> {
     var previousState = _currentState;
     var nextState = to;
 
-    _report(previousState, nextState, #exits, event, payload);
+    _report(previousState, nextState, 'exits', event, payload);
     _currentState = to;
-    _report(previousState, nextState, #enters, event, payload);
+    _report(previousState, nextState, 'enters', event, payload);
   }
 
   void enter(State state, [dynamic payload]) =>
-      _transition(state, #_enter, payload);
-  void exit([dynamic payload]) => _transition(null, #_exit, payload);
+      _transition(state, '_enter', payload);
+  void exit([dynamic payload]) => _transition(null, '_exit', payload);
 
-  bool send(Symbol event, [dynamic payload]) {
+  bool send(String event, [dynamic payload]) {
     var legalStates = _defs[event];
 
     if (legalStates == null) {
@@ -108,12 +108,12 @@ class StateMachine<State, Context> {
     return true;
   }
 
-  void define(Symbol event, {List<State> from, State to}) {
+  void define(String event, {List<State> from, State to}) {
     _defs[event] ??= {};
     _defs[event][from] = to;
   }
 
-  void when(State state, Symbol edge, Effect<State, Context> effect) {
+  void when(State state, String edge, Effect<State, Context> effect) {
     _effects[state] ??= {};
     _effects[state][edge] ??= [];
     _effects[state][edge].add(effect);

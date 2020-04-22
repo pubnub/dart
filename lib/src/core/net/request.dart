@@ -41,6 +41,11 @@ class Request {
           type, pathSegments, this.queryParameters, this.headers, this.body);
     }
   }
+
+  @override
+  String toString() {
+    return '${type.method} - $pathSegments?$queryParameters';
+  }
 }
 
 abstract class RequestHandler {

@@ -25,7 +25,7 @@ mixin SubscribeDx on Core {
 
     if (keyset.subscriptionManager == null) {
       keyset.subscriptionManager = SubscriptionManager(this, keyset);
-      keyset.subscriptionManager.update((state) => {#isEnabled: true});
+      keyset.subscriptionManager.update((state) => {'isEnabled': true});
     }
 
     var subscription = Subscription(channels ?? {}, channelGroups ?? {}, keyset,

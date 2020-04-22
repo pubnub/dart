@@ -6,9 +6,9 @@ abstract class Effect<State, Context> {
   void execute(
       {State exiting,
       State entering,
-      Symbol event,
+      String event,
       dynamic payload,
-      Symbol edge,
+      String edge,
       StateMachine machine,
       Updater<Context> updater});
 }
