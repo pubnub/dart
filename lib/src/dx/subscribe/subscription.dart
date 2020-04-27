@@ -34,29 +34,31 @@ class Subscription {
   ///
   /// If [withPresence] is false, this should be empty.
   Set<String> get presenceChannelGroups => withPresence
-      ? channelGroups.map((channelGroup) => '${channelGroup}-pnpres')
+      ? channelGroups.map((channelGroup) => '${channelGroup}-pnpres').toSet()
       : {};
 
   Subscription(this.channels, this.channelGroups, this._keyset,
       {this.withPresence}) {
-    _stream = _keyset.subscriptionManager.messages
-        .where((envelope) =>
-            channels.contains(envelope['c']) ||
-            channelGroups.contains(envelope['b']) ||
-            (withPresence &&
-                (presenceChannels.contains(envelope['c']) ||
-                    presenceChannelGroups.contains(envelope['b']))))
-        .map((envelope) => Envelope.fromJson(envelope));
+    _stream = _keyset.subscriptionManager.messages.where((envelope) {
+      return channels.contains(envelope['c']) ||
+          channels.contains(envelope['b']) ||
+          channelGroups.contains(envelope['b']) ||
+          (withPresence &&
+              (presenceChannels.contains(envelope['c']) ||
+                  presenceChannelGroups.contains(envelope['b'])));
+    }).map((envelope) => Envelope.fromJson(envelope));
 
     presence = _stream
         .where((envelope) =>
             presenceChannels.contains(envelope.channel) ||
-            presenceChannels.contains(envelope.channelGroup))
+            presenceChannels.contains(envelope.subscriptionPattern) ||
+            presenceChannels.contains(envelope.subscriptionPattern))
         .map<PresenceEvent>((envelope) => PresenceEvent.fromEnvelope(envelope));
 
     messages = _stream.where((envelope) =>
         channels.contains(envelope.channel) ||
-        channelGroups.contains(envelope.channelGroup));
+        channels.contains(envelope.subscriptionPattern) ||
+        channelGroups.contains(envelope.subscriptionPattern));
   }
 
   /// Resubscribe to [channels] and [channelGroups].

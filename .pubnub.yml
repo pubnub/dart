@@ -3,6 +3,16 @@ changelog:
   -
     changes:
       -
+        text: "Add HereNow to PresenceDx, usable as `pubnub.hereNow()`."
+        type: feature
+      -
+        text: "Fix subscribe `withPresence: true` not properly forwarding messages when used with wildcard channels."
+        type: bug
+    date: Apr 27, 20
+    version: v1.0.4
+  -
+    changes:
+      -
         text: "Change all Symbols to Strings to support Flutter better, fix a typo in SubscribeParams preventing subscribe from working."
         type: bug
     date: Apr 22, 20
@@ -151,4 +161,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "1.0.3"
+version: "1.0.4"

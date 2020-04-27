@@ -146,6 +146,12 @@ class PaginatedChannelHistory {
   /// it will always be true.
   bool get hasMore => _hasMoreOverride == false && _cursor != 0;
 
+  /// Resets the history to the beginning.
+  void reset() {
+    _cursor = null;
+    _messages.clear();
+  }
+
   /// Fetches more messages and stores them in [messages].
   Future<FetchHistoryResult> more() async {
     var result = await defaultFlow(

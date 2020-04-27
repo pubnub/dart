@@ -226,7 +226,7 @@ class ChannelOccupancy {
 
   factory ChannelOccupancy.fromJson(
       String channelName, Map<String, dynamic> channelObject) {
-    Map<String, UUID> uuids;
+    var uuids = <String, UUID>{};
 
     if (channelObject['uuids'] != null) {
       for (var uuid in channelObject['uuids']) {

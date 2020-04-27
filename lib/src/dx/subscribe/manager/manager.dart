@@ -36,14 +36,17 @@ class SubscriptionManager {
 
             ctx.update({'handler': handler});
 
-            handler.text().then((result) {
+            try {
+              var result = await handler.text();
               ctx.machine.send('resolve', result);
-            }).catchError((error) {
+            } catch (error) {
               ctx.machine.send('reject', error);
-            });
+            }
           })
           ..when(null, 'enters').callback((ctx) {
-            ctx.context['handler']?.cancel();
+            if (ctx.context != null) {
+              ctx.context['handler']?.cancel();
+            }
           }),
         _SubscriptionMachine = Blueprint<String, Map<String, dynamic>>()
           ..define('fetch',

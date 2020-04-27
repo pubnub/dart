@@ -20,7 +20,7 @@ extension MessageTypeExtension on MessageType {
 
 class Envelope {
   String shard;
-  String channelGroup;
+  String subscriptionPattern;
   String channel;
   MessageType messageType;
   int flags;
@@ -39,7 +39,7 @@ class Envelope {
 
   Envelope.fromJson(dynamic object) {
     shard = object['a'] as String;
-    channelGroup = object['b'] as String;
+    subscriptionPattern = object['b'] as String;
     channel = object['c'] as String;
     payload = object['d'];
     messageType = fromInt(object['e'] as int);

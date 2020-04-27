@@ -1,7 +1,13 @@
+## [v1.0.4](https://github.com/pubnub/dart/releases/tag/v1.0.4)
+April 27 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.0.3...v1.0.4)
+
+- 🌟️ Add HereNow to PresenceDx, usable as `pubnub.hereNow()`. 
+- 🐛 Fix subscribe `withPresence: true` not properly forwarding messages when used with wildcard channels. 
+
 ## [v1.0.3](https://github.com/pubnub/dart/releases/tag/v1.0.3)
 April 22 2020
-
-[Full Changelog](https://github.com/pubnub/dart/compare/v1.0.2...v1.0.3)
 
 - ⭐️️ Fix a typo in UserDx docstring. 
 - 🐛 Change all Symbols to Strings to support Flutter better, fix a typo in SubscribeParams preventing subscribe from working. 

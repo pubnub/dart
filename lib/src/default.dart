@@ -1,3 +1,5 @@
+import 'package:pubnub/src/dx/presence/presence.dart';
+
 import 'core/core.dart';
 import 'core/keyset.dart';
 import 'core/net/net.dart';
@@ -29,7 +31,8 @@ class PubNub extends Core
         SignalDx,
         MessageActionDx,
         PushNotificationDx,
-        PamDx {
+        PamDx,
+        PresenceDx {
   /// [BatchDx] contains methods that allow running batch operations on channels,
   /// channel groups and other features.
   BatchDx batch;
