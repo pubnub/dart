@@ -1,3 +1,4 @@
+@Timeout(Duration(seconds: 55))
 import 'package:test/test.dart';
 
 import 'objects/objects.dart';
@@ -16,8 +17,7 @@ void main() {
       pubnub = PubNub(networking: FakeNetworkingModule())
         ..keysets.add(Keyset(subscribeKey: 'test', publishKey: 'test'),
             name: 'default', useAsDefault: true);
-    }); // Setup ends
-
+    });
     test('listPushChannels throws for empty deviceId', () {
       expect(pubnub.listPushChannels('', PushGateway.gcm),
           throwsA(TypeMatcher<InvariantException>()));
@@ -35,7 +35,7 @@ void main() {
       var deviceId = 'A332C23D';
       when(
         path:
-            'v2/push/sub-key/test/devices/A332C23D?type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v1/push/sub-key/test/devices/A332C23D?type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: '["ch1", "ch2"]');
       var response = await pubnub.listPushChannels(deviceId, PushGateway.gcm);
@@ -57,7 +57,7 @@ void main() {
       var topic = 'topic';
       when(
         path:
-            'v2/push/sub-key/test/device-apns2/A332C23D?environment=development&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/push/sub-key/test/devices-apns2/A332C23D?environment=development&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: '["ch1", "ch2"]');
       var response = await pubnub.listPushChannels(deviceId, PushGateway.apns2,
@@ -72,7 +72,7 @@ void main() {
       var topic = 'topic';
       when(
         path:
-            'v2/push/sub-key/test/device-apns2/A332C23D?environment=production&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/push/sub-key/test/devices-apns2/A332C23D?environment=production&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: '["ch1", "ch2"]');
       var response = await pubnub.listPushChannels(deviceId, PushGateway.apns2,
@@ -101,7 +101,7 @@ void main() {
       var channels = <String>{'ch1', 'ch2'};
       when(
         path:
-            'v2/push/sub-key/test/devices/A332C23D?add=ch1%2Cch2&type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v1/push/sub-key/test/devices/A332C23D?add=ch1%2Cch2&type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: '[1, "ch1", "ch2"]');
       var response =
@@ -121,7 +121,7 @@ void main() {
       var topic = 'topic';
       when(
         path:
-            'v2/push/sub-key/test/device-apns2/A332C23D?add=ch1%2Cch2&environment=production&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/push/sub-key/test/devices-apns2/A332C23D?add=ch1%2Cch2&environment=production&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: '[1,"ch1,ch2"]');
       var response = await pubnub.addPushChannels(
@@ -150,7 +150,7 @@ void main() {
       var channels = <String>{'ch1', 'ch2'};
       when(
         path:
-            'v2/push/sub-key/test/devices/A332C23D?remove=ch1%2Cch2&type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v1/push/sub-key/test/devices/A332C23D?remove=ch1%2Cch2&type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: '[1, "ch1", "ch2"]');
       var response =
@@ -170,7 +170,7 @@ void main() {
       var topic = 'topic';
       when(
         path:
-            'v2/push/sub-key/test/device-apns2/A332C23D?remove=ch1%2Cch2&environment=production&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/push/sub-key/test/devices-apns2/A332C23D?remove=ch1%2Cch2&environment=production&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: '[1, "ch1", "ch2"]');
       var response = await pubnub.removePushChannels(
@@ -196,9 +196,9 @@ void main() {
       var deviceId = 'A332C23D';
       when(
         path:
-            'v2/push/sub-key/test/devices/A332C23D/remove?type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v1/push/sub-key/test/devices/A332C23D/remove?type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
-      ).then(status: 200, body: '[]');
+      ).then(status: 200, body: '[1, "Device Removed"]');
       var response = await pubnub.removeDevice(deviceId, PushGateway.gcm);
       expect(response, isA<RemoveDeviceResult>());
     });
@@ -213,9 +213,9 @@ void main() {
       var topic = 'topic';
       when(
         path:
-            'v2/push/sub-key/test/device-apns2/A332C23D/remove?environment=production&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/push/sub-key/test/devices-apns2/A332C23D/remove?environment=production&topic=topic&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
-      ).then(status: 200, body: '[]');
+      ).then(status: 200, body: '[1, "Device Removed"]');
       var response = await pubnub.removeDevice(deviceId, PushGateway.apns2,
           topic: topic, environment: Environment.production);
       expect(response, isA<RemoveDeviceResult>());

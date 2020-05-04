@@ -1,7 +1,13 @@
+## [v1.0.5](https://github.com/pubnub/dart/releases/tag/v1.0.5)
+May 4 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.0.4...v1.0.5)
+
+- 🐛 Fix wrong API Uri in Push Notifications. Fixed the following issues reported by [@aadil058](https://github.com/aadil058): [#2](https://github.com/pubnub/dart/issues/2).
+- 🐛 Fix Subscription.unsubscribe to correctly close the messages stream. Fixed the following issues reported by [@are](https://github.com/are): [#3](https://github.com/pubnub/dart/issues/3).
+
 ## [v1.0.4](https://github.com/pubnub/dart/releases/tag/v1.0.4)
 April 27 2020
-
-[Full Changelog](https://github.com/pubnub/dart/compare/v1.0.3...v1.0.4)
 
 - 🌟️ Add HereNow to PresenceDx, usable as `pubnub.hereNow()`. 
 - 🐛 Fix subscribe `withPresence: true` not properly forwarding messages when used with wildcard channels. 

@@ -1,78 +1,90 @@
 import 'dart:async';
 
+import 'package:logging/logging.dart';
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_endpoints/subscribe.dart';
 import 'package:pubnub/src/state_machine/state_machine.dart';
 
 import 'exceptions.dart';
 
+final _log = Logger('pubnub.dx.subscribe.manager');
+
 class SubscriptionManager {
   Core core;
   Keyset keyset;
 
-  final StreamController<dynamic> _messagesController =
-      StreamController.broadcast();
+  StreamController<dynamic> _messagesController;
   Stream<dynamic> get messages => _messagesController.stream;
 
-  final Blueprint<String, Map<String, dynamic>> _RequestMachine;
-  final Blueprint<String, Map<String, dynamic>> _SubscriptionMachine;
+  Blueprint<String, Map<String, dynamic>> _RequestMachine;
+  Blueprint<String, Map<String, dynamic>> _SubscriptionMachine;
 
-  StateMachine<String, Map<String, dynamic>> _machine;
+  StateMachine<String, Map<String, dynamic>> machine;
 
-  SubscriptionManager(this.core, this.keyset)
-      : _RequestMachine = Blueprint<String, Map<String, dynamic>>()
-          ..define('reject', from: ['pending'], to: 'rejected')
-          ..define('resolve', from: ['pending'], to: 'resolved')
-          ..define('timeout', from: ['pending'], to: 'rejected')
-          ..when('resolved', 'enters').exit(withPayload: true)
-          ..when('rejected', 'enters').exit(withPayload: true)
-          ..when(null, 'exits').send('timeout',
-              payload: SubscribeTimeoutException(),
-              after: Duration(seconds: 270))
-          ..when('pending', 'enters').callback((ctx) async {
-            SubscribeParams params = ctx.payload;
+  SubscriptionManager(this.core, this.keyset) {
+    _RequestMachine = Blueprint<String, Map<String, dynamic>>()
+      ..define('reject', from: ['pending'], to: 'rejected')
+      ..define('resolve', from: ['pending'], to: 'resolved')
+      ..define('timeout', from: ['pending'], to: 'rejected')
+      ..when('resolved', 'enters').exit(withPayload: true)
+      ..when('rejected', 'enters').exit(withPayload: true)
+      ..when(null).send('timeout',
+          payload: SubscribeTimeoutException(), after: Duration(seconds: 270))
+      ..when('pending', 'enters').callback((ctx) async {
+        SubscribeParams params = ctx.payload;
 
-            var handler = await core.networking.handle(params.toRequest());
+        try {
+          var handler = await core.networking.handle(params.toRequest());
 
-            ctx.update({'handler': handler});
+          ctx.update({'handler': handler});
 
-            try {
-              var result = await handler.text();
-              ctx.machine.send('resolve', result);
-            } catch (error) {
-              ctx.machine.send('reject', error);
+          var result = await handler.text();
+          ctx.machine.send('resolve', result);
+        } catch (error) {
+          ctx.machine.send('reject', error);
+        }
+      })
+      ..when(null, 'enters').callback((ctx) {
+        if (ctx.context != null) {
+          ctx.context['handler']?.cancel();
+        }
+      });
+
+    _SubscriptionMachine = Blueprint<String, Map<String, dynamic>>()
+      ..define('fetch',
+          from: ['state.idle', 'state.fetching'], to: 'state.fetching')
+      ..define('idle', from: ['state.fetching', 'state.idle'], to: 'state.idle')
+      ..define('update',
+          from: ['state.idle', 'state.fetching'], to: 'state.idle')
+      ..when(null, 'exits').callback((ctx) {
+        ctx.update(ctx.payload);
+      })
+      ..when('state.idle', 'enters').callback((ctx) {
+        _log.info(
+            'Entering ${ctx.entering} from ${ctx.exiting} because of ${ctx.event}');
+
+        if (ctx.event == 'update') {
+          var newContext = <String, dynamic>{...ctx.context, ...ctx.payload};
+          ctx.update(newContext);
+
+          if (newContext['isEnabled'] == true &&
+              (newContext['channels'].length > 0 ||
+                  newContext['channelGroups'].length > 0)) {
+            if (_messagesController == null || _messagesController.isClosed) {
+              _log.info('Creating the controller...');
+              _messagesController = StreamController.broadcast();
             }
-          })
-          ..when(null, 'enters').callback((ctx) {
-            if (ctx.context != null) {
-              ctx.context['handler']?.cancel();
+            ctx.machine.send('fetch');
+          } else {
+            if (_messagesController != null) {
+              _log.info('Disposing the controller...');
+              _messagesController.close();
+              _messagesController = null;
             }
-          }),
-        _SubscriptionMachine = Blueprint<String, Map<String, dynamic>>()
-          ..define('fetch',
-              from: ['state.idle', 'state.fetching'], to: 'state.fetching')
-          ..define('idle',
-              from: ['state.fetching', 'state.idle'], to: 'state.idle')
-          ..define('update',
-              from: ['state.idle', 'state.fetching'], to: 'state.idle')
-          ..when(null, 'exits').callback((ctx) {
-            ctx.update(ctx.payload);
-          })
-          ..when('state.idle', 'enters').callback((ctx) {
-            if (ctx.event == 'update') {
-              var newContext = <String, dynamic>{
-                ...ctx.context,
-                ...ctx.payload
-              };
-              ctx.update(newContext);
+          }
+        }
+      });
 
-              if (newContext['isEnabled'] == true &&
-                  (newContext['channels'].length > 0 ||
-                      newContext['channelGroups'].length > 0)) {
-                ctx.machine.send('fetch');
-              }
-            }
-          }) {
     _SubscriptionMachine
       ..when('state.fetching').machine('request', _RequestMachine,
           onBuild: (m, sm) {
@@ -102,9 +114,9 @@ class SubscriptionManager {
         }
       });
 
-    _machine = _SubscriptionMachine.build();
+    machine = _SubscriptionMachine.build();
 
-    _machine.enter('state.idle', {
+    machine.enter('state.idle', {
       'channels': <String>{},
       'channelGroups': <String>{},
       'timetoken': Timetoken(0),
@@ -113,10 +125,10 @@ class SubscriptionManager {
   }
 
   void update(Map<String, dynamic> Function(Map<String, dynamic> ctx) cb) {
-    if (_machine.state != 'state.idle') {
-      _machine.send('fail', SubscribeOutdatedException());
+    if (machine.state != 'state.idle') {
+      machine.send('fail', SubscribeOutdatedException());
     }
 
-    _machine.send('update', cb(_machine.context));
+    machine.send('update', cb(machine.context));
   }
 }

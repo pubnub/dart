@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:pubnub/src/core/core.dart';
 
 import 'envelope.dart';
@@ -5,7 +7,6 @@ import 'extensions/keyset.dart';
 
 class Subscription {
   final Keyset _keyset;
-  Stream<Envelope> _stream;
 
   /// List of channels that this subscription represents.
   Set<String> channels;
@@ -37,29 +38,10 @@ class Subscription {
       ? channelGroups.map((channelGroup) => '${channelGroup}-pnpres').toSet()
       : {};
 
+  StreamSubscription _streamSubscription;
+
   Subscription(this.channels, this.channelGroups, this._keyset,
-      {this.withPresence}) {
-    _stream = _keyset.subscriptionManager.messages.where((envelope) {
-      return channels.contains(envelope['c']) ||
-          channels.contains(envelope['b']) ||
-          channelGroups.contains(envelope['b']) ||
-          (withPresence &&
-              (presenceChannels.contains(envelope['c']) ||
-                  presenceChannelGroups.contains(envelope['b'])));
-    }).map((envelope) => Envelope.fromJson(envelope));
-
-    presence = _stream
-        .where((envelope) =>
-            presenceChannels.contains(envelope.channel) ||
-            presenceChannels.contains(envelope.subscriptionPattern) ||
-            presenceChannels.contains(envelope.subscriptionPattern))
-        .map<PresenceEvent>((envelope) => PresenceEvent.fromEnvelope(envelope));
-
-    messages = _stream.where((envelope) =>
-        channels.contains(envelope.channel) ||
-        channels.contains(envelope.subscriptionPattern) ||
-        channelGroups.contains(envelope.subscriptionPattern));
-  }
+      {this.withPresence});
 
   /// Resubscribe to [channels] and [channelGroups].
   void subscribe() {
@@ -69,10 +51,35 @@ class Subscription {
               .union(channelGroups)
               .union(presenceChannelGroups),
         });
+
+    var s = _keyset.subscriptionManager.messages.where((envelope) {
+      return channels.contains(envelope['c']) ||
+          channels.contains(envelope['b']) ||
+          channelGroups.contains(envelope['b']) ||
+          (withPresence &&
+              (presenceChannels.contains(envelope['c']) ||
+                  presenceChannelGroups.contains(envelope['b'])));
+    }).map((envelope) => Envelope.fromJson(envelope));
+
+    var _controller = StreamController<Envelope>.broadcast();
+
+    _streamSubscription = s.listen((env) => _controller.add(env));
+
+    presence = _controller.stream
+        .where((envelope) =>
+            presenceChannels.contains(envelope.channel) ||
+            presenceChannels.contains(envelope.subscriptionPattern) ||
+            presenceChannels.contains(envelope.subscriptionPattern))
+        .map<PresenceEvent>((envelope) => PresenceEvent.fromEnvelope(envelope));
+
+    messages = _controller.stream.where((envelope) =>
+        channels.contains(envelope.channel) ||
+        channels.contains(envelope.subscriptionPattern) ||
+        channelGroups.contains(envelope.subscriptionPattern));
   }
 
   /// Unsubscribe from [channels] and [channelGroups].
-  void unsubscribe() {
+  Future<void> unsubscribe() async {
     _keyset.subscriptionManager.update((state) => {
           'channels': state['channels']
               .difference(channels)
@@ -81,5 +88,11 @@ class Subscription {
               .difference(channelGroups)
               .difference(presenceChannelGroups),
         });
+
+    if (_streamSubscription != null) {
+      await _streamSubscription.cancel();
+
+      _streamSubscription = null;
+    }
   }
 }

@@ -3,6 +3,16 @@ changelog:
   -
     changes:
       -
+        text: "Fix wrong API Uri in Push Notifications."
+        type: bug
+      -
+        text: "Fix Subscription.unsubscribe to correctly close the messages stream."
+        type: bug
+    date: May 4, 20
+    version: v1.0.5
+  -
+    changes:
+      -
         text: "Add HereNow to PresenceDx, usable as `pubnub.hereNow()`."
         type: feature
       -
@@ -161,4 +171,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "1.0.4"
+version: "1.0.5"

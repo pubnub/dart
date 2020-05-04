@@ -37,6 +37,9 @@ class DefaultResult extends Result {
     } else if (object['error'] is bool) {
       hasError = object['error'] as bool;
       errorMessage = object['error_message'];
+    } else if (object['error'] is String) {
+      hasError = true;
+      errorMessage = object['error'];
     }
 
     return DefaultResult()

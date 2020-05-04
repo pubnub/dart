@@ -68,15 +68,16 @@ class Channel {
 
   /// Returns all message actions of this channel
   ///
-  /// Pagination can be controlled using [start], [end] and [limit] parameters,
-  /// If [from] is not provided, the server uses the current time.
+  /// Pagination can be controlled using [from], [to] and [limit] parameters,
+  /// If [from] is not provided, the server uses the current time
+  /// Providing no [to] or [limit] means there is "no limit" to the number of actions being requested
   ///
   /// Providing no end or limit means there is "no limit" to the number of actions being requested.
   /// In this event the server will try and retrieve all actions for the channel, going back in time forever.
   Future<FetchMessageActionsResult> fetchMessageActions(
-          {Timetoken start, Timetoken end, int limit}) =>
+          {Timetoken from, Timetoken to, int limit}) =>
       _core.fetchMessageActions(name,
-          start: start, end: end, limit: limit, keyset: _keyset);
+          from: from, to: to, limit: limit, keyset: _keyset);
 
   /// You can use this method to post actions on a "parent message"
   /// by specifying message action details [type], [value] and [timetoken] of the parent message.

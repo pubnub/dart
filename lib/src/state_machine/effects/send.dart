@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import '../effect.dart';
 import '../state_machine.dart';
 
@@ -8,6 +10,8 @@ class SendEffect<State, Context> extends Effect<State, Context> {
 
   SendEffect(this.event, {this.payload, this.after});
 
+  Timer _timer;
+
   @override
   void execute(
       {State exiting,
@@ -17,10 +21,16 @@ class SendEffect<State, Context> extends Effect<State, Context> {
       String edge,
       StateMachine machine,
       Updater<Context> updater}) {
-    if (after != null) {
-      Future.delayed(after, () => _send(machine));
-    } else {
-      _send(machine);
+    if (event == '_enter') {
+      if (after != null) {
+        _timer = Timer(after, () => _send(machine));
+      } else {
+        _send(machine);
+      }
+    } else if (event == '_exit') {
+      if (after != null) {
+        _timer.cancel();
+      }
     }
   }
 

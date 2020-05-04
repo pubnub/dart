@@ -8,7 +8,9 @@ final _log = Logger('pubnub.dx.messageAction');
 
 mixin MessageActionDx on Core {
   /// Fetches all message actions of a given [channel]
-  /// starting from [start] to [end] time
+  /// starting from [from] to [to] time
+  /// If [from] is not provided, the server uses the current time
+  /// Providing no [to] or [limit] means there is "no limit" to the number of actions being requested
   /// These actions can represent receipts, reactions or custom actions for messages.
   ///
   /// Pagination can be controlled using start, end and limit parameters, where start > end.
@@ -21,8 +23,8 @@ mixin MessageActionDx on Core {
   /// In some cases, due to internal limitations on the number of queries performed per request,
   /// the server will not be able to give the full range of actions requested.
   Future<FetchMessageActionsResult> fetchMessageActions(String channel,
-      {Timetoken start,
-      Timetoken end,
+      {Timetoken from,
+      Timetoken to,
       int limit,
       Keyset keyset,
       String using}) async {
@@ -39,7 +41,7 @@ mixin MessageActionDx on Core {
           log: _log,
           core: this,
           params: FetchMessageActionsParams(keyset, channel,
-              start: start, end: end, limit: limit),
+              start: from, end: to, limit: limit),
           serialize: (object, [_]) =>
               FetchMessageActionsResult.fromJson(object));
 
@@ -48,8 +50,8 @@ mixin MessageActionDx on Core {
       if (loopResult.moreActions != null) {
         var more = loopResult.moreActions as MoreAction;
         if (more != null) {
-          start = Timetoken(int.parse(more.start));
-          end = Timetoken(int.parse(more.end));
+          from = Timetoken(int.parse(more.start));
+          to = Timetoken(int.parse(more.end));
           limit = more.limit;
         }
       }

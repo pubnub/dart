@@ -146,7 +146,7 @@ void main() {
         var endTimetoken = Timetoken(15645905639093361);
         var limit = 5;
         await channel.fetchMessageActions(
-            start: startTimetoken, end: endTimetoken, limit: limit);
+            from: startTimetoken, to: endTimetoken, limit: limit);
         var invocation = fakePubnub.invocations[0];
         expect(invocation.isMethod, equals(true));
         expect(invocation.memberName, equals(#fetchMessageActions));
@@ -154,8 +154,8 @@ void main() {
         expect(
             invocation.namedArguments,
             equals({
-              #start: startTimetoken,
-              #end: endTimetoken,
+              #from: startTimetoken,
+              #to: endTimetoken,
               #limit: limit,
               #keyset: keyset,
               #using: null

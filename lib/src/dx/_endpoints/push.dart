@@ -49,11 +49,11 @@ class ListPushChannelsParams extends Parameters {
   @override
   Request toRequest() {
     var pathSegments = [
-      'v2',
+      pushGateway == PushGateway.apns2 ? 'v2' : 'v1',
       'push',
       'sub-key',
       keyset.subscribeKey,
-      pushGateway == PushGateway.apns2 ? 'device-apns2' : 'devices',
+      pushGateway == PushGateway.apns2 ? 'devices-apns2' : 'devices',
       deviceId,
     ];
 
@@ -102,11 +102,11 @@ class AddPushChannelsParams extends Parameters {
   @override
   Request toRequest() {
     var pathSegments = [
-      'v2',
+      pushGateway == PushGateway.apns2 ? 'v2' : 'v1',
       'push',
       'sub-key',
       keyset.subscribeKey,
-      pushGateway == PushGateway.apns2 ? 'device-apns2' : 'devices',
+      pushGateway == PushGateway.apns2 ? 'devices-apns2' : 'devices',
       deviceId,
     ];
     var queryParameters = {
@@ -127,14 +127,14 @@ class AddPushChannelsParams extends Parameters {
 }
 
 class AddPushChannelsResult extends Result {
-  int response;
-  String modifiedChannels;
+  int status;
+  String description;
   AddPushChannelsResult();
   factory AddPushChannelsResult.fromJson(dynamic object) {
     if (object is List) {
       return AddPushChannelsResult()
-        ..response = object[0]
-        ..modifiedChannels = object[1];
+        ..status = object[0]
+        ..description = object[1];
     }
 
     throw getExceptionFromDefaultResult(DefaultResult.fromJson(object));
@@ -156,11 +156,11 @@ class RemovePushChannelsParams extends Parameters {
   @override
   Request toRequest() {
     var pathSegments = [
-      'v2',
+      pushGateway == PushGateway.apns2 ? 'v2' : 'v1',
       'push',
       'sub-key',
       keyset.subscribeKey,
-      pushGateway == PushGateway.apns2 ? 'device-apns2' : 'devices',
+      pushGateway == PushGateway.apns2 ? 'devices-apns2' : 'devices',
       deviceId,
     ];
     var queryParameters = {
@@ -181,14 +181,14 @@ class RemovePushChannelsParams extends Parameters {
 }
 
 class RemovePushChannelsResult extends Result {
-  int response;
-  String modifiedChannels;
+  int status;
+  String description;
   RemovePushChannelsResult();
   factory RemovePushChannelsResult.fromJson(dynamic object) {
     if (object is List) {
       return RemovePushChannelsResult()
-        ..response = object[0]
-        ..modifiedChannels = object[1];
+        ..status = object[0]
+        ..description = object[1];
     }
 
     throw getExceptionFromDefaultResult(DefaultResult.fromJson(object));
@@ -209,11 +209,11 @@ class RemoveDeviceParams extends Parameters {
   @override
   Request toRequest() {
     var pathSegments = [
-      'v2',
+      pushGateway == PushGateway.apns2 ? 'v2' : 'v1',
       'push',
       'sub-key',
       keyset.subscribeKey,
-      pushGateway == PushGateway.apns2 ? 'device-apns2' : 'devices',
+      pushGateway == PushGateway.apns2 ? 'devices-apns2' : 'devices',
       deviceId,
       'remove'
     ];
@@ -235,8 +235,16 @@ class RemoveDeviceParams extends Parameters {
 }
 
 class RemoveDeviceResult extends Result {
+  int status;
+  String description;
   RemoveDeviceResult();
   factory RemoveDeviceResult.fromJson(dynamic object) {
-    return RemoveDeviceResult();
+    if (object is List) {
+      return RemoveDeviceResult()
+        ..status = object[0]
+        ..description = object[1];
+    }
+
+    throw getExceptionFromDefaultResult(DefaultResult.fromJson(object));
   }
 }
