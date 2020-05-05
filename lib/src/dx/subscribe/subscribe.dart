@@ -1,5 +1,3 @@
-import 'package:logging/logging.dart';
-
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
@@ -11,11 +9,11 @@ import 'package:pubnub/src/dx/_endpoints/presence.dart';
 
 export 'extensions/keyset.dart';
 
-final _log = Logger('pubnub.dx.subscribe');
+final _logger = injectLogger('dx.subscribe');
 
 mixin SubscribeDx on Core {
   /// Subscribes to [channels] and [channelGroups]. Returns [Subscription].
-  Subscription subscribe(
+  Subscription subscription(
       {Keyset keyset,
       String using,
       Set<String> channels,
@@ -23,16 +21,28 @@ mixin SubscribeDx on Core {
       bool withPresence}) {
     keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
 
-    if (keyset.subscriptionManager == null) {
-      keyset.subscriptionManager = SubscriptionManager(this, keyset);
-      keyset.subscriptionManager.update((state) => {'isEnabled': true});
-    }
+    keyset.subscriptionManager ??= SubscriptionManager(this, keyset);
 
     var subscription = Subscription(channels ?? {}, channelGroups ?? {}, keyset,
         withPresence: withPresence ?? false);
 
-    subscription.subscribe();
-    keyset.addSubscription(subscription);
+    return subscription;
+  }
+
+  Future<Subscription> subscribe(
+      {Keyset keyset,
+      String using,
+      Set<String> channels,
+      Set<String> channelGroups,
+      bool withPresence}) async {
+    keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
+
+    keyset.subscriptionManager ??= SubscriptionManager(this, keyset);
+
+    var subscription = Subscription(channels ?? {}, channelGroups ?? {}, keyset,
+        withPresence: withPresence ?? false);
+
+    await subscription.subscribe();
 
     return subscription;
   }
@@ -58,7 +68,7 @@ mixin SubscribeDx on Core {
     Ensure(keyset).isNotNull('keyset');
 
     return defaultFlow<LeaveParams, LeaveResult>(
-        log: _log,
+        logger: _logger,
         core: this,
         params: LeaveParams(keyset,
             channels: channels, channelGroups: channelGroups),
@@ -77,7 +87,7 @@ mixin SubscribeDx on Core {
     Ensure(keyset).isNotNull('keyset');
 
     return defaultFlow<HeartbeatParams, HeartbeatResult>(
-        log: _log,
+        logger: _logger,
         core: this,
         params: HeartbeatParams(keyset,
             channels: channels,

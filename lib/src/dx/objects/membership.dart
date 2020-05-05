@@ -1,12 +1,10 @@
-import 'package:logging/logging.dart';
-
 import 'package:pubnub/src/core/core.dart';
-import 'package:pubnub/src/dx/_utils/utils.dart';
 
+import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/objects/membership.dart';
 import 'schema.dart';
 
-final _log = Logger('pubnub.dx.objects.membership');
+final _logger = injectLogger('dx.objects.membership');
 
 class MembershipDx {
   final Core _core;
@@ -59,7 +57,7 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<GetMembershipsParams, MembershipsResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
@@ -139,7 +137,7 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
@@ -205,7 +203,7 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
@@ -274,7 +272,7 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
@@ -342,7 +340,7 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
@@ -395,7 +393,7 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<GetSpaceMembersParams, SpaceMembersResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => SpaceMembersResult.fromJson(object));
@@ -475,7 +473,7 @@ class MembershipDx {
         sort: sort);
 
     return defaultFlow<ManageSpaceMembersParams, SpaceMembersResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => SpaceMembersResult.fromJson(object));

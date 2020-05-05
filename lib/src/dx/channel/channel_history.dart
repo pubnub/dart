@@ -1,5 +1,3 @@
-import 'package:logging/logging.dart';
-
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/default.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
@@ -8,7 +6,7 @@ import 'package:pubnub/src/dx/_endpoints/history.dart';
 import 'channel.dart';
 import 'message.dart';
 
-final _log = Logger('pubnub.channel.history');
+final _logger = injectLogger('dx.channel.history');
 
 enum ChannelHistoryOrder { ascending, descending }
 
@@ -54,7 +52,7 @@ class ChannelHistory {
   /// [to] parameter is disregarded.
   Future<int> count() async {
     var result = await defaultFlow(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: CountMessagesParams(_keyset,
             channels: {_channel.name}, timetoken: from ?? Timetoken(1)),
@@ -71,7 +69,7 @@ class ChannelHistory {
   /// * if both [to] and [from] are defined, then it will work on messages that were sent between [from] and [to].
   Future<void> delete() async {
     await defaultFlow(
-      log: _log,
+      logger: _logger,
       core: _core,
       params:
           DeleteMessagesParams(_keyset, _channel.name, end: from, start: to),
@@ -91,7 +89,7 @@ class ChannelHistory {
 
     do {
       var result = await defaultFlow(
-          log: _log,
+          logger: _logger,
           core: _core,
           params: FetchHistoryParams(_keyset, _channel.name,
               reverse: true,
@@ -105,7 +103,7 @@ class ChannelHistory {
 
       _messages
           .addAll(result.messages.map((message) => Message.fromJson(message)));
-    } while (_cursor != 0);
+    } while (_cursor?.value != 0);
   }
 }
 
@@ -144,7 +142,7 @@ class PaginatedChannelHistory {
   ///
   /// Keep in mind, that before the first [more] call,
   /// it will always be true.
-  bool get hasMore => _hasMoreOverride == false && _cursor != 0;
+  bool get hasMore => _hasMoreOverride == false && _cursor?.value != 0;
 
   /// Resets the history to the beginning.
   void reset() {
@@ -155,7 +153,7 @@ class PaginatedChannelHistory {
   /// Fetches more messages and stores them in [messages].
   Future<FetchHistoryResult> more() async {
     var result = await defaultFlow(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: FetchHistoryParams(_keyset, _channel.name,
             reverse: _order.choose(ascending: true, descending: false),
@@ -176,13 +174,13 @@ class PaginatedChannelHistory {
     if (_order == ChannelHistoryOrder.descending) {
       _cursor = result.startTimetoken;
 
-      if (result.startTimetoken != 0) {
+      if (result.startTimetoken?.value != 0) {
         _startTimetoken = result.startTimetoken;
       }
     } else {
       _cursor = result.endTimetoken;
 
-      if (result.endTimetoken != 0) {
+      if (result.endTimetoken?.value != 0) {
         _endTimetoken = result.endTimetoken;
       }
     }

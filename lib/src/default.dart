@@ -1,10 +1,7 @@
-import 'package:pubnub/src/dx/presence/presence.dart';
-
 import 'core/core.dart';
 import 'core/keyset.dart';
 import 'core/net/net.dart';
 
-import 'dx/objects/schema.dart';
 import 'net/net.dart';
 import 'parser/parser.dart';
 
@@ -18,11 +15,29 @@ import 'dx/channel/channel_group.dart';
 import 'dx/message_action/message_action.dart';
 import 'dx/pam/pam.dart';
 import 'dx/push/push.dart';
+import 'dx/objects/schema.dart';
 import 'dx/objects/membership.dart';
 import 'dx/objects/space.dart';
 import 'dx/objects/user.dart';
+import 'dx/presence/presence.dart';
 
 /// PubNub library.
+///
+/// All methods on this instance accept two named parameters: `keyset` and `using`.
+/// * `keyset` accepts an instance of [Keyset],
+/// * `using` accepts a String name of a keyset that was defined using `pubnub.keysets.add` method.
+///
+/// Both of those parameters are used to obtain an instance of [Keyset] that will be used in subsequent operations.
+///
+/// > **Example**: In case of method [channel], all operations on a returned [Channel] instance
+/// > will be executed with a keyset that was obtained when the [channel] method was called.
+///
+///
+/// At the beginning, the method that you call will try to obtain the keyset in accordance to those rules:
+/// * `keyset` parameter has the highest priority,
+/// * if `keyset` is null, it will try to obtain a keyset named `using`,
+/// * if `using` is null, it will try to obtain the default keyset,
+/// * if default keyset is not defined, it will throw an error.
 class PubNub extends Core
     with
         TimeDx,
@@ -37,23 +52,23 @@ class PubNub extends Core
   /// channel groups and other features.
   BatchDx batch;
 
-  /// [ChannelGroupDx] contains method that allow manipulating channel groups.
+  /// [ChannelGroupDx] contains methods that allow manipulating channel groups.
   ChannelGroupDx channelGroups;
 
-  /// [UserDx] contains methods that provide functionality to manage users
+  /// [UserDx] contains methods that provide functionality to manage users.
   UserDx users;
 
-  /// [SpaceDX] contains methods that allow manipulating spaces
+  /// [SpaceDx] contains methods that allow manipulating spaces.
   SpaceDx spaces;
 
-  /// [MembershipDX] contains methods that allow managing members of spaces and
-  /// their user's memberships
+  /// [MembershipDx] contains methods that allow managing members of spaces and
+  /// their users' memberships.
   MembershipDx memberships;
 
-  /// Version of library.
+  /// Current version of this library.
   static String version = Core.version;
 
-  PubNub({Keyset defaultKeyset, NetworkingModule networking})
+  PubNub({Keyset defaultKeyset, NetworkModule networking})
       : super(
             defaultKeyset: defaultKeyset,
             networking: networking ?? PubNubNetworkingModule(),
@@ -65,36 +80,25 @@ class PubNub extends Core
     memberships = MembershipDx(this);
   }
 
-  /// Returns a representation of a channel. Useful if you only need to work
-  /// on one channel.
+  /// Returns a representation of a channel.
   ///
-  /// All operations on a channel will use the keyset passed into this method:
-  /// * [keyset] parameter has the highest priority,
-  /// * if [keyset] is null, it will try to obtain a keyset named [using],
-  /// * if [using] is null, it will try to obtain the default keyset,
-  /// * if default keyset is not defined, it will throw an error.
+  /// Useful if you only need to work on one channel.
   Channel channel(String name, {Keyset keyset, String using}) {
     keyset ??= keysets.get(using, defaultIfNameIsNull: true);
 
     return Channel(this, keyset, name);
   }
 
-  /// Returns a representation of a channel group. Useful if you need to work on a
-  /// bunch of channels at the same time.
+  /// Returns a representation of a channel group.
   ///
-  /// * [keyset] parameter has the highest priority,
-  /// * if [keyset] is null, it will try to obtain a keyset named [using],
-  /// * if [using] is null, it will try to obtain the default keyset,
-  /// * if default keyset is not defined, it will throw an error.
+  /// Useful if you need to work on a bunch of channels at the same time.
   ChannelGroup channelGroup(String name, {Keyset keyset, String using}) {
     keyset ??= keysets.get(using, defaultIfNameIsNull: true);
 
     return ChannelGroup(this, keyset, name);
   }
 
-  /// You can use this method to create a new user
-  /// It returns representation of a user which further
-  /// can be used to perform that user specific operations
+  /// Creates and returns a new instance of [User] (from Objects API).
   Future<User> user(String userId, String name,
       {String email,
       dynamic custom,
@@ -120,9 +124,7 @@ class PubNub extends Core
     return usr;
   }
 
-  /// You can use this method to create a new space
-  /// It returns representation of a space which further
-  /// can be used to perform that channel specific operations
+  /// Creates and returns a new instance of [Space] (from Objects API).
   Future<Space> space(String spaceId, String name,
       {String description, dynamic custom, Keyset keyset, String using}) async {
     keyset ??= keysets.get(using, defaultIfNameIsNull: true);
@@ -139,9 +141,9 @@ class PubNub extends Core
     return space;
   }
 
-  /// Device object with [deviceId] can be used to manage it's registration
-  /// to receive Push notification from channel(s).
-  /// You should provide valid non empty [deviceId]
+  /// Returns a new instance of [Device] (from Push Notification API).
+  ///
+  /// [deviceId] should be non-empty and valid.
   Device device(String deviceId, {Keyset keyset, String using}) {
     keyset ??= keysets.get(using, defaultIfNameIsNull: true);
     return Device(this, keyset, deviceId);

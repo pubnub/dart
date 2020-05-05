@@ -1,13 +1,12 @@
 import 'dart:async';
 
-import 'package:logging/logging.dart';
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_endpoints/subscribe.dart';
 import 'package:pubnub/src/state_machine/state_machine.dart';
 
 import 'exceptions.dart';
 
-final _log = Logger('pubnub.dx.subscribe.manager');
+final _logger = injectLogger('dx.subscribe.manager');
 
 class SubscriptionManager {
   Core core;
@@ -60,34 +59,38 @@ class SubscriptionManager {
         ctx.update(ctx.payload);
       })
       ..when('state.idle', 'enters').callback((ctx) {
-        _log.info(
+        _logger.info(
             'Entering ${ctx.entering} from ${ctx.exiting} because of ${ctx.event}');
 
         if (ctx.event == 'update') {
           var newContext = <String, dynamic>{...ctx.context, ...ctx.payload};
+          Completer<void> completer = newContext['completer'];
+          newContext.remove('completer');
           ctx.update(newContext);
 
-          if (newContext['isEnabled'] == true &&
-              (newContext['channels'].length > 0 ||
-                  newContext['channelGroups'].length > 0)) {
+          if ((newContext['channels'].length > 0 ||
+              newContext['channelGroups'].length > 0)) {
             if (_messagesController == null || _messagesController.isClosed) {
-              _log.info('Creating the controller...');
+              _logger.info('Creating the controller...');
               _messagesController = StreamController.broadcast();
             }
             ctx.machine.send('fetch');
           } else {
             if (_messagesController != null) {
-              _log.info('Disposing the controller...');
+              _logger.info('Disposing the controller...');
               _messagesController.close();
               _messagesController = null;
             }
           }
+
+          completer?.complete();
         }
       });
 
     _SubscriptionMachine
       ..when('state.fetching').machine('request', _RequestMachine,
           onBuild: (m, sm) {
+        _logger.info('Entering state.fetching');
         var params = SubscribeParams(keyset, m.context['timetoken'].value,
             region: m.context['region'],
             channels: m.context['channels'],
@@ -124,11 +127,15 @@ class SubscriptionManager {
     });
   }
 
-  void update(Map<String, dynamic> Function(Map<String, dynamic> ctx) cb) {
+  Future<void> update(
+      Map<String, dynamic> Function(Map<String, dynamic> ctx) cb) {
+    var completer = Completer<void>();
     if (machine.state != 'state.idle') {
       machine.send('fail', SubscribeOutdatedException());
     }
 
-    machine.send('update', cb(machine.context));
+    machine.send('update', {...cb(machine.context), 'completer': completer});
+
+    return completer.future;
   }
 }

@@ -122,7 +122,7 @@ MockBuilder when(
       _queue, request ?? MockRequest(method, path, headers, body));
 }
 
-class FakeNetworkingModule implements NetworkingModule {
+class FakeNetworkingModule implements NetworkModule {
   FakeNetworkingModule() {
     _queue.clear();
   }

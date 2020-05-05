@@ -1,7 +1,16 @@
+## [v1.1.0](https://github.com/pubnub/dart/releases/tag/v1.1.0)
+May 5 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.0.5...v1.1.0)
+
+- ⭐️️ Bumps cbor package version and fixes analyzer warnings. 
+- ⭐️️ Removes many dependencies that are unnecessary. 
+- ⭐️️ Build_runner is no longer necessary to use. 
+- 🐛 Refactors logging to rely on Zones. 
+- 🐛 Fixes issues with resubscribing and improves injectLogger. 
+
 ## [v1.0.5](https://github.com/pubnub/dart/releases/tag/v1.0.5)
 May 4 2020
-
-[Full Changelog](https://github.com/pubnub/dart/compare/v1.0.4...v1.0.5)
 
 - 🐛 Fix wrong API Uri in Push Notifications. Fixed the following issues reported by [@aadil058](https://github.com/aadil058): [#2](https://github.com/pubnub/dart/issues/2).
 - 🐛 Fix Subscription.unsubscribe to correctly close the messages stream. Fixed the following issues reported by [@are](https://github.com/are): [#3](https://github.com/pubnub/dart/issues/3).

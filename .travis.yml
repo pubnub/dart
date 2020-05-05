@@ -3,11 +3,6 @@ dist: xenial
 os: linux
 dart: stable
 
-
-before_script: 
-  - pub run build_runner build
-
-
 stages:
   - name: "test"
     if: |

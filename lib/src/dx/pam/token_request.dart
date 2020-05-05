@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:logging/logging.dart';
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_endpoints/pam.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
@@ -8,7 +7,7 @@ import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'resource.dart';
 import 'token.dart';
 
-final _log = Logger('pubnub.dx.pam');
+final _logger = injectLogger('dx.pam');
 
 class TokenRequest {
   final Core _core;
@@ -73,7 +72,7 @@ class TokenRequest {
     var payload = json.encode(data);
 
     return defaultFlow<PamGrantTokenParams, Token>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: PamGrantTokenParams(
             _keyset, payload, '${Time().now().millisecondsSinceEpoch ~/ 1000}'),

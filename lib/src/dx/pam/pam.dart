@@ -1,4 +1,3 @@
-import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 
 import 'package:pubnub/src/core/core.dart';
@@ -11,7 +10,7 @@ export 'token.dart' show Token;
 export 'resource.dart' show Resource, ResourceType, ResourceTypeExtension;
 export 'token_request.dart' show TokenRequest;
 
-final _log = Logger('pubnub.dx.pam');
+final _logger = injectLogger('dx.pam');
 
 mixin PamDx on Core {
   /// Use this method to modify permissions for provided [authKeys].
@@ -48,13 +47,13 @@ mixin PamDx on Core {
         delete: delete);
 
     var result = await defaultFlow<PamGrantParams, PamGrantResult>(
-        log: _log,
+        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => PamGrantResult.fromJson(object));
 
     if (result.warning) {
-      _log.log(Level.WARNING, result.message);
+      _logger.warning(result.message);
     }
 
     return result;

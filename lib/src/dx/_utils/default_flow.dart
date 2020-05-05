@@ -1,4 +1,3 @@
-import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 
 import 'package:pubnub/src/core/core.dart';
@@ -9,7 +8,7 @@ typedef Serialize<R> = R Function(dynamic object,
     [Map<String, List<String>> headers]);
 
 Future<R> defaultFlow<P extends Parameters, R>(
-    {@required Logger log,
+    {@required ILogger logger,
     @required Core core,
     @required P params,
     @required Serialize<R> serialize}) async {

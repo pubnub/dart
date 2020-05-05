@@ -3,6 +3,16 @@ changelog:
   -
     changes:
       -
+        text: "Refactors logging to rely on Zones."
+        type: bug
+      -
+        text: "Fixes issues with resubscribing and improves injectLogger."
+        type: bug
+    date: May 5, 20
+    version: v1.1.0
+  -
+    changes:
+      -
         text: "Fix wrong API Uri in Push Notifications."
         type: bug
       -
@@ -171,4 +181,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "1.0.5"
+version: "1.1.0"

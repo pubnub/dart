@@ -1,11 +1,10 @@
-import 'package:logging/logging.dart';
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/default.dart';
 
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/push.dart';
 
-final _log = Logger('pubnub.dx.push');
+final _logger = injectLogger('dx.push');
 
 // Managing device registrations for Push Notification Service
 mixin PushNotificationDx on Core {
@@ -21,7 +20,7 @@ mixin PushNotificationDx on Core {
   ///
   /// If [gateway] is [PushGateway.apns2] then [topic] is mandatory to provide
   /// [topic] is bundle id of the mobile application
-  /// [environmnet] denoting the environment of the mobile application for [PushGateway.apns2]
+  /// [environment] denoting the environment of the mobile application for [PushGateway.apns2]
   /// it can be either [Environment.development] or [Environment.production]
   /// default value for [environment] is [Environment.development]
   Future<ListPushChannelsResult> listPushChannels(
@@ -38,7 +37,7 @@ mixin PushNotificationDx on Core {
     var params = ListPushChannelsParams(keyset, deviceId, gateway,
         topic: topic, environment: environment);
     return defaultFlow<ListPushChannelsParams, ListPushChannelsResult>(
-        log: _log,
+        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => ListPushChannelsResult.fromJson(object));
@@ -56,7 +55,7 @@ mixin PushNotificationDx on Core {
   ///
   /// If [gateway] is [PushGateway.apns2] then [topic] is mandatory to provide
   /// [topic] is bundle id of the mobile application
-  /// [environmnet] denoting the environment of the mobile application for [PushGateway.apns2]
+  /// [environment] denoting the environment of the mobile application for [PushGateway.apns2]
   /// it can be either [Environment.development] or [Environment.production]
   /// default value for [environment] is [Environment.development]
   Future<AddPushChannelsResult> addPushChannels(
@@ -73,13 +72,13 @@ mixin PushNotificationDx on Core {
     var params = AddPushChannelsParams(keyset, deviceId, gateway, channels,
         topic: topic, environment: environment);
     return defaultFlow<AddPushChannelsParams, AddPushChannelsResult>(
-        log: _log,
+        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => AddPushChannelsResult.fromJson(object));
   }
 
-  /// It removes registration of device [deviceId] from [channles]
+  /// It removes registration of device [deviceId] from [channels]
   /// So device [deviceId] will not get push notifications from [channels]
   ///
   /// [deviceId] is the id/token of the device
@@ -91,7 +90,7 @@ mixin PushNotificationDx on Core {
   ///
   /// If [gateway] is [PushGateway.apns2] then [topic] is mandatory to provide
   /// [topic] is bundle id of the mobile application
-  /// [environmnet] denoting the environment of the mobile application for [PushGateway.apns2]
+  /// [environment] denoting the environment of the mobile application for [PushGateway.apns2]
   /// it can be either [Environment.development] or [Environment.production]
   /// default value for [environment] is [Environment.development]
   Future<RemovePushChannelsResult> removePushChannels(
@@ -108,7 +107,7 @@ mixin PushNotificationDx on Core {
     var params = RemovePushChannelsParams(keyset, deviceId, gateway, channels,
         topic: topic, environment: environment);
     return defaultFlow<RemovePushChannelsParams, RemovePushChannelsResult>(
-        log: _log,
+        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => RemovePushChannelsResult.fromJson(object));
@@ -126,7 +125,7 @@ mixin PushNotificationDx on Core {
   ///
   /// If [gateway] is [PushGateway.apns2] then [topic] is mandatory to provide
   /// [topic] is bundle id of the mobile application
-  /// [environmnet] denoting the environment of the mobile application for [PushGateway.apns2]
+  /// [environment] denoting the environment of the mobile application for [PushGateway.apns2]
   /// it can be either [Environment.development] or [Environment.production]
   /// default value for [environment] is [Environment.development]
   Future<RemoveDeviceResult> removeDevice(String deviceId, PushGateway gateway,
@@ -142,7 +141,7 @@ mixin PushNotificationDx on Core {
     var params = RemoveDeviceParams(keyset, deviceId, gateway,
         topic: topic, environment: environment);
     return defaultFlow<RemoveDeviceParams, RemoveDeviceResult>(
-        log: _log,
+        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => RemoveDeviceResult.fromJson(object));

@@ -1,16 +1,16 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:logging/logging.dart';
 import 'package:pool/pool.dart';
 
-import 'package:pubnub/src/core/net/net.dart';
-import 'package:pubnub/src/core/net/request.dart';
-import 'package:pubnub/src/net/exceptions.dart';
+import 'package:pubnub/src/core/core.dart';
+import 'exceptions.dart';
 
-final _log = Logger('pubnub.networking');
+final _logger = injectLogger('pubnub.networking');
 
 class PubNubRequestHandler extends RequestHandler {
+  static int _idCounter = 0;
+
   Request request;
   Dio _client;
 
@@ -18,7 +18,10 @@ class PubNubRequestHandler extends RequestHandler {
   final Completer<Response> _contents = Completer();
   PoolResource _resource;
 
-  PubNubRequestHandler(this.request, Dio client, PoolResource resource) {
+  final int _id;
+
+  PubNubRequestHandler(this.request, Dio client, PoolResource resource)
+      : _id = PubNubRequestHandler._idCounter++ {
     _client = client;
     _resource = resource;
     _initialize();
@@ -28,7 +31,7 @@ class PubNubRequestHandler extends RequestHandler {
     var uri = Uri(
         pathSegments: request.pathSegments,
         queryParameters: request.queryParameters);
-    _log.info('Starting request to ${uri}...');
+    _logger.info('($_id) Starting request to ${uri}...');
     try {
       var response = await _client.requestUri<String>(uri,
           data: request.body,
@@ -38,10 +41,10 @@ class PubNubRequestHandler extends RequestHandler {
           ),
           cancelToken: _cancelToken);
 
-      _log.info('Request succeed! (${response.request.uri})');
+      _logger.info('($_id) Request succeed! (${response.request.uri})');
       _contents.complete(response);
     } on DioError catch (e) {
-      _log.info('Request failed ($e, ${e.message})');
+      _logger.info('($_id) Request failed ($e, ${e.message})');
       switch (e.type) {
         case DioErrorType.CANCEL:
           _contents.completeError(PubNubRequestCancelException(e.error));
@@ -86,7 +89,7 @@ class PubNubRequestHandler extends RequestHandler {
   }
 }
 
-class PubNubNetworkingModule implements NetworkingModule {
+class PubNubNetworkingModule implements NetworkModule {
   static final Uri origin = Uri(scheme: 'https', host: 'ps.pndsn.com');
 
   final Pool _pool = Pool(10);

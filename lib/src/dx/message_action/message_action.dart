@@ -1,24 +1,19 @@
-import 'package:logging/logging.dart';
 import 'package:pubnub/src/core/core.dart';
-import 'package:pubnub/src/dx/_utils/utils.dart';
 
+import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/message_action.dart';
 
-final _log = Logger('pubnub.dx.messageAction');
+final _logger = injectLogger('dx.message_action');
 
 mixin MessageActionDx on Core {
-  /// Fetches all message actions of a given [channel]
-  /// starting from [from] to [to] time
-  /// If [from] is not provided, the server uses the current time
-  /// Providing no [to] or [limit] means there is "no limit" to the number of actions being requested
-  /// These actions can represent receipts, reactions or custom actions for messages.
+  /// Returns all message actions of a given [channel].
   ///
-  /// Pagination can be controlled using start, end and limit parameters, where start > end.
-  /// If start is not provided, the server uses the current time.
+  /// Pagination can be controlled using [from], [to] and [limit] parameters.
   ///
-  /// Providing no end or limit means there is "no limit" to the number of actions being requested.
-  /// In this event the server will try and retrieve all actions for the channel, going back in time forever.
-  /// You can use [limit] parameter to limit the number of fetched message actions
+  /// If [from] is not provided, the server uses the current time.
+  ///
+  /// If both [to] or [limit] are null, it will fetch the maximum amount of message actions -
+  /// the server will try and retrieve all actions for the channel, going back in time forever.
   ///
   /// In some cases, due to internal limitations on the number of queries performed per request,
   /// the server will not be able to give the full range of actions requested.
@@ -38,7 +33,7 @@ mixin MessageActionDx on Core {
     var loopResult;
     do {
       loopResult = await defaultFlow(
-          log: _log,
+          logger: _logger,
           core: this,
           params: FetchMessageActionsParams(keyset, channel,
               start: from, end: to, limit: limit),
@@ -60,45 +55,45 @@ mixin MessageActionDx on Core {
     return fetchMessageActionsResult;
   }
 
-  /// This method allows user to post actions on a "parent message"
-  /// by specifying the [keyset], [channel], and [timetoken] of the parent message.
+  /// This method adds a message action to a parent message.
   ///
-  /// The server does not validate that the parent message exists at the time the action is posted.
-  /// The server does, however, check that you have not already added this particular action to this message.
-  /// In other words, for a given parent message (identified by [subkey], [channel], [timetoken]),
-  ///  there is at most one unique (type, value) pair per uuid.
+  /// [type] and [value] cannot be empty.
   ///
-  /// Message action contains two properties : action[type] and action[value] and those should not be empty
-  /// Empty [type] and/or [value] throws Ensure exception
+  /// Parent message is a normal message identified by a combination of subscription key, [channel] and [timetoken].
+  /// > **Important!**
+  /// >
+  /// > Server *does not* validate if the parent message exists at the time of adding the message action.
+  /// >
+  /// > It does, however, check if you have not **already added this particular action** to the parent message.
+  ///
+  /// In other words, for a given parent message, there can be only one message action with [type] and [value].
   Future<AddMessageActionResult> addMessageAction(
-      String type, String value, String channel, Timetoken messageTimetoken,
+      String type, String value, String channel, Timetoken timetoken,
       {Keyset keyset, String using}) async {
     keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
 
     Ensure(keyset).isNotNull('keyset');
     Ensure(type).isNotEmpty('message action type');
     Ensure(value).isNotEmpty('message action value');
-    Ensure(messageTimetoken).isNotNull('message timetoken');
+    Ensure(timetoken).isNotNull('message timetoken');
 
-    var payload = <String, String>{};
-    payload['type'] = type;
-    payload['value'] = value;
-    var addMessageActionbody = await super.parser.encode(payload);
+    var addMessageActionBody =
+        await super.parser.encode({'type': type, 'value': value});
 
     var params = AddMessageActionParams(
-        keyset, channel, messageTimetoken, addMessageActionbody);
+        keyset, channel, timetoken, addMessageActionBody);
 
     return defaultFlow<AddMessageActionParams, AddMessageActionResult>(
-        log: _log,
+        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => AddMessageActionResult.fromJson(object));
   }
 
-  /// Allows users to remove their previously-posted message actions,
-  /// by specifying the parent message, and the single timetoken of the action(s) they wish to delete.
+  /// This method removes an existing message action (identified by [actionTimetoken])
+  /// from a parent message (identified by [messageTimetoken]) on a [channel].
   ///
-  /// It is technically possible to delete more than one action here,
+  /// It is technically possible to delete more than one action with this method;
   /// if the same UUID posted different actions on the same parent message at the same time.
   ///
   /// If all goes well, the action(s) will be deleted from the database,
@@ -118,7 +113,7 @@ mixin MessageActionDx on Core {
         keyset, channel, messageTimetoken, actionTimetoken);
 
     return defaultFlow<DeleteMessageActionParams, DeleteMessageActionResult>(
-        log: _log,
+        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => DeleteMessageActionResult.fromJson(object));

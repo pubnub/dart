@@ -1,11 +1,9 @@
-import 'package:logging/logging.dart';
-
 import 'package:pubnub/src/core/core.dart';
 
 import 'package:pubnub/src/dx/_endpoints/publish.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
-final _log = Logger('pubnub.dx.publish');
+final _logger = injectLogger('dx.publish');
 
 mixin PublishDx on Core {
   /// Publishes [message] to a [channel].
@@ -34,8 +32,10 @@ mixin PublishDx on Core {
     var params = PublishParams(keyset, channel, payload,
         storeMessage: storeMessage, ttl: ttl);
 
+    _logger.verbose('Publishing a message to a channel $channel');
+
     return defaultFlow<PublishParams, PublishResult>(
-        log: _log,
+        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => PublishResult.fromJson(object));

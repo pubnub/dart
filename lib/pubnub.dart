@@ -22,4 +22,6 @@ export './src/dx/channel/message.dart' show Message;
 export './src/dx/pam/pam.dart'
     show Resource, ResourceType, ResourceTypeExtension, TokenRequest, Token;
 
+export './src/logging/logging.dart' show StreamLogger, LogRecord;
+
 export './src/default.dart';

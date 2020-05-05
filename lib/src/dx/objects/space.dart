@@ -1,14 +1,12 @@
-import 'package:logging/logging.dart';
-
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/default.dart';
-import 'package:pubnub/src/dx/_utils/utils.dart';
 
+import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/objects/membership.dart';
 import 'package:pubnub/src/dx/_endpoints/objects/space.dart';
 import 'schema.dart';
 
-final _log = Logger('pubnub.dx.objects.space');
+final _logger = injectLogger('dx.objects.space');
 
 class SpaceDx {
   final Core _core;
@@ -34,7 +32,7 @@ class SpaceDx {
     var params = CreateSpaceParams(payload, keyset, include: include);
 
     return defaultFlow<CreateSpaceParams, CreateSpaceResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => CreateSpaceResult.fromJson(object));
@@ -87,7 +85,7 @@ class SpaceDx {
         sort: sort);
 
     return defaultFlow<GetAllSpacesParams, GetAllSpacesResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => GetAllSpacesResult.fromJson(object));
@@ -112,7 +110,7 @@ class SpaceDx {
     var params = GetSpaceParams(keyset, spaceId, include: include);
 
     return defaultFlow<GetSpaceParams, GetSpaceResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => GetSpaceResult.fromJson(object));
@@ -143,7 +141,7 @@ class SpaceDx {
     var params = UpdateSpaceParams(keyset, payload, spaceId, include: include);
 
     return defaultFlow<UpdateSpaceParams, UpdateSpaceResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => UpdateSpaceResult.fromJson(object));
@@ -164,7 +162,7 @@ class SpaceDx {
     var params = DeleteSpaceParams(keyset, spaceId);
 
     return defaultFlow<DeleteSpaceParams, DeleteSpaceResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => DeleteSpaceResult.fromJson(object));

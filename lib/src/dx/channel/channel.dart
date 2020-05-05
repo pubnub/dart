@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/default.dart';
 import 'package:pubnub/src/dx/_endpoints/presence.dart';
@@ -16,10 +14,15 @@ class Channel {
 
   Channel(this._core, this._keyset, this.name);
 
-  /// Subscribes to channel [name]. Returns [Subscription] instance.
+  /// Returns a subscription to channel [name]. Returns [Subscription] instance.
   ///
   /// If you set [withPresence] to true, it will also subscribe to presence events.
-  Subscription subscribe({bool withPresence = false}) {
+  Subscription subscription({bool withPresence = false}) {
+    return _core.subscription(
+        keyset: _keyset, channels: {name}, withPresence: withPresence);
+  }
+
+  Future<Subscription> subscribe({bool withPresence = false}) {
     return _core.subscribe(
         keyset: _keyset, channels: {name}, withPresence: withPresence);
   }
@@ -66,38 +69,38 @@ class Channel {
     return _core.announceLeave(keyset: _keyset, channels: {name});
   }
 
-  /// Returns all message actions of this channel
+  /// Returns all message actions of this channel.
   ///
-  /// Pagination can be controlled using [from], [to] and [limit] parameters,
-  /// If [from] is not provided, the server uses the current time
-  /// Providing no [to] or [limit] means there is "no limit" to the number of actions being requested
+  /// Pagination can be controlled using [from], [to] and [limit] parameters.
   ///
-  /// Providing no end or limit means there is "no limit" to the number of actions being requested.
-  /// In this event the server will try and retrieve all actions for the channel, going back in time forever.
+  /// If [from] is not provided, the server uses the current time.
+  ///
+  /// If both [to] or [limit] are null, it will fetch the maximum amount of message actions -
+  /// the server will try and retrieve all actions for the channel, going back in time forever.
   Future<FetchMessageActionsResult> fetchMessageActions(
           {Timetoken from, Timetoken to, int limit}) =>
       _core.fetchMessageActions(name,
           from: from, to: to, limit: limit, keyset: _keyset);
 
-  /// You can use this method to post actions on a "parent message"
-  /// by specifying message action details [type], [value] and [timetoken] of the parent message.
+  /// This method adds a message action to a parent message.
   ///
-  /// The server does not validate that the parent message exists at the time the action is posted.
-  /// The server does, however, check that you have not already added this particular action to this message.
-  /// In other words, for a given parent message (identified by [subkey], [channel], [timetoken]),
-  ///  there is at most one unique (type, value) pair per uuid.
+  /// [type] and [value] cannot be empty.
   ///
-  /// Message action contains two properties : action[type] and action[value] and those should not be empty
-  /// Empty [type] and/or [value] throws Ensure exception
+  /// Parent message is a normal message identified by a combination of subscription key, channel [name] and [timetoken].
+  /// > **Important!**
+  /// >
+  /// > Server *does not* validate if the parent message exists at the time of adding the message action.
+  /// >
+  /// > It does, however, check if you have not **already added this particular action** to the parent message.
+  ///
+  /// In other words, for a given parent message, there can be only one message action with [type] and [value].
   Future<AddMessageActionResult> addMessageAction(
-          String type, String value, Timetoken messageTimetoken) =>
-      _core.addMessageAction(type, value, name, messageTimetoken,
-          keyset: _keyset);
+          String type, String value, Timetoken timetoken) =>
+      _core.addMessageAction(type, value, name, timetoken, keyset: _keyset);
 
-  /// Allows users to remove their previously-posted message actions,
-  /// by specifying the parent message, and the single timetoken of the action(s) they wish to delete.
+  /// This method removes an existing message action (identified by [actionTimetoken]) from a parent message (identified by [messageTimetoken]).
   ///
-  /// It is technically possible to delete more than one action here,
+  /// It is technically possible to delete more than one action with this method;
   /// if the same UUID posted different actions on the same parent message at the same time.
   ///
   /// If all goes well, the action(s) will be deleted from the database,

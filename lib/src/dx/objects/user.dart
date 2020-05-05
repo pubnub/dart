@@ -1,15 +1,12 @@
-import 'package:logging/logging.dart';
-
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/default.dart';
 
+import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/objects/membership.dart';
 import 'package:pubnub/src/dx/_endpoints/objects/user.dart';
-import 'package:pubnub/src/dx/objects/schema.dart';
+import 'schema.dart';
 
-import 'package:pubnub/src/dx/_utils/utils.dart';
-
-final _log = Logger('pubnub.dx.objects.user');
+final _logger = injectLogger('dx.objects.user');
 
 class UserDx {
   final Core _core;
@@ -31,7 +28,7 @@ class UserDx {
     var params = CreateUserParams(payload, keyset, include: include);
 
     return defaultFlow<CreateUserParams, CreateUserResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => CreateUserResult.fromJson(object));
@@ -78,7 +75,7 @@ class UserDx {
         sort: sort);
 
     return defaultFlow<GetAllUsersParams, GetAllUsersResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => GetAllUsersResult.fromJson(object));
@@ -93,7 +90,7 @@ class UserDx {
     Ensure(userId).isNotEmpty('userId');
     var params = GetUserParams(keyset, userId, include: include);
     return defaultFlow<GetUserParams, GetUserResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => GetUserResult.fromJson(object));
@@ -119,7 +116,7 @@ class UserDx {
     var params = UpdateUserParams(keyset, payload, userId, include: include);
 
     return defaultFlow<UpdateUserParams, UpdateUserResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => UpdateUserResult.fromJson(object));
@@ -135,7 +132,7 @@ class UserDx {
     var params = DeleteUserParams(keyset, userId);
 
     return defaultFlow<DeleteUserParams, DeleteUserResult>(
-        log: _log,
+        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => DeleteUserResult.fromJson(object));

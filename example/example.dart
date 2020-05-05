@@ -7,7 +7,7 @@ void main() async {
           Keyset(subscribeKey: 'demo', publishKey: 'demo', uuid: UUID('demo')));
 
   // Subscribe to a channel
-  var subscription = pubnub.subscribe(channels: {'test'});
+  var subscription = await pubnub.subscribe(channels: {'test'});
 
   subscription.messages.take(1).listen((message) {
     print(message);
@@ -17,7 +17,7 @@ void main() async {
   await pubnub.publish('test', {'message': 'My message!'});
 
   // Unsubscribe
-  subscription.unsubscribe();
+  await subscription.unsubscribe();
 
   // Channel abstraction for easier usage
   var channel = pubnub.channel('test');
