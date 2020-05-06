@@ -3,6 +3,13 @@ changelog:
   -
     changes:
       -
+        text: "Expose missing types."
+        type: bug
+    date: May 6, 20
+    version: v1.1.1
+  -
+    changes:
+      -
         text: "Refactors logging to rely on Zones."
         type: bug
       -
@@ -181,4 +188,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "1.1.0"
+version: "1.1.1"

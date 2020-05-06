@@ -1,3 +1,10 @@
+## [v1.1.1](https://github.com/pubnub/dart/releases/tag/v1.1.1)
+May 6 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.1.0...v1.1.1)
+
+- 🐛 Expose missing types. 
+
 ## [v1.1.0](https://github.com/pubnub/dart/releases/tag/v1.1.0)
 May 5 2020
 
