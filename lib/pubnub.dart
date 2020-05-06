@@ -9,7 +9,7 @@ export './src/dx/channel/channel.dart' show Channel;
 export './src/dx/channel/channel_group.dart' show ChannelGroup;
 
 export './src/dx/_endpoints/publish.dart' show PublishResult;
-export './src/dx/_endpoints/presence.dart' show HeartbeatResult, LeaveResult;
+export './src/dx/_endpoints/presence.dart' show HeartbeatResult, LeaveResult, StateInfo;
 export './src/dx/_endpoints/signal.dart' show SignalResult;
 
 export './src/dx/subscribe/subscription.dart' show Subscription;
