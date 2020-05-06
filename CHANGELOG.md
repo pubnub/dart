@@ -1,3 +1,10 @@
+## [v1.1.2](https://github.com/pubnub/dart/releases/tag/v1.1.2)
+May 6 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.1.1...v1.1.2)
+
+- 🐛 Fixes issues of missing types for objects and push-notification. Fixed the following issues reported by [@pushpendraKh](https://github.com/pushpendraKh): [#5](https://github.com/pubnub/dart/issues/5).
+
 ## [v1.1.1](https://github.com/pubnub/dart/releases/tag/v1.1.1)
 May 6 2020
 

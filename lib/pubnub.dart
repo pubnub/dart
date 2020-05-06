@@ -14,7 +14,9 @@ export './src/dx/_endpoints/presence.dart'
 export './src/dx/_endpoints/signal.dart' show SignalResult;
 export './src/dx/_endpoints/push.dart'
     show
+        PushGateway,
         PushGatewayExtension,
+        Environment,
         EnvironmentExtension,
         AddPushChannelsResult,
         ListPushChannelsResult,
@@ -32,6 +34,8 @@ export './src/dx/subscribe/envelope.dart'
 export './src/dx/channel/channel_history.dart'
     show PaginatedChannelHistory, ChannelHistory;
 export './src/dx/channel/message.dart' show Message;
+
+export './src/dx/_endpoints/objects/objects_types.dart';
 
 export './src/dx/pam/pam.dart'
     show Resource, ResourceType, ResourceTypeExtension, TokenRequest, Token;

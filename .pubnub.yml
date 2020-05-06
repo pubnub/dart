@@ -3,6 +3,13 @@ changelog:
   -
     changes:
       -
+        text: "Fixes issues of missing types for objects and push-notification."
+        type: bug
+    date: May 6, 20
+    version: v1.1.2
+  -
+    changes:
+      -
         text: "Expose missing types."
         type: bug
     date: May 6, 20
@@ -188,4 +195,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "1.1.1"
+version: "1.1.2"
