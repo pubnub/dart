@@ -1,3 +1,11 @@
+## [v1.1.3](https://github.com/pubnub/dart/releases/tag/v1.1.3)
+May 11 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.1.2...v1.1.3)
+
+- 🐛 Fixes unsubscribeAll so its no longer modifying subscription list during iteration. Fixed the following issues reported by [@pushpendraKh](https://github.com/pushpendraKh): [#6](https://github.com/pubnub/dart/issues/6).
+- 🐛 Fixes exports to include presence and channel group results. 
+
 ## [v1.1.2](https://github.com/pubnub/dart/releases/tag/v1.1.2)
 May 6 2020
 

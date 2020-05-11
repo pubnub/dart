@@ -49,11 +49,11 @@ mixin SubscribeDx on Core {
 
   /// Unsubscribes from all channels and channel groups.
   void unsubscribeAll() async {
-    super.keysets.forEach((key, value) async {
-      for (var sub in value.subscriptions) {
+    for (var keyset in keysets.keysets) {
+      for (var sub in [...keyset.subscriptions]) {
         await sub.unsubscribe();
       }
-    });
+    }
   }
 
   /// Announce in [channels] and [channelGroups] that a device linked to the UUID in the keyset left.

@@ -35,8 +35,6 @@ class Envelope {
   dynamic userMeta;
   dynamic originalMessage;
 
-  Envelope._();
-
   Envelope.fromJson(dynamic object) {
     shard = object['a'] as String;
     subscriptionPattern = object['b'] as String;

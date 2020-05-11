@@ -59,7 +59,7 @@ class SubscriptionManager {
         ctx.update(ctx.payload);
       })
       ..when('state.idle', 'enters').callback((ctx) {
-        _logger.info(
+        _logger.silly(
             'Entering ${ctx.entering} from ${ctx.exiting} because of ${ctx.event}');
 
         if (ctx.event == 'update') {
@@ -71,13 +71,13 @@ class SubscriptionManager {
           if ((newContext['channels'].length > 0 ||
               newContext['channelGroups'].length > 0)) {
             if (_messagesController == null || _messagesController.isClosed) {
-              _logger.info('Creating the controller...');
+              _logger.silly('Creating the controller...');
               _messagesController = StreamController.broadcast();
             }
             ctx.machine.send('fetch');
           } else {
             if (_messagesController != null) {
-              _logger.info('Disposing the controller...');
+              _logger.silly('Disposing the controller...');
               _messagesController.close();
               _messagesController = null;
             }
@@ -90,7 +90,7 @@ class SubscriptionManager {
     _SubscriptionMachine
       ..when('state.fetching').machine('request', _RequestMachine,
           onBuild: (m, sm) {
-        _logger.info('Entering state.fetching');
+        _logger.silly('Entering state.fetching');
         var params = SubscribeParams(keyset, m.context['timetoken'].value,
             region: m.context['region'],
             channels: m.context['channels'],

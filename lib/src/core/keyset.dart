@@ -11,6 +11,9 @@ class KeysetStore {
   final Map<String, Keyset> _store = {};
   String _defaultName;
 
+  /// Returns a list of all keysets in this store
+  List<Keyset> get keysets => _store.values.toList();
+
   /// Adds a [keyset] named [name] to the store.
   ///
   /// If [useAsDefault] is true, then it will be used as a default keyset.
@@ -73,7 +76,9 @@ class KeysetStore {
 
   /// Iterate over each keyset.
   void forEach(void Function(String, Keyset) callback) {
-    _store.forEach(callback);
+    for (var entry in _store.entries) {
+      callback(entry.key, entry.value);
+    }
   }
 
   Keyset _getDefault({bool throwOnNull}) {

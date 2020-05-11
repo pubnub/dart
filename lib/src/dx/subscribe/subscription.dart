@@ -112,6 +112,8 @@ class Subscription extends Disposable {
       await _streamSubscription.cancel();
 
       _streamSubscription = null;
+    } else {
+      _logger.warning('Tried unsubscribing from an inactive stream...');
     }
   }
 
