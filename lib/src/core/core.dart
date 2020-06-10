@@ -20,7 +20,7 @@ class Core {
   NetworkModule networking;
   ParserModule parser;
 
-  static String version = '1.1.3';
+  static String version = '1.2.0';
 
   Core(
       {Keyset defaultKeyset,

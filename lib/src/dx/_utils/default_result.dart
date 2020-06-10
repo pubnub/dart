@@ -34,6 +34,10 @@ class DefaultResult extends Result {
       hasError = true;
       errorDetails = object['error'];
       errorMessage = errorDetails['message'];
+      if (errorDetails['details'] != null) {
+        (errorDetails['details'] as List).forEach((e) => errorMessage +=
+            '\n Error Details: ${e['message']} for ${e['location']} in ${e['locationType']}');
+      }
     } else if (object['error'] is bool) {
       hasError = object['error'] as bool;
       errorMessage = object['error_message'];
@@ -52,29 +56,4 @@ class DefaultResult extends Result {
       ..otherKeys = collectOtherKeys(
           object, ['status', 'error', 'message', 'error_message', 'service']);
   }
-}
-
-class DefaultObjectResult extends Result {
-  dynamic status;
-  Map<String, dynamic> error;
-  dynamic data;
-  Map<String, dynamic> otherKeys = {};
-
-  DefaultObjectResult._();
-
-  static Map<String, dynamic> collectOtherKeys(
-      dynamic object, List<String> knownKeys) {
-    var clone = Map<String, dynamic>.from(object);
-    for (var key in knownKeys) {
-      clone.remove(key);
-    }
-    return clone;
-  }
-
-  factory DefaultObjectResult.fromJson(dynamic object) =>
-      DefaultObjectResult._()
-        ..status = object['status']
-        ..data = object['data']
-        ..error = object['error'] as Map<String, dynamic> ?? {}
-        ..otherKeys = collectOtherKeys(object, ['status', 'error', 'data']);
 }

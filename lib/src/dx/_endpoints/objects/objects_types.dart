@@ -1,20 +1,22 @@
-export './membership.dart'
-    show SpaceMemberInfo, MembershipInfo, MembershipsResult, SpaceMembersResult;
-
-export './space.dart'
+export './uuid_metadata.dart'
     show
-        SpaceInfo,
-        GetSpaceResult,
-        GetAllSpacesResult,
-        CreateSpaceResult,
-        UpdateSpaceResult,
-        DeleteSpaceResult;
+        UuidMetadataDetails,
+        GetAllUuidMetadataResult,
+        GetUuidMetadataResult,
+        SetUuidMetadataResult,
+        RemoveUuidMetadataResult;
 
-export './user.dart'
+export './channel_metadata.dart'
     show
-        UserInfo,
-        GetAllUsersResult,
-        CreateUserResult,
-        UpdateUserResult,
-        GetUserResult,
-        DeleteUserResult;
+        ChannelMetadataDetails,
+        GetAllChannelMetadataResult,
+        GetChannelMetadataResult,
+        SetChannelMetadataResult,
+        RemoveChannelMetadataResult;
+
+export './membership_metadata.dart'
+    show
+        MembershipMetadata,
+        ChannelMemberMetadata,
+        MembershipsResult,
+        ChannelMembersResult;

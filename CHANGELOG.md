@@ -1,7 +1,13 @@
+## [v1.2.0](https://github.com/pubnub/dart/releases/tag/v1.2.0)
+June 10 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.1.3...v1.2.0)
+
+- 🌟️ Add simplified Objects API support with UUID and Channel metadata / membership management. 
+- 🐛 Fixes missing PushGateway type support of fcm for Push Notification. 
+
 ## [v1.1.3](https://github.com/pubnub/dart/releases/tag/v1.1.3)
 May 11 2020
-
-[Full Changelog](https://github.com/pubnub/dart/compare/v1.1.2...v1.1.3)
 
 - 🐛 Fixes unsubscribeAll so its no longer modifying subscription list during iteration. Fixed the following issues reported by [@pushpendraKh](https://github.com/pushpendraKh): [#6](https://github.com/pubnub/dart/issues/6).
 - 🐛 Fixes exports to include presence and channel group results. 

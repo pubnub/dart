@@ -1,12 +1,5 @@
-@Timeout(Duration(seconds: 55))
 import 'package:test/test.dart';
-
-import 'objects/objects.dart';
-
-import 'package:pubnub/src/default.dart';
-import 'package:pubnub/src/dx/_endpoints/push.dart';
-import 'package:pubnub/src/dx/push/push.dart';
-
+import 'package:pubnub/pubnub.dart';
 import '../net/fake_net.dart';
 part './fixtures/push.dart';
 

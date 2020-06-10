@@ -1,5 +1,4 @@
 import 'package:pubnub/src/core/core.dart';
-import 'package:pubnub/src/dx/_utils/utils.dart';
 
 class FetchMessageActionsParams extends Parameters {
   Keyset keyset;
@@ -52,15 +51,13 @@ class FetchMessageActionsResult extends Result {
   FetchMessageActionsResult();
 
   factory FetchMessageActionsResult.fromJson(dynamic object) {
-    var result = DefaultObjectResult.fromJson(object);
     return FetchMessageActionsResult()
-      .._status = result.status as int
-      .._actions = (result.data as List)
+      .._status = object['status'] as int
+      .._actions = (object['data'] as List)
           ?.map((e) => e == null ? null : MessageAction.fromJson(e))
           ?.toList()
-      .._moreActions = result.otherKeys['more'] != null
-          ? MoreAction.fromJson(result.otherKeys['more'])
-          : null
+      .._moreActions =
+          object['more'] != null ? MoreAction.fromJson(object['more']) : null
       .._error = object['error'];
   }
 }
@@ -145,11 +142,11 @@ class AddMessageActionResult extends Result {
   AddMessageActionResult();
 
   factory AddMessageActionResult.fromJson(dynamic object) {
-    var result = DefaultObjectResult.fromJson(object);
     return AddMessageActionResult()
-      .._status = result.status
-      .._data = result.data != null ? MessageAction.fromJson(result.data) : null
-      .._error = result.error;
+      .._status = object['status']
+      .._data =
+          object['data'] != null ? MessageAction.fromJson(object['data']) : null
+      .._error = object['error'];
   }
 }
 
@@ -199,10 +196,9 @@ class DeleteMessageActionResult extends Result {
   DeleteMessageActionResult();
 
   factory DeleteMessageActionResult.fromJson(dynamic object) {
-    var result = DefaultObjectResult.fromJson(object);
     return DeleteMessageActionResult()
-      .._status = result.status as int
-      .._data = result.data
-      .._error = result.error;
+      .._status = object['status'] as int
+      .._data = object['data']
+      .._error = object['error'];
   }
 }

@@ -15,11 +15,9 @@ import 'dx/channel/channel_group.dart';
 import 'dx/message_action/message_action.dart';
 import 'dx/pam/pam.dart';
 import 'dx/push/push.dart';
-import 'dx/objects/schema.dart';
-import 'dx/objects/membership.dart';
-import 'dx/objects/space.dart';
-import 'dx/objects/user.dart';
 import 'dx/presence/presence.dart';
+import 'dx/objects/objects_types.dart';
+import 'dx/objects/objects.dart';
 
 /// PubNub library.
 ///
@@ -55,15 +53,9 @@ class PubNub extends Core
   /// [ChannelGroupDx] contains methods that allow manipulating channel groups.
   ChannelGroupDx channelGroups;
 
-  /// [UserDx] contains methods that provide functionality to manage users.
-  UserDx users;
-
-  /// [SpaceDx] contains methods that allow manipulating spaces.
-  SpaceDx spaces;
-
-  /// [MembershipDx] contains methods that allow managing members of spaces and
-  /// their users' memberships.
-  MembershipDx memberships;
+  /// [ObjectsDx] contains methods to manage channel, uuid metadata and
+  /// UUID's membership and Channel's members
+  ObjectsDx objects;
 
   /// Current version of this library.
   static String version = Core.version;
@@ -75,9 +67,7 @@ class PubNub extends Core
             parser: PubNubParserModule()) {
     batch = BatchDx(this);
     channelGroups = ChannelGroupDx(this);
-    users = UserDx(this);
-    spaces = SpaceDx(this);
-    memberships = MembershipDx(this);
+    objects = ObjectsDx(this);
   }
 
   /// Returns a representation of a channel.
@@ -98,47 +88,55 @@ class PubNub extends Core
     return ChannelGroup(this, keyset, name);
   }
 
-  /// Creates and returns a new instance of [User] (from Objects API).
-  Future<User> user(String userId, String name,
-      {String email,
-      dynamic custom,
+  /// Creates [UUIDMetadata], sets metadata for given `uuid` to the database
+  /// * If `uuid` argument is null then it picks `uuid` of `keyset`
+  /// Returned [UUIDMetadata] instance is further useful to manage it's membership metadata
+  Future<UUIDMetadata> uuidMetadata(
+      {String uuid,
+      String name,
+      String email,
+      Map<String, dynamic> custom,
       String externalId,
       String profileUrl,
       Keyset keyset,
       String using}) async {
     keyset ??= keysets.get(using, defaultIfNameIsNull: true);
-
-    User usr;
-    var result = await users.create(
-        UserDetails(userId, name,
+    UUIDMetadata uuidMetadata;
+    var result = await objects.setUUIDMetadata(
+        UuidMetadataInput(
+            name: name,
             email: email,
             externalId: externalId,
             profileUrl: profileUrl,
             custom: custom),
+        uuid: uuid,
         keyset: keyset);
-
-    var userObject = result.data;
-    if (result.status == 200) {
-      usr = User(this, keyset, userObject.id);
+    if (result.metadata != null) {
+      uuidMetadata = UUIDMetadata(this, keyset, result.metadata.id);
     }
-    return usr;
+    return uuidMetadata;
   }
 
-  /// Creates and returns a new instance of [Space] (from Objects API).
-  Future<Space> space(String spaceId, String name,
-      {String description, dynamic custom, Keyset keyset, String using}) async {
+  /// Creates and returns a new instance of [ChannelMetadata] (from Objects API).
+  Future<ChannelMetadata> channelMetadata(String channelId,
+      {String name,
+      String description,
+      Map<String, dynamic> custom,
+      Keyset keyset,
+      String using}) async {
     keyset ??= keysets.get(using, defaultIfNameIsNull: true);
 
-    Space space;
-    var result = await spaces.create(
-        SpaceDetails(spaceId, name, description: description, custom: custom),
+    ChannelMetadata channelMetadata;
+    var result = await objects.setChannelMetadata(
+        channelId,
+        ChannelMetadataInput(
+            name: name, description: description, custom: custom),
         keyset: keyset);
 
-    var spaceObject = result.data;
-    if (result.status == 200) {
-      space = Space(this, keyset, spaceObject.id);
+    if (result.metadata != null) {
+      channelMetadata = ChannelMetadata(this, keyset, result.metadata.id);
     }
-    return space;
+    return channelMetadata;
   }
 
   /// Returns a new instance of [Device] (from Push Notification API).

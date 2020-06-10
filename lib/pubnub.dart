@@ -7,7 +7,7 @@ export './src/dx/_utils/ensure.dart' show InvariantException;
 
 export './src/dx/channel/channel.dart' show Channel;
 export './src/dx/channel/channel_group.dart' show ChannelGroup;
-
+export './src/dx/push/push.dart' show Device;
 export './src/dx/_endpoints/publish.dart' show PublishResult;
 export './src/dx/_endpoints/presence.dart'
     show HeartbeatResult, LeaveResult, HereNowResult, StateInfo;
@@ -44,6 +44,8 @@ export './src/dx/_endpoints/objects/objects_types.dart';
 
 export './src/dx/pam/pam.dart'
     show Resource, ResourceType, ResourceTypeExtension, TokenRequest, Token;
+
+export './src/dx/objects/objects_types.dart';
 
 export './src/logging/logging.dart' show StreamLogger, LogRecord;
 

@@ -1,7 +1,7 @@
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
-enum PushGateway { apns, gcm, mpns, apns2 }
+enum PushGateway { apns, fcm, gcm, mpns, apns2 }
 
 enum Environment { development, production }
 
@@ -21,6 +21,8 @@ extension EnvironmentExtension on Environment {
 extension PushGatewayExtension on PushGateway {
   String value() {
     switch (this) {
+      case PushGateway.fcm:
+        return 'fcm';
       case PushGateway.gcm:
         return 'gcm';
       case PushGateway.apns:
