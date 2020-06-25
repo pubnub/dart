@@ -4,6 +4,9 @@ library pubnub;
 
 export './src/core/core.dart';
 export './src/dx/_utils/ensure.dart' show InvariantException;
+export './src/crypto/crypto.dart' show PubNubCryptoModule, CryptoConfiguration;
+export './src/crypto/encryption_mode.dart'
+    show EncryptionMode, EncryptionModeExtension;
 
 export './src/dx/channel/channel.dart' show Channel;
 export './src/dx/channel/channel_group.dart' show ChannelGroup;

@@ -9,6 +9,7 @@ import 'extensions/keyset.dart';
 final _logger = injectLogger('dx.subscribe.subscription');
 
 class Subscription extends Disposable {
+  final Core _core;
   final Keyset _keyset;
 
   /// List of channels that this subscription represents.
@@ -54,7 +55,7 @@ class Subscription extends Disposable {
   final StreamController _streamController =
       StreamController<Envelope>.broadcast();
 
-  Subscription(this.channels, this.channelGroups, this._keyset,
+  Subscription(this.channels, this.channelGroups, this._core, this._keyset,
       {this.withPresence});
 
   /// Resubscribe to [channels] and [channelGroups].
@@ -83,8 +84,13 @@ class Subscription extends Disposable {
             (withPresence &&
                 (presenceChannels.contains(envelope['c']) ||
                     presenceChannelGroups.contains(envelope['b'])));
-      }).map((envelope) => Envelope.fromJson(envelope));
-
+      }).map((envelope) {
+        if (envelope['b'] == null && _keyset.cipherKey != null) {
+          envelope['d'] =
+              _core.crypto.decrypt(_keyset.cipherKey, envelope['d']);
+        }
+        return Envelope.fromJson(envelope);
+      });
       _streamSubscription = s.listen((env) => _streamController.add(env));
     }
   }

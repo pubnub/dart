@@ -1,9 +1,8 @@
 import 'core/core.dart';
-import 'core/keyset.dart';
-import 'core/net/net.dart';
 
 import 'net/net.dart';
 import 'parser/parser.dart';
+import 'crypto/crypto.dart';
 
 import 'dx/time.dart';
 import 'dx/publish/publish.dart';
@@ -60,11 +59,16 @@ class PubNub extends Core
   /// Current version of this library.
   static String version = Core.version;
 
-  PubNub({Keyset defaultKeyset, NetworkModule networking})
+  PubNub(
+      {Keyset defaultKeyset,
+      NetworkModule networking,
+      ParserModule parser,
+      CryptoModule crypto})
       : super(
             defaultKeyset: defaultKeyset,
             networking: networking ?? PubNubNetworkingModule(),
-            parser: PubNubParserModule()) {
+            parser: parser ?? PubNubParserModule(),
+            crypto: crypto ?? PubNubCryptoModule()) {
     batch = BatchDx(this);
     channelGroups = ChannelGroupDx(this);
     objects = ObjectsDx(this);

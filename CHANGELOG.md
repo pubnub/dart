@@ -1,3 +1,10 @@
+## [v1.3.0](https://github.com/pubnub/dart/releases/tag/v1.3.0)
+June 25 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.2.0...v1.3.0)
+
+- 🌟️ Add message encryption support. 
+
 ## [v1.2.0](https://github.com/pubnub/dart/releases/tag/v1.2.0)
 June 10 2020
 

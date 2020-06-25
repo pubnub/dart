@@ -101,8 +101,13 @@ class ChannelHistory {
 
       _cursor = result.endTimetoken;
 
-      _messages
-          .addAll(result.messages.map((message) => Message.fromJson(message)));
+      _messages.addAll(result.messages.map((message) {
+        if (_keyset.cipherKey != null) {
+          message['message'] = _core.crypto
+              .decrypt(_keyset.cipherKey, message['message'] as String);
+        }
+        return Message.fromJson(message);
+      }));
     } while (_cursor?.value != 0);
   }
 }
@@ -185,8 +190,13 @@ class PaginatedChannelHistory {
       }
     }
 
-    _messages
-        .addAll(result.messages.map((message) => Message.fromJson(message)));
+    _messages.addAll(result.messages.map((message) {
+      if (_keyset.cipherKey != null) {
+        message['message'] = _core.crypto
+            .decrypt(_keyset.cipherKey, message['message'] as String);
+      }
+      return Message.fromJson(message);
+    }));
 
     return result;
   }

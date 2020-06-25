@@ -3,6 +3,13 @@ changelog:
   -
     changes:
       -
+        text: "Add message encryption support."
+        type: feature
+    date: Jun 25, 20
+    version: v1.3.0
+  -
+    changes:
+      -
         text: "Add simplified Objects API support with UUID and Channel metadata / membership management."
         type: feature
       -
@@ -215,4 +222,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "1.2.0"
+version: "1.3.0"

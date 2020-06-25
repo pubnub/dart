@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 
 import 'exceptions.dart';
+import 'crypto/cipher_key.dart';
 import 'uuid.dart';
 
 class KeysetException extends PubNubException {
@@ -108,6 +109,9 @@ class Keyset {
   /// If PAM is enabled, authentication key is required to access channels.
   final String authKey;
 
+  /// Used for message encryption.
+  final CipherKey cipherKey;
+
   /// UUID used in MAU pricing.
   final UUID uuid;
 
@@ -119,5 +123,6 @@ class Keyset {
       this.publishKey,
       this.secretKey,
       this.authKey,
+      this.cipherKey,
       this.uuid});
 }

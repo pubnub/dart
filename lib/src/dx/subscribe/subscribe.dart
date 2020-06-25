@@ -23,7 +23,8 @@ mixin SubscribeDx on Core {
 
     keyset.subscriptionManager ??= SubscriptionManager(this, keyset);
 
-    var subscription = Subscription(channels ?? {}, channelGroups ?? {}, keyset,
+    var subscription = Subscription(
+        channels ?? {}, channelGroups ?? {}, this, keyset,
         withPresence: withPresence ?? false);
 
     return subscription;
@@ -39,7 +40,8 @@ mixin SubscribeDx on Core {
 
     keyset.subscriptionManager ??= SubscriptionManager(this, keyset);
 
-    var subscription = Subscription(channels ?? {}, channelGroups ?? {}, keyset,
+    var subscription = Subscription(
+        channels ?? {}, channelGroups ?? {}, this, keyset,
         withPresence: withPresence ?? false);
 
     await subscription.subscribe();

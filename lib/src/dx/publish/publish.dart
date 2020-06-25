@@ -29,6 +29,12 @@ mixin PublishDx on Core {
     Ensure(keyset).isNotNull('keyset');
 
     var payload = await super.parser.encode(message);
+
+    if (keyset.cipherKey != null) {
+      payload =
+          await super.parser.encode(crypto.encrypt(keyset.cipherKey, payload));
+    }
+
     var params = PublishParams(keyset, channel, payload,
         storeMessage: storeMessage, ttl: ttl);
 
