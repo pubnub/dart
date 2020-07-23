@@ -3,6 +3,16 @@ changelog:
   -
     changes:
       -
+        text: "Add file apis to support file feature."
+        type: feature
+      -
+        text: "Add support for random initialization vector for messages and file."
+        type: improvement
+    date: Jul 23, 20
+    version: v1.4.0
+  -
+    changes:
+      -
         text: "Add message encryption support."
         type: feature
     date: Jun 25, 20
@@ -161,6 +171,7 @@ features:
     - PUBLISH-FIRE
     - PUBLISH-REPLICATION-FLAG
     - PUBLISH-MESSAGE-TTL
+    - PUBLISH-FILE-MESSAGE
   push:
     - PUSH-ADD-DEVICE-TO-CHANNELS
     - PUSH-REMOVE-DEVICE-FROM-CHANNELS
@@ -206,12 +217,21 @@ features:
     - OBJECTS-MANAGE-CHANNEL-MEMBERS-V2
     - OBJECTS-FILTERING
     - OBJECTS-SORTING
+  files:
+    - FILES-SEND-FILE
+    - FILES-LIST-FILES
+    - FILES-GET-FILE-URL
+    - FILES-DELETE-FILE
+    - FILES-DOWNLOAD-FILE
   message-actions:
     - MESSAGE-ACTIONS-GET
     - MESSAGE-ACTIONS-ADD
     - MESSAGE-ACTIONS-REMOVE
   time:
     - TIME-TIME
+  others:
+    - RANDOM-INITIALIZATION-VECTOR
+
 name: dart
 schema: 1
 scm: github.com/pubnub/dart
@@ -222,4 +242,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "1.3.0"
+version: "1.4.0"

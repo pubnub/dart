@@ -100,14 +100,13 @@ class ChannelHistory {
           serialize: (object, [_]) => FetchHistoryResult.fromJson(object));
 
       _cursor = result.endTimetoken;
-
-      _messages.addAll(result.messages.map((message) {
+      _messages.addAll(await Future.wait(result.messages.map((message) async {
         if (_keyset.cipherKey != null) {
-          message['message'] = _core.crypto
-              .decrypt(_keyset.cipherKey, message['message'] as String);
+          message['message'] = await _core.parser.decode(_core.crypto
+              .decrypt(_keyset.cipherKey, message['message'] as String));
         }
         return Message.fromJson(message);
-      }));
+      })));
     } while (_cursor?.value != 0);
   }
 }
@@ -190,13 +189,13 @@ class PaginatedChannelHistory {
       }
     }
 
-    _messages.addAll(result.messages.map((message) {
+    _messages.addAll(await Future.wait(result.messages.map((message) async {
       if (_keyset.cipherKey != null) {
-        message['message'] = _core.crypto
-            .decrypt(_keyset.cipherKey, message['message'] as String);
+        message['message'] = await _core.parser.decode(_core.crypto
+            .decrypt(_keyset.cipherKey, message['message'] as String));
       }
       return Message.fromJson(message);
-    }));
+    })));
 
     return result;
   }

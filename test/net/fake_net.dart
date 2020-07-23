@@ -17,7 +17,7 @@ class FakeRequestHandler extends RequestHandler {
     var uri = Uri(
         pathSegments: request.pathSegments,
         queryParameters: request.queryParameters);
-
+    if (request.url != null) uri = request.url;
     var doesMethodMatch =
         mock.request.method.toUpperCase() == request.type.method.toUpperCase();
 
@@ -55,6 +55,11 @@ class FakeRequestHandler extends RequestHandler {
   }
 
   @override
+  Future<dynamic> response() {
+    return _contents.future;
+  }
+
+  @override
   Future<String> text() async {
     return (await _contents.future).body;
   }
@@ -81,9 +86,12 @@ class MockRequest {
 class MockResponse {
   final int status;
   final String body;
+  final int statusCode;
+  final dynamic data;
   final Map<String, List<String>> headers;
 
-  const MockResponse(this.status, [this.headers = const {}, this.body]);
+  const MockResponse(this.status,
+      [this.headers = const {}, this.body, this.statusCode, this.data]);
 }
 
 class Mock {
@@ -103,8 +111,11 @@ class MockBuilder {
       {int status,
       Map<String, List<String>> headers,
       String body,
+      int statusCode,
+      dynamic data,
       MockResponse response}) {
-    var mock = Mock(_request, response ?? MockResponse(status, headers, body));
+    var mock = Mock(_request,
+        response ?? MockResponse(status, headers, body, statusCode, data));
 
     _queue.add(mock);
   }
@@ -129,6 +140,15 @@ class FakeNetworkingModule implements NetworkModule {
 
   @override
   Future<RequestHandler> handle(Request request) async {
+    if (_queue.isEmpty) {
+      throw MockException('set up the mock first');
+    }
+
+    return FakeRequestHandler(request, _queue.removeAt(0));
+  }
+
+  @override
+  Future<RequestHandler> handleCustomRequest(Request request) async {
     if (_queue.isEmpty) {
       throw MockException('set up the mock first');
     }

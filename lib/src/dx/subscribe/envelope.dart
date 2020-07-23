@@ -1,12 +1,13 @@
 import 'package:pubnub/src/core/core.dart';
 
-enum MessageType { normal, signal, objects, messageAction }
+enum MessageType { normal, signal, objects, messageAction, file }
 
 MessageType fromInt(int messageType) => const {
       null: MessageType.normal,
       1: MessageType.signal,
       2: MessageType.objects,
       3: MessageType.messageAction,
+      4: MessageType.file
     }[messageType];
 
 extension MessageTypeExtension on MessageType {
@@ -15,6 +16,7 @@ extension MessageTypeExtension on MessageType {
         MessageType.signal: 1,
         MessageType.objects: 2,
         MessageType.messageAction: 3,
+        MessageType.file: 4,
       }[this];
 }
 

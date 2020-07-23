@@ -84,10 +84,10 @@ class Subscription extends Disposable {
             (withPresence &&
                 (presenceChannels.contains(envelope['c']) ||
                     presenceChannelGroups.contains(envelope['b'])));
-      }).map((envelope) {
-        if (envelope['b'] == null && _keyset.cipherKey != null) {
-          envelope['d'] =
-              _core.crypto.decrypt(_keyset.cipherKey, envelope['d']);
+      }).asyncMap((envelope) async {
+        if (envelope['e'] == null && _keyset.cipherKey != null) {
+          envelope['d'] = await _core.parser
+              .decode(_core.crypto.decrypt(_keyset.cipherKey, envelope['d']));
         }
         return Envelope.fromJson(envelope);
       });

@@ -9,7 +9,7 @@ typedef SignFunction = String Function(
     String body);
 
 class Request {
-  static Map<String, String> defualtQueryParameters = {
+  static Map<String, String> defaultQueryParameters = {
     'pnsdk': 'PubNub-Dart/${Core.version}'
   };
   static final Map<String, String> defaultHeaders = {
@@ -21,17 +21,19 @@ class Request {
 
   Map<String, String> queryParameters;
   Map<String, String> headers;
-  String body;
+  dynamic body;
+  Uri url;
 
   Request(this.type, this.pathSegments,
       {Map<String, String> queryParameters,
       Map<String, String> headers,
-      String body,
-      SignFunction signWith}) {
+      dynamic body,
+      SignFunction signWith,
+      this.url}) {
     pathSegments = pathSegments;
     this.queryParameters = {
       ...(queryParameters ?? {}),
-      ...defualtQueryParameters
+      ...defaultQueryParameters
     };
     this.headers = {...(headers ?? {}), ...defaultHeaders};
     this.body = body;
@@ -49,8 +51,9 @@ class Request {
 }
 
 abstract class RequestHandler {
-  Future<String> text();
+  Future<dynamic> text();
   Future<Map<String, List<String>>> headers();
+  Future<dynamic> response();
 
   bool isCancelled;
   void cancel([dynamic reason]);

@@ -9,5 +9,8 @@ class CryptoException extends PubNubException {
 
 abstract class CryptoModule {
   String encrypt(CipherKey key, String input);
-  String decrypt(CipherKey key, String input);
+  dynamic decrypt(CipherKey key, String input);
+
+  List<int> encryptFileData(CipherKey key, List<int> input);
+  List<int> decryptFileData(CipherKey key, List<int> input);
 }

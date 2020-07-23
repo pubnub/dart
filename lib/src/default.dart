@@ -15,6 +15,8 @@ import 'dx/message_action/message_action.dart';
 import 'dx/pam/pam.dart';
 import 'dx/push/push.dart';
 import 'dx/presence/presence.dart';
+import 'dx/file/file.dart';
+import 'dx/file/fileManager.dart';
 import 'dx/objects/objects_types.dart';
 import 'dx/objects/objects.dart';
 
@@ -56,6 +58,9 @@ class PubNub extends Core
   /// UUID's membership and Channel's members
   ObjectsDx objects;
 
+  /// [FileDx] contains that allow managing files
+  FileDx files;
+
   /// Current version of this library.
   static String version = Core.version;
 
@@ -72,6 +77,7 @@ class PubNub extends Core
     batch = BatchDx(this);
     channelGroups = ChannelGroupDx(this);
     objects = ObjectsDx(this);
+    files = FileDx(this, PubNubFileManager());
   }
 
   /// Returns a representation of a channel.

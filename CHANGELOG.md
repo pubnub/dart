@@ -1,3 +1,11 @@
+## [v1.4.0](https://github.com/pubnub/dart/releases/tag/v1.4.0)
+July 23 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.3.0...v1.4.0)
+
+- 🌟️ Add file apis to support file feature. 
+- ⭐️️ Add support for random initialization vector for messages and file. 
+
 ## [v1.3.0](https://github.com/pubnub/dart/releases/tag/v1.3.0)
 June 25 2020
 

@@ -12,6 +12,12 @@ export './src/dx/channel/channel.dart' show Channel;
 export './src/dx/channel/channel_group.dart' show ChannelGroup;
 export './src/dx/push/push.dart' show Device;
 export './src/dx/_endpoints/publish.dart' show PublishResult;
+export './src/dx/_endpoints/file.dart'
+    show
+        PublishFileMessageResult,
+        ListFilesResult,
+        DeleteFileResult,
+        DownloadFileResult;
 export './src/dx/_endpoints/presence.dart'
     show HeartbeatResult, LeaveResult, HereNowResult, StateInfo;
 export './src/dx/_endpoints/channel_group.dart'
@@ -41,6 +47,7 @@ export './src/dx/subscribe/envelope.dart'
     show Envelope, PresenceAction, PresenceEvent;
 export './src/dx/channel/channel_history.dart'
     show PaginatedChannelHistory, ChannelHistory;
+export './src/dx/file/file.dart';
 export './src/dx/channel/message.dart' show Message;
 
 export './src/dx/_endpoints/objects/objects_types.dart';

@@ -23,7 +23,7 @@ class Core {
   ParserModule parser;
   CryptoModule crypto;
 
-  static String version = '1.3.0';
+  static String version = '1.4.0';
 
   Core(
       {Keyset defaultKeyset,
