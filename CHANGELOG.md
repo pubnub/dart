@@ -1,3 +1,10 @@
+## [v1.4.1](https://github.com/pubnub/dart/releases/tag/v1.4.1)
+July 24 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.4.0...v1.4.1)
+
+- 🐛 Fixes issue of missing exposed MessageType enum. 
+
 ## [v1.4.0](https://github.com/pubnub/dart/releases/tag/v1.4.0)
 July 23 2020
 

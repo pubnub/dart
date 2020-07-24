@@ -44,7 +44,7 @@ export './src/dx/_endpoints/message_action.dart'
 
 export './src/dx/subscribe/subscription.dart' show Subscription;
 export './src/dx/subscribe/envelope.dart'
-    show Envelope, PresenceAction, PresenceEvent;
+    show Envelope, PresenceAction, PresenceEvent, MessageType;
 export './src/dx/channel/channel_history.dart'
     show PaginatedChannelHistory, ChannelHistory;
 export './src/dx/file/file.dart';
