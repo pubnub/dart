@@ -1,3 +1,10 @@
+## [v1.4.2](https://github.com/pubnub/dart/releases/tag/v1.4.2)
+July 27 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.4.1...v1.4.2)
+
+- 🐛 Fixes issue of invalid type argument for fcm push gateway type. Fixed the following issues reported by [@vikram25897](https://github.com/vikram25897): [#10](https://github.com/pubnub/dart/issues/10).
+
 ## [v1.4.1](https://github.com/pubnub/dart/releases/tag/v1.4.1)
 July 24 2020
 

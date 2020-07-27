@@ -12,8 +12,8 @@ final _logger = injectLogger('dx.file');
 
 class FileDx {
   final Core _core;
-  final FileManager fileManager;
-  FileDx(this._core, this.fileManager);
+  final FileManager _fileManager;
+  FileDx(this._core, this._fileManager);
 
   /// This method allows to send [file] to [channel]
   /// If file upload operation , It also publish [fileMessage] along with file data `fileId` and `fileName`
@@ -66,11 +66,11 @@ class FileDx {
     var form = <String, dynamic>{};
     form_fields.forEach((m) => form[m['key']] = m['value']);
     if (keyset.cipherKey != null || cipherKey != null) {
-      form['file'] = fileManager.createMultipartFile(_core.crypto
+      form['file'] = _fileManager.createMultipartFile(_core.crypto
           .encryptFileData(
-              cipherKey ?? keyset.cipherKey, fileManager.read(file)));
+              cipherKey ?? keyset.cipherKey, _fileManager.read(file)));
     } else {
-      form['file'] = fileManager.createMultipartFile(fileManager.read(file),
+      form['file'] = _fileManager.createMultipartFile(_fileManager.read(file),
           fileName: fileName);
     }
     var publishMessage = FileMessage(
@@ -81,7 +81,7 @@ class FileDx {
     var s3Response = await customFlow<FileUploadParams, FileUploadResult>(
         logger: _logger,
         core: _core,
-        params: FileUploadParams(uri, fileManager.createFormData(form)),
+        params: FileUploadParams(uri, _fileManager.createFormData(form)),
         serialize: (object, [_]) => FileUploadResult.fromJson(object));
     if (s3Response.statusCode == 204) {
       do {

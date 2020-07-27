@@ -3,6 +3,13 @@ changelog:
   -
     changes:
       -
+        text: "Fixes issue of invalid type argument for fcm push gateway type."
+        type: bug
+    date: Jul 27, 20
+    version: v1.4.2
+  -
+    changes:
+      -
         text: "Fixes issue of missing exposed MessageType enum."
         type: bug
     date: Jul 24, 20
@@ -249,4 +256,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "1.4.1"
+version: "1.4.2"

@@ -22,7 +22,7 @@ extension PushGatewayExtension on PushGateway {
   String value() {
     switch (this) {
       case PushGateway.fcm:
-        return 'fcm';
+        return 'gcm';
       case PushGateway.gcm:
         return 'gcm';
       case PushGateway.apns:

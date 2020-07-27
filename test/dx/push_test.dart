@@ -102,6 +102,21 @@ void main() {
       expect(response, isA<AddPushChannelsResult>());
     });
 
+    test(
+        'addPushChannels with fcm type should give call to backend with gcm type value',
+        () async {
+      var deviceId = 'A332C23D';
+      var channels = <String>{'ch1', 'ch2'};
+      when(
+        path:
+            'v1/push/sub-key/test/devices/A332C23D?add=ch1%2Cch2&type=gcm&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: '[1, "ch1", "ch2"]');
+      var response =
+          await pubnub.addPushChannels(deviceId, PushGateway.fcm, channels);
+      expect(response, isA<AddPushChannelsResult>());
+    });
+
     test('addPushChannels throws when topic null with apns2', () {
       var deviceId = 'A332C23D';
       var channels = <String>{'ch1', 'ch2'};
