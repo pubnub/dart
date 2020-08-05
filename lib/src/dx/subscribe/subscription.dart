@@ -85,7 +85,9 @@ class Subscription extends Disposable {
                 (presenceChannels.contains(envelope['c']) ||
                     presenceChannelGroups.contains(envelope['b'])));
       }).asyncMap((envelope) async {
-        if (envelope['e'] == null && _keyset.cipherKey != null) {
+        if ((envelope['e'] == null || envelope['e'] == 4) &&
+            !envelope['b'].endsWith('-pnpres') &&
+            _keyset.cipherKey != null) {
           envelope['d'] = await _core.parser
               .decode(_core.crypto.decrypt(_keyset.cipherKey, envelope['d']));
         }

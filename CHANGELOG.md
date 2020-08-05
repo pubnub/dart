@@ -1,3 +1,11 @@
+## [v1.4.3](https://github.com/pubnub/dart/releases/tag/v1.4.3)
+August 5 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.4.2...v1.4.3)
+
+- 🐛 Fixes issue of exception from server when publishKey os null with publish call. 
+- 🐛 Fixes missing url component in file publish message for sendFile and support for message encryption. 
+
 ## [v1.4.2](https://github.com/pubnub/dart/releases/tag/v1.4.2)
 July 27 2020
 

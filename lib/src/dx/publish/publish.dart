@@ -27,6 +27,7 @@ mixin PublishDx on Core {
     keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
 
     Ensure(keyset).isNotNull('keyset');
+    Ensure(keyset.publishKey).isNotNull('publishKey');
 
     var payload = await super.parser.encode(message);
 

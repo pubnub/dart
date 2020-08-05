@@ -18,7 +18,7 @@ class FileDx {
   /// This method allows to send [file] to [channel]
   /// If file upload operation , It also publish [fileMessage] along with file data `fileId` and `fileName`
   ///
-  /// Provide [cipherKey] to encrypt file content if you want to override default `cipherKey` of `Keyset`
+  /// Provide [cipherKey] to encrypt file content & fileEvent message if you want to override default `cipherKey` of `Keyset`
   /// * It gives priority of [cipherKey] provided in method argument over `keyset`'s `cipherKey`
   ///
   /// It retries for publishing [fileMessage] till default value of PubNub configuration value
@@ -51,6 +51,7 @@ class FileDx {
       Keyset keyset,
       String using}) async {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+
     Ensure(keyset.publishKey).isNotNull('publish key for file upload message');
     var requestPayload =
         await _core.parser.encode(GenerateFileUploadUrlBody(fileName));
@@ -73,9 +74,11 @@ class FileDx {
       form['file'] = _fileManager.createMultipartFile(_fileManager.read(file),
           fileName: fileName);
     }
-    var publishMessage = FileMessage(
-        fileUploadDetails.data.map((k, v) => MapEntry('$k', '$v')),
-        message: fileMessage);
+    var fileInfo = fileUploadDetails.data.map((k, v) => MapEntry('$k', '$v'));
+    fileInfo['url'] = getFileUrl(channel, '${fileUploadDetails.data['id']}',
+            '${fileUploadDetails.data['name']}')
+        .toString();
+    var publishMessage = FileMessage(fileInfo, message: fileMessage);
     var publishFileResult = PublishFileMessageResult();
     var retryCount = keyset.fileMessagePublishRetryLimit;
     var s3Response = await customFlow<FileUploadParams, FileUploadResult>(
@@ -90,6 +93,7 @@ class FileDx {
               ttl: fileMessageTtl,
               storeMessage: storeFileMessage,
               meta: fileMessageMeta,
+              cipherKey: cipherKey,
               keyset: keyset,
               using: using);
         } catch (e) {
@@ -110,6 +114,8 @@ class FileDx {
   /// In case `sendFile` method doesn't publish message to [channel], this method
   /// can be used to explicitly publish message
   ///
+  /// Provide [cipherKey] to encrypt `message` it takes precedence over `keyset`'s cipherKey
+  ///
   /// You can override the default account configuration on message
   /// saving using [storeMessage] flag - `true` to save and `false` to discard.
   /// Leave this option unset if you want to use the default.
@@ -128,12 +134,17 @@ class FileDx {
       {bool storeMessage,
       int ttl,
       dynamic meta,
+      CipherKey cipherKey,
       Keyset keyset,
       String using}) async {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
     Ensure(keyset.publishKey).isNotNull('publish key');
 
     var messagePayload = await _core.parser.encode(message);
+    if (cipherKey != null || keyset.cipherKey != null) {
+      messagePayload = await _core.parser.encode(
+          _core.crypto.encrypt(cipherKey ?? keyset.cipherKey, messagePayload));
+    }
     if (meta != null) meta = await _core.parser.encode(meta);
     return defaultFlow(
         logger: _logger,

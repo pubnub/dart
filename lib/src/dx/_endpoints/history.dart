@@ -1,6 +1,8 @@
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
+typedef decryptFunction = List<int> Function(CipherKey key, String data);
+
 class FetchHistoryParams extends Parameters {
   Keyset keyset;
   String channel;
@@ -113,10 +115,13 @@ class BatchHistoryResultEntry {
 
   BatchHistoryResultEntry._();
 
-  factory BatchHistoryResultEntry.fromJson(Map<String, dynamic> object) {
+  factory BatchHistoryResultEntry.fromJson(Map<String, dynamic> object,
+      {CipherKey cipherKey, Function decryptFunction}) {
     return BatchHistoryResultEntry._()
       ..timetoken = Timetoken(object['timestamp'] as int)
-      ..message = object['message'];
+      ..message = cipherKey == null
+          ? object['message']
+          : decryptFunction(cipherKey, object['message']);
   }
 }
 
@@ -125,7 +130,8 @@ class BatchHistoryResult extends Result {
 
   BatchHistoryResult._();
 
-  factory BatchHistoryResult.fromJson(Map<String, dynamic> object) {
+  factory BatchHistoryResult.fromJson(Map<String, dynamic> object,
+      {CipherKey cipherKey, Function decryptFunction}) {
     var result = DefaultResult.fromJson(object);
 
     return BatchHistoryResult._()
@@ -133,7 +139,8 @@ class BatchHistoryResult extends Result {
           (key, value) => MapEntry(
               key,
               (value as List<dynamic>)
-                  .map((entry) => BatchHistoryResultEntry.fromJson(entry))
+                  .map((entry) => BatchHistoryResultEntry.fromJson(entry,
+                      cipherKey: cipherKey, decryptFunction: decryptFunction))
                   .toList()));
   }
 }

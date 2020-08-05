@@ -3,6 +3,16 @@ changelog:
   -
     changes:
       -
+        text: "Fixes issue of exception from server when publishKey os null with publish call."
+        type: bug
+      -
+        text: "Fixes missing url component in file publish message for sendFile and support for message encryption."
+        type: bug
+    date: Aug 5, 20
+    version: v1.4.3
+  -
+    changes:
+      -
         text: "Fixes issue of invalid type argument for fcm push gateway type."
         type: bug
     date: Jul 27, 20
@@ -256,4 +266,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "1.4.2"
+version: "1.4.3"

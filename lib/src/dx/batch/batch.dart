@@ -29,7 +29,9 @@ class BatchDx {
             end: end,
             reverse: reverse,
             includeMeta: includeMeta),
-        serialize: (object, [_]) => BatchHistoryResult.fromJson(object));
+        serialize: (object, [_]) => BatchHistoryResult.fromJson(object,
+            cipherKey: keyset.cipherKey,
+            decryptFunction: _core.crypto.decrypt));
   }
 
   /// Get multiple channels' message count using one REST call.

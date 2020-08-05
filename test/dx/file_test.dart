@@ -48,6 +48,53 @@ void main() {
       expect(result, isA<PublishFileMessageResult>());
     });
 
+    test('#publishFileMessage withEncryption', () async {
+      when(
+        path: _publishFileMessageUrlEncryption,
+        method: 'GET',
+      ).then(status: 200, body: _publishFileMessageSuccessResponse);
+      var message =
+          FileMessage({'id': 'some', 'name': 'cat_file.jpg'}, message: 'msg');
+      var result = await pubnub.files.publishFileMessage('channel', message,
+          cipherKey: CipherKey.fromUtf8('cipherKey'));
+      expect(result, isA<PublishFileMessageResult>());
+    });
+
+    test('#publishFileMessage withEncryption defaultKeyset', () async {
+      pubnub = PubNub(
+          networking: FakeNetworkingModule(),
+          defaultKeyset: Keyset(
+              subscribeKey: 'test',
+              publishKey: 'test',
+              cipherKey: CipherKey.fromUtf8('cipherKey')));
+      when(
+        path: _publishFileMessageUrlEncryption,
+        method: 'GET',
+      ).then(status: 200, body: _publishFileMessageSuccessResponse);
+      var message =
+          FileMessage({'id': 'some', 'name': 'cat_file.jpg'}, message: 'msg');
+      var result = await pubnub.files.publishFileMessage('channel', message);
+      expect(result, isA<PublishFileMessageResult>());
+    });
+
+    test('#publishFileMessage cipherKey precedence', () async {
+      pubnub = PubNub(
+          networking: FakeNetworkingModule(),
+          defaultKeyset: Keyset(
+              subscribeKey: 'test',
+              publishKey: 'test',
+              cipherKey: CipherKey.fromUtf8('default_cipherKey')));
+      when(
+        path: _publishFileMessageUrlEncryption,
+        method: 'GET',
+      ).then(status: 200, body: _publishFileMessageSuccessResponse);
+      var message =
+          FileMessage({'id': 'some', 'name': 'cat_file.jpg'}, message: 'msg');
+      var result = await pubnub.files.publishFileMessage('channel', message,
+          cipherKey: CipherKey.fromUtf8('cipherKey'));
+      expect(result, isA<PublishFileMessageResult>());
+    });
+
     test('#publishFileMessage failure', () async {
       when(
         path: _publishFileMessageUrl1,
@@ -72,8 +119,9 @@ void main() {
       expect(result, isA<DeleteFileResult>());
     });
     test('#SendFile', () async {
-      var pubnub = FakePubNub();
       var keyset = Keyset(subscribeKey: 'test', publishKey: 'test');
+      var pubnub = FakePubNub()
+        ..keysets.add(keyset, name: 'default', useAsDefault: true);
       when(
               path: _generateFileUploadUrl,
               method: 'POST',
@@ -92,8 +140,9 @@ void main() {
     });
 
     test('#SendFile #FileMessagePublish retry', () async {
-      var pubnub = FakePubNub();
       var keyset = Keyset(subscribeKey: 'test', publishKey: 'test');
+      var pubnub = FakePubNub()
+        ..keysets.add(keyset, name: 'default', useAsDefault: true);
       when(
               path: _generateFileUploadUrl,
               method: 'POST',
