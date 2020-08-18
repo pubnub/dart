@@ -47,6 +47,6 @@ class Ensure {
       return;
     }
 
-    throw InvariantException('is-equal', what);
+    throw InvariantException('is-equal', what, ['$otherValue']);
   }
 }

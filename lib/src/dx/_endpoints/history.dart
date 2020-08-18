@@ -1,5 +1,7 @@
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
+import 'package:pubnub/src/dx/subscribe/envelope.dart'
+    show MessageType, fromInt;
 
 typedef decryptFunction = List<int> Function(CipherKey key, String data);
 
@@ -78,16 +80,26 @@ class BatchHistoryParams extends Parameters {
   Timetoken start;
   Timetoken end;
   bool includeMeta;
+  bool includeMessageActions;
+  bool includeUUID;
+  bool includeMessageType;
 
   BatchHistoryParams(this.keyset, this.channels,
-      {this.max, this.reverse, this.start, this.end, this.includeMeta})
+      {this.max,
+      this.reverse,
+      this.start,
+      this.end,
+      this.includeMeta,
+      this.includeMessageActions,
+      this.includeMessageType,
+      this.includeUUID})
       : assert(channels.isNotEmpty);
 
   @override
   Request toRequest() {
     var pathSegments = [
       'v3',
-      'history',
+      includeMessageActions == true ? 'history-with-actions' : 'history',
       'sub-key',
       keyset.subscribeKey,
       'channel',
@@ -100,6 +112,9 @@ class BatchHistoryParams extends Parameters {
       if (start != null) 'start': '$start',
       if (end != null) 'end': '$end',
       if (includeMeta != null) 'include-_meta': '$includeMeta',
+      if (includeMessageType != null)
+        'include_message_type': '{$includeMessageType}',
+      if (includeUUID != null) 'include_uuid': '{$includeUUID}',
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
     };
@@ -112,6 +127,9 @@ class BatchHistoryParams extends Parameters {
 class BatchHistoryResultEntry {
   dynamic message;
   Timetoken timetoken;
+  String uuid;
+  MessageType messageType;
+  Map<String, dynamic> actions;
 
   BatchHistoryResultEntry._();
 
@@ -119,29 +137,53 @@ class BatchHistoryResultEntry {
       {CipherKey cipherKey, Function decryptFunction}) {
     return BatchHistoryResultEntry._()
       ..timetoken = Timetoken(object['timestamp'] as int)
+      ..uuid = object['uuid']
+      ..messageType = (object['message_type'] is int)
+          ? fromInt(object['message_type'])
+          : null
       ..message = cipherKey == null
           ? object['message']
-          : decryptFunction(cipherKey, object['message']);
+          : decryptFunction(cipherKey, object['message'])
+      ..actions = object['actions'];
   }
 }
 
 class BatchHistoryResult extends Result {
   Map<String, List<BatchHistoryResultEntry>> channels;
+  MoreHistory more;
 
-  BatchHistoryResult._();
+  BatchHistoryResult();
 
   factory BatchHistoryResult.fromJson(Map<String, dynamic> object,
       {CipherKey cipherKey, Function decryptFunction}) {
     var result = DefaultResult.fromJson(object);
 
-    return BatchHistoryResult._()
+    return BatchHistoryResult()
       ..channels = (result.otherKeys['channels'] as Map<String, dynamic>).map(
           (key, value) => MapEntry(
               key,
               (value as List<dynamic>)
                   .map((entry) => BatchHistoryResultEntry.fromJson(entry,
                       cipherKey: cipherKey, decryptFunction: decryptFunction))
-                  .toList()));
+                  .toList()))
+      ..more = result.otherKeys['more'] != null
+          ? MoreHistory.fromJson(result.otherKeys['more'])
+          : null;
+  }
+}
+
+class MoreHistory {
+  String url;
+  String start;
+  int count;
+
+  MoreHistory();
+
+  factory MoreHistory.fromJson(dynamic object) {
+    return MoreHistory()
+      ..url = object['url'] as String
+      ..start = object['start'] as String
+      ..count = object['limit'] as int;
   }
 }
 

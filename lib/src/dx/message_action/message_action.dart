@@ -76,6 +76,7 @@ mixin MessageActionDx on Core {
     Ensure(type).isNotEmpty('message action type');
     Ensure(value).isNotEmpty('message action value');
     Ensure(timetoken).isNotNull('message timetoken');
+    Ensure(keyset.uuid).isNotNull('uuid');
 
     var addMessageActionBody =
         await super.parser.encode({'type': type, 'value': value});

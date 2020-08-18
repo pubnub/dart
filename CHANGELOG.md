@@ -1,3 +1,12 @@
+## [v1.4.4](https://github.com/pubnub/dart/releases/tag/v1.4.4)
+August 19 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.4.3...v1.4.4)
+
+- 🌟️ Add flags in history v3 for including messageType and uuid. 
+- 🌟️ Add support for fetch history with message actions. Fixed the following issues reported by [@edissonaguilar](https://github.com/edissonaguilar): [#12](https://github.com/pubnub/dart/issues/12).
+- ⭐️️ Refactor for error message parsing for files. 
+
 ## [v1.4.3](https://github.com/pubnub/dart/releases/tag/v1.4.3)
 August 5 2020
 

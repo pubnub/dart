@@ -3,7 +3,20 @@ changelog:
   -
     changes:
       -
-        text: "Fixes issue of exception from server when publishKey os null with publish call."
+        text: "Add flags in history v3 for including messageType and uuid."
+        type: feature
+      -
+        text: "Add support for fetch history with message actions."
+        type: feature
+      -
+        text: "Refactor for error message parsing for files."
+        type: improvement
+    date: Aug 19, 20
+    version: v1.4.4
+  -
+    changes:
+      -
+        text: "Fixes issue of exception from server when publishKey is null with publish call."
         type: bug
       -
         text: "Fixes missing url component in file publish message for sendFile and support for message encryption."
@@ -211,6 +224,11 @@ features:
     - STORAGE-MESSAGE-COUNT
     - STORAGE-HISTORY-WITH-META
     - STORAGE-FETCH-WITH-META
+    - STORAGE-FETCH-WITH-MESSAGE-ACTIONS
+    - STORAGE-HISTORY-WITH-INCLUDE-MESSAGE-TYPE
+    - STORAGE-HISTORY-WITH-INCLUDE-UUID
+    - STORAGE-FETCH-WITH-INCLUDE-MESSAGE-TYPE
+    - STORAGE-FETCH-WITH-INCLUDE-UUID
   subscribe:
     - SUBSCRIBE-CHANNELS
     - SUBSCRIBE-CHANNEL-GROUPS
@@ -266,4 +284,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "1.4.3"
+version: "1.4.4"

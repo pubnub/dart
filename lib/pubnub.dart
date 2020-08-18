@@ -17,6 +17,7 @@ export './src/dx/_endpoints/file.dart'
         PublishFileMessageResult,
         ListFilesResult,
         DeleteFileResult,
+        FileDetail,
         DownloadFileResult;
 export './src/dx/_endpoints/presence.dart'
     show HeartbeatResult, LeaveResult, HereNowResult, StateInfo;
@@ -25,6 +26,13 @@ export './src/dx/_endpoints/channel_group.dart'
         ChannelGroupChangeChannelsResult,
         ChannelGroupListChannelsResult,
         ChannelGroupDeleteResult;
+export './src/dx/_endpoints/history.dart'
+    show
+        FetchHistoryResult,
+        BatchHistoryResult,
+        BatchHistoryResultEntry,
+        CountMessagesResult,
+        DeleteMessagesResult;
 export './src/dx/_endpoints/signal.dart' show SignalResult;
 export './src/dx/_endpoints/push.dart'
     show

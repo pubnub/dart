@@ -1,3 +1,5 @@
+import 'dart:convert' show utf8;
+import 'package:xml/xml.dart' show XmlDocument;
 import 'package:meta/meta.dart';
 
 import 'package:pubnub/src/core/core.dart';
@@ -21,12 +23,17 @@ Future<R> customFlow<P extends Parameters, R>(
 
     return result;
   } on PubNubRequestFailureException catch (exception) {
-    var error = await core.parser.decode(exception.responseData);
-
-    if (error is Map) {
-      error = DefaultResult.fromJson(error);
+    var responseData = exception.responseData;
+    if (responseData.data != null) {
+      var details = utf8.decode(exception.responseData.data);
+      var messageNode =
+          XmlDocument.parse(details).rootElement.getElement('Message');
+      if (messageNode != null) {
+        details = messageNode.text;
+      }
+      throw PubNubException(
+          '${responseData.statusCode}\n${responseData.statusMessage}\n${exception.message}\n$details');
     }
-
-    throw getExceptionFromAny(error);
+    throw PubNubException('${responseData.statusCode}');
   }
 }

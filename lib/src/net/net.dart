@@ -155,8 +155,7 @@ class CustomRequestHandler extends RequestHandler {
           _contents.completeError(PubNubRequestTimeoutException());
           break;
         case DioErrorType.RESPONSE:
-          _contents
-              .completeError(PubNubRequestFailureException(e.response.data));
+          _contents.completeError(PubNubRequestFailureException(e.response));
           break;
         case DioErrorType.DEFAULT:
         default:

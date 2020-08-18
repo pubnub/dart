@@ -1,3 +1,4 @@
+import 'package:pubnub/pubnub.dart';
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/history.dart';
@@ -13,25 +14,57 @@ class BatchDx {
   Future<BatchHistoryResult> fetchMessages(Set<String> channels,
       {Keyset keyset,
       String using,
-      int count,
+      int count = 25,
       Timetoken start,
       Timetoken end,
       bool reverse,
-      bool includeMeta}) async {
+      bool includeMeta,
+      bool includeMessageActions = false,
+      bool includeMessageType = true,
+      bool includeUUID = true}) async {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
 
-    return defaultFlow<BatchHistoryParams, BatchHistoryResult>(
-        logger: _logger,
-        core: _core,
-        params: BatchHistoryParams(keyset, channels,
-            max: count,
-            start: start,
-            end: end,
-            reverse: reverse,
-            includeMeta: includeMeta),
-        serialize: (object, [_]) => BatchHistoryResult.fromJson(object,
-            cipherKey: keyset.cipherKey,
-            decryptFunction: _core.crypto.decrypt));
+    if (includeMessageActions == true) {
+      Ensure(channels.length).isEqual(1,
+          'History can return actions data for a single channel only. Either pass a single channel or disable the includeMessageActions flag.');
+    }
+    var fetchMessagesResult = BatchHistoryResult()..channels = {};
+    BatchHistoryResult loopResult;
+    do {
+      loopResult = await defaultFlow<BatchHistoryParams, BatchHistoryResult>(
+          logger: _logger,
+          core: _core,
+          params: BatchHistoryParams(keyset, channels,
+              max: count,
+              start: start,
+              end: end,
+              reverse: reverse,
+              includeMeta: includeMeta,
+              includeMessageActions: includeMessageActions,
+              includeMessageType: includeMessageType,
+              includeUUID: includeUUID),
+          serialize: (object, [_]) => BatchHistoryResult.fromJson(object,
+              cipherKey: keyset.cipherKey,
+              decryptFunction: _core.crypto.decrypt));
+      loopResult.channels.forEach((channel, messages) => {
+            if (fetchMessagesResult.channels[channel] == null)
+              {
+                fetchMessagesResult.channels[channel] =
+                    loopResult.channels[channel]
+              }
+            else
+              {
+                fetchMessagesResult.channels[channel]
+                    .addAll(loopResult.channels[channel])
+              }
+          });
+      if (loopResult.more != null) {
+        var moreHistory = loopResult.more;
+        start = Timetoken(int.parse(moreHistory.start));
+        count = moreHistory.count;
+      }
+    } while (loopResult.more != null);
+    return fetchMessagesResult;
   }
 
   /// Get multiple channels' message count using one REST call.

@@ -14,8 +14,13 @@ void main() {
   group('DX [messageAction]', () {
     setUp(() {
       pubnub = PubNub(networking: FakeNetworkingModule())
-        ..keysets.add(Keyset(subscribeKey: 'test', publishKey: 'test'),
-            name: 'default', useAsDefault: true);
+        ..keysets.add(
+            Keyset(
+                subscribeKey: 'test',
+                publishKey: 'test',
+                uuid: UUID('test-uuid')),
+            name: 'default',
+            useAsDefault: true);
     });
     test('add message action throws when type is empty', () async {
       var messageTimetoken = Timetoken(15610547826970050);
@@ -60,7 +65,7 @@ void main() {
       when(
         method: 'POST',
         path:
-            'v1/message-actions/test/channel/test/message/15610547826970050?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v1/message-actions/test/channel/test/message/15610547826970050?uuid=test-uuid&pnsdk=PubNub-Dart%2F${PubNub.version}',
         body: _addMessageActionBody,
       ).then(status: 200, body: _addMessageActionResponse);
       expect(
@@ -76,7 +81,7 @@ void main() {
       when(
         method: 'POST',
         path:
-            'v1/message-actions/test/channel/test/message/15610547826970050?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v1/message-actions/test/channel/test/message/15610547826970050?uuid=test-uuid&pnsdk=PubNub-Dart%2F${PubNub.version}',
         body: _addMessageActionBody,
       ).then(status: 200, body: _failedToPublishErrorResponse);
       var response = await pubnub.addMessageAction(
@@ -91,7 +96,7 @@ void main() {
       when(
         method: 'POST',
         path:
-            'v1/message-actions/test/channel/test/message/15610547826970050?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v1/message-actions/test/channel/test/message/15610547826970050?uuid=test-uuid&pnsdk=PubNub-Dart%2F${PubNub.version}',
         body: _addMessageActionBody,
       ).then(status: 200, body: _invalidParameterErrorResponse);
       var response = await pubnub.addMessageAction(
@@ -105,7 +110,7 @@ void main() {
       when(
         method: 'POST',
         path:
-            'v1/message-actions/test/channel/test/message/15610547826970050?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v1/message-actions/test/channel/test/message/15610547826970050?uuid=test-uuid&pnsdk=PubNub-Dart%2F${PubNub.version}',
         body: _addMessageActionBody,
       ).then(status: 200, body: _unauthorizeErrorResponse);
       var response = await pubnub.addMessageAction(
@@ -206,7 +211,7 @@ void main() {
       when(
         method: 'DELETE',
         path:
-            'v1/message-actions/test/channel/test/message/15610547826970050/action/15645905639093361?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v1/message-actions/test/channel/test/message/15610547826970050/action/15645905639093361?uuid=test-uuid&pnsdk=PubNub-Dart%2F${PubNub.version}',
       ).then(status: 200, body: _deleteMessageActionResponse);
 
       expect(
@@ -222,7 +227,7 @@ void main() {
       when(
         method: 'DELETE',
         path:
-            'v1/message-actions/test/channel/test/message/15610547826970050/action/15645905639093361?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v1/message-actions/test/channel/test/message/15610547826970050/action/15645905639093361?uuid=test-uuid&pnsdk=PubNub-Dart%2F${PubNub.version}',
       ).then(status: 200, body: _unauthorizeErrorResponse);
       var response = await pubnub.deleteMessageAction(
           channel, messageTimetoken, actionTimetoken);
