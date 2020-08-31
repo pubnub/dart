@@ -4,7 +4,7 @@ final _batchFetchMessagesSuccessResponse = '''{
   "error":false,
   "status":200,
   "error_message":"",
-  "channels":{"test-1":[{"message": 42, "timestamp": 1231231231231}], "test-2": [{"message": 10, "timestamp": 1231231231231}]}
+  "channels":{"test-1":[{"message": 42, "timetoken": "1231231231231"}], "test-2": [{"message": 10, "timetoken": "1231231231231"}]}
 }''';
 
 final _batchCountMessagesSuccessResponse = '''{
@@ -22,7 +22,7 @@ final _batchFetchMessagesWithActionSuccessResponse = '''{
     "demo-channel": [
       {
         "message": "Hi",
-        "timetoken": 15610547826970040,
+        "timetoken": "15610547826970040",
         "actions": {
           "receipt": {
             "read": [
@@ -36,7 +36,7 @@ final _batchFetchMessagesWithActionSuccessResponse = '''{
       },
       {
         "message": "Hello",
-        "timetoken": 15610547826970000,
+        "timetoken": "15610547826970000",
         "actions": {
           "reaction": {
             "smiley_face": [
@@ -70,7 +70,7 @@ final _batchFetchMessagesWithActionsWithMore = '''{
     "demo-channel": [
       {
         "message": "Hi",
-        "timetoken": 15610547826970040,
+        "timetoken": "15610547826970040",
         "actions": {
           "receipt": {
             "read": [
@@ -84,7 +84,7 @@ final _batchFetchMessagesWithActionsWithMore = '''{
       },
       {
         "message": "Hello",
-        "timetoken": 15610547826970000,
+        "timetoken": "15610547826970000",
         "actions": {
           "reaction": {
             "smiley_face": [

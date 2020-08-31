@@ -1,11 +1,18 @@
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
+import 'package:xml/xml.dart';
 
 PubNubException getExceptionFromAny(dynamic error) {
   if (error is DefaultResult) {
     return getExceptionFromDefaultResult(error);
   }
 
+  if (error is XmlDocument) {
+    var details = error.rootElement.getElement('Message')?.text;
+
+    return PubNubException(
+        'Request to third party service failed. Details: $details');
+  }
   if (error is List) {
     if (error.isEmpty) {
       return UnknownException();

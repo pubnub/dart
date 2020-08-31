@@ -28,8 +28,8 @@ class FetchMessageActionsParams extends Parameters {
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -125,8 +125,9 @@ class AddMessageActionParams extends Parameters {
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
     };
 
-    return Request(RequestType.post, pathSegments,
-        queryParameters: queryParameters, body: messageAction);
+    return Request.post(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters),
+        body: messageAction);
   }
 }
 
@@ -179,8 +180,8 @@ class DeleteMessageActionParams extends Parameters {
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
     };
 
-    return Request(RequestType.delete, pathSegments,
-        queryParameters: queryParameters);
+    return Request.delete(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 

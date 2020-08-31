@@ -5,6 +5,7 @@ class PublishParams extends Parameters {
   String channel;
   String message;
 
+  String meta;
   bool storeMessage;
   int ttl;
 
@@ -19,7 +20,8 @@ class PublishParams extends Parameters {
       keyset.subscribeKey,
       '0',
       channel,
-      '0'
+      '0',
+      message
     ];
 
     var queryParameters = {
@@ -27,14 +29,17 @@ class PublishParams extends Parameters {
         'store': '1'
       else if (storeMessage == false)
         'store': '0',
+      if (meta != null) 'meta': meta,
       if (keyset.authKey != null) 'auth': keyset.authKey,
       if (keyset.uuid != null) 'uuid': keyset.uuid.value,
       if (ttl != null) 'ttl': ttl.toString()
     };
 
-    return Request(RequestType.post, pathSegments,
-        queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
-        body: message);
+    return Request.get(
+        uri: Uri(
+            pathSegments: pathSegments,
+            queryParameters:
+                queryParameters.isNotEmpty ? queryParameters : null));
   }
 }
 

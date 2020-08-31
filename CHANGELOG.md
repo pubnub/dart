@@ -1,3 +1,14 @@
+## [v2.0.0](https://github.com/pubnub/dart/releases/tag/v2.0.0)
+August 31 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v1.4.4...v2.0.0)
+
+- 🌟️ Refactors networking module to allow additional flexibility. 
+- 🌟️ Adds supervisor module that allows reconnection, retry and other additional, cross module functionalities. 
+- 🌟️ Adds meta parameter to publish call and makes publish using GET instead of POST. 
+- 🐛 Exposes `batch`, `objects` and other APIs from the PubNub class. Fixed the following issues reported by [@devopsokdone](https://github.com/devopsokdone): [#11](https://github.com/pubnub/dart/issues/11).
+- 🐛 Fixes a typo in BatchHistory where timetoken was returned null. Fixed the following issues reported by [@devopsokdone](https://github.com/devopsokdone): [#13](https://github.com/pubnub/dart/issues/13).
+
 ## [v1.4.4](https://github.com/pubnub/dart/releases/tag/v1.4.4)
 August 19 2020
 

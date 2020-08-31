@@ -32,8 +32,8 @@ class GetAllUuidMetadataParams extends Parameters {
       if (sort != null && sort.isNotEmpty) 'sort': sort.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}'
     };
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -113,8 +113,8 @@ class GetUuidMetadataParams extends Parameters {
       if (include != null && include.isNotEmpty) 'include': include.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}'
     };
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -153,8 +153,9 @@ class SetUuidMetadataParams extends Parameters {
       if (include != null && include.isNotEmpty) 'include': include.join(','),
       if (keyset.authKey != null) 'auth': keyset.authKey
     };
-    return Request(RequestType.patch, pathSegments,
-        queryParameters: queryParameters, body: uuidMetadata);
+    return Request.patch(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters),
+        body: uuidMetadata);
   }
 }
 
@@ -186,8 +187,8 @@ class RemoveUuidMetadataParams extends Parameters {
       uuid ?? '${keyset.uuid}'
     ];
     var queryParameters = {if (keyset.authKey != null) 'auth': keyset.authKey};
-    return Request(RequestType.delete, pathSegments,
-        queryParameters: queryParameters);
+    return Request.delete(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 

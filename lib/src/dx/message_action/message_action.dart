@@ -3,8 +3,6 @@ import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/message_action.dart';
 
-final _logger = injectLogger('dx.message_action');
-
 mixin MessageActionDx on Core {
   /// Returns all message actions of a given [channel].
   ///
@@ -33,7 +31,6 @@ mixin MessageActionDx on Core {
     var loopResult;
     do {
       loopResult = await defaultFlow(
-          logger: _logger,
           core: this,
           params: FetchMessageActionsParams(keyset, channel,
               start: from, end: to, limit: limit),
@@ -85,7 +82,6 @@ mixin MessageActionDx on Core {
         keyset, channel, timetoken, addMessageActionBody);
 
     return defaultFlow<AddMessageActionParams, AddMessageActionResult>(
-        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => AddMessageActionResult.fromJson(object));
@@ -114,7 +110,6 @@ mixin MessageActionDx on Core {
         keyset, channel, messageTimetoken, actionTimetoken);
 
     return defaultFlow<DeleteMessageActionParams, DeleteMessageActionResult>(
-        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => DeleteMessageActionResult.fromJson(object));

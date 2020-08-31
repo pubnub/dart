@@ -33,12 +33,18 @@ class Channel {
   /// saving using [storeMessage] flag - `true` to save and `false` to discard.
   /// Leave this option unset if you want to use the default.
   ///
+  /// [meta] parameter is for providing additional information with message
+  /// that can be used for stream filtering
+  /// * Inorder to make stream filtering work, Provide valid `Object` as meta.
+  /// * Invalid type (e.g String) data won't be passed to server.
+  ///
   /// You can set a per-message time to live in storage using [ttl] option.
   /// If set to `0`, message won't expire.
   /// If unset, expiration will fall back to default.
-  Future<PublishResult> publish(dynamic message, {bool storeMessage, int ttl}) {
+  Future<PublishResult> publish(dynamic message,
+      {bool storeMessage, int ttl, dynamic meta}) {
     return _core.publish(name, message,
-        storeMessage: storeMessage, ttl: ttl, keyset: _keyset);
+        storeMessage: storeMessage, ttl: ttl, keyset: _keyset, meta: meta);
   }
 
   /// Returns [PaginatedChannelHistory]. Most useful in infinite list type scenario.

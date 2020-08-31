@@ -29,11 +29,10 @@ void main() {
 
     test('publish returns PublishResult with correct data', () async {
       when(
-        path:
-            'publish/demo/demo/0/test/0?pnsdk=PubNub-Dart%2F${PubNub.version}',
-        method: 'POST',
-        body: '{"hello":"world"}',
-      ).then(status: 200, body: _publishSuccessResponse);
+              path:
+                  'publish/demo/demo/0/test/0/%7B%22hello%22:%22world%22%7D?pnsdk=PubNub-Dart%2F${PubNub.version}',
+              method: 'GET')
+          .then(status: 200, body: _publishSuccessResponse);
 
       var response = await pubnub.publish('test', {'hello': 'world'});
 
@@ -44,13 +43,37 @@ void main() {
     test('publish throws an exception when non-200 status code', () async {
       when(
         path:
-            'publish/demo/demo/0/test/0?pnsdk=PubNub-Dart%2F${PubNub.version}',
-        method: 'POST',
-        body: '{"hello":"world"}',
+            'publish/demo/demo/0/test/0/%7B%22hello%22:%22world%22%7D?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
       ).then(status: 400, body: _publishFailureResponse);
 
       expect(pubnub.publish('test', {'hello': 'world'}),
           throwsA(TypeMatcher<PublishException>()));
+    });
+
+    test('#publish with meta', () async {
+      when(
+        path:
+            'publish/demo/demo/0/test/0/%7B%22hello%22:%22world%22%7D?meta=%7B%22hello%22%3A%22world%22%7D&pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: _publishSuccessResponse);
+      var response = await pubnub
+          .publish('test', {'hello': 'world'}, meta: {'hello': 'world'});
+      expect(response.description, equals('Sent'));
+    });
+
+    test('#publish with string meta', () async {
+      when(
+        path:
+            'publish/demo/demo/0/test/0/%7B%22hello%22:%22world%22%7D?pnsdk=PubNub-Dart%2F${PubNub.version}',
+        method: 'GET',
+      ).then(status: 200, body: _publishSuccessResponse);
+
+      var response =
+          await pubnub.publish('test', {'hello': 'world'}, meta: 'meta_sample');
+
+      expect(response.isError, equals(false));
+      expect(response.description, equals('Sent'));
     });
   });
 }

@@ -3,10 +3,10 @@ import 'package:pubnub/pubnub.dart';
 // This is the same example as the `example.dart` file, but shows how to enable extra logging
 void main() async {
   // Create a root logger
-  var logger = StreamLogger.root('root', logLevel: Level.warning);
+  var logger = StreamLogger.root('root', logLevel: Level.all);
 
   // Subscribe to messages with a default printer
-  logger.stream.listen(
+  var sub = logger.stream.listen(
       LogRecord.createPrinter(r'[$time] (${level.name}) $scope: $message'));
 
   var pubnub = PubNub(
@@ -17,13 +17,11 @@ void main() async {
   var _ = await provideLogger(logger, () async {
     var subscription = await pubnub.subscribe(channels: {'test'});
 
-    subscription.messages.take(1).listen((message) {
-      print(message);
-    });
+    await pubnub.publish('test', {'message': 'My message'});
 
-    await pubnub.publish('test', {'message': 'My message!'});
+    print(await subscription.messages.first);
 
-    await subscription.unsubscribe();
+    await subscription.dispose();
   });
 
   // You can change the log level as well!
@@ -42,4 +40,8 @@ void main() async {
 
     print('Messages on test channel: $count');
   });
+
+  await sub.cancel();
+  await logger.dispose();
+  print('disposed!');
 }

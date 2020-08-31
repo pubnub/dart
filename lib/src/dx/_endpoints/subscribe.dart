@@ -48,9 +48,8 @@ class SubscribeParams extends Parameters {
         'filter-expr': keyset.filterExpression
     };
 
-    return Request(RequestType.subscribe, pathSegments,
-        queryParameters: queryParameters,
-        headers: {'Content-Type': 'application/json'});
+    return Request.subscribe(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 

@@ -48,8 +48,8 @@ class GetMembershipsMetadataParams extends Parameters {
       if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -140,8 +140,9 @@ class ManageMembershipsParams extends Parameters {
       if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
     };
 
-    return Request(RequestType.patch, pathSegments,
-        queryParameters: queryParameters, body: membershipMetadata);
+    return Request.patch(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters),
+        body: membershipMetadata);
   }
 }
 
@@ -188,11 +189,11 @@ class GetChannelMembersParams extends Parameters {
       if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
     };
 
-    return Request(
-      RequestType.get,
-      pathSegments,
+    return Request.get(
+        uri: Uri(
+      pathSegments: pathSegments,
       queryParameters: queryParameters,
-    );
+    ));
   }
 }
 
@@ -283,10 +284,8 @@ class ManageChannelMembersParams extends Parameters {
       if (filter != null && filter.isNotEmpty) 'filter': filter,
       if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
     };
-    return Request(
-      RequestType.patch,
-      pathSegments,
-      queryParameters: queryParameters,
+    return Request.patch(
+      uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters),
       body: membersMetadata,
     );
   }

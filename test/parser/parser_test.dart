@@ -1,13 +1,13 @@
-import 'package:pubnub/src/core/parse.dart';
+import 'package:pubnub/src/core/parser.dart';
 import 'package:pubnub/src/parser/parser.dart';
 
 import 'package:test/test.dart';
 
 void main() {
-  PubNubParserModule parser;
+  ParserModule parser;
   group('Parser [PubNubParserModule]', () {
     setUp(() {
-      parser = PubNubParserModule();
+      parser = ParserModule();
     });
 
     group('#decode', () {

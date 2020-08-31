@@ -3,6 +3,25 @@ changelog:
   -
     changes:
       -
+        text: "Refactors networking module to allow additional flexibility."
+        type: feature
+      -
+        text: "Adds supervisor module that allows reconnection, retry and other additional, cross module functionalities."
+        type: feature
+      -
+        text: "Adds meta parameter to publish call and makes publish using GET instead of POST."
+        type: feature
+      -
+        text: "Exposes `batch`, `objects` and other APIs from the PubNub class."
+        type: bug
+      -
+        text: "Fixes a typo in BatchHistory where timetoken was returned null."
+        type: bug
+    date: Aug 31, 20
+    version: v2.0.0
+  -
+    changes:
+      -
         text: "Add flags in history v3 for including messageType and uuid."
         type: feature
       -
@@ -284,4 +303,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "1.4.4"
+version: "2.0.0"

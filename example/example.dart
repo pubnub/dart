@@ -17,7 +17,7 @@ void main() async {
   await pubnub.publish('test', {'message': 'My message!'});
 
   // Unsubscribe
-  await subscription.unsubscribe();
+  await subscription.dispose();
 
   // Channel abstraction for easier usage
   var channel = pubnub.channel('test');

@@ -93,6 +93,8 @@ void main() {
           isA<Map<String, dynamic>>());
       expect(result.channels['demo-channel'][0].actions['receipt']['read'],
           isA<List>());
+      expect(result.channels['demo-channel'][0].timetoken,
+          equals(Timetoken(15610547826970040)));
     });
 
     test('.batch#fetchMessages with more messages', () async {

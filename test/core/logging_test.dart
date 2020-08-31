@@ -21,7 +21,7 @@ void main() {
       test('should return the logger from Zone.current', () async {
         var logger = FakeLogger();
 
-        await provideLogger(logger, () {
+        await provideLogger(logger, () async {
           var logger = injectLogger('test.logger');
 
           logger.info('test');

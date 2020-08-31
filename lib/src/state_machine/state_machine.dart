@@ -82,7 +82,10 @@ class StateMachine<State, Context> {
 
   void enter(State state, [dynamic payload]) =>
       _transition(state, '_enter', payload);
-  void exit([dynamic payload]) => _transition(null, '_exit', payload);
+  void exit([dynamic payload]) {
+    _transition(null, '_exit', payload);
+    _transitionsController.close();
+  }
 
   bool send(String event, [dynamic payload]) {
     var legalStates = _defs[event];

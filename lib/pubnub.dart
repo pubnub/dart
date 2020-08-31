@@ -1,18 +1,25 @@
 /// PubNub is an SDK that allows you to communicate with
 /// PubNub Data Streaming Network in a fast and easy manner.
+///
+/// The best starting point to take a look around is the [PubNub] class that combines all available features.
 library pubnub;
 
 export './src/core/core.dart';
 export './src/dx/_utils/ensure.dart' show InvariantException;
-export './src/crypto/crypto.dart' show PubNubCryptoModule, CryptoConfiguration;
+export './src/crypto/crypto.dart' show CryptoModule, CryptoConfiguration;
+
 export './src/crypto/encryption_mode.dart'
     show EncryptionMode, EncryptionModeExtension;
 
+export './src/dx/files/files.dart' show FileDx;
+export './src/dx/batch/batch.dart' show BatchDx;
+export './src/dx/objects/objects.dart' show ObjectsDx;
+export './src/dx/channel/channel_group.dart' show ChannelGroup, ChannelGroupDx;
+
 export './src/dx/channel/channel.dart' show Channel;
-export './src/dx/channel/channel_group.dart' show ChannelGroup;
 export './src/dx/push/push.dart' show Device;
 export './src/dx/_endpoints/publish.dart' show PublishResult;
-export './src/dx/_endpoints/file.dart'
+export 'src/dx/_endpoints/files.dart'
     show
         PublishFileMessageResult,
         ListFilesResult,
@@ -51,11 +58,13 @@ export './src/dx/_endpoints/message_action.dart'
         DeleteMessageActionResult;
 
 export './src/dx/subscribe/subscription.dart' show Subscription;
+export './src/dx/subscribe/extensions/keyset.dart'
+    show SubscribeKeysetExtension, PresenceKeysetExtension;
 export './src/dx/subscribe/envelope.dart'
     show Envelope, PresenceAction, PresenceEvent, MessageType;
 export './src/dx/channel/channel_history.dart'
     show PaginatedChannelHistory, ChannelHistory;
-export './src/dx/file/file.dart';
+export 'src/dx/files/files.dart' show FileInfo, FileMessage;
 export './src/dx/channel/message.dart' show Message;
 
 export './src/dx/_endpoints/objects/objects_types.dart';

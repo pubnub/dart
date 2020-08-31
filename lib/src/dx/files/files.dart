@@ -1,48 +1,41 @@
-import 'dart:io';
 import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
-import 'package:pubnub/src/dx/_endpoints/file.dart';
-import 'package:pubnub/src/dx/file/fileManager.dart';
+import 'package:pubnub/src/dx/_endpoints/files.dart';
+
 import 'schema.dart';
 import 'extensions/keyset.dart';
-export 'extensions/keyset.dart';
-export 'schema.dart';
 
-final _logger = injectLogger('dx.file');
+export 'schema.dart';
+export 'extensions/keyset.dart';
 
 class FileDx {
   final Core _core;
-  final FileManager _fileManager;
-  FileDx(this._core, this._fileManager);
+  FileDx(this._core);
 
-  /// This method allows to send [file] to [channel]
-  /// If file upload operation , It also publish [fileMessage] along with file data `fileId` and `fileName`
+  /// This method allows to send a [file] to a [channel] with an optional [fileMessage].
   ///
-  /// Provide [cipherKey] to encrypt file content & fileEvent message if you want to override default `cipherKey` of `Keyset`
-  /// * It gives priority of [cipherKey] provided in method argument over `keyset`'s `cipherKey`
+  /// > Ensure that your [Keyset] has a `publishKey` defined.
   ///
-  /// It retries for publishing [fileMessage] till default value of PubNub configuration value
-  /// [fileMessagePublishRetryLimit] which is configurable
+  /// If you provide a [cipherKey], the file will be encrypted with it.
+  /// If its missing, then a `cipherKey` from [Keyset] will be used.
+  /// If no `cipherKey` is provided, then the file won't be encrypted.
   ///
-  /// * If all retry exhaused for publish file Message then response's `fileInfo`
-  /// field will give file's id and name
+  /// If the upload was successful, but publishing the file event to the [channel] wasn't,
+  /// this method will retry publishing up to a value configured in `fileMessagePublishRetryLimit`.
+  /// In case that is unsuccessful, you can retry publishing the file event manually by passing [FileInfo]
+  /// to the [publishFileMessage] method.
   ///
-  /// If [fileMessage] is null then only file information (fileId, fileName) will be published to [channel]
-  /// * Additional Publish File Message options
-  /// You can set a per-message time to live in storage using [fileMessageTtl] option.
-  /// If set to `0`, message won't expire.
-  /// If unset, expiration will fall back to default.
-  /// You can override the default account configuration on message
-  /// saving using [storeFileMessage] flag - `true` to save and `false` to discard.
-  /// Leave this option unset if you want to use the default.
-  /// Provide [fileMessageMeta] for additional information
+  /// #### Additional file event options
+  /// * You can set a per-message time to live in storage using [fileMessageTtl] option.
+  ///   If set to `0`, message won't expire. If unset, expiration will fall back to default.
   ///
-  /// If [keyset] is not provided, then it tries to obtain a keyset [using] name.
-  /// If that fails, then it uses the default keyset.
-  /// If that fails as well, then it will throw [InvariantException].
-  /// Ensure that you provide [publishKey] as it is required for publishing message
+  /// * You can override the default account configuration on message
+  ///   saving using [storeFileMessage] flag - `true` to save and `false` to discard.
+  ///   Leave this option unset if you want to use the default.
+  ///
+  /// * Provide [fileMessageMeta] for additional information
   Future<PublishFileMessageResult> sendFile(
-      String channel, File file, String fileName,
+      String channel, String fileName, List<int> file,
       {CipherKey cipherKey,
       dynamic fileMessage,
       bool storeFileMessage,
@@ -52,40 +45,46 @@ class FileDx {
       String using}) async {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
 
-    Ensure(keyset.publishKey).isNotNull('publish key for file upload message');
-    var requestPayload =
-        await _core.parser.encode(GenerateFileUploadUrlBody(fileName));
-    var fileUploadDetails = await defaultFlow<GenerateFileUploadUrlParams,
+    Ensure(keyset.publishKey)
+        .isNotNull('publish key is required for file upload');
+
+    var requestPayload = await _core.parser.encode({'name': fileName});
+
+    var uploadDetails = await defaultFlow<GenerateFileUploadUrlParams,
             GenerateFileUploadUrlResult>(
-        logger: _logger,
         core: _core,
         params: GenerateFileUploadUrlParams(keyset, channel, requestPayload),
         serialize: (object, [_]) =>
             GenerateFileUploadUrlResult.fromJson(object));
-    var uri = Uri.parse(fileUploadDetails.fileUploadRequest['url']);
-    var form_fields = fileUploadDetails.fileUploadRequest['form_fields'];
-    var form = <String, dynamic>{};
-    form_fields.forEach((m) => form[m['key']] = m['value']);
+
     if (keyset.cipherKey != null || cipherKey != null) {
-      form['file'] = _fileManager.createMultipartFile(_core.crypto
-          .encryptFileData(
-              cipherKey ?? keyset.cipherKey, _fileManager.read(file)));
-    } else {
-      form['file'] = _fileManager.createMultipartFile(_fileManager.read(file),
-          fileName: fileName);
+      file = _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey, file);
     }
-    var fileInfo = fileUploadDetails.data.map((k, v) => MapEntry('$k', '$v'));
-    fileInfo['url'] = getFileUrl(channel, '${fileUploadDetails.data['id']}',
-            '${fileUploadDetails.data['name']}')
-        .toString();
+
+    // TODO: Decide what to do here
+    // form['file'] = _fileManager.createMultipartFile(_fileManager.read(file),
+    //     fileName: fileName);
+
+    var fileInfo = FileInfo(
+      uploadDetails.fileId,
+      uploadDetails.fileName,
+      getFileUrl(channel, uploadDetails.fileId, uploadDetails.fileName)
+          .toString(),
+    );
+
     var publishMessage = FileMessage(fileInfo, message: fileMessage);
-    var publishFileResult = PublishFileMessageResult();
+
     var retryCount = keyset.fileMessagePublishRetryLimit;
-    var s3Response = await customFlow<FileUploadParams, FileUploadResult>(
-        logger: _logger,
+
+    var s3Response = await defaultFlow<FileUploadParams, FileUploadResult>(
         core: _core,
-        params: FileUploadParams(uri, _fileManager.createFormData(form)),
+        params: FileUploadParams(uploadDetails.uploadUri,
+            {...uploadDetails.formFields, 'file': file}),
+        deserialize: false,
         serialize: (object, [_]) => FileUploadResult.fromJson(object));
+
+    var publishFileResult = PublishFileMessageResult();
+
     if (s3Response.statusCode == 204) {
       do {
         try {
@@ -147,7 +146,6 @@ class FileDx {
     }
     if (meta != null) meta = await _core.parser.encode(meta);
     return defaultFlow(
-        logger: _logger,
         core: _core,
         params: PublishFileMessageParams(keyset, channel, messagePayload,
             storeMessage: storeMessage, ttl: ttl, meta: meta),
@@ -171,10 +169,10 @@ class FileDx {
     if (keyset.cipherKey != null || cipherKey != null) {
       decrypter = _core.crypto.decryptFileData;
     }
-    return customFlow<DownloadFileParams, DownloadFileResult>(
-        logger: _logger,
+    return defaultFlow<DownloadFileParams, DownloadFileResult>(
         core: _core,
         params: DownloadFileParams(getFileUrl(channel, fileId, fileName)),
+        deserialize: false,
         serialize: (object, [_]) => DownloadFileResult.fromJson(object,
             cipherKey: cipherKey ?? keyset.cipherKey,
             decryptFunction: decrypter));
@@ -194,7 +192,6 @@ class FileDx {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
 
     return defaultFlow<ListFilesParams, ListFilesResult>(
-        logger: _logger,
         core: _core,
         params: ListFilesParams(keyset, channel, limit: limit, next: next),
         serialize: (object, [_]) => ListFilesResult.fromJson(object));
@@ -210,7 +207,6 @@ class FileDx {
       {Keyset keyset, String using}) async {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
     return defaultFlow<DeleteFileParams, DeleteFileResult>(
-        logger: _logger,
         core: _core,
         params: DeleteFileParams(keyset, channel, fileId, fileName),
         serialize: (object, [_]) => DeleteFileResult.fromJson(object));
@@ -238,9 +234,7 @@ class FileDx {
       'files',
       fileId,
       fileName
-    ], queryParameters: {
-      'pnsdk': 'PubNub-Dart/${Core.version}'
-    });
+    ]);
   }
 
   /// This method helps to encrypt the file content in bytes format

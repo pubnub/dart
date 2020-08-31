@@ -3,7 +3,7 @@ import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_endpoints/publish.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
-final _logger = injectLogger('dx.publish');
+final _logger = injectLogger('pubnub.dx.publish');
 
 mixin PublishDx on Core {
   /// Publishes [message] to a [channel].
@@ -16,11 +16,20 @@ mixin PublishDx on Core {
   /// If set to `0`, message won't expire.
   /// If unset, expiration will fall back to default.
   ///
+  /// [meta] parameter is for providing additional information with message
+  /// that can be used for stream filtering
+  /// * Inorder to make stream filtering work, Provide valid `Object` as meta.
+  /// * Invalid type (e.g String) data won't be passed to server.
+  ///
   /// If [keyset] is not provided, then it tries to obtain a keyset [using] name.
   /// If that fails, then it uses the default keyset.
   /// If that fails as well, then it will throw [InvariantException].
   Future<PublishResult> publish(String channel, dynamic message,
-      {Keyset keyset, String using, bool storeMessage, int ttl}) async {
+      {Keyset keyset,
+      String using,
+      dynamic meta,
+      bool storeMessage,
+      int ttl}) async {
     Ensure(channel).isNotEmpty('channel name');
     Ensure(message).isNotNull('message');
 
@@ -39,10 +48,13 @@ mixin PublishDx on Core {
     var params = PublishParams(keyset, channel, payload,
         storeMessage: storeMessage, ttl: ttl);
 
+    if (meta != null && !(meta is String)) {
+      params..meta = await super.parser.encode(meta);
+    }
+
     _logger.verbose('Publishing a message to a channel $channel');
 
-    return defaultFlow<PublishParams, PublishResult>(
-        logger: _logger,
+    return await defaultFlow<PublishParams, PublishResult>(
         core: this,
         params: params,
         serialize: (object, [_]) => PublishResult.fromJson(object));

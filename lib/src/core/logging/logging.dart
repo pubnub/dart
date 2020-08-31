@@ -5,9 +5,9 @@ import 'dummy_logger.dart';
 final _pubnubLoggerModuleKey = #pubnub.logging;
 
 /// Provides a [logger] to the code inside [body].
-Future<R> provideLogger<R>(ILogger logger, R Function() body) async {
-  var result =
-      await runZoned<R>(body, zoneValues: {_pubnubLoggerModuleKey: logger});
+Future<R> provideLogger<R>(ILogger logger, Future<R> Function() body) async {
+  var result = await runZoned<Future<R>>(body,
+      zoneValues: {_pubnubLoggerModuleKey: logger});
 
   return result;
 }

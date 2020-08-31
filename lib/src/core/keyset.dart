@@ -93,6 +93,12 @@ class KeysetStore {
       }
     }
   }
+
+  Keyset obtain(Keyset keyset, String using) {
+    keyset ??= get(using, defaultIfNameIsNull: true);
+
+    return keyset;
+  }
 }
 
 /// Represents a configuration for a given subscribe key.

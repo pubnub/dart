@@ -9,8 +9,6 @@ import 'package:pubnub/src/dx/_endpoints/presence.dart';
 
 export 'extensions/keyset.dart';
 
-final _logger = injectLogger('dx.subscribe');
-
 mixin SubscribeDx on Core {
   /// Subscribes to [channels] and [channelGroups]. Returns [Subscription].
   Subscription subscription(
@@ -70,7 +68,6 @@ mixin SubscribeDx on Core {
     Ensure(keyset).isNotNull('keyset');
 
     return defaultFlow<LeaveParams, LeaveResult>(
-        logger: _logger,
         core: this,
         params: LeaveParams(keyset,
             channels: channels, channelGroups: channelGroups),
@@ -89,7 +86,6 @@ mixin SubscribeDx on Core {
     Ensure(keyset).isNotNull('keyset');
 
     return defaultFlow<HeartbeatParams, HeartbeatResult>(
-        logger: _logger,
         core: this,
         params: HeartbeatParams(keyset,
             channels: channels,

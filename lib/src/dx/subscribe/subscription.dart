@@ -6,7 +6,7 @@ import 'package:pubnub/src/dx/_utils/disposable.dart';
 import 'envelope.dart';
 import 'extensions/keyset.dart';
 
-final _logger = injectLogger('dx.subscribe.subscription');
+final _logger = injectLogger('pubnub.dx.subscribe.subscription');
 
 class Subscription extends Disposable {
   final Core _core;
@@ -85,8 +85,9 @@ class Subscription extends Disposable {
                 (presenceChannels.contains(envelope['c']) ||
                     presenceChannelGroups.contains(envelope['b'])));
       }).asyncMap((envelope) async {
+        _logger.silly('Processing envelope: $envelope');
         if ((envelope['e'] == null || envelope['e'] == 4) &&
-            !envelope['b'].endsWith('-pnpres') &&
+            !envelope['c'].endsWith('-pnpres') &&
             _keyset.cipherKey != null) {
           envelope['d'] = await _core.parser
               .decode(_core.crypto.decrypt(_keyset.cipherKey, envelope['d']));

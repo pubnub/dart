@@ -1,6 +1,6 @@
 import 'package:encrypt/encrypt.dart' as crypto;
 import 'package:crypto/crypto.dart' show sha256;
-import 'dart:convert' show json, base64, utf8;
+import 'dart:convert' show base64, utf8;
 import 'dart:typed_data' show Uint8List;
 
 import '../core/core.dart';
@@ -17,10 +17,10 @@ class CryptoConfiguration {
       this.useRandomInitializationVector = false});
 }
 
-class PubNubCryptoModule implements CryptoModule {
+class CryptoModule implements ICryptoModule {
   final CryptoConfiguration defaultConfiguration;
 
-  PubNubCryptoModule({this.defaultConfiguration = const CryptoConfiguration()});
+  CryptoModule({this.defaultConfiguration = const CryptoConfiguration()});
 
   crypto.Key _getKey(CipherKey cipherKey, CryptoConfiguration configuration) {
     if (configuration.encryptKey) {
@@ -105,4 +105,7 @@ class PubNubCryptoModule implements CryptoModule {
       throw CryptoException('Error while encrypting file data \n${e.message}');
     }
   }
+
+  @override
+  void register(Core core) {}
 }

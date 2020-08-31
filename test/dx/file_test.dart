@@ -1,26 +1,21 @@
-import 'package:test/test.dart';
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:dio/src/form_data.dart';
-import 'package:dio/src/multipart_file.dart';
-
-import 'package:pubnub/src/dx/file/file.dart';
-import 'package:pubnub/src/dx/file/fileManager.dart';
+import 'package:test/test.dart';
 
 import 'package:pubnub/pubnub.dart';
-import 'package:pubnub/src/dx/_endpoints/file.dart';
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/src/dx/files/files.dart';
+import 'package:pubnub/src/dx/_endpoints/files.dart';
+
 import '../net/fake_net.dart';
-part './fixtures/file.dart';
+
+part 'fixtures/files.dart';
 
 void main() {
   PubNub pubnub;
+  var keyset = Keyset(subscribeKey: 'test', publishKey: 'test');
   group('DX [file]', () {
     setUp(() {
       pubnub = PubNub(networking: FakeNetworkingModule())
-        ..keysets.add(Keyset(subscribeKey: 'test', publishKey: 'test'),
-            name: 'default', useAsDefault: true);
+        ..keysets.add(keyset, name: 'default', useAsDefault: true);
     });
 
     test('#listFiles', () async {
@@ -43,7 +38,7 @@ void main() {
         method: 'GET',
       ).then(status: 200, body: _publishFileMessageSuccessResponse);
       var message =
-          FileMessage({'id': 'some', 'name': 'cat_file.jpg'}, message: 'msg');
+          FileMessage(FileInfo('some', 'cat_file.jpg'), message: 'msg');
       var result = await pubnub.files.publishFileMessage('channel', message);
       expect(result, isA<PublishFileMessageResult>());
     });
@@ -54,7 +49,7 @@ void main() {
         method: 'GET',
       ).then(status: 200, body: _publishFileMessageSuccessResponse);
       var message =
-          FileMessage({'id': 'some', 'name': 'cat_file.jpg'}, message: 'msg');
+          FileMessage(FileInfo('some', 'cat_file.jpg'), message: 'msg');
       var result = await pubnub.files.publishFileMessage('channel', message,
           cipherKey: CipherKey.fromUtf8('cipherKey'));
       expect(result, isA<PublishFileMessageResult>());
@@ -72,7 +67,7 @@ void main() {
         method: 'GET',
       ).then(status: 200, body: _publishFileMessageSuccessResponse);
       var message =
-          FileMessage({'id': 'some', 'name': 'cat_file.jpg'}, message: 'msg');
+          FileMessage(FileInfo('some', 'cat_file.jpg'), message: 'msg');
       var result = await pubnub.files.publishFileMessage('channel', message);
       expect(result, isA<PublishFileMessageResult>());
     });
@@ -89,7 +84,7 @@ void main() {
         method: 'GET',
       ).then(status: 200, body: _publishFileMessageSuccessResponse);
       var message =
-          FileMessage({'id': 'some', 'name': 'cat_file.jpg'}, message: 'msg');
+          FileMessage(FileInfo('some', 'cat_file.jpg'), message: 'msg');
       var result = await pubnub.files.publishFileMessage('channel', message,
           cipherKey: CipherKey.fromUtf8('cipherKey'));
       expect(result, isA<PublishFileMessageResult>());
@@ -101,7 +96,7 @@ void main() {
         method: 'GET',
       ).then(status: 200, body: _publishFileMessageFailureResponse);
       var message =
-          FileMessage({'id': 'some', 'name': 'cat_file.jpg'}, message: 'msg');
+          FileMessage(FileInfo('some', 'cat_file.jpg'), message: 'msg');
       var result = await pubnub.files.publishFileMessage('channel', message);
       expect(result, isA<PublishFileMessageResult>());
       expect(result.isError, equals(true));
@@ -119,43 +114,47 @@ void main() {
       expect(result, isA<DeleteFileResult>());
     });
     test('#SendFile', () async {
-      var keyset = Keyset(subscribeKey: 'test', publishKey: 'test');
-      var pubnub = FakePubNub()
-        ..keysets.add(keyset, name: 'default', useAsDefault: true);
       when(
               path: _generateFileUploadUrl,
               method: 'POST',
               body: '{"name":"cat_file.jpg"}')
           .then(status: 200, body: _generateFileUploadUrlResponse);
-      when(path: 'https://pubnub-test-config.s3.amazonaws.com', method: 'POST')
-          .then(status: 200, statusCode: 204, body: '');
+
+      when(
+              path: 'https://pubnub-test-config.s3.amazonaws.com',
+              method: 'POST',
+              body: _sendFileResponse)
+          .then(status: 204, body: '');
+
       when(
         path: _publishFileMessageUrl2,
         method: 'GET',
       ).then(status: 200, body: _publishFileMessageSuccessResponse);
+
       var result = await pubnub.files.sendFile(
-          'channel', File('cat_file.jpg'), 'cat_file.jpg',
+          'channel', 'cat_file.jpg', [0, 1, 2, 3],
           fileMessage: 'msg', keyset: keyset);
       expect(result, isA<PublishFileMessageResult>());
     });
 
     test('#SendFile #FileMessagePublish retry', () async {
       var keyset = Keyset(subscribeKey: 'test', publishKey: 'test');
-      var pubnub = FakePubNub()
-        ..keysets.add(keyset, name: 'default', useAsDefault: true);
       when(
               path: _generateFileUploadUrl,
               method: 'POST',
               body: '{"name":"cat_file.jpg"}')
           .then(status: 200, body: _generateFileUploadUrlResponse);
-      when(path: 'https://pubnub-test-config.s3.amazonaws.com', method: 'POST')
-          .then(status: 200, statusCode: 204, body: '');
+      when(
+              path: 'https://pubnub-test-config.s3.amazonaws.com',
+              method: 'POST',
+              body: _sendFileResponse)
+          .then(status: 204, body: '');
       when(
         path: _publishFileMessageUrl2,
         method: 'GET',
       ).then(status: 400, body: _publishFileMessageFailureResponse);
       var result = await pubnub.files.sendFile(
-          'channel', File('cat_file.jpg'), 'cat_file.jpg',
+          'channel', 'cat_file.jpg', [0, 1, 2, 3],
           fileMessage: 'msg', keyset: keyset);
       expect(result, isA<PublishFileMessageResult>());
       expect(result.fileInfo, isNotNull);
@@ -163,9 +162,10 @@ void main() {
 
     test('#Download File', () async {
       when(path: _downloadFileUrl, method: 'GET')
-          .then(status: 200, data: [01, 02]);
+          .then(status: 200, body: [01, 02]);
       var result = await pubnub.files.downloadFile(
           'channel', '5a3eb38c-483a-4b25-ac01-c4e20deba6d6', 'cat_file.jpg');
+
       expect(result, isA<DownloadFileResult>());
     });
     test('#getFileUrl', () async {

@@ -61,6 +61,12 @@ class LogRecord {
       customPrint(message);
     };
   }
+
+  /// Function that can be passed into `listen` method to print a [LogRecord].
+  ///
+  /// Prints `[$time] (${level.name}) $message`.
+  static void Function(LogRecord) defaultPrinter =
+      LogRecord.createPrinter(r'[$time] (${level.name}) $message');
 }
 
 /// A logger implementation that contains a stream of [LogRecord] records.
@@ -218,6 +224,20 @@ class StreamLogger extends ILogger {
           stackTrace: stackTrace);
 
       _sink.add(record);
+    }
+  }
+
+  bool _isDisposed = false;
+
+  Future<void> dispose() async {
+    if (!_isDisposed) {
+      await _streamController.close();
+
+      for (var child in _children.values) {
+        await child.dispose();
+      }
+
+      _isDisposed = true;
     }
   }
 }

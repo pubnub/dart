@@ -4,6 +4,8 @@ import 'package:pubnub/src/dx/subscribe/subscription.dart';
 
 extension SubscribeKeysetExtension on Keyset {
   String get filterExpression => settings['#filterExpression'];
+
+  /// Set filter expression for Subscribe message filtering.
   set filterExpression(String value) => settings['#filterExpression'] = value;
 
   SubscriptionManager get subscriptionManager =>

@@ -70,8 +70,8 @@ class ListPushChannelsParams extends Parameters {
       queryParameters['topic'] = topic;
       queryParameters.remove('type');
     }
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -123,8 +123,8 @@ class AddPushChannelsParams extends Parameters {
       queryParameters['topic'] = topic;
       queryParameters.remove('type');
     }
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -177,8 +177,8 @@ class RemovePushChannelsParams extends Parameters {
       queryParameters['topic'] = topic;
       queryParameters.remove('type');
     }
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -231,8 +231,8 @@ class RemoveDeviceParams extends Parameters {
       queryParameters['topic'] = topic;
       queryParameters.remove('type');
     }
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 

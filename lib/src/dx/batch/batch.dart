@@ -3,8 +3,6 @@ import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/history.dart';
 
-final _logger = injectLogger('dx.batch.history');
-
 class BatchDx {
   final Core _core;
 
@@ -32,7 +30,6 @@ class BatchDx {
     BatchHistoryResult loopResult;
     do {
       loopResult = await defaultFlow<BatchHistoryParams, BatchHistoryResult>(
-          logger: _logger,
           core: _core,
           params: BatchHistoryParams(keyset, channels,
               max: count,
@@ -95,7 +92,6 @@ class BatchDx {
     }
 
     return defaultFlow(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => CountMessagesResult.fromJson(object));

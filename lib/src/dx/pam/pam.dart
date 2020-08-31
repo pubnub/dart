@@ -10,7 +10,7 @@ export 'token.dart' show Token;
 export 'resource.dart' show Resource, ResourceType, ResourceTypeExtension;
 export 'token_request.dart' show TokenRequest;
 
-final _logger = injectLogger('dx.pam');
+final _logger = injectLogger('pubnub.dx.pam');
 
 mixin PamDx on Core {
   /// Use this method to modify permissions for provided [authKeys].
@@ -47,7 +47,6 @@ mixin PamDx on Core {
         delete: delete);
 
     var result = await defaultFlow<PamGrantParams, PamGrantResult>(
-        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => PamGrantResult.fromJson(object));

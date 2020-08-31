@@ -4,8 +4,6 @@ import 'package:pubnub/src/dx/_utils/utils.dart';
 
 export '../_endpoints/presence.dart' show StateInfo;
 
-final _logger = injectLogger('dx.presence');
-
 mixin PresenceDx on Core {
   /// Gets the occupancy information from a list of [channels] and/or [channelGroups].
   ///
@@ -26,7 +24,6 @@ mixin PresenceDx on Core {
         channels: channels, channelGroups: channelGroups, stateInfo: stateInfo);
 
     return defaultFlow<HereNowParams, HereNowResult>(
-        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => HereNowResult.fromJson(object,

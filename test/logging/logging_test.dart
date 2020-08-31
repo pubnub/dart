@@ -21,7 +21,7 @@ void main() {
               ['test1', 'test1.1', 'test1.2', 'test2', 'test2.1', 'test2.2']),
         );
 
-        await provideLogger(logger, () {
+        await provideLogger(logger, () async {
           var logger = injectLogger('test');
           var logger1 = injectLogger('test.logger1');
           var logger2 = injectLogger('test.logger2');
@@ -44,7 +44,7 @@ void main() {
           emitsInOrder(['test1.2', 'test2.2']),
         );
 
-        await provideLogger(logger, () {
+        await provideLogger(logger, () async {
           var logger = injectLogger('test');
           var logger1 = injectLogger('test.logger1');
           var logger2 = injectLogger('test.logger2');

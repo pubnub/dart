@@ -46,8 +46,8 @@ class FetchHistoryParams extends Parameters {
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -119,8 +119,8 @@ class BatchHistoryParams extends Parameters {
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -136,7 +136,7 @@ class BatchHistoryResultEntry {
   factory BatchHistoryResultEntry.fromJson(Map<String, dynamic> object,
       {CipherKey cipherKey, Function decryptFunction}) {
     return BatchHistoryResultEntry._()
-      ..timetoken = Timetoken(object['timestamp'] as int)
+      ..timetoken = Timetoken(int.tryParse(object['timetoken']))
       ..uuid = object['uuid']
       ..messageType = (object['message_type'] is int)
           ? fromInt(object['message_type'])
@@ -218,8 +218,8 @@ class CountMessagesParams extends Parameters {
         'timetoken': '$timetoken',
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -262,8 +262,8 @@ class DeleteMessagesParams extends Parameters {
       if (end != null) 'end': '$end',
     };
 
-    return Request(RequestType.delete, pathSegments,
-        queryParameters: queryParameters);
+    return Request.delete(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 

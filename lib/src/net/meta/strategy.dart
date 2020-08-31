@@ -1,0 +1,35 @@
+import 'package:pubnub/pubnub.dart';
+
+import 'diagnostics.dart';
+import 'retry_policy.dart';
+
+class NetworkingStrategy extends Strategy {
+  RetryPolicy retryPolicy;
+
+  NetworkingStrategy({this.retryPolicy});
+
+  @override
+  List<Resolution> resolve(Fiber fiber, Diagnostic diagnostic) {
+    if (retryPolicy == null) {
+      return [Resolution.fail()];
+    }
+
+    if (fiber.tries >= retryPolicy?.maxRetries) {
+      return [Resolution.fail()];
+    }
+
+    if (diagnostic is HostIsDownDiagnostic ||
+        diagnostic is HostLookupFailedDiagnostic ||
+        diagnostic is TimeoutDiagnostic) {
+      // Host is down. We should retry after some delay.
+
+      return [
+        Resolution.networkStatus(false),
+        Resolution.delay(retryPolicy.getDelay(fiber)),
+        Resolution.retry()
+      ];
+    }
+
+    return null;
+  }
+}

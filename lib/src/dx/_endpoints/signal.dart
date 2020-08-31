@@ -25,8 +25,8 @@ class SignalParams extends Parameters {
       if (keyset.uuid != null) 'uuid': keyset.uuid.value,
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 

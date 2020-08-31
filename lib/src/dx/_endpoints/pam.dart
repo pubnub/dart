@@ -17,10 +17,11 @@ class PamGrantTokenParams extends Parameters {
       'timestamp': timestamp,
     };
 
-    return Request(RequestType.post, pathSegments,
-        queryParameters: queryParameters,
-        body: payload,
-        signWith: (t, p, q, h, b) => computeV2Signature(keyset, t, p, q, b));
+    return Request.post(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters),
+        body: payload);
+    // TODO: fix me
+    // signWith: (t, p, q, h, b) => computeV2Signature(keyset, t, p, q, b));
   }
 }
 
@@ -78,9 +79,10 @@ class PamGrantParams extends Parameters {
       if (read != null) 'r': read ? '1' : '0',
       if (write != null) 'w': write ? '1' : '0',
     };
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters,
-        signWith: (t, p, q, h, b) => computeSignature(keyset, p, q));
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
+    //TODO: fix me
+    // signWith: (t, p, q, h, b) => computeSignature(keyset, p, q));
   }
 }
 

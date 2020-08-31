@@ -46,10 +46,16 @@ class BlueprintFactory<State, Context> {
           String name, Blueprint<SState, SContext> blueprint,
           {MachineCallbackWithCtx<State, Context, SState, SContext> onEnter,
           MachineCallbackWithCtx<State, Context, SState, SContext> onExit,
-          MachineCallback<State, Context, SState, SContext> onBuild}) =>
+          MachineCallback<State, Context, SState, SContext> onBuild,
+          MachineCallback<State, Context, SState, SContext> onParentEnter,
+          MachineCallback<State, Context, SState, SContext> onParentExit}) =>
       _addEffect(MachineEffect<State, Context, SState, SContext>(
           name, blueprint,
-          onEnter: onEnter, onExit: onExit, onBuild: onBuild));
+          onEnter: onEnter,
+          onExit: onExit,
+          onBuild: onBuild,
+          onParentEnter: onParentEnter,
+          onParentExit: onParentExit));
 }
 
 class Blueprint<State, Context> {

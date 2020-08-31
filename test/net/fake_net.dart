@@ -1,72 +1,76 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:pubnub/src/core/core.dart';
-import 'package:pubnub/src/core/net/net.dart';
-import 'package:pubnub/src/net/exceptions.dart';
 
 class MockException extends PubNubException {
   MockException(String message) : super(message);
 }
 
-class FakeRequestHandler extends RequestHandler {
+class FakeRequestHandler extends IRequestHandler {
   Request request;
+  Mock mock;
 
-  final Completer<MockResponse> _contents = Completer();
+  FakeRequestHandler(this.mock);
 
-  FakeRequestHandler(this.request, Mock mock) {
-    var uri = Uri(
-        pathSegments: request.pathSegments,
-        queryParameters: request.queryParameters);
-    if (request.url != null) uri = request.url;
+  @override
+  Future<IResponse> response(Request request) {
+    var actualUri = prepareUri(request.uri);
+    var expectedUri = prepareUri(Uri.parse(mock.request.path));
+
     var doesMethodMatch =
         mock.request.method.toUpperCase() == request.type.method.toUpperCase();
 
-    var doesBodyMatch = mock.request.body == request.body;
+    String body;
+    if (request.body is String) {
+      body = request.body;
+    } else if (request.body == null) {
+      body = null;
+    } else {
+      body = json.encode(request.body);
+    }
 
-    var doesUriMatch = mock.request.path == uri.toString();
+    String mockBody;
 
-    Future.microtask(() {
+    if (request.body is String) {
+      mockBody = mock.request.body;
+    } else if (request.body == null) {
+      mockBody = null;
+    } else {
+      mockBody = json.encode(json.decode(mock.request.body));
+    }
+
+    var doesBodyMatch = mockBody == body;
+
+    var doesUriMatch = expectedUri.toString() == actualUri.toString();
+
+    return Future.microtask(() {
       if (doesMethodMatch && doesBodyMatch && doesUriMatch) {
-        if (mock.response.status != 200) {
-          _contents
-              .completeError(PubNubRequestFailureException(mock.response.body));
+        if (![200, 204].contains(mock.response.statusCode)) {
+          throw PubNubRequestFailureException(mock.response);
         } else {
-          _contents.complete(mock.response);
+          return mock.response;
         }
       } else {
         var exceptionBody = '';
+
         if (!doesMethodMatch) {
           exceptionBody +=
-              '\n* method:\n| EXPECTED: ${mock.request.method.toUpperCase()}\n| ACTUAL: ${request.type.method.toUpperCase()}';
+              '\n* method:\n| EXPECTED: ${mock.request.method.toUpperCase()}\n| ACTUAL:   ${request.type.method.toUpperCase()}';
         }
         if (!doesUriMatch) {
           exceptionBody +=
-              '\n* uri:\n| EXPECTED: ${mock.request.path}\n| ACTUAL: ${uri.toString()}';
+              '\n* uri:\n| EXPECTED: ${expectedUri}\n| ACTUAL:   ${actualUri}';
         }
         if (!doesBodyMatch) {
           exceptionBody +=
-              '\n* body:\n| EXPECTED:\n${mock.request.body}\n| ACTUAL:\n${request.body}';
+              '\n* body:\n| EXPECTED:\n${mockBody}\n| ACTUAL:\n${body}';
         }
 
-        _contents.completeError(MockException(
-            'mock request does not match the expected request$exceptionBody'));
+        throw MockException(
+            'mock request does not match the expected request $exceptionBody');
       }
     });
-  }
-
-  @override
-  Future<dynamic> response() {
-    return _contents.future;
-  }
-
-  @override
-  Future<String> text() async {
-    return (await _contents.future).body;
-  }
-
-  @override
-  Future<Map<String, List<String>>> headers() async {
-    return (await _contents.future).headers;
   }
 
   @override
@@ -76,22 +80,29 @@ class FakeRequestHandler extends RequestHandler {
 class MockRequest {
   final String method;
   final String path;
-  final String body;
+  final dynamic body;
   final Map<String, List<String>> headers;
 
   const MockRequest(this.method, this.path,
       [this.headers = const {}, this.body]);
 }
 
-class MockResponse {
-  final int status;
-  final String body;
-  final int statusCode;
-  final dynamic data;
+class MockResponse implements IResponse {
+  final dynamic body;
+
+  @override
   final Map<String, List<String>> headers;
 
-  const MockResponse(this.status,
-      [this.headers = const {}, this.body, this.statusCode, this.data]);
+  @override
+  final int statusCode;
+
+  const MockResponse({this.body, this.headers = const {}, this.statusCode});
+
+  @override
+  List<int> get byteList => body;
+
+  @override
+  String get text => body;
 }
 
 class Mock {
@@ -108,14 +119,14 @@ class MockBuilder {
   MockBuilder(this._queue, this._request);
 
   void then(
-      {int status,
-      Map<String, List<String>> headers,
-      String body,
-      int statusCode,
-      dynamic data,
+      {Map<String, List<String>> headers,
+      dynamic body,
+      int status,
       MockResponse response}) {
-    var mock = Mock(_request,
-        response ?? MockResponse(status, headers, body, statusCode, data));
+    var mock = Mock(
+        _request,
+        response ??
+            MockResponse(statusCode: status, body: body, headers: headers));
 
     _queue.add(mock);
   }
@@ -127,32 +138,26 @@ MockBuilder when(
     {String method,
     String path,
     Map<String, List<String>> headers,
-    String body,
+    dynamic body,
     MockRequest request}) {
   return MockBuilder(
       _queue, request ?? MockRequest(method, path, headers, body));
 }
 
-class FakeNetworkingModule implements NetworkModule {
+class FakeNetworkingModule implements INetworkingModule {
   FakeNetworkingModule() {
     _queue.clear();
   }
 
   @override
-  Future<RequestHandler> handle(Request request) async {
+  Future<IRequestHandler> handler() async {
     if (_queue.isEmpty) {
       throw MockException('set up the mock first');
     }
 
-    return FakeRequestHandler(request, _queue.removeAt(0));
+    return FakeRequestHandler(_queue.removeAt(0));
   }
 
   @override
-  Future<RequestHandler> handleCustomRequest(Request request) async {
-    if (_queue.isEmpty) {
-      throw MockException('set up the mock first');
-    }
-
-    return FakeRequestHandler(request, _queue.removeAt(0));
-  }
+  void register(Core core) {}
 }

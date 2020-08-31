@@ -4,8 +4,6 @@ import 'package:pubnub/src/default.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/push.dart';
 
-final _logger = injectLogger('dx.push');
-
 // Managing device registrations for Push Notification Service
 mixin PushNotificationDx on Core {
   /// It returns list of all channels to which device [deviceId] is registered
@@ -37,7 +35,6 @@ mixin PushNotificationDx on Core {
     var params = ListPushChannelsParams(keyset, deviceId, gateway,
         topic: topic, environment: environment);
     return defaultFlow<ListPushChannelsParams, ListPushChannelsResult>(
-        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => ListPushChannelsResult.fromJson(object));
@@ -72,7 +69,6 @@ mixin PushNotificationDx on Core {
     var params = AddPushChannelsParams(keyset, deviceId, gateway, channels,
         topic: topic, environment: environment);
     return defaultFlow<AddPushChannelsParams, AddPushChannelsResult>(
-        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => AddPushChannelsResult.fromJson(object));
@@ -107,7 +103,6 @@ mixin PushNotificationDx on Core {
     var params = RemovePushChannelsParams(keyset, deviceId, gateway, channels,
         topic: topic, environment: environment);
     return defaultFlow<RemovePushChannelsParams, RemovePushChannelsResult>(
-        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => RemovePushChannelsResult.fromJson(object));
@@ -141,7 +136,6 @@ mixin PushNotificationDx on Core {
     var params = RemoveDeviceParams(keyset, deviceId, gateway,
         topic: topic, environment: environment);
     return defaultFlow<RemoveDeviceParams, RemoveDeviceResult>(
-        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => RemoveDeviceResult.fromJson(object));

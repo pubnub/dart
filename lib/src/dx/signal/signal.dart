@@ -3,8 +3,6 @@ import 'package:pubnub/src/core/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/signal.dart';
 
-final _logger = injectLogger('dx.signal');
-
 mixin SignalDx on Core {
   /// Publishes signal [message] to a [channel].
   Future<SignalResult> signal(String channel, dynamic message,
@@ -15,7 +13,6 @@ mixin SignalDx on Core {
     var params = SignalParams(keyset, channel, payload);
 
     return defaultFlow(
-        logger: _logger,
         core: this,
         params: params,
         serialize: (object, [_]) => SignalResult.fromJson(object));

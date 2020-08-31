@@ -5,8 +5,6 @@ import 'package:pubnub/src/dx/_utils/utils.dart';
 
 import 'package:pubnub/src/dx/_endpoints/channel_group.dart';
 
-final _log = injectLogger('dx.channel_group');
-
 /// Representation of a channel group.
 class ChannelGroup {
   final PubNub _core;
@@ -63,7 +61,6 @@ class ChannelGroupDx {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
     return defaultFlow<ChannelGroupListChannelsParams,
             ChannelGroupListChannelsResult>(
-        logger: _log,
         core: _core,
         params: ChannelGroupListChannelsParams(keyset, group),
         serialize: (object, [_]) =>
@@ -77,7 +74,6 @@ class ChannelGroupDx {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
     return defaultFlow<ChannelGroupChangeChannelsParams,
             ChannelGroupChangeChannelsResult>(
-        logger: _log,
         core: _core,
         params: ChannelGroupChangeChannelsParams(keyset, group, add: channels),
         serialize: (object, [_]) =>
@@ -91,7 +87,6 @@ class ChannelGroupDx {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
     return defaultFlow<ChannelGroupChangeChannelsParams,
             ChannelGroupChangeChannelsResult>(
-        logger: _log,
         core: _core,
         params:
             ChannelGroupChangeChannelsParams(keyset, group, remove: channels),
@@ -104,7 +99,6 @@ class ChannelGroupDx {
       {Keyset keyset, String using}) {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
     return defaultFlow<ChannelGroupDeleteParams, ChannelGroupDeleteResult>(
-        logger: _log,
         core: _core,
         params: ChannelGroupDeleteParams(keyset, group),
         serialize: (object, [_]) => ChannelGroupDeleteResult.fromJson(object));

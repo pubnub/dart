@@ -31,8 +31,8 @@ class HeartbeatParams extends Parameters {
       if (state != null) 'state': '$state'
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -71,8 +71,8 @@ class SetUserStateParams extends Parameters {
       'state': '$state',
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -113,8 +113,8 @@ class GetUserStateParams extends Parameters {
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -156,8 +156,8 @@ class LeaveParams extends Parameters {
       if (keyset.uuid != null) 'uuid': '${keyset.uuid.value}',
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -212,8 +212,8 @@ class HereNowParams extends Parameters {
       if (stateInfo == StateInfo.all) 'state': '1'
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -297,8 +297,8 @@ class WhereNowParams extends Parameters {
       if (keyset.authKey != null) 'auth': keyset.authKey
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 

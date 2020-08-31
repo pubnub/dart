@@ -6,8 +6,6 @@ import 'package:pubnub/src/dx/_endpoints/history.dart';
 import 'channel.dart';
 import 'message.dart';
 
-final _logger = injectLogger('dx.channel.history');
-
 enum ChannelHistoryOrder { ascending, descending }
 
 extension ChannelHistoryOrderExtension on ChannelHistoryOrder {
@@ -52,7 +50,6 @@ class ChannelHistory {
   /// [to] parameter is disregarded.
   Future<int> count() async {
     var result = await defaultFlow(
-        logger: _logger,
         core: _core,
         params: CountMessagesParams(_keyset,
             channels: {_channel.name}, timetoken: from ?? Timetoken(1)),
@@ -69,7 +66,6 @@ class ChannelHistory {
   /// * if both [to] and [from] are defined, then it will work on messages that were sent between [from] and [to].
   Future<void> delete() async {
     await defaultFlow(
-      logger: _logger,
       core: _core,
       params:
           DeleteMessagesParams(_keyset, _channel.name, end: from, start: to),
@@ -89,7 +85,6 @@ class ChannelHistory {
 
     do {
       var result = await defaultFlow(
-          logger: _logger,
           core: _core,
           params: FetchHistoryParams(_keyset, _channel.name,
               reverse: true,
@@ -157,7 +152,6 @@ class PaginatedChannelHistory {
   /// Fetches more messages and stores them in [messages].
   Future<FetchHistoryResult> more() async {
     var result = await defaultFlow(
-        logger: _logger,
         core: _core,
         params: FetchHistoryParams(_keyset, _channel.name,
             reverse: _order.choose(ascending: true, descending: false),

@@ -33,8 +33,8 @@ class GetAllChannelMetadataParams extends Parameters {
       if (sort != null && sort.isNotEmpty) 'sort': sort.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}'
     };
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -110,8 +110,8 @@ class GetChannelMetadataParams extends Parameters {
       if (keyset.authKey != null) 'auth': keyset.authKey
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -152,8 +152,11 @@ class SetChannelMetadataParams extends Parameters {
       if (keyset.authKey != null) 'auth': keyset.authKey,
     };
 
-    return Request(RequestType.patch, pathSegments,
-        queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
+    return Request.patch(
+        uri: Uri(
+            pathSegments: pathSegments,
+            queryParameters:
+                queryParameters.isNotEmpty ? queryParameters : null),
         body: channelMetadata);
   }
 }
@@ -189,8 +192,8 @@ class RemoveChannelMetadataParams extends Parameters {
       if (keyset.authKey != null) 'auth': keyset.authKey,
     };
 
-    return Request(RequestType.delete, pathSegments,
-        queryParameters: queryParameters);
+    return Request.delete(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 

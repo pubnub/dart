@@ -1,9 +1,10 @@
 part of '../pam_test.dart';
 
 final _grantRequest = MockRequest('GET',
-    'v2/auth/grant/sub-key/test?auth=authKey&channel=my_channel&ttl=1440&timestamp=1234567890&m=0&r=1&w=0&pnsdk=PubNub-Dart%2F${PubNub.version}&signature=7IQCgpg73TUef0vywNJLvK27qrYKxKgvWUueR_Kej9U%3D');
+    'v2/auth/grant/sub-key/test?auth=authKey&channel=my_channel&ttl=1440&timestamp=1234567890&m=0&r=1&w=0&pnsdk=PubNub-Dart%2F${PubNub.version}');
 
-final _grantSuccessResponse = MockResponse(200, {}, '''
+final _grantSuccessResponse =
+    MockResponse(statusCode: 200, headers: {}, body: '''
 {
     "status": 200,
     "message": "Success",
@@ -27,11 +28,12 @@ final _grantSuccessResponse = MockResponse(200, {}, '''
 
 final _grantTokenRequest = MockRequest(
     'POST',
-    'v3/pam/test/grant?timestamp=1234567890&pnsdk=PubNub-Dart%2F${PubNub.version}&signature=v2.FL8sKKLo_xIlZnTV47foJdbUYUIWCtvYP4IqJzKVnKU',
+    'v3/pam/test/grant?timestamp=1234567890&pnsdk=PubNub-Dart%2F${PubNub.version}',
     {},
     '{"ttl":1440,"permissions":{"resources":{"channels":{"inbox-jay":3},"groups":{},"users":{},"spaces":{}},"patterns":{"channels":{},"groups":{},"users":{},"spaces":{}},"meta":{"user-id":"jay@example.com","contains-unicode":"The 來 test."}}}');
 
-final _grantTokenSuccessResponse = MockResponse(200, {}, '''{
+final _grantTokenSuccessResponse =
+    MockResponse(statusCode: 200, headers: {}, body: '''{
   "status": 200,
   "data": {
     "message": "Success",
@@ -40,7 +42,8 @@ final _grantTokenSuccessResponse = MockResponse(200, {}, '''{
   "service": "Access Manager"
 }''');
 
-final _grantTokenFailureResponse = MockResponse(400, {}, '''
+final _grantTokenFailureResponse =
+    MockResponse(statusCode: 400, headers: {}, body: '''
 {
     "status": 400,
     "error": {

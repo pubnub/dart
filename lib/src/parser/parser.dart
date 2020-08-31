@@ -1,24 +1,77 @@
 import 'dart:convert';
+import 'package:xml/xml.dart' show XmlDocument;
 
-import '../core/parse.dart';
+import 'package:pubnub/src/core/core.dart';
 
-class PubNubParserModule implements ParserModule {
+import '../core/parser.dart';
+
+abstract class Parser<T> {
+  Future<T> decode(String input);
+  Future<String> encode(T input);
+
+  const Parser();
+}
+
+class _JsonParser extends Parser<dynamic> {
+  const _JsonParser();
+
   @override
-  Future<dynamic> decode(String input) async {
+  Future decode(String input) async {
+    return json.decode(input);
+  }
+
+  @override
+  Future<String> encode(input) async {
+    return json.encode(input);
+  }
+}
+
+class _XmlParser extends Parser<XmlDocument> {
+  const _XmlParser();
+
+  @override
+  Future<XmlDocument> decode(String input) async {
+    return XmlDocument.parse(input);
+  }
+
+  @override
+  Future<String> encode(XmlDocument input) async {
+    return input.toXmlString();
+  }
+}
+
+const Map<String, Parser> _parserMap = {
+  'json': _JsonParser(),
+  'xml': _XmlParser(),
+};
+
+class ParserModule implements IParserModule {
+  @override
+  Future<T> decode<T>(String input, {String type = 'json'}) async {
+    if (!_parserMap.containsKey(type)) {
+      throw ParserException('Unsupported format $type.');
+    }
+
     try {
-      return json.decode(input);
+      return await _parserMap[type].decode(input);
     } catch (e) {
-      throw ParserException('Cannot decode string as JSON');
+      throw ParserException('Cannot decode input string as $type.', e);
     }
   }
 
   @override
-  Future<String> encode(dynamic input) async {
+  Future<String> encode<T>(T input, {String type = 'json'}) async {
+    if (!_parserMap.containsKey(type)) {
+      throw ParserException('Unsupported format $type.');
+    }
+
     try {
-      return json.encode(input);
-    } on JsonUnsupportedObjectError catch (error) {
-      throw ParserException(
-          'Cannot encode object ${error.unsupportedObject} as JSON String');
+      return await _parserMap[type].encode(input);
+    } catch (e) {
+      throw ParserException('Cannot encode input object as $type.', e);
     }
   }
+
+  @override
+  void register(Core core) {}
 }

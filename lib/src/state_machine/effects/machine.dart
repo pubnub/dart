@@ -15,12 +15,19 @@ class MachineEffect<State, Context, SubState, SubContext>
   String name;
   Blueprint blueprint;
 
+  MachineCallback<State, Context, SubState, SubContext> onParentExit;
+  MachineCallback<State, Context, SubState, SubContext> onParentEnter;
+
   MachineCallbackWithCtx<State, Context, SubState, SubContext> onExit;
   MachineCallbackWithCtx<State, Context, SubState, SubContext> onEnter;
   MachineCallback<State, Context, SubState, SubContext> onBuild;
 
   MachineEffect(this.name, this.blueprint,
-      {this.onExit, this.onEnter, this.onBuild});
+      {this.onExit,
+      this.onEnter,
+      this.onBuild,
+      this.onParentEnter,
+      this.onParentExit});
 
   @override
   void execute(
@@ -36,6 +43,7 @@ class MachineEffect<State, Context, SubState, SubContext>
 
       machine.register(name, submachine);
 
+      if (onParentEnter != null) onParentEnter(machine, submachine);
       if (onBuild != null) onBuild(machine, submachine);
 
       submachine.when(null, 'exits',
@@ -49,6 +57,7 @@ class MachineEffect<State, Context, SubState, SubContext>
       }));
     } else if (edge == 'exits') {
       var submachine = machine.get(name);
+      if (onParentExit != null) onParentExit(machine, submachine);
 
       if (submachine.state != null) {
         submachine.exit();

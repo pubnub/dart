@@ -5,9 +5,9 @@ typedef decryptFunction = List<int> Function(CipherKey key, List<int> data);
 class GenerateFileUploadUrlParams extends Parameters {
   Keyset keyset;
   String channel;
-  String fileName;
+  String payload;
 
-  GenerateFileUploadUrlParams(this.keyset, this.channel, this.fileName);
+  GenerateFileUploadUrlParams(this.keyset, this.channel, this.payload);
 
   @override
   Request toRequest() {
@@ -19,40 +19,42 @@ class GenerateFileUploadUrlParams extends Parameters {
       channel,
       'generate-upload-url'
     ];
-    return Request(RequestType.post, pathSegments, body: fileName);
+    return Request.post(uri: Uri(pathSegments: pathSegments), body: payload);
   }
 }
 
-class GenerateFileUploadUrlBody {
+class GenerateFileUploadUrlResult extends Result {
+  String fileId;
   String fileName;
 
-  GenerateFileUploadUrlBody(this.fileName);
-
-  Map<String, dynamic> toJson() => <String, dynamic>{'name': fileName};
-}
-
-class GenerateFileUploadUrlResult extends Result {
-  Map<String, dynamic> data;
-
-  Map<String, dynamic> fileUploadRequest;
+  Uri uploadUri;
+  Map<String, String> formFields;
 
   GenerateFileUploadUrlResult._();
 
   factory GenerateFileUploadUrlResult.fromJson(dynamic object) =>
       GenerateFileUploadUrlResult._()
-        ..data = object['data']
-        ..fileUploadRequest = object['file_upload_request'];
+        ..fileId = object['data']['id']
+        ..fileName = object['data']['name']
+        ..uploadUri = Uri.parse(object['file_upload_request']['url'])
+        ..formFields =
+            (object['file_upload_request']['form_fields'] as List<dynamic>)
+                .fold({}, (previousValue, element) {
+          previousValue[element['name']] = element['value'];
+          return previousValue;
+        });
 }
 
 class FileUploadParams extends Parameters {
   Uri requestUrl;
-  dynamic formData;
+
+  Map<String, dynamic> formData;
 
   FileUploadParams(this.requestUrl, this.formData);
 
   @override
   Request toRequest() {
-    return Request(RequestType.post, [], body: formData, url: requestUrl);
+    return Request.file(uri: requestUrl, body: formData);
   }
 }
 
@@ -98,8 +100,8 @@ class PublishFileMessageParams extends Parameters {
       if (ttl != null) 'ttl': ttl.toString(),
       if (meta != null) 'meta': meta
     };
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -120,13 +122,13 @@ class PublishFileMessageResult extends Result {
 }
 
 class DownloadFileParams extends Parameters {
-  Uri url;
+  Uri uri;
 
-  DownloadFileParams(this.url);
+  DownloadFileParams(this.uri);
 
   @override
   Request toRequest() {
-    return Request(RequestType.get, [], url: url);
+    return Request.get(uri: uri);
   }
 }
 
@@ -139,9 +141,10 @@ class DownloadFileResult extends Result {
       {CipherKey cipherKey, Function decryptFunction}) {
     if (cipherKey != null) {
       return DownloadFileResult._()
-        ..fileContent = decryptFunction(cipherKey, object.data as List<int>);
+        ..fileContent =
+            decryptFunction(cipherKey, object.byteList as List<int>);
     }
-    return DownloadFileResult._()..fileContent = object.data;
+    return DownloadFileResult._()..fileContent = object.byteList;
   }
 }
 
@@ -170,8 +173,8 @@ class ListFilesParams extends Parameters {
       if (next != null) 'next': next
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -234,7 +237,7 @@ class DeleteFileParams extends Parameters {
       fileId,
       fileName
     ];
-    return Request(RequestType.delete, pathSegments);
+    return Request.delete(uri: Uri(pathSegments: pathSegments));
   }
 }
 

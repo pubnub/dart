@@ -15,8 +15,7 @@ import 'dx/message_action/message_action.dart';
 import 'dx/pam/pam.dart';
 import 'dx/push/push.dart';
 import 'dx/presence/presence.dart';
-import 'dx/file/file.dart';
-import 'dx/file/fileManager.dart';
+import 'dx/files/files.dart';
 import 'dx/objects/objects_types.dart';
 import 'dx/objects/objects.dart';
 
@@ -66,18 +65,18 @@ class PubNub extends Core
 
   PubNub(
       {Keyset defaultKeyset,
-      NetworkModule networking,
-      ParserModule parser,
-      CryptoModule crypto})
+      INetworkingModule networking,
+      IParserModule parser,
+      ICryptoModule crypto})
       : super(
             defaultKeyset: defaultKeyset,
-            networking: networking ?? PubNubNetworkingModule(),
-            parser: parser ?? PubNubParserModule(),
-            crypto: crypto ?? PubNubCryptoModule()) {
+            networking: networking ?? NetworkingModule(),
+            parser: parser ?? ParserModule(),
+            crypto: crypto ?? CryptoModule()) {
     batch = BatchDx(this);
     channelGroups = ChannelGroupDx(this);
     objects = ObjectsDx(this);
-    files = FileDx(this, PubNubFileManager());
+    files = FileDx(this);
   }
 
   /// Returns a representation of a channel.

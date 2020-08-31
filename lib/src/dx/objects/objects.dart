@@ -5,8 +5,6 @@ import 'package:pubnub/src/dx/_endpoints/objects/membership_metadata.dart';
 import '../_utils/utils.dart';
 import 'schema.dart';
 
-final _logger = injectLogger('dx.objects');
-
 class ObjectsDx {
   final Core _core;
 
@@ -61,7 +59,6 @@ class ObjectsDx {
         sort: sort);
 
     return defaultFlow<GetAllUuidMetadataParams, GetAllUuidMetadataResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => GetAllUuidMetadataResult.fromJson(object));
@@ -96,7 +93,6 @@ class ObjectsDx {
 
     var params = GetUuidMetadataParams(keyset, uuid: uuid, include: include);
     return defaultFlow<GetUuidMetadataParams, GetUuidMetadataResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => GetUuidMetadataResult.fromJson(object));
@@ -143,7 +139,6 @@ class ObjectsDx {
         SetUuidMetadataParams(keyset, payload, uuid: uuid, include: include);
 
     return defaultFlow<SetUuidMetadataParams, SetUuidMetadataResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => SetUuidMetadataResult.fromJson(object));
@@ -166,7 +161,6 @@ class ObjectsDx {
     var params = RemoveUuidMetadataParams(keyset, uuid: uuid);
 
     return defaultFlow<RemoveUuidMetadataParams, RemoveUuidMetadataResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => RemoveUuidMetadataResult.fromJson(object));
@@ -224,7 +218,6 @@ class ObjectsDx {
 
     return defaultFlow<GetAllChannelMetadataParams,
             GetAllChannelMetadataResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) =>
@@ -252,7 +245,6 @@ class ObjectsDx {
     var params = GetChannelMetadataParams(keyset, channelId, include: include);
 
     return defaultFlow<GetChannelMetadataParams, GetChannelMetadataResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => GetChannelMetadataResult.fromJson(object));
@@ -290,7 +282,6 @@ class ObjectsDx {
         SetChannelMetadataParams(keyset, channelId, payload, include: include);
 
     return defaultFlow<SetChannelMetadataParams, SetChannelMetadataResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => SetChannelMetadataResult.fromJson(object));
@@ -308,7 +299,6 @@ class ObjectsDx {
 
     return defaultFlow<RemoveChannelMetadataParams,
             RemoveChannelMetadataResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) =>
@@ -383,7 +373,6 @@ class ObjectsDx {
         sort: sort);
 
     return defaultFlow<GetMembershipsMetadataParams, MembershipsResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
@@ -476,7 +465,6 @@ class ObjectsDx {
         sort: sort);
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
@@ -565,7 +553,6 @@ class ObjectsDx {
         sort: sort);
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
@@ -651,7 +638,6 @@ class ObjectsDx {
         sort: sort);
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => MembershipsResult.fromJson(object));
@@ -717,7 +703,6 @@ class ObjectsDx {
         sort: sort);
 
     return defaultFlow<GetChannelMembersParams, ChannelMembersResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => ChannelMembersResult.fromJson(object));
@@ -798,7 +783,6 @@ class ObjectsDx {
         sort: sort);
 
     return defaultFlow<ManageChannelMembersParams, ChannelMembersResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => ChannelMembersResult.fromJson(object));
@@ -873,7 +857,6 @@ class ObjectsDx {
         sort: sort);
 
     return defaultFlow<ManageChannelMembersParams, ChannelMembersResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => ChannelMembersResult.fromJson(object));
@@ -950,7 +933,6 @@ class ObjectsDx {
         sort: sort);
 
     return defaultFlow<ManageChannelMembersParams, ChannelMembersResult>(
-        logger: _logger,
         core: _core,
         params: params,
         serialize: (object, [_]) => ChannelMembersResult.fromJson(object));

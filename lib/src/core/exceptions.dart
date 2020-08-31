@@ -49,3 +49,9 @@ class NotImplementedException extends PubNubException {
 class PublishException extends PubNubException {
   PublishException(String message) : super(message);
 }
+
+class MaximumRetriesException extends PubNubException {
+  static final String _message = 'Maximum number of retries has been reached.';
+
+  MaximumRetriesException() : super(_message);
+}

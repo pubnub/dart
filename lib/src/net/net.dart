@@ -2,193 +2,32 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:pool/pool.dart';
+import 'package:pubnub/pubnub.dart';
 
-import 'package:pubnub/src/core/core.dart';
-import 'exceptions.dart';
+import 'meta/meta.dart';
+import 'request_handler.dart';
 
-final _logger = injectLogger('pubnub.networking');
+class NetworkingModule implements INetworkingModule {
+  static int _requestCounter = 0;
 
-class PubNubRequestHandler extends RequestHandler {
-  static int _idCounter = 0;
-
-  Request request;
-  Dio _client;
-
-  final CancelToken _cancelToken = CancelToken();
-  final Completer<Response> _contents = Completer();
-  PoolResource _resource;
-
-  final int _id;
-
-  PubNubRequestHandler(this.request, Dio client, PoolResource resource)
-      : _id = PubNubRequestHandler._idCounter++ {
-    _client = client;
-    _resource = resource;
-    _initialize();
-  }
-
-  void _initialize() async {
-    var uri = Uri(
-        pathSegments: request.pathSegments,
-        queryParameters: request.queryParameters);
-    _logger.info('($_id) Starting request to ${uri}...');
-    try {
-      var response = await _client.requestUri<String>(uri,
-          data: request.body,
-          options:
-              Options(method: request.type.method, headers: request.headers),
-          cancelToken: _cancelToken);
-
-      _logger.info('($_id) Request succeed! (${response.request.uri})');
-      _contents.complete(response);
-    } on DioError catch (e) {
-      _logger.info('($_id) Request failed ($e, ${e.message})');
-      switch (e.type) {
-        case DioErrorType.CANCEL:
-          _contents.completeError(PubNubRequestCancelException(e.error));
-          break;
-        case DioErrorType.CONNECT_TIMEOUT:
-        case DioErrorType.RECEIVE_TIMEOUT:
-        case DioErrorType.SEND_TIMEOUT:
-          _contents.completeError(PubNubRequestTimeoutException());
-          break;
-        case DioErrorType.RESPONSE:
-          _contents
-              .completeError(PubNubRequestFailureException(e.response.data));
-          break;
-        case DioErrorType.DEFAULT:
-        default:
-          _contents.completeError(PubNubRequestOtherException());
-          break;
-      }
-    } finally {
-      _resource.release();
-    }
-  }
-
-  @override
-  Future<Response> response() async {
-    return await _contents.future;
-  }
-
-  @override
-  Future<String> text() async {
-    return (await _contents.future).data as String;
-  }
-
-  @override
-  Future<Map<String, List<String>>> headers() async {
-    return (await _contents.future).headers.map;
-  }
-
-  @override
-  bool get isCancelled => _cancelToken.isCancelled;
-
-  @override
-  void cancel([dynamic reason]) {
-    if (!_cancelToken.isCancelled) {
-      _cancelToken.cancel(reason);
-    }
-  }
-}
-
-class PubNubNetworkingModule implements NetworkModule {
-  static final Uri origin = Uri(scheme: 'https', host: 'ps.pndsn.com');
-
+  final RetryPolicy retryPolicy;
   final Pool _pool = Pool(10);
-  final Dio _client = Dio(BaseOptions(baseUrl: '${origin.toString()}/'));
+  final Dio _client = Dio();
+
+  NetworkingModule({this.retryPolicy});
 
   @override
-  Future<RequestHandler> handle(Request request) async {
-    var resource = await _pool.request();
-    return PubNubRequestHandler(request, _client, resource);
+  Future<RequestHandler> handler() async {
+    var requestId = _requestCounter++;
+
+    return RequestHandler(requestId,
+        client: _client, resource: _pool.request());
   }
 
   @override
-  Future<RequestHandler> handleCustomRequest(Request request) async {
-    var resource = await _pool.request();
-    return CustomRequestHandler(request, Dio(), resource);
-  }
-}
-
-class CustomRequestHandler extends RequestHandler {
-  static int _idCounter = 0;
-
-  Request request;
-  Dio _client;
-
-  final CancelToken _cancelToken = CancelToken();
-  final Completer<Response> _contents = Completer();
-  PoolResource _resource;
-
-  final int _id;
-
-  CustomRequestHandler(this.request, Dio client, PoolResource resource)
-      : _id = CustomRequestHandler._idCounter++ {
-    _client = client;
-    _resource = resource;
-    _initialize();
-  }
-
-  void _initialize() async {
-    _logger.info('($_id) Starting request to ${request.url}...');
-    try {
-      var response = await _client.requestUri(request.url,
-          data: request.body,
-          options: Options(
-              method: request.type.method,
-              headers: request.headers,
-              responseType: ResponseType.bytes),
-          cancelToken: _cancelToken);
-
-      _logger.info('($_id) Request succeed! (${response.request.uri})');
-      _contents.complete(response);
-    } on DioError catch (e) {
-      _logger.info('($_id) Request failed ($e, ${e.message})');
-      switch (e.type) {
-        case DioErrorType.CANCEL:
-          _contents.completeError(PubNubRequestCancelException(e.error));
-          break;
-        case DioErrorType.CONNECT_TIMEOUT:
-        case DioErrorType.RECEIVE_TIMEOUT:
-        case DioErrorType.SEND_TIMEOUT:
-          _contents.completeError(PubNubRequestTimeoutException());
-          break;
-        case DioErrorType.RESPONSE:
-          _contents.completeError(PubNubRequestFailureException(e.response));
-          break;
-        case DioErrorType.DEFAULT:
-        default:
-          _contents.completeError(PubNubRequestOtherException());
-          break;
-      }
-    } finally {
-      _resource.release();
-    }
-  }
-
-  @override
-  Future<dynamic> response() {
-    return _contents.future.then((value) => value);
-  }
-
-  @override
-  Future<String> text() async {
-    return (await _contents.future).data;
-  }
-
-  @override
-  Future<Map<String, List<String>>> headers() async {
-    return (await _contents.future).headers.map;
-  }
-
-  @override
-  bool get isCancelled => _cancelToken.isCancelled;
-
-  @override
-  void cancel([dynamic reason]) {
-    if (!_cancelToken.isCancelled) {
-      _cancelToken.cancel(reason);
-    }
+  void register(Core core) {
+    core.supervisor.registerDiagnostic(getNetworkDiagnostic);
+    core.supervisor
+        .registerStrategy(NetworkingStrategy(retryPolicy: retryPolicy));
   }
 }

@@ -20,8 +20,8 @@ class ChannelGroupListChannelsParams extends Parameters {
 
     var queryParameters = {'auth': keyset.authKey, 'uuid': keyset.uuid.value};
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -65,8 +65,8 @@ class ChannelGroupChangeChannelsParams extends Parameters {
       if (remove != null) 'remove': remove.join(',')
     };
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
@@ -94,8 +94,8 @@ class ChannelGroupDeleteParams extends Parameters {
 
     var queryParameters = {'auth': keyset.authKey, 'uuid': keyset.uuid.value};
 
-    return Request(RequestType.get, pathSegments,
-        queryParameters: queryParameters);
+    return Request.get(
+        uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
   }
 }
 
