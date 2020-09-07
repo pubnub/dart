@@ -3,6 +3,13 @@ changelog:
   -
     changes:
       -
+        text: "Fixes issue of upgrade failure."
+        type: bug
+    date: Sep 7, 20
+    version: v2.0.1
+  -
+    changes:
+      -
         text: "Refactors networking module to allow additional flexibility."
         type: feature
       -
@@ -303,4 +310,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "2.0.0"
+version: "2.0.1"

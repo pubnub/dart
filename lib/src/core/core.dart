@@ -26,7 +26,7 @@ class Core {
   ICryptoModule crypto;
   SupervisorModule supervisor = SupervisorModule();
 
-  static String version = '2.0.0';
+  static String version = '2.0.1';
 
   Core(
       {Keyset defaultKeyset,

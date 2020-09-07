@@ -53,6 +53,7 @@ export './src/dx/_endpoints/push.dart'
         RemovePushChannelsResult;
 export './src/dx/_endpoints/message_action.dart'
     show
+        MessageAction,
         FetchMessageActionsResult,
         AddMessageActionResult,
         DeleteMessageActionResult;

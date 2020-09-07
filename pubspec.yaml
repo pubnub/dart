@@ -1,6 +1,6 @@
 name: pubnub
 description: PubNub SDK v5 for Dart lang (with Flutter support) that allows you to create real-time applications
-version: 2.0.0
+version: 2.0.1
 homepage: https://www.pubnub.com/docs
 
 environment:
@@ -9,11 +9,11 @@ environment:
 dependencies:
   pool: ^1.4.0
   dio: ^3.0.0
-  meta: ^1.1.0
+  meta: ^1.2.0
   crypto: ^2.1.0
   cbor: ^3.1.0
   encrypt: ^4.0.2
-  convert: ^2.0.0
+  convert: ^2.1.0
   pedantic: ^1.9.0
   xml: ^4.3.0
 dev_dependencies:

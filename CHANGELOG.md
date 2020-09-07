@@ -1,3 +1,10 @@
+## [v2.0.1](https://github.com/pubnub/dart/releases/tag/v2.0.1)
+September 7 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v2.0.0...v2.0.1)
+
+- 🐛 Fixes issue of upgrade failure. Fixed the following issues reported by [@devopsokdone](https://github.com/devopsokdone): [#14](https://github.com/pubnub/dart/issues/14).
+
 ## [v2.0.0](https://github.com/pubnub/dart/releases/tag/v2.0.0)
 August 31 2020
 
