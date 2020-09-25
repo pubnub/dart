@@ -4,20 +4,27 @@ import 'exceptions.dart';
 import 'crypto/cipher_key.dart';
 import 'uuid.dart';
 
+/// An exception that happens during keyset creation or resolution.
+///
+/// {@category Exceptions}
 class KeysetException extends PubNubException {
   KeysetException(String message) : super(message);
 }
 
+/// Represents a collection of [Keyset].
+///
+/// Keyset names must be unique and only one of them can be default.
 class KeysetStore {
   final Map<String, Keyset> _store = {};
   String _defaultName;
 
-  /// Returns a list of all keysets in this store
+  /// Returns a list of all keysets in this store.
   List<Keyset> get keysets => _store.values.toList();
 
   /// Adds a [keyset] named [name] to the store.
   ///
   /// If [useAsDefault] is true, then it will be used as a default keyset.
+  /// If a default keyset already exists, it will no longer be the default.
   Keyset add(Keyset keyset,
       {@required String name, bool useAsDefault = false}) {
     if (_store.containsKey(name)) {
@@ -32,6 +39,7 @@ class KeysetStore {
     return keyset;
   }
 
+  /// Removes a keyset from this store.
   Keyset remove(String name) {
     if (name == _defaultName) {
       _defaultName = null;
@@ -94,6 +102,7 @@ class KeysetStore {
     }
   }
 
+  /// Convinience method that returns a keyset based on the [keyset] and [using] combination.
   Keyset obtain(Keyset keyset, String using) {
     keyset ??= get(using, defaultIfNameIsNull: true);
 
@@ -102,6 +111,8 @@ class KeysetStore {
 }
 
 /// Represents a configuration for a given subscribe key.
+///
+/// {@category Basic Features}
 class Keyset {
   /// Subscribe key.
   final String subscribeKey;

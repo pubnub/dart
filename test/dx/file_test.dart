@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'package:test/test.dart';
 
 import 'package:pubnub/pubnub.dart';
+import 'package:pubnub/core.dart';
+
 import 'package:pubnub/src/dx/files/files.dart';
 import 'package:pubnub/src/dx/_endpoints/files.dart';
 
 import '../net/fake_net.dart';
-
 part 'fixtures/files.dart';
 
 void main() {

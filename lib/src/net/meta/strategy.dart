@@ -1,8 +1,9 @@
-import 'package:pubnub/pubnub.dart';
+import 'package:pubnub/core.dart';
 
 import 'diagnostics.dart';
 import 'retry_policy.dart';
 
+/// @nodoc
 class NetworkingStrategy extends Strategy {
   RetryPolicy retryPolicy;
 
@@ -14,7 +15,7 @@ class NetworkingStrategy extends Strategy {
       return [Resolution.fail()];
     }
 
-    if (fiber.tries >= retryPolicy?.maxRetries) {
+    if (!fiber.isSubscribe && fiber.tries >= retryPolicy?.maxRetries) {
       return [Resolution.fail()];
     }
 

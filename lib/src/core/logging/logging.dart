@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'dummy_logger.dart';
-
 final _pubnubLoggerModuleKey = #pubnub.logging;
 
 /// Provides a [logger] to the code inside [body].
@@ -12,6 +10,16 @@ Future<R> provideLogger<R>(ILogger logger, Future<R> Function() body) async {
   return result;
 }
 
+/// @nodoc
+class DummyLogger extends ILogger {
+  @override
+  DummyLogger get(String scope) => this;
+
+  @override
+  void log(int level, message) {}
+}
+
+/// @nodoc
 class LazyLogger implements ILogger {
   final String _id;
   final ILogger Function() _obtainLogger;

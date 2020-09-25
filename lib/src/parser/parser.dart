@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:xml/xml.dart' show XmlDocument;
 
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
 import '../core/parser.dart';
 
+/// @nodoc
 abstract class Parser<T> {
   Future<T> decode(String input);
   Future<String> encode(T input);
@@ -45,6 +46,7 @@ const Map<String, Parser> _parserMap = {
   'xml': _XmlParser(),
 };
 
+/// @nodoc
 class ParserModule implements IParserModule {
   @override
   Future<T> decode<T>(String input, {String type = 'json'}) async {

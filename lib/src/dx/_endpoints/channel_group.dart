@@ -1,4 +1,4 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
 class ChannelGroupListChannelsParams extends Parameters {
@@ -25,10 +25,17 @@ class ChannelGroupListChannelsParams extends Parameters {
   }
 }
 
+/// Result of list channel groups channels endpoint call.
+///
+/// {@category Results}
 class ChannelGroupListChannelsResult extends Result {
+  /// Channel group name.
   String name;
+
+  /// Channel group channels.
   Set<String> channels;
 
+  /// @nodoc
   ChannelGroupListChannelsResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
     var payload = result.otherKeys['payload'];
@@ -70,7 +77,11 @@ class ChannelGroupChangeChannelsParams extends Parameters {
   }
 }
 
+/// Result of add or remove channels of channel group endpoint call.
+///
+/// {@category Results}
 class ChannelGroupChangeChannelsResult extends Result {
+  /// @nodoc
   ChannelGroupChangeChannelsResult.fromJson(Map<String, dynamic> object);
 }
 
@@ -99,6 +110,10 @@ class ChannelGroupDeleteParams extends Parameters {
   }
 }
 
+/// Result of remove channel group endpoint call.
+///
+/// {@category Results}
 class ChannelGroupDeleteResult extends Result {
+  /// @nodoc
   ChannelGroupDeleteResult.fromJson(Map<String, dynamic> object);
 }

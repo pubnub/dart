@@ -1,5 +1,6 @@
 import 'request_type.dart';
 
+/// @nodoc
 class Request {
   RequestType type;
   Uri uri;

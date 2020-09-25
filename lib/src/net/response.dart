@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart' as dio;
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
 class Response extends IResponse {
   @override

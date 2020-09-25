@@ -1,9 +1,11 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
 import 'cbor.dart';
 import 'resource.dart';
 
 /// Token returned by the PAM.
+///
+/// {@category Access Manager}
 class Token {
   final String _stringToken;
 

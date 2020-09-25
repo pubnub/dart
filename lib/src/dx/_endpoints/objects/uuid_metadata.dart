@@ -1,4 +1,4 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
 class GetAllUuidMetadataParams extends Parameters {
   Keyset keyset;
@@ -37,6 +37,10 @@ class GetAllUuidMetadataParams extends Parameters {
   }
 }
 
+/// Represents UUID metadata.
+///
+/// {@category Results}
+/// {@category Objects}
 class UuidMetadataDetails {
   String _id;
   String _name;
@@ -69,14 +73,22 @@ class UuidMetadataDetails {
     .._eTag = json['eTag'] as String;
 }
 
+/// Result of get all UUID metadata endpoint call.
+///
+/// {@category Results}
+/// {@category Objects}
 class GetAllUuidMetadataResult extends Result {
   List<UuidMetadataDetails> _metadataList;
   int _totalCount;
   String _next;
   String _prev;
 
+  /// List of UUIDs.
   List<UuidMetadataDetails> get metadataList => _metadataList;
+
+  /// Total count of UUIDs.
   int get totalCount => _totalCount;
+
   String get next => _next;
   String get prev => _prev;
 
@@ -118,9 +130,14 @@ class GetUuidMetadataParams extends Parameters {
   }
 }
 
+/// Result of get UUID metadata endpoint call.
+///
+/// {@category Results}
+/// {@category Objects}
 class GetUuidMetadataResult extends Result {
   UuidMetadataDetails _metadata;
 
+  /// UUID metadata.
   UuidMetadataDetails get metadata => _metadata;
 
   GetUuidMetadataResult();
@@ -159,11 +176,16 @@ class SetUuidMetadataParams extends Parameters {
   }
 }
 
+/// Result of set UUID metadata endpoint call.
+///
+/// {@category Results}
+/// {@category Objects}
 class SetUuidMetadataResult extends Result {
   UuidMetadataDetails _metadata;
 
   SetUuidMetadataResult._();
 
+  /// UUID metadata.
   UuidMetadataDetails get metadata => _metadata;
 
   factory SetUuidMetadataResult.fromJson(dynamic object) =>
@@ -192,6 +214,10 @@ class RemoveUuidMetadataParams extends Parameters {
   }
 }
 
+/// Result of remove UUID metadata endpoint call.
+///
+/// {@category Results}
+/// {@category Objects}
 class RemoveUuidMetadataResult extends Result {
   RemoveUuidMetadataResult._();
 

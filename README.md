@@ -46,7 +46,7 @@ You can import it in one of two ways:
 
 ```dart
 // Import all PubNub objects into your namespace
-import 'package:pubnub/pubnub.dart';
+import 'package:pubnub/core.dart';
 
 // Or import PubNub into a named namespace
 import 'package:pubnub/pubnub.dart' as pn;

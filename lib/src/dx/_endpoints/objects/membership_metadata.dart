@@ -1,4 +1,4 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
 import 'package:pubnub/src/dx/_endpoints/objects/channel_metadata.dart'
     show ChannelMetadataDetails;
@@ -53,6 +53,10 @@ class GetMembershipsMetadataParams extends Parameters {
   }
 }
 
+/// Represents membership metadata.
+///
+/// {@category Results}
+/// {@category Objects}
 class MembershipMetadata {
   ChannelMetadataDetails _channel;
   dynamic _custom;
@@ -73,6 +77,10 @@ class MembershipMetadata {
     .._eTag = object['eTag'] as String;
 }
 
+/// Result of memberships endpoint calls.
+///
+/// {@category Results}
+/// {@category Objects}
 class MembershipsResult extends Result {
   List<MembershipMetadata> _metadataList;
   int _totalCount;
@@ -197,6 +205,10 @@ class GetChannelMembersParams extends Parameters {
   }
 }
 
+/// Represents channel member metadata.
+///
+/// {@category Results}
+/// {@category Objects}
 class ChannelMemberMetadata {
   UuidMetadataDetails _uuid;
   dynamic _custom;
@@ -218,6 +230,10 @@ class ChannelMemberMetadata {
         .._eTag = object['eTag'] as String;
 }
 
+/// Result of channel members endpoint calls.
+///
+/// {@category Results}
+/// {@category Objects}
 class ChannelMembersResult extends Result {
   List<ChannelMemberMetadata> _metadataList;
   int _totalCount;

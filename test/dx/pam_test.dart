@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/default.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/pam/pam.dart';

@@ -1,4 +1,4 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
 class PublishParams extends Parameters {
   Keyset keyset;
@@ -43,6 +43,9 @@ class PublishParams extends Parameters {
   }
 }
 
+/// Result of publish endpoint call.
+///
+/// {@category Results}
 class PublishResult extends Result {
   bool isError;
   String description;

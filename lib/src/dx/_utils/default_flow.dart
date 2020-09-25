@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
 typedef Serialize<R> = R Function(dynamic object,

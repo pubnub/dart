@@ -21,7 +21,7 @@ abstract class IRequestHandler {
         path: requestUri.path != '' ? requestUri.path : null,
         port: requestUri.hasPort ? requestUri.port : defaultUri.port,
         queryParameters: {
-          ...defaultUri.queryParameters,
+          if (requestUri.host == '') ...defaultUri.queryParameters,
           ...requestUri.queryParameters
         },
         userInfo: requestUri.userInfo);

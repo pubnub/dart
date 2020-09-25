@@ -1,7 +1,9 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
-import 'package:pubnub/src/dx/_utils/utils.dart';
-import 'package:pubnub/src/dx/_endpoints/signal.dart';
+import '../_utils/utils.dart';
+import '../_endpoints/signal.dart';
+
+export '../_endpoints/signal.dart';
 
 mixin SignalDx on Core {
   /// Publishes signal [message] to a [channel].

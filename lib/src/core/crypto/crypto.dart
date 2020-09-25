@@ -4,10 +4,14 @@ import 'cipher_key.dart';
 
 export 'cipher_key.dart';
 
+/// Exception thrown when encryption or decryption fails.
+///
+/// {@category Exceptions}
 class CryptoException extends PubNubException {
   CryptoException([String message]) : super(message);
 }
 
+/// @nodoc
 abstract class ICryptoModule {
   void register(Core core);
 

@@ -35,39 +35,39 @@ final _generateFileUploadUrlResponse = '''
     "expiration_date": "2020-04-03T22:44:47Z",
     "form_fields": [
       {
-        "name": "tagging",
+        "key": "tagging",
         "value": "<Tagging><TagSet><Tag><Key>ObjectTTL</Key><Value>1000</Value></Tag></TagSet></Tagging>"
       },
       {
-        "name": "key",
+        "key": "key",
         "value": "file-upload/5a3eb38c-483a-4b25-ac01-c4e20deba6d6/test_image.jpg"
       },
       {
-        "name": "Content-Type",
+        "key": "Content-Type",
         "value": "binary/octet-stream"
       },
       {
-        "name": "X-Amz-Credential",
+        "key": "X-Amz-Credential",
         "value": "xxx/20200403/us-west-2/s3/aws4_request"
       },
       {
-        "name": "X-Amz-Security-Token",
+        "key": "X-Amz-Security-Token",
         "value": "lgnwegn2mg202j4g0g2mg04g02gj2"
       },
       {
-        "name": "X-Amz-Algorithm",
+        "key": "X-Amz-Algorithm",
         "value": "AWS4-HMAC-SHA256"
       },
       {
-        "name": "X-Amz-Date",
+        "key": "X-Amz-Date",
         "value": "20200403T212950Z"
       },
       {
-        "name": "Policy",
+        "key": "Policy",
         "value": "CnsgImV4cGlyYXRpb24iOiAiMjAyMC0wNC0wM1QyMToy..."
       },
       {
-        "name": "X-Amz-Signature",
+        "key": "X-Amz-Signature",
         "value": "1fbaad6738c6cd4c7eec2afe4cb2553a1e9cd2be690fdc2ecdc6e26f60a3781a"
       }
     ]
@@ -103,7 +103,7 @@ final _generateFileUploadUrl =
     'v1/files/test/channels/channel/generate-upload-url?pnsdk=PubNub-Dart%2F${PubNub.version}';
 
 final _downloadFileUrl =
-    'https://ps.pndsn.com/v1/files/test/channels/channel/files/5a3eb38c-483a-4b25-ac01-c4e20deba6d6/cat_file.jpg?pnsdk=PubNub-Dart%2F${PubNub.version}';
+    'https://ps.pndsn.com/v1/files/test/channels/channel/files/5a3eb38c-483a-4b25-ac01-c4e20deba6d6/cat_file.jpg?';
 
 final _getFileUrl =
     'https://ps.pndsn.com/v1/files/test/channels/channel/files/fileId/fileName';

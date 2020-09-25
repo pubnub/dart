@@ -1,14 +1,17 @@
-import 'package:pubnub/pubnub.dart';
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
+import '../_endpoints/objects/objects_types.dart';
+import 'objects.dart';
+import 'objects_types.dart';
 
-/// Represents a Channel Metadata object
-/// Useful to deal with a specific channel's Metadata
+/// Represents a channel metadata.
+///
+/// Useful to deal with a specific channel's metadata.
 class ChannelMetadata {
-  final PubNub _core;
+  final ObjectsDx _objects;
   final Keyset _keyset;
   final String _id;
 
-  ChannelMetadata(this._core, this._keyset, this._id);
+  ChannelMetadata(this._objects, this._keyset, this._id);
 
   /// You can use this method to add a uuidMetadata(membersMetadata) into given channel
   ///
@@ -42,7 +45,7 @@ class ChannelMetadata {
           bool includeCount,
           String filter,
           Set<String> sort}) =>
-      _core.objects.setChannelMembers(_id, channelMembersMetadata,
+      _objects.setChannelMembers(_id, channelMembersMetadata,
           limit: limit,
           start: start,
           end: end,
@@ -85,7 +88,7 @@ class ChannelMetadata {
           bool includeCount,
           String filter,
           Set<String> sort}) =>
-      _core.objects.removeChannelMembers(_id, uuids,
+      _objects.removeChannelMembers(_id, uuids,
           keyset: _keyset,
           limit: limit,
           start: start,
@@ -130,7 +133,7 @@ class ChannelMetadata {
           Set<String> sort,
           Keyset keyset,
           String using}) =>
-      _core.objects.getChannelMembers(_id,
+      _objects.getChannelMembers(_id,
           limit: limit,
           start: start,
           end: end,

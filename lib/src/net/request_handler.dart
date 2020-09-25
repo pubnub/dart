@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart' as dio;
 import 'package:pool/pool.dart' show PoolResource;
-import 'package:pubnub/pubnub.dart';
 
+import 'package:pubnub/core.dart';
 import 'response.dart';
 
 final _logger = injectLogger('pubnub.networking.request_handler');
@@ -102,6 +102,7 @@ class RequestHandler extends IRequestHandler {
     if (!_cancelToken.isCancelled && !_isReleased) {
       _cancelToken.cancel(reason);
       _resource?.release();
+      _isReleased = true;
       _logger.info('($_id) Request cancelled and resource released.');
     }
   }

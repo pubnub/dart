@@ -1,9 +1,11 @@
-/// Class representing an UUID.
+/// Represents an UUID.
+///
+/// {@category Basic Features}
 class UUID {
   /// The actual value of an UUID.
   final String value;
 
-  /// Some state that may be associated with this UUID. It is used
+  /// State that may be associated with this UUID. It is used
   /// in certain contexts.
   final Map<String, dynamic> state;
 

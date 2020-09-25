@@ -1,4 +1,4 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
 class SignalParams extends Parameters {
@@ -30,6 +30,9 @@ class SignalParams extends Parameters {
   }
 }
 
+/// Result of signal endpoint call.
+///
+/// {@category Results}
 class SignalResult extends Result {
   bool isError;
   String description;

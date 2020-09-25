@@ -1,10 +1,21 @@
-import 'package:pubnub/src/core/core.dart';
-import 'package:pubnub/src/dx/_utils/utils.dart';
+import 'package:pubnub/core.dart';
+import '../_utils/utils.dart';
 
+/// Push gateway type.
+///
+/// * [apns]and [apns2] uses Apple services.
+/// * [fcm] and [gcm] uses Google services.
+/// * [mpns] uses Microsoft services.
+///
+/// {@category Push}
 enum PushGateway { apns, fcm, gcm, mpns, apns2 }
 
+/// Environment type.
+///
+/// {@category Push}
 enum Environment { development, production }
 
+/// @nodoc
 extension EnvironmentExtension on Environment {
   String value() {
     switch (this) {
@@ -18,6 +29,7 @@ extension EnvironmentExtension on Environment {
   }
 }
 
+/// @nodoc
 extension PushGatewayExtension on PushGateway {
   String value() {
     switch (this) {
@@ -75,6 +87,10 @@ class ListPushChannelsParams extends Parameters {
   }
 }
 
+/// Result of list push channels endpoint call.
+///
+/// {@category Results}
+/// {@category Push}
 class ListPushChannelsResult extends Result {
   List<dynamic> channels;
 
@@ -128,6 +144,10 @@ class AddPushChannelsParams extends Parameters {
   }
 }
 
+/// Result of add push channels endpoint call.
+///
+/// {@category Results}
+/// {@category Push}
 class AddPushChannelsResult extends Result {
   int status;
   String description;
@@ -182,6 +202,10 @@ class RemovePushChannelsParams extends Parameters {
   }
 }
 
+/// Result of remove push channels endpoint call.
+///
+/// {@category Results}
+/// {@category Push}
 class RemovePushChannelsResult extends Result {
   int status;
   String description;
@@ -236,6 +260,10 @@ class RemoveDeviceParams extends Parameters {
   }
 }
 
+/// Result of remove device endpoint call.
+///
+/// {@category Results}
+/// {@category Push}
 class RemoveDeviceResult extends Result {
   int status;
   String description;

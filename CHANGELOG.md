@@ -1,3 +1,12 @@
+## [Unreleased]
+September 25 2020
+
+[Full Changelog](https://github.com/pubnub/dart/compare/v2.0.1...v3.0.0-rc)
+
+- ⭐️️ Subscribe loop is now written using async generator and should be easier to debug. 
+- ⭐️️ Exports now are more comprehensive and clear, documentation clarity has been improved. 
+- 🐛 Removes additional query params from AWS calls. 
+
 ## [v2.0.1](https://github.com/pubnub/dart/releases/tag/v2.0.1)
 September 7 2020
 

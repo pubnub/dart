@@ -1,4 +1,4 @@
-import 'package:pubnub/pubnub.dart';
+import 'package:pubnub/core.dart';
 
 class HostIsDownDiagnostic extends Diagnostic {
   final String host;

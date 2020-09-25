@@ -1,7 +1,8 @@
 import 'package:test/test.dart';
 
 import 'package:pubnub/pubnub.dart';
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
+
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/message_action.dart';
 
@@ -162,9 +163,9 @@ void main() {
         method: 'GET',
         path:
             'v1/message-actions/test/channel/test?pnsdk=PubNub-Dart%2F${PubNub.version}',
-      ).then(status: 200, body: _fetchMessageActionError);
-      var response = await pubnub.fetchMessageActions('test');
-      expect(response.status, 400);
+      ).then(status: 400, body: _fetchMessageActionError);
+
+      expect(pubnub.fetchMessageActions('test'), throwsA(anything));
     });
 
     test('delete message action throws when channel is empty', () async {

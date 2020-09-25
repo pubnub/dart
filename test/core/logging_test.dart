@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:pubnub/src/core/core.dart';
-import 'package:pubnub/src/core/logging/dummy_logger.dart';
+import 'package:pubnub/core.dart';
 
 class FakeLogger extends ILogger {
   List<String> messages = [];

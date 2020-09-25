@@ -1,6 +1,8 @@
 import 'package:test/test.dart';
 
 import 'package:pubnub/pubnub.dart';
+import 'package:pubnub/core.dart';
+import 'package:pubnub/src/dx/_endpoints/history.dart';
 
 import '../net/fake_net.dart';
 part './fixtures/history.dart';

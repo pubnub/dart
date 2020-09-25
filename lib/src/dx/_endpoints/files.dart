@@ -1,4 +1,5 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
+import 'package:pubnub/pubnub.dart';
 
 typedef decryptFunction = List<int> Function(CipherKey key, List<int> data);
 
@@ -40,7 +41,7 @@ class GenerateFileUploadUrlResult extends Result {
         ..formFields =
             (object['file_upload_request']['form_fields'] as List<dynamic>)
                 .fold({}, (previousValue, element) {
-          previousValue[element['name']] = element['value'];
+          previousValue[element['key']] = element['value'];
           return previousValue;
         });
 }
@@ -105,14 +106,19 @@ class PublishFileMessageParams extends Parameters {
   }
 }
 
+/// Result of publish file message endpoint call.
+///
+/// {@category Results}
+/// {@category Files}
 class PublishFileMessageResult extends Result {
   bool isError;
   String description;
   int timetoken;
-  dynamic fileInfo;
+  FileInfo fileInfo;
 
   PublishFileMessageResult();
 
+  /// @nodoc
   factory PublishFileMessageResult.fromJson(dynamic object) {
     return PublishFileMessageResult()
       ..timetoken = int.tryParse(object[2])
@@ -132,11 +138,17 @@ class DownloadFileParams extends Parameters {
   }
 }
 
+/// Result of download file endpoint call.
+///
+/// {@category Results}
+/// {@category Files}
 class DownloadFileResult extends Result {
+  /// Content of the file.
   dynamic fileContent;
 
   DownloadFileResult._();
 
+  /// @nodoc
   factory DownloadFileResult.fromJson(dynamic object,
       {CipherKey cipherKey, Function decryptFunction}) {
     if (cipherKey != null) {
@@ -178,17 +190,26 @@ class ListFilesParams extends Parameters {
   }
 }
 
+/// Result of list files endpoint call.
+///
+/// {@category Results}
+/// {@category Files}
 class ListFilesResult extends Result {
   List<FileDetail> _filesDetail;
   String _next;
   int _count;
 
+  /// List of file details.
   List<FileDetail> get filesDetail => _filesDetail;
+
+  /// Next page ID. Used for pagination.
   String get next => _next;
+
   int get count => _count;
 
   ListFilesResult._();
 
+  /// @nodoc
   factory ListFilesResult.fromJson(dynamic object) => ListFilesResult._()
     .._filesDetail = (object['data'] as List)
         ?.map((e) => e == null ? null : FileDetail.fromJson(e))
@@ -197,6 +218,10 @@ class ListFilesResult extends Result {
     .._count = object['count'] as int;
 }
 
+/// Represents a file uploaded to PubNub.
+///
+/// {@category Results}
+/// {@category Files}
 class FileDetail {
   String _name;
   String _id;
@@ -241,8 +266,13 @@ class DeleteFileParams extends Parameters {
   }
 }
 
+/// Result of delete file endpoint call.
+///
+/// {@category Results}
+/// {@category Files}
 class DeleteFileResult extends Result {
   DeleteFileResult._();
 
+  /// @nodoc
   factory DeleteFileResult.fromJson(dynamic object) => DeleteFileResult._();
 }

@@ -1,5 +1,9 @@
+/// Represents a resource type.
+///
+/// {@category Access Manager}
 enum ResourceType { space, user, channel, channelGroup }
 
+/// @nodoc
 extension ResourceTypeExtension on ResourceType {
   String get value {
     switch (this) {
@@ -17,6 +21,7 @@ extension ResourceTypeExtension on ResourceType {
   }
 }
 
+/// @nodoc
 ResourceType getResourceTypeFromString(String type) {
   switch (type) {
     case 'chan':
@@ -33,6 +38,8 @@ ResourceType getResourceTypeFromString(String type) {
 }
 
 /// Represents a resource in PAM.
+///
+/// {@category Access Manager}
 class Resource {
   /// Type of the resource.
   ResourceType type;

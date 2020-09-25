@@ -1,12 +1,12 @@
-import 'core/core.dart';
+import '../core.dart';
 
 import 'net/net.dart';
 import 'parser/parser.dart';
 import 'crypto/crypto.dart';
+import 'subscribe/subscribe.dart';
 
 import 'dx/time.dart';
 import 'dx/publish/publish.dart';
-import 'dx/subscribe/subscribe.dart';
 import 'dx/signal/signal.dart';
 import 'dx/batch/batch.dart';
 import 'dx/channel/channel.dart';
@@ -18,6 +18,7 @@ import 'dx/presence/presence.dart';
 import 'dx/files/files.dart';
 import 'dx/objects/objects_types.dart';
 import 'dx/objects/objects.dart';
+import 'dx/supervisor/supervisor.dart';
 
 /// PubNub library.
 ///
@@ -36,6 +37,8 @@ import 'dx/objects/objects.dart';
 /// * if `keyset` is null, it will try to obtain a keyset named `using`,
 /// * if `using` is null, it will try to obtain the default keyset,
 /// * if default keyset is not defined, it will throw an error.
+///
+/// {@category Basic Features}
 class PubNub extends Core
     with
         TimeDx,
@@ -45,19 +48,19 @@ class PubNub extends Core
         MessageActionDx,
         PushNotificationDx,
         PamDx,
-        PresenceDx {
-  /// [BatchDx] contains methods that allow running batch operations on channels,
+        PresenceDx,
+        SupervisorDx {
+  /// Contains methods that allow running batch operations on channels,
   /// channel groups and other features.
   BatchDx batch;
 
-  /// [ChannelGroupDx] contains methods that allow manipulating channel groups.
+  /// Contains methods that allow manipulating channel groups.
   ChannelGroupDx channelGroups;
 
-  /// [ObjectsDx] contains methods to manage channel, uuid metadata and
-  /// UUID's membership and Channel's members
+  /// Contains methods to manage channel and uuids metadata and their relationships.
   ObjectsDx objects;
 
-  /// [FileDx] contains that allow managing files
+  /// Contains methods that allow managing files.
   FileDx files;
 
   /// Current version of this library.
@@ -81,25 +84,16 @@ class PubNub extends Core
 
   /// Returns a representation of a channel.
   ///
-  /// Useful if you only need to work on one channel.
+  /// Useful if you need to work on only one channel.
   Channel channel(String name, {Keyset keyset, String using}) {
     keyset ??= keysets.get(using, defaultIfNameIsNull: true);
 
     return Channel(this, keyset, name);
   }
 
-  /// Returns a representation of a channel group.
+  /// Creates [UUIDMetadata] and sets metadata for given [uuid] in the database.
   ///
-  /// Useful if you need to work on a bunch of channels at the same time.
-  ChannelGroup channelGroup(String name, {Keyset keyset, String using}) {
-    keyset ??= keysets.get(using, defaultIfNameIsNull: true);
-
-    return ChannelGroup(this, keyset, name);
-  }
-
-  /// Creates [UUIDMetadata], sets metadata for given `uuid` to the database
-  /// * If `uuid` argument is null then it picks `uuid` of `keyset`
-  /// Returned [UUIDMetadata] instance is further useful to manage it's membership metadata
+  /// If [uuid] is null, then it uses [Keyset.uuid].
   Future<UUIDMetadata> uuidMetadata(
       {String uuid,
       String name,
@@ -121,12 +115,12 @@ class PubNub extends Core
         uuid: uuid,
         keyset: keyset);
     if (result.metadata != null) {
-      uuidMetadata = UUIDMetadata(this, keyset, result.metadata.id);
+      uuidMetadata = UUIDMetadata(objects, keyset, result.metadata.id);
     }
     return uuidMetadata;
   }
 
-  /// Creates and returns a new instance of [ChannelMetadata] (from Objects API).
+  /// Creates [ChannelMetadata] and sets metadata for given [channel] in the database.
   Future<ChannelMetadata> channelMetadata(String channelId,
       {String name,
       String description,
@@ -143,7 +137,7 @@ class PubNub extends Core
         keyset: keyset);
 
     if (result.metadata != null) {
-      channelMetadata = ChannelMetadata(this, keyset, result.metadata.id);
+      channelMetadata = ChannelMetadata(objects, keyset, result.metadata.id);
     }
     return channelMetadata;
   }

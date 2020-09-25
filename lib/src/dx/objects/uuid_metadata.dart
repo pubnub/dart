@@ -1,17 +1,16 @@
-import 'package:pubnub/pubnub.dart';
-import 'package:pubnub/src/core/core.dart';
-import 'package:pubnub/src/dx/_endpoints/objects/objects_types.dart';
-
+import 'package:pubnub/core.dart';
+import '../_endpoints/objects/objects_types.dart';
+import 'objects.dart';
 import 'schema.dart';
 
 /// Representation of UuidMetadata object
 /// Useful while dealing with one specific `uuid` details
 class UUIDMetadata {
-  final PubNub _core;
+  final ObjectsDx _objects;
   final Keyset _keyset;
   final String _uuid;
 
-  UUIDMetadata(this._core, this._keyset, this._uuid);
+  UUIDMetadata(this._objects, this._keyset, this._uuid);
 
   /// It adds membership metadata for given `uuid` and returns paginated list of memberships metadata
   ///
@@ -45,7 +44,7 @@ class UUIDMetadata {
           bool includeCount,
           String filter,
           Set<String> sort}) =>
-      _core.objects.setMemberships(membershipMetadata,
+      _objects.setMemberships(membershipMetadata,
           uuid: _uuid,
           keyset: _keyset,
           limit: limit,
@@ -89,7 +88,7 @@ class UUIDMetadata {
           bool includeCount,
           String filter,
           Set<String> sort}) =>
-      _core.objects.getMemberships(
+      _objects.getMemberships(
           uuid: _uuid,
           limit: limit,
           start: start,

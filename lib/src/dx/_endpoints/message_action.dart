@@ -1,4 +1,4 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
 class FetchMessageActionsParams extends Parameters {
   Keyset keyset;
@@ -33,46 +33,57 @@ class FetchMessageActionsParams extends Parameters {
   }
 }
 
+/// Result of fetch message actions endpoint call.
+///
+/// {@category Results}
 class FetchMessageActionsResult extends Result {
-  int _status;
   List<MessageAction> _actions;
   dynamic _moreActions;
-  Map<String, dynamic> _error;
 
   dynamic get moreActions => _moreActions;
-  Map<String, dynamic> get error => _error;
 
-  int get status => _status;
-  set status(int status) => _status = status;
-
+  /// List of message actions.
   List<MessageAction> get actions => _actions ?? [];
   set actions(List<MessageAction> actions) => _actions = actions;
 
+  /// @nodoc
   FetchMessageActionsResult();
 
+  /// @nodoc
   factory FetchMessageActionsResult.fromJson(dynamic object) {
     return FetchMessageActionsResult()
-      .._status = object['status'] as int
       .._actions = (object['data'] as List)
           ?.map((e) => e == null ? null : MessageAction.fromJson(e))
           ?.toList()
       .._moreActions =
-          object['more'] != null ? MoreAction.fromJson(object['more']) : null
-      .._error = object['error'];
+          object['more'] != null ? MoreAction.fromJson(object['more']) : null;
   }
 }
 
+/// Represents a message action.
+///
+/// {@category Results}
 class MessageAction {
+  /// Type of this message action.
   String type;
+
+  /// Value of this message action.
   String value;
+
+  /// Timetoken of when this message action has been added.
   String actionTimetoken;
+
+  /// Timetoken of the parent message.
   String messageTimetoken;
+
+  /// UUID of who added this message action.
   String uuid;
 
-  MessageAction();
+  MessageAction._();
 
+  /// @nodoc
   factory MessageAction.fromJson(dynamic object) {
-    return MessageAction()
+    return MessageAction._()
       ..type = object['type'] as String
       ..value = object['value'] as String
       ..actionTimetoken = "${object['actionTimetoken']}"
@@ -81,6 +92,7 @@ class MessageAction {
   }
 }
 
+/// @nodoc
 class MoreAction {
   String url;
   String start;
@@ -131,6 +143,9 @@ class AddMessageActionParams extends Parameters {
   }
 }
 
+/// Result of add message actions endpoint call.
+///
+/// {@category Results}
 class AddMessageActionResult extends Result {
   int _status;
   MessageAction _data;
@@ -185,6 +200,9 @@ class DeleteMessageActionParams extends Parameters {
   }
 }
 
+/// Result of delete message actions endpoint call.
+///
+/// {@category Results}
 class DeleteMessageActionResult extends Result {
   int _status;
   dynamic _data;

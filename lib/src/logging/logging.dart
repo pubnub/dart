@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
 /// A record that contains logged information.
 class LogRecord {
@@ -66,7 +66,7 @@ class LogRecord {
   ///
   /// Prints `[$time] (${level.name}) $message`.
   static void Function(LogRecord) defaultPrinter =
-      LogRecord.createPrinter(r'[$time] (${level.name}) $message');
+      LogRecord.createPrinter(r'[$time] (${level.name}) $scope: $message');
 }
 
 /// A logger implementation that contains a stream of [LogRecord] records.

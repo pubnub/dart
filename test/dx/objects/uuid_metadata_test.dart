@@ -1,7 +1,9 @@
 import 'package:test/test.dart';
-import 'package:pubnub/pubnub.dart';
-import '../../net/fake_net.dart';
 
+import 'package:pubnub/pubnub.dart';
+import 'package:pubnub/core.dart';
+
+import '../../net/fake_net.dart';
 part 'fixtures/uuid_metadata.dart';
 
 void main() {

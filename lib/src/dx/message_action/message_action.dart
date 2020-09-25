@@ -1,7 +1,9 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
-import 'package:pubnub/src/dx/_utils/utils.dart';
-import 'package:pubnub/src/dx/_endpoints/message_action.dart';
+import '../_utils/utils.dart';
+import '../_endpoints/message_action.dart';
+
+export '../_endpoints/message_action.dart';
 
 mixin MessageActionDx on Core {
   /// Returns all message actions of a given [channel].
@@ -48,7 +50,6 @@ mixin MessageActionDx on Core {
         }
       }
     } while (loopResult.moreActions != null);
-    fetchMessageActionsResult..status = loopResult.status;
     return fetchMessageActionsResult;
   }
 
