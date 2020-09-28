@@ -25,14 +25,14 @@ class Manager {
     var channels = _subscriptions.fold<Set<String>>(
         <String>{},
         (s, sub) => s
-          ..addAll({
+          ..addAll(<String>{
             ...sub.channels,
             if (sub.withPresence == true) ...sub.presenceChannels
           }));
     var channelGroups = _subscriptions.fold<Set<String>>(
         <String>{},
         (s, sub) => s
-          ..addAll({
+          ..addAll(<String>{
             ...sub.channelGroups,
             if (sub.withPresence == true) ...sub.presenceChannelGroups
           }));

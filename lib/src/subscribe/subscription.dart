@@ -21,10 +21,10 @@ class Subscription {
   bool get withPresence => _withPresence;
 
   /// Set of channels that this subscription represents.
-  Set<String> get channels => {..._channels ?? {}};
+  Set<String> get channels => {..._channels ?? <String>{}};
 
   /// Set of channel groups that this subscription represents.
-  Set<String> get channelGroups => {..._channelGroups ?? {}};
+  Set<String> get channelGroups => {..._channelGroups ?? <String>{}};
 
   /// Whether this subscription has been cancelled.
   bool get isCancelled => _cancelCompleter.isCompleted;
@@ -34,11 +34,11 @@ class Subscription {
 
   /// Set of presence channels that are generated from set of channels
   Set<String> get presenceChannels =>
-      _channels.map((channel) => '${channel}-pnpres');
+      channels.map((channel) => '${channel}-pnpres').toSet();
 
   /// Set of presence channel groups that are generated from set of channel groups
   Set<String> get presenceChannelGroups =>
-      _channelGroups.map((channelGroup) => '${channelGroup}-pnpres');
+      channelGroups.map((channelGroup) => '${channelGroup}-pnpres').toSet();
 
   /// Broadcast stream of messages in this subscription.
   Stream<Envelope> get messages =>
@@ -86,17 +86,17 @@ class Subscription {
 
     _envelopeSubscription = _manager.envelopes.where((envelope) {
       // If message was sent to one of our channels.
-      if (_channels.contains(envelope.channel)) {
+      if (channels.contains(envelope.channel)) {
         return true;
       }
 
       // If message was sent to one of our channel patterns.
-      if (_channels.contains(envelope.subscriptionPattern)) {
+      if (channels.contains(envelope.subscriptionPattern)) {
         return true;
       }
 
       // If message was sent to one of our channel groups.
-      if (_channelGroups.contains(envelope.subscriptionPattern)) {
+      if (channelGroups.contains(envelope.subscriptionPattern)) {
         return true;
       }
 
