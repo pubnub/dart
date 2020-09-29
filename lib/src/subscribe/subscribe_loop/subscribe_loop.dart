@@ -19,25 +19,23 @@ class UpdateException implements Exception {}
 class CancelException implements Exception {}
 
 /// @nodoc
-Future<T> withCancel<T>(Future<T> future, Future<Exception> signal) {
-  var result = Completer<T>();
+Future<T> invertFailure<T>(Future<T> future) async {
+  throw await future;
+}
 
-  void completeError(dynamic exception) {
-    if (!result.isCompleted) {
-      result.completeError(exception);
+/// @nodoc
+Future<T> withCancel<T>(Future<T> future, Future<Exception> signal) async {
+  try {
+    var result = await Future.any([future, invertFailure(signal)]);
+
+    if (result is T) {
+      return result;
+    } else {
+      throw result;
     }
+  } catch (e) {
+    rethrow;
   }
-
-  void complete(T value) {
-    if (!result.isCompleted) {
-      result.complete(value);
-    }
-  }
-
-  signal.then((e) => completeError(e)).catchError((e) => completeError(e));
-  future.then(complete).catchError((e) => completeError(e));
-
-  return result.future;
 }
 
 /// @nodoc
@@ -132,6 +130,7 @@ class SubscribeLoop {
         var diagnostic = core.supervisor.runDiagnostics(fiber, exception);
 
         if (diagnostic == null) {
+          _logger.warning('No diagnostics found.');
           rethrow;
         }
 

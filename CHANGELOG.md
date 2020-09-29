@@ -1,9 +1,9 @@
 ## [Unreleased]
-September 28 2020
+September 29 2020
 
 [Full Changelog](https://github.com/pubnub/dart/compare/v2.0.1...v3.0.0-rc)
 
-- 🐛 Fixes a bunch of issues with incorrect arguments passed in. 
+- 🐛 Adds additional diagnostics to the networking module. 
 
 ## [v2.0.1](https://github.com/pubnub/dart/releases/tag/v2.0.1)
 September 7 2020

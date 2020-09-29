@@ -21,7 +21,8 @@ class NetworkingStrategy extends Strategy {
 
     if (diagnostic is HostIsDownDiagnostic ||
         diagnostic is HostLookupFailedDiagnostic ||
-        diagnostic is TimeoutDiagnostic) {
+        diagnostic is TimeoutDiagnostic ||
+        diagnostic is UnknownHttpExceptionDiagnostic) {
       // Host is down. We should retry after some delay.
 
       return [
