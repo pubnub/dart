@@ -1,3 +1,4 @@
+/// @nodoc
 abstract class IResponse {
   int get statusCode;
   Map<String, List<String>> get headers;

@@ -3,6 +3,25 @@ changelog:
   -
     changes:
       -
+        text: "Subscribe loop is now written using async generator and should be easier to debug."
+        type: improvement
+      -
+        text: "Exports now are more comprehensive and clear, documentation clarity has been improved."
+        type: improvement
+      -
+        text: "Removes additional query params from AWS calls."
+        type: bug
+      -
+        text: "Fixes a bunch of issues with incorrect arguments passed in."
+        type: bug
+      -
+        text: "Adds additional diagnostics to the networking module."
+        type: bug
+    date: Oct 8, 20
+    version: v3.0.0
+  -
+    changes:
+      -
         text: "Fixes issue of upgrade failure."
         type: bug
     date: Sep 7, 20
@@ -310,4 +329,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "2.0.1"
+version: "3.0.0"

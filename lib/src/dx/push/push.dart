@@ -1,26 +1,26 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/default.dart';
 
-import 'package:pubnub/src/dx/_utils/utils.dart';
-import 'package:pubnub/src/dx/_endpoints/push.dart';
+import '../_utils/utils.dart';
+import '../_endpoints/push.dart';
+
+export '../_endpoints/push.dart';
 
 // Managing device registrations for Push Notification Service
 mixin PushNotificationDx on Core {
-  /// It returns list of all channels to which device [deviceId] is registered
-  /// to receive push notifications
+  /// It returns list of all channels to which device [deviceId] is registered to receive push notifications.
   ///
-  /// [deviceId] is the id/token of the device
-  /// [gateway] indicates the backend to use for push service
-  /// it can be
-  /// * apns or apns2 for apple service
-  /// * gcm for google service
-  /// * mpns for microsoft service
+  /// [deviceId] is the id/token of the device.
+  /// [gateway] indicates the backend to use for push service:
+  /// * apns or apns2 for Apple service.
+  /// * gcm for Google service.
+  /// * mpns for Microsoft service.
   ///
-  /// If [gateway] is [PushGateway.apns2] then [topic] is mandatory to provide
-  /// [topic] is bundle id of the mobile application
-  /// [environment] denoting the environment of the mobile application for [PushGateway.apns2]
-  /// it can be either [Environment.development] or [Environment.production]
-  /// default value for [environment] is [Environment.development]
+  /// If [gateway] is [PushGateway.apns2] then [topic] is mandatory to provide.
+  /// [topic] is bundle id of the mobile application.
+  /// [environment] denoting the environment of the mobile application for [PushGateway.apns2], it can be either:
+  /// * [Environment.development] (which is the default value).
+  /// * [Environment.production].
   Future<ListPushChannelsResult> listPushChannels(
       String deviceId, PushGateway gateway,
       {String topic,
@@ -142,6 +142,7 @@ mixin PushNotificationDx on Core {
   }
 }
 
+/// Represents a device used in push endpoints.
 class Device {
   final PubNub _core;
   final Keyset _keyset;

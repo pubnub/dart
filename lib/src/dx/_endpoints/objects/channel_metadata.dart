@@ -1,4 +1,4 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
 class GetAllChannelMetadataParams extends Parameters {
   Keyset keyset;
@@ -38,6 +38,10 @@ class GetAllChannelMetadataParams extends Parameters {
   }
 }
 
+/// Represents channel metadata.
+///
+/// {@category Results}
+/// {@category Objects}
 class ChannelMetadataDetails {
   String _id;
   String _name;
@@ -65,6 +69,10 @@ class ChannelMetadataDetails {
         .._eTag = object['eTag'] as String;
 }
 
+/// Result of get all channels metadata endpoint call.
+///
+/// {@category Results}
+/// {@category Objects}
 class GetAllChannelMetadataResult extends Result {
   List<ChannelMetadataDetails> _metadataList;
   int _totalCount;
@@ -115,6 +123,10 @@ class GetChannelMetadataParams extends Parameters {
   }
 }
 
+/// Result of get channels metadata endpoint call.
+///
+/// {@category Results}
+/// {@category Objects}
 class GetChannelMetadataResult extends Result {
   ChannelMetadataDetails _metadata;
   ChannelMetadataDetails get metadata => _metadata;
@@ -161,6 +173,10 @@ class SetChannelMetadataParams extends Parameters {
   }
 }
 
+/// Result of set channels metadata endpoint call.
+///
+/// {@category Results}
+/// {@category Objects}
 class SetChannelMetadataResult extends Result {
   ChannelMetadataDetails _metadata;
   SetChannelMetadataResult._();
@@ -197,6 +213,10 @@ class RemoveChannelMetadataParams extends Parameters {
   }
 }
 
+/// Result of remove channels metadata endpoint call.
+///
+/// {@category Results}
+/// {@category Objects}
 class RemoveChannelMetadataResult extends Result {
   RemoveChannelMetadataResult._();
 

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
 class MockException extends PubNubException {
   MockException(String message) : super(message);

@@ -1,13 +1,26 @@
-import 'package:pubnub/src/core/core.dart';
-import 'package:pubnub/src/dx/_endpoints/objects/uuid_metadata.dart';
-import 'package:pubnub/src/dx/_endpoints/objects/channel_metadata.dart';
-import 'package:pubnub/src/dx/_endpoints/objects/membership_metadata.dart';
+import 'package:pubnub/core.dart';
+
 import '../_utils/utils.dart';
+import '../_endpoints/objects/uuid_metadata.dart';
+import '../_endpoints/objects/channel_metadata.dart';
+import '../_endpoints/objects/membership_metadata.dart';
 import 'schema.dart';
 
+export '../_endpoints/objects/uuid_metadata.dart';
+export '../_endpoints/objects/channel_metadata.dart';
+export '../_endpoints/objects/membership_metadata.dart';
+export 'schema.dart';
+
+/// Groups **objects** methods together.
+///
+/// Available as [PubNub.objects].
+/// Introduced with [Objects API](https://www.pubnub.com/docs/platform/channels/metadata).
+///
+/// {@category Objects}
 class ObjectsDx {
   final Core _core;
 
+  /// @nodoc
   ObjectsDx(this._core);
 
   /// Returns a paginated list of all uuidMetadata associated with the given subscription key,

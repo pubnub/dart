@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:pubnub/pubnub.dart';
+import 'package:pubnub/logging.dart';
 import 'package:pubnub/networking.dart';
 
 void main() async {
@@ -10,26 +9,26 @@ void main() async {
   logger.stream.listen(
       LogRecord.createPrinter(r'[$time] (${level.name}) $scope $message'));
 
+  // Create PubNub instance with default keyset.
+  var pubnub = PubNub(
+    networking:
+        NetworkingModule(retryPolicy: RetryPolicy.exponential(maxRetries: 10)),
+    defaultKeyset:
+        Keyset(subscribeKey: 'demo', publishKey: 'demo', uuid: UUID('demo')),
+  );
+
+  print(
+      'Network reconnection test. Please wait few seconds for further instructions...');
+
+  var sub = await pubnub.subscribe(channels: {'test2'});
+
+  await Future.delayed(Duration(seconds: 5));
+
+  print('Subscribed. Disconnect your network for few seconds.');
+
+  await Future.delayed(Duration(seconds: 5));
+
   await provideLogger(logger, () async {
-    // Create PubNub instance with default keyset.
-    var pubnub = PubNub(
-      networking: NetworkingModule(
-          retryPolicy: RetryPolicy.exponential(maxRetries: 10)),
-      defaultKeyset:
-          Keyset(subscribeKey: 'demo', publishKey: 'demo', uuid: UUID('demo')),
-    );
-
-    print(
-        'Network reconnection test. Please wait few seconds for further instructions...');
-
-    var sub = await pubnub.subscribe(channels: {'test2'});
-
-    await Future.delayed(Duration(seconds: 5));
-
-    print('Subscribed. Disconnect your network for few seconds.');
-
-    await Future.delayed(Duration(seconds: 5));
-
     var f = pubnub.publish('test2', {'myMessage': 'it works!'});
 
     print(
@@ -44,7 +43,5 @@ void main() async {
     await sub.dispose();
 
     print('Done!');
-
-    exit(0);
   });
 }

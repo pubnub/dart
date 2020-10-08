@@ -2,7 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
 String _encodeQueryParameters(Map<String, String> queryParameters) => SplayTreeMap
         .from(queryParameters)

@@ -1,17 +1,23 @@
 import 'dart:convert';
 
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_endpoints/pam.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
 import 'resource.dart';
 import 'token.dart';
 
+/// Represents a token request.
+///
+/// {@category Access Manager}
 class TokenRequest {
   final Core _core;
   final Keyset _keyset;
 
+  /// Time to live in seconds.
   final int ttl;
+
+  /// Token metadata.
   final dynamic meta;
 
   final List<Resource> _resources = [];

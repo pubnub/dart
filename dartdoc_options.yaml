@@ -1,0 +1,29 @@
+dartdoc:
+  exclude: ["core"]
+  categories:
+    "Basic Features":
+      markdown: "doc/Basic.md"
+      name: "Basic Features"
+    "Objects":
+      markdown: "doc/Objects.md"
+      name: "Objects"
+    "Files":
+      markdown: "doc/Files.md"
+      name: "Files"
+    "Push":
+      markdown: "doc/Push.md"
+      name: "Push"
+    "Access Manager":
+      markdown: "doc/AccessManager.md"
+      name: "Access Manager"
+    "Exceptions":
+      markdown: "doc/Exceptions.md"
+      name: "Exceptions"
+    "Results":
+      markdown: "doc/Results.md"
+      name: "Results"
+    "Modules":
+      name: "Modules"
+  categoryOrder: ["Basic Features", "Objects", "Files", "Push", "Access Manager", "Exceptions", "Results"]
+  examplePathPrefix: "./examples"
+  showUndocumentedCategories: true

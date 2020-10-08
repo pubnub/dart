@@ -1,9 +1,10 @@
 import 'package:pubnub/pubnub.dart';
+import 'package:pubnub/logging.dart';
 
 // This is the same example as the `example.dart` file, but shows how to enable extra logging
 void main() async {
   // Create a root logger
-  var logger = StreamLogger.root('root', logLevel: Level.all);
+  var logger = StreamLogger.root('root', logLevel: Level.info);
 
   // Subscribe to messages with a default printer
   var sub = logger.stream.listen(
@@ -16,6 +17,8 @@ void main() async {
   // Provide logging only for the parts that you are interested in.
   var _ = await provideLogger(logger, () async {
     var subscription = await pubnub.subscribe(channels: {'test'});
+
+    await Future.delayed(Duration(seconds: 1));
 
     await pubnub.publish('test', {'message': 'My message'});
 
@@ -43,5 +46,4 @@ void main() async {
 
   await sub.cancel();
   await logger.dispose();
-  print('disposed!');
 }

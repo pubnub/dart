@@ -1,3 +1,6 @@
+/// Represents file information.
+///
+/// {@category Files}
 class FileInfo {
   String id;
   String name;
@@ -10,6 +13,9 @@ class FileInfo {
   }
 }
 
+/// Represents message with attached file.
+///
+/// {@category Files}
 class FileMessage {
   FileInfo file;
   dynamic message;

@@ -3,12 +3,18 @@ import 'package:crypto/crypto.dart' show sha256;
 import 'dart:convert' show base64, utf8;
 import 'dart:typed_data' show Uint8List;
 
-import '../core/core.dart';
+import 'package:pubnub/core.dart';
 import 'encryption_mode.dart';
 
+/// Configuration used in cryptography.
 class CryptoConfiguration {
+  /// Encryption mode used.
   final EncryptionMode encryptionMode;
+
+  /// Whether key should be encrypted.
   final bool encryptKey;
+
+  /// Whether a random IV should be used.
   final bool useRandomInitializationVector;
 
   const CryptoConfiguration(
@@ -17,9 +23,14 @@ class CryptoConfiguration {
       this.useRandomInitializationVector = false});
 }
 
+/// Default cryptography module used in PubNub SDK.
 class CryptoModule implements ICryptoModule {
   final CryptoConfiguration defaultConfiguration;
 
+  /// Default configuration is:
+  /// * `encryptionMode` set to [EncryptionMode.CBC].
+  /// * `encryptKey` set to `true`.
+  /// * `useRandomInitializationVector` set to `false`.
   CryptoModule({this.defaultConfiguration = const CryptoConfiguration()});
 
   crypto.Key _getKey(CipherKey cipherKey, CryptoConfiguration configuration) {
@@ -31,6 +42,9 @@ class CryptoModule implements ICryptoModule {
     }
   }
 
+  /// Decrypts [input] with [key] based on [configuration].
+  ///
+  /// If [configuration] is `null`, then [CryptoModule.defaultConfiguration] is used.
   @override
   dynamic decrypt(CipherKey key, String input,
       {CryptoConfiguration configuration}) {
@@ -53,6 +67,9 @@ class CryptoModule implements ICryptoModule {
     }
   }
 
+  /// Encrypts [input] with [key] based on [configuration].
+  ///
+  /// If [configuration] is `null`, then [CryptoModule.defaultConfiguration] is used.
   @override
   String encrypt(CipherKey key, dynamic input,
       {CryptoConfiguration configuration}) {
@@ -75,6 +92,9 @@ class CryptoModule implements ICryptoModule {
     }
   }
 
+  /// Decrypts [input] based on the [key] and [configuration].
+  ///
+  /// If [configuration] is `null`, then [CryptoModule.defaultConfiguration] is used.
   @override
   List<int> decryptFileData(CipherKey key, List<int> input,
       {CryptoConfiguration configuration}) {
@@ -90,6 +110,9 @@ class CryptoModule implements ICryptoModule {
     }
   }
 
+  /// Encrypts [input] based on the [key] and [configuration].
+  ///
+  /// If [configuration] is `null`, then [CryptoModule.defaultConfiguration] is used.
   @override
   List<int> encryptFileData(CipherKey key, List<int> input,
       {CryptoConfiguration configuration}) {
@@ -106,6 +129,7 @@ class CryptoModule implements ICryptoModule {
     }
   }
 
+  /// @nodoc
   @override
   void register(Core core) {}
 }

@@ -1,7 +1,5 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
-import 'package:pubnub/src/dx/subscribe/envelope.dart'
-    show MessageType, fromInt;
 
 typedef decryptFunction = List<int> Function(CipherKey key, String data);
 
@@ -51,6 +49,9 @@ class FetchHistoryParams extends Parameters {
   }
 }
 
+/// Result of paginated history endpoint call.
+///
+/// {@category Results}
 class FetchHistoryResult extends Result {
   List<dynamic> messages;
 
@@ -124,22 +125,36 @@ class BatchHistoryParams extends Parameters {
   }
 }
 
+/// Message from batch history endpoint.
+///
+/// {@category Results}
 class BatchHistoryResultEntry {
+  /// Contents of the message.
   dynamic message;
+
+  /// Original timetoken of the message.
   Timetoken timetoken;
+
+  /// UUID of the sender.
   String uuid;
+
+  /// Type of the message.
   MessageType messageType;
+
+  /// If `includeMessageActions` was true, this will contain message actions.
+  /// Otherwise, it will be `null`.
   Map<String, dynamic> actions;
 
   BatchHistoryResultEntry._();
 
+  /// @nodoc
   factory BatchHistoryResultEntry.fromJson(Map<String, dynamic> object,
       {CipherKey cipherKey, Function decryptFunction}) {
     return BatchHistoryResultEntry._()
       ..timetoken = Timetoken(int.tryParse(object['timetoken']))
       ..uuid = object['uuid']
       ..messageType = (object['message_type'] is int)
-          ? fromInt(object['message_type'])
+          ? MessageTypeExtension.fromInt(object['message_type'])
           : null
       ..message = cipherKey == null
           ? object['message']
@@ -148,12 +163,19 @@ class BatchHistoryResultEntry {
   }
 }
 
+/// Result of batch history endpoint call.
+///
+/// {@category Results}
 class BatchHistoryResult extends Result {
+  /// Map of channels to a list of messages represented by [BatchHistoryResultEntry].
   Map<String, List<BatchHistoryResultEntry>> channels;
+
+  /// @nodoc
   MoreHistory more;
 
   BatchHistoryResult();
 
+  /// @nodoc
   factory BatchHistoryResult.fromJson(Map<String, dynamic> object,
       {CipherKey cipherKey, Function decryptFunction}) {
     var result = DefaultResult.fromJson(object);
@@ -223,11 +245,16 @@ class CountMessagesParams extends Parameters {
   }
 }
 
+/// Result of count messages endpoint call.
+///
+/// {@category Results}
 class CountMessagesResult extends Result {
+  /// Map of channels to message counts.
   Map<String, int> channels;
 
   CountMessagesResult._();
 
+  /// @nodoc
   factory CountMessagesResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
 

@@ -1,4 +1,4 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/default.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/history.dart';
@@ -6,8 +6,10 @@ import 'package:pubnub/src/dx/_endpoints/history.dart';
 import 'channel.dart';
 import 'message.dart';
 
+/// Order of messages based on timetoken.
 enum ChannelHistoryOrder { ascending, descending }
 
+/// @nodoc
 extension ChannelHistoryOrderExtension on ChannelHistoryOrder {
   T choose<T>({T ascending, T descending}) {
     switch (this) {
@@ -21,6 +23,7 @@ extension ChannelHistoryOrderExtension on ChannelHistoryOrder {
   }
 }
 
+/// Represents history of messages in a channel that can be counted, fetched or removed.
 class ChannelHistory {
   final PubNub _core;
   final Channel _channel;
@@ -42,6 +45,7 @@ class ChannelHistory {
   List<Message> get messages => _messages;
   List<Message> _messages = [];
 
+  /// @nodoc
   ChannelHistory(this._core, this._channel, this._keyset, this.from, this.to);
 
   /// Returns a number of messages after [from].
@@ -106,6 +110,9 @@ class ChannelHistory {
   }
 }
 
+/// Represents readonly history of messages in a channel.
+///
+/// It fetches messages in chunks only when requested using [more] call.
 class PaginatedChannelHistory {
   final PubNub _core;
   final Channel _channel;
@@ -131,6 +138,7 @@ class PaginatedChannelHistory {
   int get chunkSize => _chunkSize;
   final int _chunkSize;
 
+  /// @nodoc
   PaginatedChannelHistory(
       this._core, this._channel, this._keyset, this._order, this._chunkSize);
 

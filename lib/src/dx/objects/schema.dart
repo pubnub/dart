@@ -1,3 +1,6 @@
+/// Represents UUID metadata operations input.
+///
+/// {@category Objects}
 class UuidMetadataInput {
   String name;
   String email;
@@ -17,6 +20,9 @@ class UuidMetadataInput {
       };
 }
 
+/// Represents channel metadata operations input.
+///
+/// {@category Objects}
 class ChannelMetadataInput {
   String name;
   String description;
@@ -31,6 +37,9 @@ class ChannelMetadataInput {
       };
 }
 
+/// Represents channel member metadata operations input.
+///
+/// {@category Objects}
 class ChannelMemberMetadataInput {
   String uuid;
   Map<String, dynamic> custom;
@@ -43,6 +52,9 @@ class ChannelMemberMetadataInput {
       };
 }
 
+/// Represents membership metadata operations input.
+///
+/// {@category Objects}
 class MembershipMetadataInput {
   String channelId;
   Map<String, dynamic> custom;
@@ -55,6 +67,9 @@ class MembershipMetadataInput {
       };
 }
 
+/// Represents UUID input.
+///
+/// {@category Objects}
 class UuIdInfo {
   String uuid;
 
@@ -65,6 +80,9 @@ class UuIdInfo {
       };
 }
 
+/// Represents channel id input.
+///
+/// {@category Objects}
 class ChannelIdInfo {
   String channelId;
 

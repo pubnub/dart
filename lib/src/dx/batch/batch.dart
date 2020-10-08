@@ -1,14 +1,22 @@
-import 'package:pubnub/pubnub.dart';
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/history.dart';
 
+export 'package:pubnub/src/dx/_endpoints/history.dart'
+    show BatchHistoryResult, BatchHistoryResultEntry, CountMessagesResult;
+
+/// Groups common **batch** features together.
+///
+/// Available as [PubNub.batch].
 class BatchDx {
   final Core _core;
 
+  /// @nodoc
   BatchDx(this._core);
 
-  /// Fetch messages for multiple channels using one REST call.
+  /// Fetch messages for multiple channels using one call.
+  ///
+  /// If [includeMessageActions] is `true`, then you can only pass in one channel in [channels].
   Future<BatchHistoryResult> fetchMessages(Set<String> channels,
       {Keyset keyset,
       String using,
@@ -64,14 +72,12 @@ class BatchDx {
     return fetchMessagesResult;
   }
 
-  /// Get multiple channels' message count using one REST call.
+  /// Get multiple channels' message count using one call.
   ///
-  /// [channels] can either be a [Map<String, Timetoken>] or [Set<String>]:
-  /// * if you want to count messages in all channels up to a common timetoken,
-  /// pass in a [Set<String>] and a named parameter [timetoken].
-  /// * if you want to specify separate timetoken for each channel,
-  /// pass in a [Map<String, Timetoken>]. Additionally, if a value in the map is null,
-  /// it will use a timetoken from a named parameter [timetoken].
+  /// [channels] can either be a `Map<String, Timetoken>` or `Set<String>`:
+  /// * if you want to count messages in all channels up to a common timetoken, pass in a `Set<String>` and a named parameter [timetoken].
+  /// * if you want to specify separate timetoken for each channel, pass in a `Map<String, Timetoken>`.
+  ///   Additionally, if a value in the map is null, it will use a timetoken from a named parameter [timetoken].
   Future<CountMessagesResult> countMessages(dynamic channels,
       {Keyset keyset, String using, Timetoken timetoken}) {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
@@ -88,7 +94,8 @@ class BatchDx {
           channelsTimetoken:
               channels.map((key, value) => MapEntry(key, value ?? timetoken)));
     } else {
-      throw InvalidArgumentsException();
+      Ensure.fail('invalid-type', 'channels',
+          ['Set<String>', 'Map<String, Timetoken>']);
     }
 
     return defaultFlow(

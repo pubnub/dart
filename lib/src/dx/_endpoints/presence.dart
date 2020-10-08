@@ -1,4 +1,4 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
 class HeartbeatParams extends Parameters {
@@ -36,9 +36,13 @@ class HeartbeatParams extends Parameters {
   }
 }
 
+/// Result of heartbeat endpoint call.
+///
+/// {@category Results}
 class HeartbeatResult extends Result {
   HeartbeatResult._();
 
+  /// @nodoc
   factory HeartbeatResult.fromJson(dynamic _object) => HeartbeatResult._();
 }
 
@@ -76,11 +80,15 @@ class SetUserStateParams extends Parameters {
   }
 }
 
+/// Result of set user state endpoint call.
+///
+/// {@category Results}
 class SetUserStateResult extends Result {
   String state;
 
   SetUserStateResult._();
 
+  /// @nodoc
   factory SetUserStateResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
 
@@ -118,11 +126,15 @@ class GetUserStateParams extends Parameters {
   }
 }
 
+/// Result of get user state endpoint call.
+///
+/// {@category Results}
 class GetUserStateResult extends Result {
   String state;
 
   GetUserStateResult._();
 
+  /// @nodoc
   factory GetUserStateResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
 
@@ -161,11 +173,15 @@ class LeaveParams extends Parameters {
   }
 }
 
+/// Result of leave endpoint call.
+///
+/// {@category Results}
 class LeaveResult extends Result {
   String action;
 
   LeaveResult._();
 
+  /// @nodoc
   factory LeaveResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
 
@@ -173,6 +189,7 @@ class LeaveResult extends Result {
   }
 }
 
+/// Represents an amount of state requested.
 enum StateInfo { all, onlyUUIDs, none }
 
 class HereNowParams extends Parameters {
@@ -217,6 +234,9 @@ class HereNowParams extends Parameters {
   }
 }
 
+/// Represents current channel participants.
+///
+/// {@category Results}
 class ChannelOccupancy {
   String channelName;
   Map<String, UUID> uuids;
@@ -244,6 +264,9 @@ class ChannelOccupancy {
   }
 }
 
+/// Result of here now endpoint call.
+///
+/// {@category Results}
 class HereNowResult extends Result {
   Map<String, ChannelOccupancy> channels = {};
 
@@ -302,6 +325,9 @@ class WhereNowParams extends Parameters {
   }
 }
 
+/// Result of where now endpoint call.
+///
+/// {@category Results}
 class WhereNowResult extends Result {
   Set<String> channels;
 

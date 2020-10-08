@@ -1,13 +1,12 @@
-import 'dart:async';
-
-import '../core.dart';
 import 'event.dart';
 import 'fiber.dart';
+import 'resolution.dart';
+import 'signals.dart';
 
 export 'event.dart';
 export 'fiber.dart';
-
-final _logger = injectLogger('pubnub.core.supervisor');
+export 'resolution.dart';
+export 'signals.dart';
 
 abstract class Diagnostic {
   const Diagnostic();
@@ -23,12 +22,7 @@ class SupervisorModule {
   final Set<DiagnosticHandler> _handlers = {};
   final Set<Strategy> _strategies = {};
 
-  final StreamController<SupervisorEvent> _events =
-      StreamController.broadcast();
-
-  bool _isNetworkUp = true;
-
-  Stream<SupervisorEvent> get events => _events.stream;
+  final Signals signals = Signals();
 
   void registerDiagnostic(DiagnosticHandler handler) {
     _handlers.add(handler);
@@ -38,17 +32,7 @@ class SupervisorModule {
     _strategies.add(strategy);
   }
 
-  void notify(SupervisorEvent event) {
-    if (_isNetworkUp && event is NetworkIsDownEvent) {
-      _isNetworkUp = false;
-      _logger.warning('Detected that network is down.');
-      _events.add(event);
-    } else if (_isNetworkUp == false && event is NetworkIsUpEvent) {
-      _isNetworkUp = true;
-      _logger.warning('Detected that network is up.');
-      _events.add(event);
-    }
-  }
+  void notify(SupervisorEvent event) => signals.notify(event);
 
   Diagnostic runDiagnostics(Fiber fiber, Exception exception) {
     return _handlers

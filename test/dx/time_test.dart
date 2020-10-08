@@ -1,6 +1,7 @@
 import 'package:test/test.dart';
 
 import 'package:pubnub/pubnub.dart';
+import 'package:pubnub/core.dart';
 
 import '../net/fake_net.dart';
 

@@ -1,4 +1,4 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/files.dart';
 
@@ -7,9 +7,26 @@ import 'extensions/keyset.dart';
 
 export 'schema.dart';
 export 'extensions/keyset.dart';
+export '../_endpoints/files.dart'
+    show
+        PublishFileMessageResult,
+        DeleteFileResult,
+        DownloadFileResult,
+        FileUploadResult,
+        GenerateFileUploadUrlResult,
+        ListFilesResult,
+        FileDetail;
 
+/// Groups **file** methods together.
+///
+/// Available as [PubNub.files].
+/// Introduced with [File API](https://www.pubnub.com/docs/platform/messages/files).
+///
+/// {@category Files}
 class FileDx {
   final Core _core;
+
+  /// @nodoc
   FileDx(this._core);
 
   /// This method allows to send a [file] to a [channel] with an optional [fileMessage].
@@ -17,7 +34,7 @@ class FileDx {
   /// > Ensure that your [Keyset] has a `publishKey` defined.
   ///
   /// If you provide a [cipherKey], the file will be encrypted with it.
-  /// If its missing, then a `cipherKey` from [Keyset] will be used.
+  /// If its missing, then [Keyset.cipherKey] will be used.
   /// If no `cipherKey` is provided, then the file won't be encrypted.
   ///
   /// If the upload was successful, but publishing the file event to the [channel] wasn't,
@@ -33,7 +50,7 @@ class FileDx {
   ///   saving using [storeFileMessage] flag - `true` to save and `false` to discard.
   ///   Leave this option unset if you want to use the default.
   ///
-  /// * Provide [fileMessageMeta] for additional information
+  /// * Provide [fileMessageMeta] for additional information.
   Future<PublishFileMessageResult> sendFile(
       String channel, String fileName, List<int> file,
       {CipherKey cipherKey,
@@ -61,14 +78,11 @@ class FileDx {
       file = _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey, file);
     }
 
-    // TODO: Decide what to do here
-    // form['file'] = _fileManager.createMultipartFile(_fileManager.read(file),
-    //     fileName: fileName);
-
     var fileInfo = FileInfo(
       uploadDetails.fileId,
       uploadDetails.fileName,
-      getFileUrl(channel, uploadDetails.fileId, uploadDetails.fileName)
+      getFileUrl(channel, uploadDetails.fileId, uploadDetails.fileName,
+              keyset: keyset)
           .toString(),
     );
 
@@ -76,10 +90,12 @@ class FileDx {
 
     var retryCount = keyset.fileMessagePublishRetryLimit;
 
+    var params = FileUploadParams(
+        uploadDetails.uploadUri, {...uploadDetails.formFields, 'file': file});
+
     var s3Response = await defaultFlow<FileUploadParams, FileUploadResult>(
         core: _core,
-        params: FileUploadParams(uploadDetails.uploadUri,
-            {...uploadDetails.formFields, 'file': file}),
+        params: params,
         deserialize: false,
         serialize: (object, [_]) => FileUploadResult.fromJson(object));
 
@@ -101,19 +117,22 @@ class FileDx {
           publishFileResult.isError = true;
         }
         if (!publishFileResult.isError) {
+          publishFileResult.fileInfo = fileInfo;
           return publishFileResult;
         }
         --retryCount;
       } while (retryCount > 0);
     }
-    return publishFileResult..fileInfo = publishMessage.file;
+
+    return publishFileResult..fileInfo = fileInfo;
   }
 
-  /// This method allows to publish file Message
+  /// Allows to publish file message.
+  ///
   /// In case `sendFile` method doesn't publish message to [channel], this method
   /// can be used to explicitly publish message
   ///
-  /// Provide [cipherKey] to encrypt `message` it takes precedence over `keyset`'s cipherKey
+  /// Provide [cipherKey] to encrypt the message. It takes precedence over [Keyset.cipherKey].
   ///
   /// You can override the default account configuration on message
   /// saving using [storeMessage] flag - `true` to save and `false` to discard.
@@ -153,10 +172,9 @@ class FileDx {
   }
 
   /// This method allows to download the file with [fileId] and [fileName] from channel [channel]
-  /// It returns file content in bytes format `List<int>`
+  /// It returns file content in bytes format `List<int>`.
   ///
-  /// Provide [cipherKey] to override default configuration of PubNub object's `keyset`'s `cipherKey`
-  /// * It gives priority of [cipherKey] provided in method argument over `keyset`'s `cipherKey`
+  /// Provided [cipherKey] overrides [Keyset.cipherKey].
   ///
   /// If [keyset] is not provided, then it tries to obtain a keyset [using] name.
   /// If that fails, then it uses the default keyset.
@@ -178,11 +196,11 @@ class FileDx {
             decryptFunction: decrypter));
   }
 
-  /// This method gives list of all files information of channel [channel]
+  /// Lists all files in a [channel].
   ///
-  /// You can limit this list by providing [limit] parameter
+  /// You can limit this list by providing [limit] parameter.
   ///
-  /// Pagination can be managed by using [next] parameter
+  /// Pagination can be managed by using [next] parameter.
   ///
   /// If [keyset] is not provided, then it tries to obtain a keyset [using] name.
   /// If that fails, then it uses the default keyset.
@@ -197,7 +215,7 @@ class FileDx {
         serialize: (object, [_]) => ListFilesResult.fromJson(object));
   }
 
-  /// It deletes file with [fileId], [fileName] from channel [channel]
+  /// Deletes file with [fileId] and [fileName] from [channel].
   ///
   /// If [keyset] is not provided, then it tries to obtain a keyset [using] name.
   /// If that fails, then it uses the default keyset.
@@ -212,12 +230,11 @@ class FileDx {
         serialize: (object, [_]) => DeleteFileResult.fromJson(object));
   }
 
-  /// It gives you the `Uri` to download the file with [fileId], [fileName] from channel [channel]
+  /// Returns [Uri] to download the file with [fileId] and [fileName] from [channel].
   ///
-  /// You can your returned Url to download the file content by giving GET request
+  /// You can download the file by making a GET request to returned Uri.
   ///
-  /// * Ensure to manage decryption part since the returned content may be encrypted
-  /// if file is uploaded in encrypted format
+  /// > If the file is encrypted, you will have to decrypt it on your own.
   ///
   /// If [keyset] is not provided, then it tries to obtain a keyset [using] name.
   /// If that fails, then it uses the default keyset.
@@ -225,7 +242,7 @@ class FileDx {
   Uri getFileUrl(String channel, String fileId, String fileName,
       {Keyset keyset, String using}) {
     keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    return Uri(scheme: 'https', host: 'ps.pndsn.com', pathSegments: [
+    var pathSegments = [
       'v1',
       'files',
       keyset.subscribeKey,
@@ -234,13 +251,28 @@ class FileDx {
       'files',
       fileId,
       fileName
-    ]);
+    ];
+    var queryParams = {
+      'pnsdk': 'PubNub-Dart/${Core.version}',
+      if (keyset.secretKey != null)
+        'timestamp': '${Time().now().millisecondsSinceEpoch ~/ 1000}',
+      if (keyset.authKey != null) 'auth': keyset.authKey
+    };
+    if (keyset.secretKey != null) {
+      queryParams.addAll(
+          {'signature': computeSignature(keyset, pathSegments, queryParams)});
+    }
+
+    return Uri(
+        scheme: 'https',
+        host: 'ps.pndsn.com',
+        pathSegments: pathSegments,
+        queryParameters: queryParams);
   }
 
-  /// This method helps to encrypt the file content in bytes format
+  /// Encrypts file content in bytes format.
   ///
-  /// Provide [cipherKey] to override default configuration of PubNub object's `keyset`'s `cipherKey`
-  /// * It gives priority of [cipherKey] provided in method argument over `keyset`'s `cipherKey`
+  /// Provide [cipherKey] to override [Keyset.cipherKey].
   ///
   /// If [keyset] is not provided, then it tries to obtain a keyset [using] name.
   /// If that fails, then it uses the default keyset.
@@ -251,10 +283,9 @@ class FileDx {
     return _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey, bytes);
   }
 
-  /// This method helps to decrypt the file content in bytes format
+  /// Decrypts file content in bytes format.
   ///
-  /// Provide [cipherKey] to override default configuration of PubNub object's `keyset`'s `cipherKey`
-  /// * it gives priority of [cipherKey] provided in method argument over `keyset`'s `cipherKey`
+  /// Provide [cipherKey] to override [Keyset.cipherKey].
   ///
   /// If [keyset] is not provided, then it tries to obtain a keyset [using] name.
   /// If that fails, then it uses the default keyset.

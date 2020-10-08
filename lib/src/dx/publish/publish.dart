@@ -1,7 +1,9 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 
-import 'package:pubnub/src/dx/_endpoints/publish.dart';
-import 'package:pubnub/src/dx/_utils/utils.dart';
+import '../_utils/utils.dart';
+import '../_endpoints/publish.dart';
+
+export '../_endpoints/publish.dart';
 
 final _logger = injectLogger('pubnub.dx.publish');
 

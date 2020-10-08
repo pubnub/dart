@@ -1,3 +1,4 @@
+/// @nodoc
 enum RequestType { get, post, patch, subscribe, delete, file }
 
 const _sendTimeoutRequestDefault = {
@@ -27,6 +28,7 @@ const _connectTimeoutRequestDefault = {
   RequestType.file: 30000,
 };
 
+/// @nodoc
 extension RequestTypeExtension on RequestType {
   static const methods = {
     RequestType.get: 'GET',

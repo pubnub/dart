@@ -1,31 +1,27 @@
-import 'package:pubnub/src/core/core.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/default.dart';
-import 'package:pubnub/src/dx/_endpoints/presence.dart';
-import 'package:pubnub/src/dx/_endpoints/publish.dart';
-import 'package:pubnub/src/dx/_endpoints/message_action.dart';
-import 'package:pubnub/src/dx/subscribe/subscription.dart';
 
+import '../_endpoints/presence.dart';
+import '../_endpoints/publish.dart';
+import '../_endpoints/message_action.dart';
 import 'channel_history.dart';
 
+export 'channel_history.dart'
+    show PaginatedChannelHistory, ChannelHistory, ChannelHistoryOrder;
+export 'message.dart' show Message;
+
+/// Represents a single channel.
+///
+/// It shouldn't be instantiated directly, instead call [PubNub.channel].
+///
+/// {@category Basic Features}
 class Channel {
   final PubNub _core;
   final Keyset _keyset;
   String name;
 
+  /// @nodoc
   Channel(this._core, this._keyset, this.name);
-
-  /// Returns a subscription to channel [name]. Returns [Subscription] instance.
-  ///
-  /// If you set [withPresence] to true, it will also subscribe to presence events.
-  Subscription subscription({bool withPresence = false}) {
-    return _core.subscription(
-        keyset: _keyset, channels: {name}, withPresence: withPresence);
-  }
-
-  Future<Subscription> subscribe({bool withPresence = false}) {
-    return _core.subscribe(
-        keyset: _keyset, channels: {name}, withPresence: withPresence);
-  }
 
   /// Publishes [message] to a channel [name].
   ///

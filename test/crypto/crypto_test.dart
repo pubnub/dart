@@ -1,4 +1,4 @@
-import 'package:pubnub/pubnub.dart';
+import 'package:pubnub/core.dart';
 import 'package:pubnub/src/crypto/crypto.dart';
 
 import 'package:test/test.dart';
