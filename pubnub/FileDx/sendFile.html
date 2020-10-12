@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the sendFile method from the FileDx class, for the Dart programming language.">
+  <title>sendFile method - FileDx class - pubnub library - Dart API</title>
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../../static-assets/github.css">
+  <link rel="stylesheet" href="../../static-assets/styles.css">
+  <link rel="icon" href="../../static-assets/favicon.png">
+
+</head>
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">pubnub</a></li>
+    <li><a href="../../pubnub/pubnub-library.html">pubnub</a></li>
+    <li><a href="../../pubnub/FileDx-class.html">FileDx</a></li>
+    <li class="self-crumb">sendFile method</li>
+  </ol>
+  <div class="self-name">sendFile</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="../../index.html">pubnub</a></li>
+      <li><a href="../../pubnub/pubnub-library.html">pubnub</a></li>
+      <li><a href="../../pubnub/FileDx-class.html">FileDx</a></li>
+      <li class="self-crumb">sendFile method</li>
+    </ol>
+    
+    <h5>FileDx class</h5>
+    <ol>
+    
+    
+        <li class="section-title inherited">
+            <a href="../../pubnub/FileDx-class.html#instance-properties">Properties</a>
+        </li>
+        <li class="inherited"><a href="https://api.dart.dev/stable/2.10.1/dart-core/Object/hashCode.html">hashCode</a></li>
+        <li class="inherited"><a href="https://api.dart.dev/stable/2.10.1/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    
+        <li class="section-title"><a href="../../pubnub/FileDx-class.html#instance-methods">Methods</a></li>
+        <li><a href="../../pubnub/FileDx/decryptFile.html">decryptFile</a></li>
+        <li><a href="../../pubnub/FileDx/deleteFile.html">deleteFile</a></li>
+        <li><a href="../../pubnub/FileDx/downloadFile.html">downloadFile</a></li>
+        <li><a href="../../pubnub/FileDx/encryptFile.html">encryptFile</a></li>
+        <li><a href="../../pubnub/FileDx/getFileUrl.html">getFileUrl</a></li>
+        <li><a href="../../pubnub/FileDx/listFiles.html">listFiles</a></li>
+        <li class="inherited"><a href="https://api.dart.dev/stable/2.10.1/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+        <li><a href="../../pubnub/FileDx/publishFileMessage.html">publishFileMessage</a></li>
+        <li><a href="../../pubnub/FileDx/sendFile.html">sendFile</a></li>
+        <li class="inherited"><a href="https://api.dart.dev/stable/2.10.1/dart-core/Object/toString.html">toString</a></li>
+    
+        <li class="section-title inherited"><a href="../../pubnub/FileDx-class.html#operators">Operators</a></li>
+        <li class="inherited"><a href="https://api.dart.dev/stable/2.10.1/dart-core/Object/operator_equals.html">operator ==</a></li>
+    
+    
+    
+    
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <div><h1><span class="kind-method">sendFile</span> method </h1></div>
+
+    <section class="multi-line-signature">
+      <span class="returntype"><a href="https://api.dart.dev/stable/2.10.1/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/PublishFileMessageResult-class.html">PublishFileMessageResult</a></span>&gt;</span></span>
+            <span class="name ">sendFile</span>
+(<wbr><ol class="parameter-list"><li><span class="parameter" id="sendFile-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.10.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-fileName"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.10.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">fileName</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-file"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.10.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.10.1/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">file</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-cipherKey">{<span class="type-annotation">CipherKey</span> <span class="parameter-name">cipherKey</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-fileMessage"><span class="type-annotation">dynamic</span> <span class="parameter-name">fileMessage</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-storeFileMessage"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.10.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">storeFileMessage</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-fileMessageTtl"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.10.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">fileMessageTtl</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-fileMessageMeta"><span class="type-annotation">dynamic</span> <span class="parameter-name">fileMessageMeta</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-keyset"><span class="type-annotation"><a href="../../pubnub/Keyset-class.html">Keyset</a></span> <span class="parameter-name">keyset</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.10.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">using</span>}</span></li>
+</ol>)
+      
+    </section>
+    <section class="desc markdown">
+      <p>This method allows to send a <code>file</code> to a <code>channel</code> with an optional <code>fileMessage</code>.</p>
+<blockquote>
+<p>Ensure that your <a href="../../pubnub/Keyset-class.html">Keyset</a> has a <code>publishKey</code> defined.</p>
+</blockquote>
+<p>If you provide a <code>cipherKey</code>, the file will be encrypted with it.
+If its missing, then <a href="../../pubnub/Keyset/cipherKey.html">Keyset.cipherKey</a> will be used.
+If no <code>cipherKey</code> is provided, then the file won't be encrypted.</p>
+<p>If the upload was successful, but publishing the file event to the <code>channel</code> wasn't,
+this method will retry publishing up to a value configured in <code>fileMessagePublishRetryLimit</code>.
+In case that is unsuccessful, you can retry publishing the file event manually by passing <a href="../../pubnub/FileInfo-class.html">FileInfo</a>
+to the <a href="../../pubnub/FileDx/publishFileMessage.html">publishFileMessage</a> method.</p>
+<h4 id="additional-file-event-options">Additional file event options</h4>
+<ul>
+<li>
+<p>You can set a per-message time to live in storage using <code>fileMessageTtl</code> option.
+If set to <code>0</code>, message won't expire. If unset, expiration will fall back to default.</p>
+</li>
+<li>
+<p>You can override the default account configuration on message
+saving using <code>storeFileMessage</code> flag - <code>true</code> to save and <code>false</code> to discard.
+Leave this option unset if you want to use the default.</p>
+</li>
+<li>
+<p>Provide <code>fileMessageMeta</code> for additional information.</p>
+</li>
+</ul>
+    </section>
+    
+    
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    pubnub
+      3.0.2
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../../static-assets/typeahead.bundle.min.js"></script>
+<script src="../../static-assets/highlight.pack.js"></script>
+<script src="../../static-assets/URI.js"></script>
+<script src="../../static-assets/script.js"></script>
+
+
+</body>
+
+</html>
