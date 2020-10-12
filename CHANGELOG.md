@@ -1,9 +1,9 @@
-## [v3.0.1](https://github.com/pubnub/dart/releases/tag/v3.0.1)
+## [v3.0.2](https://github.com/pubnub/dart/releases/tag/v3.0.2)
 October 12 2020
 
-[Full Changelog](https://github.com/pubnub/dart/compare/v3.0.0...v3.0.1)
+[Full Changelog](https://github.com/pubnub/dart/compare/v3.0.1...v3.0.2)
 
-- ⭐️️ Removes `pubnubcore` from API reference. 
+- 🐛 Fixes a problem with doc generation. 
 
 ## [v3.0.0](https://github.com/pubnub/dart/releases/tag/v3.0.0)
 October 8 2020

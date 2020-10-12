@@ -3,10 +3,10 @@ changelog:
   -
     changes:
       -
-        text: "Removes `pubnubcore` from API reference."
-        type: improvement
+        text: "Fixes a problem with doc generation."
+        type: bug
     date: Oct 12, 20
-    version: v3.0.1
+    version: v3.0.2
   -
     changes:
       -
@@ -336,4 +336,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "3.0.1"
+version: "3.0.2"
