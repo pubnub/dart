@@ -1,3 +1,6 @@
+/// @nodoc
+library pubnub.core;
+
 export 'src/core/core.dart';
 
 export 'src/core/keyset.dart';

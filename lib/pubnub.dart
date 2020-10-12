@@ -113,7 +113,6 @@ export 'src/dx/signal/signal.dart' show SignalResult;
 export 'src/dx/supervisor/supervisor.dart' show Signals;
 
 // Subscribe
-
 export 'src/subscribe/subscription.dart' show Subscription;
 export 'src/subscribe/extensions/keyset.dart' show SubscribeKeysetExtension;
 export 'src/subscribe/envelope.dart'

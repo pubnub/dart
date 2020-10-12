@@ -3,6 +3,13 @@ changelog:
   -
     changes:
       -
+        text: "Removes `pubnubcore` from API reference."
+        type: improvement
+    date: Oct 12, 20
+    version: v3.0.1
+  -
+    changes:
+      -
         text: "Subscribe loop is now written using async generator and should be easier to debug."
         type: improvement
       -
@@ -329,4 +336,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "3.0.0"
+version: "3.0.1"
