@@ -19,7 +19,7 @@ void main() {
     test('.batch#fetchMessages correctly fetches messages', () async {
       when(
         path:
-            'v3/history/sub-key/test/channel/test-1,test-2?max=10&include_message_type=%7Btrue%7D&include_uuid=%7Btrue%7D&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v3/history/sub-key/test/channel/test-1,test-2?max=10&include_message_type=true&include_uuid=true&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: _batchFetchMessagesSuccessResponse);
 
@@ -52,7 +52,7 @@ void main() {
     test('.batch#fetchMessages with messageActions', () async {
       when(
         path:
-            'v3/history-with-actions/sub-key/test/channel/demo-channel?max=10&include_message_type=%7Btrue%7D&include_uuid=%7Btrue%7D&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v3/history-with-actions/sub-key/test/channel/demo-channel?max=10&include_message_type=true&include_uuid=true&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: _batchFetchMessagesWithActionSuccessResponse);
 
@@ -70,7 +70,7 @@ void main() {
         () async {
       when(
         path:
-            'v3/history-with-actions/sub-key/test/channel/demo-channel?max=10&include_message_type=%7Btrue%7D&include_uuid=%7Btrue%7D&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v3/history-with-actions/sub-key/test/channel/demo-channel?max=10&include_message_type=true&include_uuid=true&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: _batchFetchMessagesWithActionsWithMore);
 
@@ -82,7 +82,7 @@ void main() {
     test('.batch#fetchMessages with messageActions', () async {
       when(
         path:
-            'v3/history-with-actions/sub-key/test/channel/demo-channel?max=10&include_message_type=%7Btrue%7D&include_uuid=%7Btrue%7D&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v3/history-with-actions/sub-key/test/channel/demo-channel?max=10&include_message_type=true&include_uuid=true&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: _batchFetchMessagesWithActionSuccessResponse);
 
@@ -102,13 +102,13 @@ void main() {
     test('.batch#fetchMessages with more messages', () async {
       when(
         path:
-            'v3/history-with-actions/sub-key/test/channel/demo-channel?max=10&include_message_type=%7Btrue%7D&include_uuid=%7Btrue%7D&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v3/history-with-actions/sub-key/test/channel/demo-channel?max=10&include_message_type=true&include_uuid=true&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: _batchFetchMessagesWithActionsWithMore);
 
       when(
         path:
-            'v3/history-with-actions/sub-key/test/channel/demo-channel?max=98&start=15610547826970000&include_message_type=%7Btrue%7D&include_uuid=%7Btrue%7D&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v3/history-with-actions/sub-key/test/channel/demo-channel?max=98&start=15610547826970000&include_message_type=true&include_uuid=true&pnsdk=PubNub-Dart%2F${PubNub.version}',
         method: 'GET',
       ).then(status: 200, body: _batchFetchMessagesWithActionSuccessResponse);
 
