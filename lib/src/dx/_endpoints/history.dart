@@ -112,10 +112,10 @@ class BatchHistoryParams extends Parameters {
       if (reverse != null) 'reverse': '$reverse',
       if (start != null) 'start': '$start',
       if (end != null) 'end': '$end',
-      if (includeMeta != null) 'include-_meta': '$includeMeta',
+      if (includeMeta != null) 'include_meta': '$includeMeta',
       if (includeMessageType != null)
-        'include_message_type': '{$includeMessageType}',
-      if (includeUUID != null) 'include_uuid': '{$includeUUID}',
+        'include_message_type': '$includeMessageType',
+      if (includeUUID != null) 'include_uuid': '$includeUUID',
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
       if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
     };
@@ -145,6 +145,10 @@ class BatchHistoryResultEntry {
   /// Otherwise, it will be `null`.
   Map<String, dynamic> actions;
 
+  /// If `includeMeta` was true, this will contain message meta.
+  /// Otherwise, it will be `null`.
+  Map<String, dynamic> meta;
+
   BatchHistoryResultEntry._();
 
   /// @nodoc
@@ -159,7 +163,8 @@ class BatchHistoryResultEntry {
       ..message = cipherKey == null
           ? object['message']
           : decryptFunction(cipherKey, object['message'])
-      ..actions = object['actions'];
+      ..actions = object['actions']
+      ..meta = object['meta'];
   }
 }
 
