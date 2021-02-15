@@ -3,19 +3,39 @@ dist: xenial
 os: linux
 dart: stable
 
+cache:
+  directories:
+    - $HOME/.pub-cache
+
+addons:
+  apt:
+    packages:
+      - lib32stdc++6
+
+env:
+  jobs:
+    - PKG=pubnub
+    - PKG=pubnub_flutter FLUTTER=true
+  global:
+    - FLUTTER_PATH="/tmp/flutter"
+
+install:
+  - |
+    if [[ $FLUTTER = "true" ]]; then
+      git clone https://github.com/flutter/flutter.git -b stable "$FLUTTER_PATH"
+      export PATH="$PATH:$FLUTTER_PATH/bin"
+    fi
+  - pub global activate derry 1.1.1
+
+before_script:
+  - cd "$TRAVIS_BUILD_DIR/$PKG"
+  - if ! [[ $FLUTTER = "true" ]]; then pub get; else flutter pub get; fi
+
 stages:
-  - name: "test"
-    if: |
-      tag IS blank
-  - name: Validate
+  - name: Test
     if: tag IS blank
 
-jobs:
-  include:
-    - stage: "test"
-      script: pub run test
-    - stage: Validate
-      name: Analyzer
-      script: dartanalyzer --fatal-warnings lib
-    - name: Formatter
-      script: dartfmt -n --set-exit-if-changed lib
+script:
+  - "derry validate analysis"
+  - "derry validate formatting"
+  - "derry test default"

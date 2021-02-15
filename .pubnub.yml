@@ -3,10 +3,25 @@ changelog:
   -
     changes:
       -
-        text: "Fixes a problem with doc generation."
+        text: "Adds signature generation and Objects v2 for PAM Grant call."
+        type: feature
+      -
+        text: "Refactors networking module to use native dart:io."
+        type: feature
+      -
+        text: "Fixes few typos and a bug with BatchHistory meta param."
         type: bug
-    date: Oct 12, 20
-    version: v3.0.2
+      -
+        text: "Fixes an issue with default params for HereNow call."
+        type: bug
+      -
+        text: "Fixes an issue with encoding of uri query parameters."
+        type: bug
+      -
+        text: "Fixes message decryption in subscribe loop."
+        type: bug
+    date: Feb 12, 21
+    version: v3.1.0
   -
     changes:
       -
@@ -336,4 +351,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "3.0.2"
+version: "3.1.0"

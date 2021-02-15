@@ -1,0 +1,13 @@
+tags:
+  integration:
+    timeout: 1m
+
+presets:
+  unit:
+    paths:
+      - test/unit
+    exclude_tags: integration
+  integration:
+    paths:
+      - test/integration
+    include_tags: integration
