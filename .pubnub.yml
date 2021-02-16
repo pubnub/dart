@@ -20,7 +20,7 @@ changelog:
       -
         text: "Fixes message decryption in subscribe loop."
         type: bug
-    date: Feb 12, 21
+    date: Feb 16, 21
     version: v3.1.0
   -
     changes:
