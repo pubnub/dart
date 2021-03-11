@@ -121,7 +121,7 @@ class Subscription {
       return false;
     }).listen(
       _envelopesController.add,
-      onError: _envelopesController.addError,
+      onError: (error) => _envelopesController.addError(error),
     );
   }
 

@@ -7,7 +7,7 @@ void main() async {
           Keyset(subscribeKey: 'demo', publishKey: 'demo', uuid: UUID('demo')));
 
   // Subscribe to a channel
-  var subscription = await pubnub.subscribe(channels: {'test'});
+  var subscription = pubnub.subscribe(channels: {'test'});
 
   subscription.messages.take(1).listen((message) {
     print(message);

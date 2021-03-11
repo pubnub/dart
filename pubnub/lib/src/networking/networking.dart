@@ -19,13 +19,21 @@ class NetworkingModule extends INetworkingModule {
   /// If `null`, then defaults to the PubNub default origin.
   final String origin;
 
-  NetworkingModule({this.retryPolicy, this.origin});
+  /// Whether `https` or `http` should be used.
+  final bool ssl;
+
+  NetworkingModule({this.retryPolicy, this.origin, this.ssl = true});
 
   @override
   Uri getOrigin() {
+    var originUri = origin != null
+        ? (ssl ? Uri.https(origin, '') : Uri.http(origin, ''))
+        : null;
+
     return Uri(
-      scheme: 'https',
-      host: origin ?? 'ps.pndsn.com',
+      scheme: originUri?.scheme == '' ? 'https' : originUri?.scheme ?? 'https',
+      host: originUri?.host ?? 'ps.pndsn.com',
+      port: originUri?.port,
       queryParameters: {'pnsdk': 'PubNub-Dart/${Core.version}'},
     );
   }

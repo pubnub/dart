@@ -10,6 +10,10 @@ class NetworkingStrategy extends Strategy {
 
   @override
   List<Resolution> resolve(Fiber fiber, Diagnostic diagnostic) {
+    if (diagnostic is TimeoutDiagnostic && fiber.isSubscribe) {
+      return [Resolution.retry()];
+    }
+
     if (retryPolicy == null) {
       return [Resolution.fail()];
     }

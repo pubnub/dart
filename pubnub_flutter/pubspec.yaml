@@ -3,6 +3,8 @@ description: Flutter extensions for PubNub Dart SDK
 version: 0.0.1
 homepage: https://www.pubnub.com/docs/platform/home
 
+publish_to: none
+
 environment:
   sdk: ">=2.7.0 <3.0.0"
   flutter: ">=1.17.0 <2.0.0"

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:pubnub/crypto.dart';
 import 'package:test/test.dart';
 
 import 'package:pubnub/pubnub.dart';
@@ -15,8 +16,14 @@ void main() {
   var keyset = Keyset(subscribeKey: 'test', publishKey: 'test');
   group('DX [file]', () {
     setUp(() {
-      pubnub = PubNub(networking: FakeNetworkingModule())
-        ..keysets.add(keyset, name: 'default', useAsDefault: true);
+      pubnub = PubNub(
+        defaultKeyset: keyset,
+        networking: FakeNetworkingModule(),
+        crypto: CryptoModule(
+          defaultConfiguration:
+              CryptoConfiguration(useRandomInitializationVector: false),
+        ),
+      );
     });
 
     test('#listFiles', () async {
@@ -62,7 +69,11 @@ void main() {
           defaultKeyset: Keyset(
               subscribeKey: 'test',
               publishKey: 'test',
-              cipherKey: CipherKey.fromUtf8('cipherKey')));
+              cipherKey: CipherKey.fromUtf8('cipherKey')),
+          crypto: CryptoModule(
+            defaultConfiguration:
+                CryptoConfiguration(useRandomInitializationVector: false),
+          ));
       when(
         path: _publishFileMessageUrlEncryption,
         method: 'GET',
@@ -76,6 +87,10 @@ void main() {
     test('#publishFileMessage cipherKey precedence', () async {
       pubnub = PubNub(
           networking: FakeNetworkingModule(),
+          crypto: CryptoModule(
+            defaultConfiguration:
+                CryptoConfiguration(useRandomInitializationVector: false),
+          ),
           defaultKeyset: Keyset(
               subscribeKey: 'test',
               publishKey: 'test',

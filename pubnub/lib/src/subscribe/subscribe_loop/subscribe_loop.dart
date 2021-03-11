@@ -49,7 +49,13 @@ class SubscribeLoop {
       onCancel: () => update((state) => state.clone(isActive: false)),
     );
 
-    _loop().pipe(_messagesController.sink);
+    var loopStream = _loop();
+
+    loopStream.listen((envelope) {
+      _messagesController.add(envelope);
+    }, onError: (exception) {
+      _messagesController.addError(exception);
+    });
 
     core.supervisor.signals.networkIsConnected
         .listen((_) => update((state) => state));

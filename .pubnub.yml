@@ -3,6 +3,16 @@ changelog:
   -
     changes:
       -
+        text: "Add random initialization vector."
+        type: feature
+      -
+        text: "Subscribe timeout handling."
+        type: bug
+    date: Mar 11, 21
+    version: v3.2.0
+  -
+    changes:
+      -
         text: "Adds signature generation and Objects v2 for PAM Grant call."
         type: feature
       -
@@ -351,4 +361,4 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "3.1.0"
+version: "3.2.0"

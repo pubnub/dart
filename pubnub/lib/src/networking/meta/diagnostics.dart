@@ -18,9 +18,7 @@ class UnknownHttpExceptionDiagnostic extends Diagnostic {
 }
 
 class TimeoutDiagnostic extends Diagnostic {
-  final int timeout;
-
-  const TimeoutDiagnostic(this.timeout);
+  const TimeoutDiagnostic();
 }
 
 final Map<RegExp, Diagnostic Function(Match)> netDiagnosticsMap = {
@@ -34,8 +32,7 @@ final Map<RegExp, Diagnostic Function(Match)> netDiagnosticsMap = {
       (match) => HostLookupFailedDiagnostic(match.group(1)),
   RegExp(r"^Failed host lookup: '([a-zA-Z0-9\-\.]+)'$"): (match) =>
       HostLookupFailedDiagnostic(match.group(1)),
-  RegExp(r'^Connecting timed out \[([0-9]+)ms\]$'): (match) =>
-      TimeoutDiagnostic(int.parse(match.group(1))),
+  RegExp(r'^Connecting timed out'): (match) => UnknownHttpExceptionDiagnostic(),
   RegExp(r'^HttpException: , uri ='): (match) =>
       UnknownHttpExceptionDiagnostic(),
 };

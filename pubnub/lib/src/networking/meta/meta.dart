@@ -5,8 +5,7 @@ import 'diagnostics.dart';
 export 'strategy.dart';
 
 Diagnostic getNetworkDiagnostic(dynamic exception) {
-  if (exception is PubNubRequestOtherException ||
-      exception is PubNubRequestTimeoutException) {
+  if (exception is PubNubRequestOtherException) {
     var otherException = exception.additionalData;
     var message = otherException.toString();
 
@@ -15,6 +14,10 @@ Diagnostic getNetworkDiagnostic(dynamic exception) {
           ? entry.value(entry.key.matchAsPrefix(message))
           : null;
     }).firstWhere((element) => element != null, orElse: () => null);
+  }
+
+  if (exception is PubNubRequestTimeoutException) {
+    return TimeoutDiagnostic();
   }
 
   if (exception is PubNubRequestFailureException) {

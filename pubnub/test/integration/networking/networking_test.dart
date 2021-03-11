@@ -53,8 +53,10 @@ void main() {
 
     await handler.response(request);
 
-    expect(mockClient.latestUri.toString(),
-        equals('https://ps1.pndsn.com/time/0?pnsdk=PubNub-Dart%2F3.0.0'));
+    expect(
+        mockClient.latestUri.toString(),
+        equals(
+            'https://ps1.pndsn.com/time/0?pnsdk=PubNub-Dart%2F${Core.version}'));
   });
 
   test(

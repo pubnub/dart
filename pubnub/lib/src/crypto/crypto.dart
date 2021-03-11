@@ -20,7 +20,7 @@ class CryptoConfiguration {
   const CryptoConfiguration(
       {this.encryptionMode = EncryptionMode.CBC,
       this.encryptKey = true,
-      this.useRandomInitializationVector = false});
+      this.useRandomInitializationVector = true});
 }
 
 /// Default cryptography module used in PubNub SDK.
