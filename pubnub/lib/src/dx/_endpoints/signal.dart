@@ -10,9 +10,9 @@ class SignalParams extends Parameters {
 
   @override
   Request toRequest() {
-    var pathSegments = [
+    var pathSegments = <String>[
       'signal',
-      keyset.publishKey,
+      keyset.publishKey!,
       keyset.subscribeKey,
       '0',
       channel,
@@ -22,7 +22,7 @@ class SignalParams extends Parameters {
 
     var queryParameters = {
       if (keyset.authKey != null) 'auth': keyset.authKey,
-      if (keyset.uuid != null) 'uuid': keyset.uuid.value,
+      'uuid': keyset.uuid.value,
     };
 
     return Request.get(
@@ -34,18 +34,16 @@ class SignalParams extends Parameters {
 ///
 /// {@category Results}
 class SignalResult extends Result {
-  bool isError;
-  String description;
-  int timetoken;
+  final bool isError;
+  final String description;
+  final int timetoken;
 
-  SignalResult();
+  SignalResult._(this.isError, this.description, this.timetoken);
 
   factory SignalResult.fromJson(dynamic object) {
     if (object is List) {
-      return SignalResult()
-        ..timetoken = int.tryParse(object[2])
-        ..description = object[1]
-        ..isError = object[0] == 0 ? false : true;
+      return SignalResult._(
+          object[0] == 0 ? false : true, object[1], int.parse(object[2]));
     }
 
     throw getExceptionFromDefaultResult(DefaultResult.fromJson(object));

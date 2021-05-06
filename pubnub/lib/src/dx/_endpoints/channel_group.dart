@@ -18,7 +18,10 @@ class ChannelGroupListChannelsParams extends Parameters {
       name
     ];
 
-    var queryParameters = {'auth': keyset.authKey, 'uuid': keyset.uuid.value};
+    var queryParameters = {
+      if (keyset.authKey != null) 'auth': keyset.authKey,
+      'uuid': keyset.uuid.value
+    };
 
     return Request.get(
         uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
@@ -30,26 +33,28 @@ class ChannelGroupListChannelsParams extends Parameters {
 /// {@category Results}
 class ChannelGroupListChannelsResult extends Result {
   /// Channel group name.
-  String name;
+  final String name;
 
   /// Channel group channels.
-  Set<String> channels;
+  final Set<String> channels;
+
+  ChannelGroupListChannelsResult(this.name, this.channels);
 
   /// @nodoc
-  ChannelGroupListChannelsResult.fromJson(Map<String, dynamic> object) {
+  factory ChannelGroupListChannelsResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
     var payload = result.otherKeys['payload'];
 
-    name = payload['group'] as String;
-    channels = (payload['channels'] as List<dynamic>).cast<String>().toSet();
+    return ChannelGroupListChannelsResult(payload['group'] as String,
+        (payload['channels'] as List<dynamic>).cast<String>().toSet());
   }
 }
 
 class ChannelGroupChangeChannelsParams extends Parameters {
   Keyset keyset;
   String name;
-  Set<String> add;
-  Set<String> remove;
+  Set<String>? add;
+  Set<String>? remove;
 
   ChannelGroupChangeChannelsParams(this.keyset, this.name,
       {this.add, this.remove});
@@ -66,10 +71,10 @@ class ChannelGroupChangeChannelsParams extends Parameters {
     ];
 
     var queryParameters = {
-      'auth': keyset.authKey,
+      if (keyset.authKey != null) 'auth': keyset.authKey,
       'uuid': keyset.uuid.value,
-      if (add != null) 'add': add.join(','),
-      if (remove != null) 'remove': remove.join(',')
+      'add': add?.join(','),
+      'remove': remove?.join(',')
     };
 
     return Request.get(
@@ -103,7 +108,10 @@ class ChannelGroupDeleteParams extends Parameters {
       'remove'
     ];
 
-    var queryParameters = {'auth': keyset.authKey, 'uuid': keyset.uuid.value};
+    var queryParameters = {
+      if (keyset.authKey != null) 'auth': keyset.authKey,
+      'uuid': keyset.uuid.value
+    };
 
     return Request.get(
         uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));

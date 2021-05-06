@@ -55,7 +55,7 @@ class _StoredValueState<T> extends State<StoredValue<T>>
   @override
   void didInitState() {
     provider = PubNubProvider.of(context);
-    keyset = provider.instance.keysets.obtain(widget.keyset, widget.using);
+    keyset = widget.keyset ?? provider.instance.keysets[widget.using];
 
     var subscription = remember(provider.instance.subscribe(
       channels: {widget.channel},

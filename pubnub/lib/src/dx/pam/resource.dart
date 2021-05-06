@@ -68,13 +68,13 @@ class Resource {
   bool get read => _bit & 1 == 1;
 
   Resource(this.type, this.name,
-      {bool create = false,
-      bool delete = false,
-      bool manage = false,
-      bool read = false,
-      bool write = false,
-      int bit = 0}) {
-    _bit = bit;
+      {bool? create = false,
+      bool? delete = false,
+      bool? manage = false,
+      bool? read = false,
+      bool? write = false,
+      int bit = 0})
+      : _bit = bit {
     if (create == true) _bit |= 16;
     if (delete == true) _bit |= 8;
     if (manage == true) _bit |= 4;
@@ -84,13 +84,13 @@ class Resource {
 
   /// Returns a new `Resource` based on this one, but with some parts replaced.
   Resource replace(
-          {ResourceType type,
-          Pattern name,
-          bool create,
-          bool delete,
-          bool manage,
-          bool read,
-          bool write}) =>
+          {ResourceType? type,
+          Pattern? name,
+          bool? create,
+          bool? delete,
+          bool? manage,
+          bool? read,
+          bool? write}) =>
       Resource(type ?? this.type, name ?? this.name,
           create: create ?? this.create,
           delete: delete ?? this.delete,

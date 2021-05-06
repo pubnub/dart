@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:meta/meta.dart';
 import 'package:pedantic/pedantic.dart';
 
 import '../logging/logging.dart';
@@ -25,8 +24,8 @@ class Fiber<T> {
 
   int tries = 0;
 
-  ILogger __logger;
-  Fiber(this._core, {@required this.action}) : id = _id++ {
+  late final ILogger __logger;
+  Fiber(this._core, {required this.action}) : id = _id++ {
     __logger = _logger.get('$id');
   }
 
@@ -42,12 +41,12 @@ class Fiber<T> {
     } catch (exception, stackTrace) {
       if (exception is Error) {
         _logger.fatal(
-            'Fatal error has occured while running a fiber (${exception}).');
+            'Fatal error has occured while running a fiber ($exception).');
         return _completer.completeError(exception, stackTrace);
       }
 
       __logger.warning(
-          'An exception has occured while running a fiber (retry #${tries}).');
+          'An exception has occured while running a fiber (retry #$tries).');
       var diagnostic = _core.supervisor.runDiagnostics(this, exception);
 
       if (diagnostic == null) {
@@ -57,6 +56,11 @@ class Fiber<T> {
       __logger.silly('Possible reason found: $diagnostic');
 
       var resolutions = _core.supervisor.runStrategies(this, diagnostic);
+
+      if (resolutions == null) {
+        _completer.completeError(exception);
+        return;
+      }
 
       for (var resolution in resolutions) {
         if (resolution is FailResolution) {

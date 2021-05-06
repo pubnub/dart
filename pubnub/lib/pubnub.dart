@@ -10,10 +10,12 @@ export 'src/default.dart';
 // Core
 export 'src/core/timetoken.dart' show Timetoken, TimetokenDateTimeExtentions;
 export 'src/core/uuid.dart' show UUID;
-export 'src/core/keyset.dart' show Keyset, KeysetStore, KeysetException;
+export 'src/core/keyset/keyset.dart' show Keyset;
+export 'src/core/keyset/store.dart' show KeysetStore;
 export 'src/core/message/message.dart' show MessageType, BaseMessage;
 export 'src/core/exceptions.dart'
     show
+        KeysetException,
         InvalidArgumentsException,
         MaximumRetriesException,
         MalformedResponseException,
@@ -58,7 +60,8 @@ export 'src/dx/message_action/message_action.dart'
         FetchMessageActionsResult,
         AddMessageActionResult,
         DeleteMessageActionResult,
-        MessageAction;
+        MessageAction,
+        MoreAction;
 export 'src/dx/objects/objects.dart'
     show
         ObjectsDx,

@@ -20,7 +20,7 @@ void main() async {
   print(
       'Network reconnection test. Please wait few seconds for further instructions...');
 
-  var sub = await pubnub.subscribe(channels: {'test2'});
+  var sub = pubnub.subscribe(channels: {'test2'});
 
   await Future.delayed(Duration(seconds: 5));
 

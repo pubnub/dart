@@ -6,6 +6,7 @@ import 'package:pubnub/src/dx/_utils/utils.dart';
 
 import 'token_request.dart';
 
+export 'package:pubnub/src/dx/_endpoints/pam.dart' show PamGrantResult;
 export 'token.dart' show Token;
 export 'resource.dart' show Resource, ResourceType, ResourceTypeExtension;
 export 'token_request.dart' show TokenRequest;
@@ -29,22 +30,21 @@ mixin PamDx on Core {
   ///
   /// ** Permissions can not be modified for channels/channel groups AND UUID(s) (user(s)) in a single method call
   Future<PamGrantResult> grant(Set<String> authKeys,
-      {int ttl,
-      Set<String> channels,
-      Set<String> channelGroups,
-      Set<String> uuids,
-      bool write,
-      bool read,
-      bool manage,
-      bool delete,
-      bool get,
-      bool update,
-      bool join,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
-    Ensure(keyset.secretKey).isNotEmpty('secretKey');
+      {int? ttl,
+      Set<String>? channels,
+      Set<String>? channelGroups,
+      Set<String>? uuids,
+      bool? write,
+      bool? read,
+      bool? manage,
+      bool? delete,
+      bool? get,
+      bool? update,
+      bool? join,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= keysets[using];
+    Ensure(keyset.secretKey).isNotNull('secretKey');
 
     if ((uuids != null && uuids.isNotEmpty) &&
         ((channels != null && channels.isNotEmpty) ||
@@ -79,13 +79,11 @@ mixin PamDx on Core {
 
   /// Creates a [TokenRequest] that can be used to obtain a [Token].
   TokenRequest requestToken(
-      {@required int ttl, dynamic meta, String using, Keyset keyset}) {
+      {@required int? ttl, dynamic meta, String? using, Keyset? keyset}) {
     Ensure(ttl).isNotNull('ttl');
 
-    keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
+    keyset ??= keysets[using];
 
-    Ensure(keyset).isNotNull('keyset');
-
-    return TokenRequest(this, keyset, ttl, meta);
+    return TokenRequest(this, keyset, ttl!, meta);
   }
 }

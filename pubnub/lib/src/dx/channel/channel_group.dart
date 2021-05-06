@@ -14,8 +14,8 @@ class ChannelGroupDx {
 
   /// Lists all channels in a channel [group].
   Future<ChannelGroupListChannelsResult> listChannels(String group,
-      {Keyset keyset, String using}) {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+      {Keyset? keyset, String? using}) {
+    keyset ??= _core.keysets[using];
     return defaultFlow<ChannelGroupListChannelsParams,
             ChannelGroupListChannelsResult>(
         keyset: keyset,
@@ -28,8 +28,8 @@ class ChannelGroupDx {
   /// Adds [channels] to the channel [group].
   Future<ChannelGroupChangeChannelsResult> addChannels(
       String group, Set<String> channels,
-      {Keyset keyset, String using}) {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+      {Keyset? keyset, String? using}) {
+    keyset ??= _core.keysets[using];
     return defaultFlow<ChannelGroupChangeChannelsParams,
             ChannelGroupChangeChannelsResult>(
         keyset: keyset,
@@ -42,8 +42,8 @@ class ChannelGroupDx {
   /// Removes [channels] from a channel [group].
   Future<ChannelGroupChangeChannelsResult> removeChannels(
       String group, Set<String> channels,
-      {Keyset keyset, String using}) {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+      {Keyset? keyset, String? using}) {
+    keyset ??= _core.keysets[using];
     return defaultFlow<ChannelGroupChangeChannelsParams,
             ChannelGroupChangeChannelsResult>(
         keyset: keyset,
@@ -56,8 +56,8 @@ class ChannelGroupDx {
 
   /// Removes ALL channels from a channel [group].
   Future<ChannelGroupDeleteResult> delete(String group,
-      {Keyset keyset, String using}) {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+      {Keyset? keyset, String? using}) {
+    keyset ??= _core.keysets[using];
     return defaultFlow<ChannelGroupDeleteParams, ChannelGroupDeleteResult>(
         keyset: keyset,
         core: _core,

@@ -12,8 +12,9 @@ import '../net/fake_net.dart';
 part 'fixtures/files.dart';
 
 void main() {
-  PubNub pubnub;
-  var keyset = Keyset(subscribeKey: 'test', publishKey: 'test');
+  late PubNub pubnub;
+  var keyset =
+      Keyset(subscribeKey: 'test', publishKey: 'test', uuid: UUID('test'));
   group('DX [file]', () {
     setUp(() {
       pubnub = PubNub(
@@ -29,7 +30,7 @@ void main() {
     test('#listFiles', () async {
       when(
         path:
-            'v1/files/test/channels/channel/files?limit=10&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v1/files/test/channels/channel/files?limit=10&pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test',
         method: 'GET',
       ).then(status: 200, body: _listFilesSuccessResponse);
 
@@ -69,7 +70,8 @@ void main() {
           defaultKeyset: Keyset(
               subscribeKey: 'test',
               publishKey: 'test',
-              cipherKey: CipherKey.fromUtf8('cipherKey')),
+              cipherKey: CipherKey.fromUtf8('cipherKey'),
+              uuid: UUID('test')),
           crypto: CryptoModule(
             defaultConfiguration:
                 CryptoConfiguration(useRandomInitializationVector: false),
@@ -94,7 +96,8 @@ void main() {
           defaultKeyset: Keyset(
               subscribeKey: 'test',
               publishKey: 'test',
-              cipherKey: CipherKey.fromUtf8('default_cipherKey')));
+              cipherKey: CipherKey.fromUtf8('default_cipherKey'),
+              uuid: UUID('test')));
       when(
         path: _publishFileMessageUrlEncryption,
         method: 'GET',
@@ -121,7 +124,7 @@ void main() {
     test('#DeleteFile', () async {
       when(
         path:
-            'v1/files/test/channels/channel/files/5a3eb38c-483a-4b25-ac01-c4e20deba6d6/cat_file.jpg?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v1/files/test/channels/channel/files/5a3eb38c-483a-4b25-ac01-c4e20deba6d6/cat_file.jpg?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test',
         method: 'DELETE',
       ).then(status: 200, body: _deleteFileResponse);
 
@@ -154,7 +157,8 @@ void main() {
     });
 
     test('#SendFile #FileMessagePublish retry', () async {
-      var keyset = Keyset(subscribeKey: 'test', publishKey: 'test');
+      var keyset =
+          Keyset(subscribeKey: 'test', publishKey: 'test', uuid: UUID('test'));
       when(
               path: _generateFileUploadUrl,
               method: 'POST',
@@ -205,7 +209,8 @@ void main() {
               subscribeKey: 'test',
               publishKey: 'test',
               secretKey: 'test',
-              authKey: 'test'));
+              authKey: 'test',
+              uuid: UUID('test')));
       var result =
           pubnub.files.getFileUrl('my_channel', 'file-id', 'cat_picture.jpg');
       expect(result.queryParameters, contains('signature'));

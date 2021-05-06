@@ -25,25 +25,25 @@ class GenerateFileUploadUrlParams extends Parameters {
 }
 
 class GenerateFileUploadUrlResult extends Result {
-  String fileId;
-  String fileName;
+  final String fileId;
+  final String fileName;
 
-  Uri uploadUri;
-  Map<String, String> formFields;
+  final Uri uploadUri;
+  final Map<String, String> formFields;
 
-  GenerateFileUploadUrlResult._();
+  GenerateFileUploadUrlResult._(
+      this.fileId, this.fileName, this.uploadUri, this.formFields);
 
   factory GenerateFileUploadUrlResult.fromJson(dynamic object) =>
-      GenerateFileUploadUrlResult._()
-        ..fileId = object['data']['id']
-        ..fileName = object['data']['name']
-        ..uploadUri = Uri.parse(object['file_upload_request']['url'])
-        ..formFields =
-            (object['file_upload_request']['form_fields'] as List<dynamic>)
-                .fold({}, (previousValue, element) {
-          previousValue[element['key']] = element['value'];
-          return previousValue;
-        });
+      GenerateFileUploadUrlResult._(
+          object['data']['id'],
+          object['data']['name'],
+          Uri.parse(object['file_upload_request']['url']),
+          (object['file_upload_request']['form_fields'] as List<dynamic>)
+              .fold({}, (previousValue, element) {
+            previousValue[element['key']] = element['value'];
+            return previousValue;
+          }));
 }
 
 class FileUploadParams extends Parameters {
@@ -60,21 +60,22 @@ class FileUploadParams extends Parameters {
 }
 
 class FileUploadResult extends Result {
-  int statusCode;
-  FileUploadResult._();
+  final int statusCode;
+
+  FileUploadResult._(this.statusCode);
 
   factory FileUploadResult.fromJson(dynamic object) =>
-      FileUploadResult._()..statusCode = object.statusCode;
+      FileUploadResult._(object.statusCode);
 }
 
 class PublishFileMessageParams extends Parameters {
   String channel;
   String message;
-
-  bool storeMessage;
   Keyset keyset;
-  int ttl;
-  String meta;
+
+  bool? storeMessage;
+  int? ttl;
+  String? meta;
 
   PublishFileMessageParams(this.keyset, this.channel, this.message,
       {this.storeMessage, this.meta, this.ttl});
@@ -84,7 +85,7 @@ class PublishFileMessageParams extends Parameters {
       'v1',
       'files',
       'publish-file',
-      keyset.publishKey,
+      keyset.publishKey!,
       keyset.subscribeKey,
       '0',
       channel,
@@ -97,7 +98,7 @@ class PublishFileMessageParams extends Parameters {
         'store': '1'
       else if (storeMessage == false)
         'store': '0',
-      if (keyset.uuid != null) 'uuid': keyset.uuid.value,
+      'uuid': keyset.uuid.value,
       if (ttl != null) 'ttl': ttl.toString(),
       if (meta != null) 'meta': meta
     };
@@ -111,19 +112,20 @@ class PublishFileMessageParams extends Parameters {
 /// {@category Results}
 /// {@category Files}
 class PublishFileMessageResult extends Result {
-  bool isError;
-  String description;
-  int timetoken;
-  FileInfo fileInfo;
+  final int? timetoken;
 
-  PublishFileMessageResult();
+  bool? isError;
+  String? description;
+  FileInfo? fileInfo;
+
+  PublishFileMessageResult({this.timetoken, this.description, this.isError});
 
   /// @nodoc
   factory PublishFileMessageResult.fromJson(dynamic object) {
-    return PublishFileMessageResult()
-      ..timetoken = int.tryParse(object[2])
-      ..description = object[1]
-      ..isError = object[0] == 1 ? false : true;
+    return PublishFileMessageResult(
+        timetoken: int.parse(object[2]),
+        description: object[1],
+        isError: object[0] == 1 ? false : true);
   }
 }
 
@@ -144,19 +146,18 @@ class DownloadFileParams extends Parameters {
 /// {@category Files}
 class DownloadFileResult extends Result {
   /// Content of the file.
-  dynamic fileContent;
+  final dynamic fileContent;
 
-  DownloadFileResult._();
+  DownloadFileResult._(this.fileContent);
 
   /// @nodoc
   factory DownloadFileResult.fromJson(dynamic object,
-      {CipherKey cipherKey, Function decryptFunction}) {
+      {CipherKey? cipherKey, Function? decryptFunction}) {
     if (cipherKey != null) {
-      return DownloadFileResult._()
-        ..fileContent =
-            decryptFunction(cipherKey, object.byteList as List<int>);
+      return DownloadFileResult._(
+          decryptFunction!(cipherKey, object.byteList as List<int>));
     }
-    return DownloadFileResult._()..fileContent = object.byteList;
+    return DownloadFileResult._(object.byteList);
   }
 }
 
@@ -164,8 +165,8 @@ class ListFilesParams extends Parameters {
   Keyset keyset;
   String channel;
 
-  int limit;
-  String next;
+  int? limit;
+  String? next;
 
   ListFilesParams(this.keyset, this.channel, {this.limit, this.next});
 
@@ -195,27 +196,25 @@ class ListFilesParams extends Parameters {
 /// {@category Results}
 /// {@category Files}
 class ListFilesResult extends Result {
-  List<FileDetail> _filesDetail;
-  String _next;
-  int _count;
+  final List<FileDetail>? _filesDetail;
+  final String? _next;
+  final int? _count;
 
   /// List of file details.
-  List<FileDetail> get filesDetail => _filesDetail;
+  List<FileDetail>? get filesDetail => _filesDetail;
 
   /// Next page ID. Used for pagination.
-  String get next => _next;
+  String? get next => _next;
 
-  int get count => _count;
+  int? get count => _count;
 
-  ListFilesResult._();
+  ListFilesResult._(this._filesDetail, this._count, this._next);
 
   /// @nodoc
-  factory ListFilesResult.fromJson(dynamic object) => ListFilesResult._()
-    .._filesDetail = (object['data'] as List)
-        ?.map((e) => e == null ? null : FileDetail.fromJson(e))
-        ?.toList()
-    .._next = object['next'] as String
-    .._count = object['count'] as int;
+  factory ListFilesResult.fromJson(dynamic object) => ListFilesResult._(
+      (object['data'] as List).map((e) => FileDetail.fromJson(e)).toList(),
+      object['count'] as int,
+      object['next'] as String);
 }
 
 /// Represents a file uploaded to PubNub.
@@ -233,13 +232,10 @@ class FileDetail {
   String get id => _id;
   String get created => _created;
 
-  FileDetail._();
+  FileDetail._(this._name, this._id, this._size, this._created);
 
-  factory FileDetail.fromJson(dynamic object) => FileDetail._()
-    .._name = object['name']
-    .._id = object['id']
-    .._size = object['size']
-    .._created = object['created'];
+  factory FileDetail.fromJson(dynamic object) => FileDetail._(
+      object['name'], object['id'], object['size'], object['created']);
 }
 
 class DeleteFileParams extends Parameters {

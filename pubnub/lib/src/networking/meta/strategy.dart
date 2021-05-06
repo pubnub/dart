@@ -4,12 +4,12 @@ import 'diagnostics.dart';
 
 /// @nodoc
 class NetworkingStrategy extends Strategy {
-  RetryPolicy retryPolicy;
+  final RetryPolicy? retryPolicy;
 
   NetworkingStrategy({this.retryPolicy});
 
   @override
-  List<Resolution> resolve(Fiber fiber, Diagnostic diagnostic) {
+  List<Resolution>? resolve(Fiber fiber, Diagnostic diagnostic) {
     if (diagnostic is TimeoutDiagnostic && fiber.isSubscribe) {
       return [Resolution.retry()];
     }
@@ -18,7 +18,7 @@ class NetworkingStrategy extends Strategy {
       return [Resolution.fail()];
     }
 
-    if (!fiber.isSubscribe && fiber.tries >= retryPolicy?.maxRetries) {
+    if (!fiber.isSubscribe && fiber.tries >= (retryPolicy!.maxRetries)) {
       return [Resolution.fail()];
     }
 
@@ -30,7 +30,7 @@ class NetworkingStrategy extends Strategy {
 
       return [
         Resolution.networkStatus(false),
-        Resolution.delay(retryPolicy.getDelay(fiber)),
+        Resolution.delay(retryPolicy!.getDelay(fiber)),
         Resolution.retry()
       ];
     }

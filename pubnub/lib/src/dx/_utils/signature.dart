@@ -18,9 +18,9 @@ String computeSignature(Keyset keyset, List<String> pathSegments,
   var plaintext = '''${keyset.subscribeKey}
 ${keyset.publishKey}
 /${pathSegments.join('/')}
-${queryParams}''';
+$queryParams''';
 
-  var hmac = Hmac(sha256, utf8.encode(keyset.secretKey));
+  var hmac = Hmac(sha256, utf8.encode(keyset.secretKey!));
   var digest = hmac.convert(utf8.encode(plaintext));
   var ciphertext = base64Url.encode(digest.bytes);
 
@@ -38,14 +38,14 @@ String computeV2Signature(
   var plaintext = '''${type.method.toUpperCase()}
 ${keyset.publishKey}
 /${pathSegments.join('/')}
-${queryString}
-${body}''';
+$queryString
+$body''';
 
-  var hmac = Hmac(sha256, utf8.encode(keyset.secretKey));
+  var hmac = Hmac(sha256, utf8.encode(keyset.secretKey!));
   var digest = hmac.convert(utf8.encode(plaintext));
   var ciphertext = base64.encode(digest.bytes);
 
-  return 'v2.${ciphertext}'
+  return 'v2.$ciphertext'
       .replaceAll(RegExp(r'\+'), '-')
       .replaceAll(RegExp(r'\/'), '_')
       .replaceAll(RegExp(r'\=*$'), '');

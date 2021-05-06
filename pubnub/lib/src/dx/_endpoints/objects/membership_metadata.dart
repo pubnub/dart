@@ -7,14 +7,14 @@ import 'package:pubnub/src/dx/_endpoints/objects/uuid_metadata.dart'
 
 class GetMembershipsMetadataParams extends Parameters {
   Keyset keyset;
-  String uuid;
-  int limit;
-  String start;
-  String end;
-  Set<String> include;
-  bool includeCount;
-  String filter;
-  Set<String> sort;
+  String? uuid;
+  int? limit;
+  String? start;
+  String? end;
+  Set<String>? include;
+  bool? includeCount;
+  String? filter;
+  Set<String>? sort;
 
   GetMembershipsMetadataParams(this.keyset,
       {this.uuid,
@@ -38,14 +38,14 @@ class GetMembershipsMetadataParams extends Parameters {
     ];
 
     var queryParameters = {
-      if (include != null && include.isNotEmpty) 'include': include.join(','),
+      if (include != null && include!.isNotEmpty) 'include': include!.join(','),
       if (limit != null) 'limit': '$limit',
       if (start != null) 'start': start,
       if (end != null) 'end': end,
       if (keyset.authKey != null) 'auth': keyset.authKey,
       if (includeCount != null) 'count': '$includeCount',
-      if (filter != null && filter.isNotEmpty) 'filter': filter,
-      if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
+      if (filter != null && filter!.isNotEmpty) 'filter': filter,
+      if (sort != null && sort!.isNotEmpty) 'sort': sort!.join(',')
     };
 
     return Request.get(
@@ -59,7 +59,7 @@ class GetMembershipsMetadataParams extends Parameters {
 /// {@category Objects}
 class MembershipMetadata {
   ChannelMetadataDetails _channel;
-  dynamic _custom;
+  dynamic? _custom;
   String _updated;
   String _eTag;
 
@@ -68,13 +68,13 @@ class MembershipMetadata {
   String get updated => _updated;
   String get eTag => _eTag;
 
-  MembershipMetadata._();
+  MembershipMetadata._(this._channel, this._custom, this._updated, this._eTag);
 
-  factory MembershipMetadata.fromJson(dynamic object) => MembershipMetadata._()
-    .._channel = ChannelMetadataDetails.fromJson(object['channel'])
-    .._custom = object['custom']
-    .._updated = object['updated'] as String
-    .._eTag = object['eTag'] as String;
+  factory MembershipMetadata.fromJson(dynamic object) => MembershipMetadata._(
+      ChannelMetadataDetails.fromJson(object['channel']),
+      object['custom'],
+      object['updated'] as String,
+      object['eTag'] as String);
 }
 
 /// Result of memberships endpoint calls.
@@ -82,37 +82,38 @@ class MembershipMetadata {
 /// {@category Results}
 /// {@category Objects}
 class MembershipsResult extends Result {
-  List<MembershipMetadata> _metadataList;
-  int _totalCount;
-  String _next;
-  String _prev;
+  final List<MembershipMetadata>? _metadataList;
+  final int? _totalCount;
+  final String? _next;
+  final String? _prev;
 
-  List<MembershipMetadata> get metadataList => _metadataList;
-  int get totalCount => _totalCount;
-  String get next => _next;
-  String get prev => _prev;
+  List<MembershipMetadata>? get metadataList => _metadataList;
+  int? get totalCount => _totalCount;
+  String? get next => _next;
+  String? get prev => _prev;
 
-  MembershipsResult._();
+  MembershipsResult._(
+      this._metadataList, this._totalCount, this._next, this._prev);
 
-  factory MembershipsResult.fromJson(dynamic object) => MembershipsResult._()
-    .._metadataList = (object['data'] as List)
-        ?.map((e) => e == null ? null : MembershipMetadata.fromJson(e))
-        ?.toList()
-    .._totalCount = object['totalCount'] as int
-    .._next = object['next'] as String
-    .._prev = object['prev'] as String;
+  factory MembershipsResult.fromJson(dynamic object) => MembershipsResult._(
+      (object['data'] as List)
+          .map((e) => MembershipMetadata.fromJson(e))
+          .toList(),
+      object['totalCount'] as int?,
+      object['next'] as String?,
+      object['prev'] as String?);
 }
 
 class ManageMembershipsParams extends Parameters {
   Keyset keyset;
-  String uuid;
-  int limit;
-  String start;
-  String end;
-  Set<String> include;
-  bool includeCount;
-  String filter;
-  Set<String> sort;
+  String? uuid;
+  int? limit;
+  String? start;
+  String? end;
+  Set<String>? include;
+  bool? includeCount;
+  String? filter;
+  Set<String>? sort;
 
   String membershipMetadata;
 
@@ -138,14 +139,14 @@ class ManageMembershipsParams extends Parameters {
     ];
 
     var queryParameters = {
-      if (include != null && include.isNotEmpty) 'include': include.join(','),
+      if (include != null && include!.isNotEmpty) 'include': include!.join(','),
       if (limit != null) 'limit': '$limit',
       if (start != null) 'start': start,
       if (end != null) 'end': end,
       if (keyset.authKey != null) 'auth': keyset.authKey,
       if (includeCount != null) 'count': '$includeCount',
-      if (filter != null && filter.isNotEmpty) 'filter': filter,
-      if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
+      if (filter != null && filter!.isNotEmpty) 'filter': filter,
+      if (sort != null && sort!.isNotEmpty) 'sort': sort!.join(',')
     };
 
     return Request.patch(
@@ -158,13 +159,13 @@ class GetChannelMembersParams extends Parameters {
   Keyset keyset;
   String channelId;
 
-  int limit;
-  String start;
-  String end;
-  Set<String> include;
-  bool includeCount;
-  String filter;
-  Set<String> sort;
+  int? limit;
+  String? start;
+  String? end;
+  Set<String>? include;
+  bool? includeCount;
+  String? filter;
+  Set<String>? sort;
 
   GetChannelMembersParams(this.keyset, this.channelId,
       {this.limit,
@@ -187,14 +188,14 @@ class GetChannelMembersParams extends Parameters {
     ];
 
     var queryParameters = {
-      if (include != null && include.isNotEmpty) 'include': include.join(','),
+      if (include != null && include!.isNotEmpty) 'include': include!.join(','),
       if (limit != null) 'limit': '$limit',
       if (start != null) 'start': start,
       if (end != null) 'end': end,
       if (keyset.authKey != null) 'auth': keyset.authKey,
       if (includeCount != null) 'count': '$includeCount',
       if (filter != null && filter != '') 'filter': filter,
-      if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
+      if (sort != null && sort!.isNotEmpty) 'sort': sort!.join(',')
     };
 
     return Request.get(
@@ -210,24 +211,24 @@ class GetChannelMembersParams extends Parameters {
 /// {@category Results}
 /// {@category Objects}
 class ChannelMemberMetadata {
-  UuidMetadataDetails _uuid;
-  dynamic _custom;
-  String _updated;
-  String _eTag;
+  final UuidMetadataDetails _uuid;
+  final dynamic? _custom;
+  final String _updated;
+  final String _eTag;
 
   UuidMetadataDetails get uuid => _uuid;
-  dynamic get custom => _custom;
+  dynamic? get custom => _custom;
   String get updated => _updated;
   String get eTag => _eTag;
 
-  ChannelMemberMetadata._();
+  ChannelMemberMetadata._(this._uuid, this._custom, this._eTag, this._updated);
 
   factory ChannelMemberMetadata.fromJson(dynamic object) =>
-      ChannelMemberMetadata._()
-        .._uuid = UuidMetadataDetails.fromJson(object['uuid'])
-        .._custom = object['custom']
-        .._updated = object['updated'] as String
-        .._eTag = object['eTag'] as String;
+      ChannelMemberMetadata._(
+          UuidMetadataDetails.fromJson(object['uuid']),
+          object['custom'],
+          object['updated'] as String,
+          object['eTag'] as String);
 }
 
 /// Result of channel members endpoint calls.
@@ -235,39 +236,40 @@ class ChannelMemberMetadata {
 /// {@category Results}
 /// {@category Objects}
 class ChannelMembersResult extends Result {
-  List<ChannelMemberMetadata> _metadataList;
-  int _totalCount;
-  String _next;
-  String _prev;
+  final List<ChannelMemberMetadata>? _metadataList;
+  final int? _totalCount;
+  final String? _next;
+  final String? _prev;
 
-  List<ChannelMemberMetadata> get metadataList => _metadataList;
-  int get totalCount => _totalCount;
-  String get next => _next;
-  String get prev => _prev;
+  List<ChannelMemberMetadata>? get metadataList => _metadataList;
+  int? get totalCount => _totalCount;
+  String? get next => _next;
+  String? get prev => _prev;
 
-  ChannelMembersResult._();
+  ChannelMembersResult._(
+      this._metadataList, this._totalCount, this._next, this._prev);
 
   factory ChannelMembersResult.fromJson(dynamic object) =>
-      ChannelMembersResult._()
-        .._metadataList = (object['data'] as List)
-            ?.map((e) => e == null ? null : ChannelMemberMetadata.fromJson(e))
-            ?.toList()
-        .._totalCount = object['totalCount'] as int
-        .._next = object['next'] as String
-        .._prev = object['prev'] as String;
+      ChannelMembersResult._(
+          (object['data'] as List)
+              .map((e) => ChannelMemberMetadata.fromJson(e))
+              .toList(),
+          object['totalCount'] as int?,
+          object['next'] as String?,
+          object['prev'] as String?);
 }
 
 class ManageChannelMembersParams extends Parameters {
   Keyset keyset;
   String channelId;
 
-  int limit;
-  String start;
-  String end;
-  Set<String> include;
-  bool includeCount;
-  String filter;
-  Set<String> sort;
+  int? limit;
+  String? start;
+  String? end;
+  Set<String>? include;
+  bool? includeCount;
+  String? filter;
+  Set<String>? sort;
 
   String membersMetadata;
 
@@ -291,14 +293,14 @@ class ManageChannelMembersParams extends Parameters {
     ];
 
     var queryParameters = {
-      if (include != null && include.isNotEmpty) 'include': include.join(','),
+      if (include != null && include!.isNotEmpty) 'include': include!.join(','),
       if (limit != null) 'limit': '$limit',
       if (start != null) 'start': start,
       if (end != null) 'end': end,
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
       if (includeCount != null) 'count': '$includeCount',
-      if (filter != null && filter.isNotEmpty) 'filter': filter,
-      if (sort != null && sort.isNotEmpty) 'sort': sort.join(',')
+      if (filter != null && filter!.isNotEmpty) 'filter': filter,
+      if (sort != null && sort!.isNotEmpty) 'sort': sort!.join(',')
     };
     return Request.patch(
       uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters),

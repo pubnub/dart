@@ -7,12 +7,12 @@ class FetchHistoryParams extends Parameters {
   Keyset keyset;
   String channel;
 
-  int count;
-  bool reverse;
-  Timetoken start;
-  Timetoken end;
-  bool includeToken;
-  bool includeMeta;
+  int? count;
+  bool? reverse;
+  Timetoken? start;
+  Timetoken? end;
+  bool? includeToken;
+  bool? includeMeta;
 
   FetchHistoryParams(this.keyset, this.channel,
       {this.count,
@@ -20,7 +20,8 @@ class FetchHistoryParams extends Parameters {
       this.start,
       this.end,
       this.includeMeta,
-      this.includeToken});
+      this.includeToken})
+      : assert(channel.isNotEmpty);
 
   @override
   Request toRequest() {
@@ -41,7 +42,7 @@ class FetchHistoryParams extends Parameters {
       if (includeToken != null) 'include_token': '$includeToken',
       if (includeMeta != null) 'include_meta': '$includeMeta',
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
+      'uuid': '${keyset.uuid}'
     };
 
     return Request.get(
@@ -53,19 +54,19 @@ class FetchHistoryParams extends Parameters {
 ///
 /// {@category Results}
 class FetchHistoryResult extends Result {
-  List<dynamic> messages;
+  final List<dynamic> messages;
 
-  Timetoken startTimetoken;
-  Timetoken endTimetoken;
+  final Timetoken startTimetoken;
+  final Timetoken endTimetoken;
 
-  FetchHistoryResult();
+  FetchHistoryResult._(this.messages, this.startTimetoken, this.endTimetoken);
 
   factory FetchHistoryResult.fromJson(dynamic object) {
     if (object is List) {
-      return FetchHistoryResult()
-        ..messages = object[0]
-        ..startTimetoken = Timetoken(object[1])
-        ..endTimetoken = Timetoken(object[2]);
+      return FetchHistoryResult._(
+          object[0],
+          Timetoken(BigInt.from(object[1] as int)),
+          Timetoken(BigInt.from(object[2] as int)));
     }
 
     throw getExceptionFromAny(object);
@@ -76,14 +77,14 @@ class BatchHistoryParams extends Parameters {
   Keyset keyset;
   Set<String> channels;
 
-  int max;
-  bool reverse;
-  Timetoken start;
-  Timetoken end;
-  bool includeMeta;
-  bool includeMessageActions;
-  bool includeUUID;
-  bool includeMessageType;
+  int? max;
+  bool? reverse;
+  Timetoken? start;
+  Timetoken? end;
+  bool? includeMeta;
+  bool? includeMessageActions;
+  bool? includeUUID;
+  bool? includeMessageType;
 
   BatchHistoryParams(this.keyset, this.channels,
       {this.max,
@@ -117,7 +118,7 @@ class BatchHistoryParams extends Parameters {
         'include_message_type': '$includeMessageType',
       if (includeUUID != null) 'include_uuid': '$includeUUID',
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
+      'uuid': '${keyset.uuid}'
     };
 
     return Request.get(
@@ -143,28 +144,27 @@ class BatchHistoryResultEntry {
 
   /// If `includeMessageActions` was true, this will contain message actions.
   /// Otherwise, it will be `null`.
-  Map<String, dynamic> actions;
+  Map<String, dynamic>? actions;
 
   /// If `includeMeta` was true, this will contain message meta.
   /// Otherwise, it will be `null`.
-  Map<String, dynamic> meta;
+  Map<String, dynamic>? meta;
 
-  BatchHistoryResultEntry._();
+  BatchHistoryResultEntry._(this.message, this.timetoken, this.uuid,
+      this.messageType, this.actions, this.meta);
 
   /// @nodoc
   factory BatchHistoryResultEntry.fromJson(Map<String, dynamic> object,
-      {CipherKey cipherKey, Function decryptFunction}) {
-    return BatchHistoryResultEntry._()
-      ..timetoken = Timetoken(int.tryParse(object['timetoken']))
-      ..uuid = object['uuid']
-      ..messageType = (object['message_type'] is int)
-          ? MessageTypeExtension.fromInt(object['message_type'])
-          : null
-      ..message = cipherKey == null
-          ? object['message']
-          : decryptFunction(cipherKey, object['message'])
-      ..actions = object['actions']
-      ..meta = object['meta'];
+      {CipherKey? cipherKey, Function? decryptFunction}) {
+    return BatchHistoryResultEntry._(
+        cipherKey == null
+            ? object['message']
+            : decryptFunction!(cipherKey, object['message']),
+        Timetoken(BigInt.parse(object['timetoken'])),
+        object['uuid'],
+        MessageTypeExtension.fromInt(object['message_type']),
+        object['actions'],
+        object['meta']);
   }
 }
 
@@ -176,26 +176,26 @@ class BatchHistoryResult extends Result {
   Map<String, List<BatchHistoryResultEntry>> channels;
 
   /// @nodoc
-  MoreHistory more;
+  MoreHistory? more;
 
-  BatchHistoryResult();
+  BatchHistoryResult._(this.channels, this.more);
 
   /// @nodoc
   factory BatchHistoryResult.fromJson(Map<String, dynamic> object,
-      {CipherKey cipherKey, Function decryptFunction}) {
+      {CipherKey? cipherKey, Function? decryptFunction}) {
     var result = DefaultResult.fromJson(object);
 
-    return BatchHistoryResult()
-      ..channels = (result.otherKeys['channels'] as Map<String, dynamic>).map(
-          (key, value) => MapEntry(
-              key,
-              (value as List<dynamic>)
-                  .map((entry) => BatchHistoryResultEntry.fromJson(entry,
-                      cipherKey: cipherKey, decryptFunction: decryptFunction))
-                  .toList()))
-      ..more = result.otherKeys['more'] != null
-          ? MoreHistory.fromJson(result.otherKeys['more'])
-          : null;
+    return BatchHistoryResult._(
+        (result.otherKeys['channels'] as Map<String, dynamic>).map(
+            (key, value) => MapEntry(
+                key,
+                (value as List<dynamic>)
+                    .map((entry) => BatchHistoryResultEntry.fromJson(entry,
+                        cipherKey: cipherKey, decryptFunction: decryptFunction))
+                    .toList())),
+        result.otherKeys['more'] != null
+            ? MoreHistory.fromJson(result.otherKeys['more'])
+            : null);
   }
 }
 
@@ -204,22 +204,20 @@ class MoreHistory {
   String start;
   int count;
 
-  MoreHistory();
+  MoreHistory._(this.url, this.start, this.count);
 
   factory MoreHistory.fromJson(dynamic object) {
-    return MoreHistory()
-      ..url = object['url'] as String
-      ..start = object['start'] as String
-      ..count = object['max'] as int;
+    return MoreHistory._(object['url'] as String, object['start'] as String,
+        object['max'] as int);
   }
 }
 
 class CountMessagesParams extends Parameters {
   Keyset keyset;
-  Map<String, Timetoken> channelsTimetoken;
+  Map<String, Timetoken>? channelsTimetoken;
 
-  Timetoken timetoken;
-  Set<String> channels;
+  Timetoken? timetoken;
+  Set<String>? channels;
 
   CountMessagesParams(this.keyset,
       {this.channelsTimetoken, this.timetoken, this.channels});
@@ -233,14 +231,14 @@ class CountMessagesParams extends Parameters {
       keyset.subscribeKey,
       'message-counts',
       if (channelsTimetoken != null)
-        channelsTimetoken.keys.join(',')
+        channelsTimetoken!.keys.join(',')
       else
-        channels.join(',')
+        channels!.join(',')
     ];
 
     var queryParameters = {
       if (channelsTimetoken != null)
-        'channelsTimetoken': channelsTimetoken.values.join(',')
+        'channelsTimetoken': channelsTimetoken?.values.join(',')
       else
         'timetoken': '$timetoken',
     };
@@ -257,15 +255,15 @@ class CountMessagesResult extends Result {
   /// Map of channels to message counts.
   Map<String, int> channels;
 
-  CountMessagesResult._();
+  CountMessagesResult._(this.channels);
 
   /// @nodoc
   factory CountMessagesResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
 
-    return CountMessagesResult._()
-      ..channels = (result.otherKeys['channels'] as Map<String, dynamic>)
-          .cast<String, int>();
+    return CountMessagesResult._(
+        (result.otherKeys['channels'] as Map<String, dynamic>)
+            .cast<String, int>());
   }
 }
 
@@ -273,8 +271,8 @@ class DeleteMessagesParams extends Parameters {
   Keyset keyset;
   String channel;
 
-  Timetoken start;
-  Timetoken end;
+  Timetoken? start;
+  Timetoken? end;
 
   DeleteMessagesParams(this.keyset, this.channel, {this.start, this.end});
 

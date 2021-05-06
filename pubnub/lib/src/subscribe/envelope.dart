@@ -1,62 +1,100 @@
 import 'package:pubnub/core.dart';
+import 'package:pubnub/pubnub.dart';
 
 /// Represents a message received from a subscription.
 ///
 /// {@category Results}
 /// {@category Basic Features}
 class Envelope extends BaseMessage {
-  String shard;
-  String subscriptionPattern;
-  String channel;
-  MessageType messageType;
-  int flags;
-  UUID uuid;
+  final String shard;
+  final String? subscriptionPattern;
+  final String channel;
+  final int region;
+  final MessageType messageType;
+  final int flags;
+  final UUID uuid;
 
-  Timetoken originalTimetoken;
-  int originalRegion;
-  @override
-  Timetoken publishedAt;
-  int region;
+  final Timetoken? originalTimetoken;
+  final int? originalRegion;
 
-  @override
-  dynamic content;
-  dynamic userMeta;
-  @override
-  dynamic originalMessage;
+  final dynamic? userMeta;
 
   dynamic get payload => content;
 
+  Envelope._(
+      {required dynamic content,
+      required dynamic originalMessage,
+      required Timetoken publishedAt,
+      required this.shard,
+      required this.subscriptionPattern,
+      required this.channel,
+      required this.messageType,
+      required this.flags,
+      required this.uuid,
+      required this.originalTimetoken,
+      required this.originalRegion,
+      required this.region,
+      required this.userMeta})
+      : super(
+          content: content,
+          originalMessage: originalMessage,
+          publishedAt: publishedAt,
+        );
+
   /// @nodoc
-  Envelope.fromJson(dynamic object) {
-    shard = object['a'] as String;
-    subscriptionPattern = object['b'] as String;
-    channel = object['c'] as String;
-    content = object['d'];
-    messageType = MessageTypeExtension.fromInt(object['e'] as int);
-    flags = object['f'] as int;
-    uuid = object['i'] != null ? UUID(object['i'] as String) : null;
-    originalTimetoken =
-        object['o'] != null ? Timetoken(int.tryParse(object['o']['t'])) : null;
-    originalRegion = object['o'] != null ? object['o']['r'] : null;
-    publishedAt =
-        object['p'] != null ? Timetoken(int.tryParse(object['p']['t'])) : null;
-    region = object['p'] != null ? object['p']['r'] : null;
-    userMeta = object['u'];
-    originalMessage = object;
+  factory Envelope.fromJson(dynamic object) {
+    return Envelope._(
+      originalMessage: object,
+      shard: object['a'] as String,
+      subscriptionPattern: object['b'] as String?,
+      channel: object['c'] as String,
+      content: object['d'],
+      messageType: MessageTypeExtension.fromInt(object['e']),
+      flags: object['f'] as int,
+      uuid: UUID(object['i'] ?? ''),
+      originalTimetoken: object['o'] != null
+          ? Timetoken(BigInt.parse(object['o']['t']))
+          : null,
+      originalRegion: object['o']?['r'],
+      publishedAt: Timetoken(BigInt.parse(object['p']['t'])),
+      region: object['p']['r'],
+      userMeta: object['u'],
+    );
   }
 }
 
 /// Represents a presence action.
-enum PresenceAction { join, leave, timeout, stateChange, interval }
+enum PresenceAction {
+  join,
+  leave,
+  timeout,
+  stateChange,
+  interval,
+
+  /// Represents a presence action that is unrecognized by the SDK
+  unknown,
+}
 
 /// @nodoc
-PresenceAction fromString(String action) => const {
-      'join': PresenceAction.join,
-      'leave': PresenceAction.leave,
-      'timeout': PresenceAction.timeout,
-      'state-change': PresenceAction.stateChange,
-      'interval': PresenceAction.interval,
-    }[action];
+extension PresenceActionExtension on PresenceAction {
+  static PresenceAction fromString(String? action) {
+    switch (action) {
+      case 'join':
+        return PresenceAction.join;
+      case 'leave':
+        return PresenceAction.leave;
+      case 'timeout':
+        return PresenceAction.timeout;
+      case 'state-change':
+        return PresenceAction.stateChange;
+      case 'interval':
+        return PresenceAction.interval;
+      case null:
+      default:
+        return PresenceAction.unknown;
+    }
+  }
+}
 
 /// Represents an event in presence.
 ///
@@ -65,21 +103,24 @@ class PresenceEvent {
   Envelope envelope;
 
   PresenceAction action;
-  UUID uuid;
+  UUID? uuid;
   int occupancy;
   Timetoken get timetoken => envelope.publishedAt;
 
-  List<UUID> get join => (envelope.payload['join'] as List<dynamic> ?? [])
+  List<UUID> get join => (envelope.payload['join'] as List<dynamic>? ?? [])
       .cast<String>()
       .map((uuid) => UUID(uuid))
       .toList();
-  List<UUID> get leave => (envelope.payload['leave'] as List<dynamic> ?? [])
+  List<UUID> get leave => (envelope.payload['leave'] as List<dynamic>? ?? [])
       .cast<String>()
       .map((uuid) => UUID(uuid))
       .toList();
 
   PresenceEvent.fromEnvelope(this.envelope)
-      : action = fromString(envelope.payload['action'] as String),
-        uuid = UUID(envelope.payload['uuid'] as String),
+      : action = PresenceActionExtension.fromString(
+            envelope.payload['action'] as String),
+        uuid = envelope.payload['uuid'] != null
+            ? UUID(envelope.payload['uuid'])
+            : null,
         occupancy = envelope.payload['occupancy'] as int;
 }

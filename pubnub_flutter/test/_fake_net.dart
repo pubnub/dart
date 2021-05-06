@@ -54,7 +54,7 @@ class FakeRequestHandler extends IRequestHandler {
 
       if (doesMethodMatch && doesBodyMatch && doesUriMatch) {
         if (![200, 204].contains(mock.response.statusCode)) {
-          throw PubNubRequestFailureException(mock.response);
+          throw RequestFailureException(mock.response);
         } else {
           return mock.response;
         }
@@ -82,6 +82,9 @@ class FakeRequestHandler extends IRequestHandler {
 
   @override
   void cancel([dynamic reason]) {}
+
+  @override
+  bool get isCancelled => false;
 }
 
 class MockRequest {

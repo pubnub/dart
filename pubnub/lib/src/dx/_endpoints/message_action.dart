@@ -4,9 +4,9 @@ class FetchMessageActionsParams extends Parameters {
   Keyset keyset;
   String channel;
 
-  Timetoken start;
-  Timetoken end;
-  int limit;
+  Timetoken? start;
+  Timetoken? end;
+  int? limit;
 
   FetchMessageActionsParams(this.keyset, this.channel,
       {this.start, this.end, this.limit});
@@ -37,27 +37,21 @@ class FetchMessageActionsParams extends Parameters {
 ///
 /// {@category Results}
 class FetchMessageActionsResult extends Result {
-  List<MessageAction> _actions;
-  dynamic _moreActions;
-
-  dynamic get moreActions => _moreActions;
-
-  /// List of message actions.
-  List<MessageAction> get actions => _actions ?? [];
-  set actions(List<MessageAction> actions) => _actions = actions;
+  List<MessageAction> actions;
+  MoreAction? moreActions;
 
   /// @nodoc
-  FetchMessageActionsResult();
+  FetchMessageActionsResult(this.actions, {this.moreActions});
 
   /// @nodoc
-  factory FetchMessageActionsResult.fromJson(dynamic object) {
-    return FetchMessageActionsResult()
-      .._actions = (object['data'] as List)
-          ?.map((e) => e == null ? null : MessageAction.fromJson(e))
-          ?.toList()
-      .._moreActions =
-          object['more'] != null ? MoreAction.fromJson(object['more']) : null;
-  }
+  factory FetchMessageActionsResult.fromJson(dynamic object) =>
+      FetchMessageActionsResult(
+          (object['data'] as List)
+              .map((e) => MessageAction.fromJson(e))
+              .toList(),
+          moreActions: object['more'] != null
+              ? MoreAction.fromJson(object['more'])
+              : null);
 }
 
 /// Represents a message action.
@@ -79,16 +73,17 @@ class MessageAction {
   /// UUID of who added this message action.
   String uuid;
 
-  MessageAction._();
+  MessageAction._(this.type, this.value, this.actionTimetoken,
+      this.messageTimetoken, this.uuid);
 
   /// @nodoc
   factory MessageAction.fromJson(dynamic object) {
-    return MessageAction._()
-      ..type = object['type'] as String
-      ..value = object['value'] as String
-      ..actionTimetoken = "${object['actionTimetoken']}"
-      ..messageTimetoken = "${object['messageTimetoken']}"
-      ..uuid = object['uuid'] as String;
+    return MessageAction._(
+        object['type'] as String,
+        object['value'] as String,
+        "${object['actionTimetoken']}",
+        "${object['messageTimetoken']}",
+        object['uuid'] as String);
   }
 }
 
@@ -99,14 +94,11 @@ class MoreAction {
   String end;
   int limit;
 
-  MoreAction();
+  MoreAction._(this.url, this.start, this.end, this.limit);
 
   factory MoreAction.fromJson(dynamic object) {
-    return MoreAction()
-      ..url = object['url'] as String
-      ..start = object['start'] as String
-      ..end = object['end'] as String
-      ..limit = object['limit'] as int;
+    return MoreAction._(object['url'] as String, object['start'] as String,
+        object['end'] as String, object['limit'] as int);
   }
 }
 
@@ -134,7 +126,7 @@ class AddMessageActionParams extends Parameters {
 
     var queryParameters = {
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
+      'uuid': '${keyset.uuid}'
     };
 
     return Request.post(
@@ -147,22 +139,14 @@ class AddMessageActionParams extends Parameters {
 ///
 /// {@category Results}
 class AddMessageActionResult extends Result {
-  int _status;
-  MessageAction _data;
-  Map<String, dynamic> _error;
+  final MessageAction _action;
 
-  int get status => _status;
-  MessageAction get data => _data;
-  Map<String, dynamic> get error => _error;
+  MessageAction get action => _action;
 
-  AddMessageActionResult();
+  AddMessageActionResult._(this._action);
 
   factory AddMessageActionResult.fromJson(dynamic object) {
-    return AddMessageActionResult()
-      .._status = object['status']
-      .._data =
-          object['data'] != null ? MessageAction.fromJson(object['data']) : null
-      .._error = object['error'];
+    return AddMessageActionResult._(MessageAction.fromJson(object['data']));
   }
 }
 
@@ -192,7 +176,7 @@ class DeleteMessageActionParams extends Parameters {
 
     var queryParameters = {
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid}'
+      'uuid': '${keyset.uuid}'
     };
 
     return Request.delete(
@@ -204,20 +188,9 @@ class DeleteMessageActionParams extends Parameters {
 ///
 /// {@category Results}
 class DeleteMessageActionResult extends Result {
-  int _status;
-  dynamic _data;
-  Map<String, dynamic> _error;
-
-  int get status => _status;
-  dynamic get data => _data;
-  Map<String, dynamic> get error => _error;
-
-  DeleteMessageActionResult();
+  DeleteMessageActionResult._();
 
   factory DeleteMessageActionResult.fromJson(dynamic object) {
-    return DeleteMessageActionResult()
-      .._status = object['status'] as int
-      .._data = object['data']
-      .._error = object['error'];
+    return DeleteMessageActionResult._();
   }
 }

@@ -7,7 +7,7 @@ import 'exceptions.dart';
 class ParserException extends PubNubException {
   dynamic originalException;
 
-  ParserException([String message, this.originalException]) : super(message);
+  ParserException(String message, [this.originalException]) : super(message);
 }
 
 /// @nodoc

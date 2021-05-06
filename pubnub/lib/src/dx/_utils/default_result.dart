@@ -1,15 +1,15 @@
 import 'package:pubnub/core.dart';
 
 class DefaultResult extends Result {
-  int status;
-  bool isError;
-  String service;
-  String _message;
-  String _errorMessage;
-  Map<String, dynamic> _errorDetails;
+  int? status;
+  bool? isError;
+  String? service;
+  String? _message;
+  String? _errorMessage;
+  Map<String, dynamic>? _errorDetails;
 
-  String get message => _errorMessage ?? _message;
-  Map<String, dynamic> get error => _errorDetails;
+  String? get message => _errorMessage ?? _message;
+  Map<String, dynamic>? get error => _errorDetails;
 
   Map<String, dynamic> otherKeys = {};
 
@@ -27,7 +27,7 @@ class DefaultResult extends Result {
 
   factory DefaultResult.fromJson(dynamic object) {
     var hasError = false;
-    String errorMessage;
+    var errorMessage;
     var errorDetails;
 
     if (object['error'] is Map<String, dynamic>) {
@@ -47,11 +47,11 @@ class DefaultResult extends Result {
     }
 
     return DefaultResult()
-      ..status = object['status'] as int
+      ..status = object['status'] as int?
       ..isError = hasError
-      ..service = object['service'] as String
+      ..service = object['service'] as String?
       .._errorDetails = errorDetails
-      .._message = object['message'] as String
+      .._message = object['message'] as String?
       .._errorMessage = errorMessage
       ..otherKeys = collectOtherKeys(
           object, ['status', 'error', 'message', 'error_message', 'service']);

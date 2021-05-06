@@ -73,6 +73,8 @@ class _ChannelOccupancyBuilderState extends State<ChannelOccupancyBuilder>
           uuids.addAll(event.join.map((uuid) => uuid.value));
           uuids.removeAll(event.leave.map((uuid) => uuid.value));
           break;
+        case PresenceAction.unknown:
+          break;
       }
     });
   }
@@ -83,7 +85,7 @@ class _ChannelOccupancyBuilderState extends State<ChannelOccupancyBuilder>
 
       uuids = result.channels.values
           .expand((c) => c.uuids.values)
-          .map((uuid) => uuid.value)
+          .map((info) => info.uuid)
           .toSet();
     });
   }

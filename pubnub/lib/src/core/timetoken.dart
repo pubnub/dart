@@ -5,7 +5,7 @@ import 'endpoint.dart';
 /// {@category Basic Features}
 class Timetoken implements Result {
   /// The actual value of the Timetoken. It's a number of nanoseconds since the epoch.
-  final int value;
+  final BigInt value;
 
   const Timetoken(this.value);
 
@@ -27,7 +27,8 @@ class Timetoken implements Result {
   ///
   /// Beware, as it drops the granularity to microseconds.
   DateTime toDateTime() {
-    return DateTime.fromMicrosecondsSinceEpoch((value / 10).round());
+    return DateTime.fromMicrosecondsSinceEpoch(
+        (value / BigInt.from(10)).round());
   }
 
   /// Creates a Timetoken from [DateTime].
@@ -35,7 +36,7 @@ class Timetoken implements Result {
   /// Beware, as the maximum granularity of the timestamp obtained this
   /// way is a microsecond.
   factory Timetoken.fromDateTime(DateTime dateTime) {
-    return Timetoken(dateTime.microsecondsSinceEpoch * 10);
+    return Timetoken(BigInt.from(dateTime.microsecondsSinceEpoch * 10));
   }
 }
 

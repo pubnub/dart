@@ -91,16 +91,16 @@ final _sendFileResponse = '''
 ''';
 
 final _publishFileMessageUrl1 =
-    'v1/files/publish-file/test/test/0/channel/0/%7B%22message%22:%22msg%22,%22file%22:%7B%22id%22:%22some%22,%22name%22:%22cat_file.jpg%22%7D%7D?pnsdk=PubNub-Dart%2F${PubNub.version}';
+    'v1/files/publish-file/test/test/0/channel/0/%7B%22message%22:%22msg%22,%22file%22:%7B%22id%22:%22some%22,%22name%22:%22cat_file.jpg%22%7D%7D?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test';
 
 final _publishFileMessageUrlEncryption =
-    'v1/files/publish-file/test/test/0/channel/0/%22X3LuZh36Z3vi4HFJSxdqD7XN%2FTsyUiPBmDfVaRipvaYs8wQE6OOloLTjGSTnZXIb0knFDIr8jPniWrnUYtdoTQ==%22?pnsdk=PubNub-Dart%2F${PubNub.version}';
+    'v1/files/publish-file/test/test/0/channel/0/%22X3LuZh36Z3vi4HFJSxdqD7XN%2FTsyUiPBmDfVaRipvaYs8wQE6OOloLTjGSTnZXIb0knFDIr8jPniWrnUYtdoTQ==%22?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test';
 
 final _publishFileMessageUrl2 =
     'v1/files/publish-file/test/test/0/channel/0/%7B%22message%22:%22msg%22,%22file%22:%7B%22id%22:%225a3eb38c-483a-4b25-ac01-c4e20deba6d6%22,%22name%22:%22cat_file.jpg%22,%22url%22:%22https:%2F%2Fps.pndsn.com%2Fv1%2Ffiles%2Ftest%2Fchannels%2Fchannel%2Ffiles%2F5a3eb38c-483a-4b25-ac01-c4e20deba6d6%2Fcat_file.jpg%3Fpnsdk=PubNub-Dart%252F1.4.2%22%7D%7D?pnsdk=PubNub-Dart%2F${PubNub.version}';
 
 final _generateFileUploadUrl =
-    'v1/files/test/channels/channel/generate-upload-url?pnsdk=PubNub-Dart%2F${PubNub.version}';
+    'v1/files/test/channels/channel/generate-upload-url?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test';
 
 final _downloadFileUrl =
     'https://ps.pndsn.com/v1/files/test/channels/channel/files/5a3eb38c-483a-4b25-ac01-c4e20deba6d6/cat_file.jpg?pnsdk=PubNub-Dart%2F${PubNub.version}';

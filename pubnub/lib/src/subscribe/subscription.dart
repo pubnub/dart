@@ -13,9 +13,9 @@ final _logger = injectLogger('pubnub.subscription.subscription');
 /// After [cancel] is called, the subscription cannot be used again.
 class Subscription {
   final Manager _manager;
-  final bool _withPresence;
-  final Set<String> _channels;
-  final Set<String> _channelGroups;
+  final bool? _withPresence;
+  final Set<String>? _channels;
+  final Set<String>? _channelGroups;
 
   /// Keyset that this subscription is using.
   Keyset get keyset => _manager.keyset;
@@ -29,6 +29,13 @@ class Subscription {
   /// Set of channel groups that this subscription represents.
   Set<String> get channelGroups => {..._channelGroups ?? <String>{}};
 
+  /// Completes when a subscription actually starts listening for messages.
+  ///
+  /// - This Future will be rebuilt each subscription loop.
+  /// - If current subscription loop fails, this future will complete with an exception.
+  /// - Each Future retrieved with this getter is guaranteed to complete before the next subscribe loop request starts.
+  Future<void> get whenStarts => _manager.whenStarts;
+
   /// Whether this subscription has been cancelled.
   bool get isCancelled => _cancelCompleter.isCompleted;
 
@@ -37,11 +44,11 @@ class Subscription {
 
   /// Set of presence channels that are generated from set of channels
   Set<String> get presenceChannels =>
-      channels.map((channel) => '${channel}-pnpres').toSet();
+      channels.map((channel) => '$channel-pnpres').toSet();
 
   /// Set of presence channel groups that are generated from set of channel groups
   Set<String> get presenceChannelGroups =>
-      channelGroups.map((channelGroup) => '${channelGroup}-pnpres').toSet();
+      channelGroups.map((channelGroup) => '$channelGroup-pnpres').toSet();
 
   /// Broadcast stream of messages in this subscription.
   Stream<Envelope> get messages =>
@@ -65,7 +72,7 @@ class Subscription {
   final StreamController<Envelope> _envelopesController =
       StreamController.broadcast();
 
-  StreamSubscription<Envelope> _envelopeSubscription;
+  StreamSubscription<Envelope>? _envelopeSubscription;
 
   Subscription(
       this._manager, this._channels, this._channelGroups, this._withPresence);
@@ -121,7 +128,9 @@ class Subscription {
       return false;
     }).listen(
       _envelopesController.add,
-      onError: (error) => _envelopesController.addError(error),
+      onError: (error) {
+        _envelopesController.addError(error);
+      },
     );
   }
 
@@ -145,7 +154,7 @@ class Subscription {
 
     _logger.info('Pausing subscription.');
 
-    _envelopeSubscription.cancel();
+    _envelopeSubscription?.cancel();
     _envelopeSubscription = null;
   }
 
@@ -161,12 +170,12 @@ class Subscription {
 
     _logger.verbose('Subscription cancelled.');
 
-    await _envelopeSubscription.cancel();
+    await _envelopeSubscription?.cancel();
     await _envelopesController.close();
 
     _cancelCompleter.complete();
 
-    _manager.subscriptions.remove(this);
+    _manager.removeSubscription(this);
   }
 
   /// Alias for [cancel].

@@ -18,6 +18,6 @@ abstract class IRequestHandler {
     );
   }
 
-  bool isCancelled;
+  bool get isCancelled;
   void cancel([dynamic reason]);
 }

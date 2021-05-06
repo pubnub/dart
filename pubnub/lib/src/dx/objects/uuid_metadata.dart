@@ -35,15 +35,15 @@ class UUIDMetadata {
   /// The default sort direction is ascending.
   Future<MembershipsResult> setMemberships(
           List<MembershipMetadataInput> membershipMetadata,
-          {int limit,
-          String start,
-          String end,
-          bool includeCustomFields,
-          bool includeChannelFields,
-          bool includeChannelCustomFields,
-          bool includeCount,
-          String filter,
-          Set<String> sort}) =>
+          {int? limit,
+          String? start,
+          String? end,
+          bool? includeCustomFields,
+          bool? includeChannelFields,
+          bool? includeChannelCustomFields,
+          bool? includeCount,
+          String? filter,
+          Set<String>? sort}) =>
       _objects.setMemberships(membershipMetadata,
           uuid: _uuid,
           keyset: _keyset,
@@ -79,15 +79,15 @@ class UUIDMetadata {
   /// Append :asc or :desc to an attribute to specify sort direction.
   /// The default sort direction is ascending.
   Future<MembershipsResult> getMemberships(
-          {int limit,
-          String start,
-          String end,
-          bool includeCustomFields,
-          bool includeChannelFields,
-          bool includeChannelCustomFields,
-          bool includeCount,
-          String filter,
-          Set<String> sort}) =>
+          {int? limit,
+          String? start,
+          String? end,
+          bool? includeCustomFields,
+          bool? includeChannelFields,
+          bool? includeChannelCustomFields,
+          bool? includeCount,
+          String? filter,
+          Set<String>? sort}) =>
       _objects.getMemberships(
           uuid: _uuid,
           limit: limit,

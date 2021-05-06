@@ -28,7 +28,7 @@ final _fetchMessageActionsResponse = '''
   ]
 }''';
 
-final _fetchMessageActionsResponsePage1 = '''
+final _fetchMessageActionsResponseWithMoreField = '''
 {
   "status": 200,
   "data": [
@@ -46,28 +46,6 @@ final _fetchMessageActionsResponsePage1 = '''
     "end": "15645905639093361",
     "limit": 2
   }
-}
-''';
-
-final _fetchMessageActionsResponsePage2 = '''
-{
-  "status": 200,
-  "data": [
-    {
-      "type": "reaction",
-      "value": "smiley_face",
-      "actionTimetoken": "15610547826970050",
-      "messageTimetoken": "15610547826969050",
-      "uuid": "terryterry69420"
-    },
-    {
-      "type": "reaction",
-      "value": "smiley_face",
-      "actionTimetoken": "15645905639093361",
-      "messageTimetoken": "15645905639093361",
-      "uuid": "uuid2"
-    }
-  ]
 }
 ''';
 

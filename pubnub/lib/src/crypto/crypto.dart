@@ -38,7 +38,7 @@ class CryptoModule implements ICryptoModule {
       return crypto.Key.fromUtf8(
           sha256.convert(cipherKey.data).toString().substring(0, 32));
     } else {
-      return crypto.Key(cipherKey.data);
+      return crypto.Key(Uint8List.fromList(cipherKey.data));
     }
   }
 
@@ -47,7 +47,7 @@ class CryptoModule implements ICryptoModule {
   /// If [configuration] is `null`, then [CryptoModule.defaultConfiguration] is used.
   @override
   dynamic decrypt(CipherKey key, String input,
-      {CryptoConfiguration configuration}) {
+      {CryptoConfiguration? configuration}) {
     var config = configuration ?? defaultConfiguration;
 
     var encrypter = crypto.Encrypter(
@@ -63,7 +63,7 @@ class CryptoModule implements ICryptoModule {
         return encrypter.decrypt64(input, iv: iv);
       }
     } catch (e) {
-      throw CryptoException('Error while decrypting message \n${e.message}');
+      throw CryptoException('Error while decrypting message:\n$e');
     }
   }
 
@@ -72,7 +72,7 @@ class CryptoModule implements ICryptoModule {
   /// If [configuration] is `null`, then [CryptoModule.defaultConfiguration] is used.
   @override
   String encrypt(CipherKey key, dynamic input,
-      {CryptoConfiguration configuration}) {
+      {CryptoConfiguration? configuration}) {
     var config = configuration ?? defaultConfiguration;
 
     var encrypter = crypto.Encrypter(
@@ -88,7 +88,7 @@ class CryptoModule implements ICryptoModule {
         return encrypter.encrypt(input, iv: iv).base64;
       }
     } catch (e) {
-      throw CryptoException('Error while encrypting message \n${e.message}');
+      throw CryptoException('Error while encrypting message:\n$e');
     }
   }
 
@@ -97,7 +97,7 @@ class CryptoModule implements ICryptoModule {
   /// If [configuration] is `null`, then [CryptoModule.defaultConfiguration] is used.
   @override
   List<int> decryptFileData(CipherKey key, List<int> input,
-      {CryptoConfiguration configuration}) {
+      {CryptoConfiguration? configuration}) {
     var config = configuration ?? defaultConfiguration;
     var encrypter = crypto.Encrypter(
         crypto.AES(_getKey(key, config), mode: config.encryptionMode.value()));
@@ -106,7 +106,7 @@ class CryptoModule implements ICryptoModule {
           crypto.Encrypted(Uint8List.fromList(input.sublist(16))),
           iv: crypto.IV.fromBase64(base64.encode(input.sublist(0, 16))));
     } catch (e) {
-      throw CryptoException('Error while decrypting file data \n${e.message}');
+      throw CryptoException('Error while decrypting file data: \n$e}');
     }
   }
 
@@ -115,7 +115,7 @@ class CryptoModule implements ICryptoModule {
   /// If [configuration] is `null`, then [CryptoModule.defaultConfiguration] is used.
   @override
   List<int> encryptFileData(CipherKey key, List<int> input,
-      {CryptoConfiguration configuration}) {
+      {CryptoConfiguration? configuration}) {
     var iv = crypto.IV.fromSecureRandom(16);
     var config = configuration ?? defaultConfiguration;
     var encrypter = crypto.Encrypter(
@@ -125,7 +125,7 @@ class CryptoModule implements ICryptoModule {
       var encrypted = encrypter.encryptBytes(input, iv: iv).bytes;
       return [...iv.bytes, ...encrypted];
     } catch (e) {
-      throw CryptoException('Error while encrypting file data \n${e.message}');
+      throw CryptoException('Error while encrypting file data:\n$e');
     }
   }
 

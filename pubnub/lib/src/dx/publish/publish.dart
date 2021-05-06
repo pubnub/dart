@@ -32,31 +32,29 @@ mixin PublishDx on Core {
   /// var result = await pubnub.publish('my-ch', 'message');
   /// ```
   Future<PublishResult> publish(String channel, dynamic message,
-      {Keyset keyset,
-      String using,
+      {Keyset? keyset,
+      String? using,
       dynamic meta,
-      bool storeMessage,
-      int ttl}) async {
+      bool? storeMessage,
+      int? ttl}) async {
     Ensure(channel).isNotEmpty('channel name');
     Ensure(message).isNotNull('message');
 
-    keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
-
-    Ensure(keyset).isNotNull('keyset');
+    keyset ??= keysets[using];
     Ensure(keyset.publishKey).isNotNull('publishKey');
 
     var payload = await super.parser.encode(message);
 
     if (keyset.cipherKey != null) {
       payload =
-          await super.parser.encode(crypto.encrypt(keyset.cipherKey, payload));
+          await super.parser.encode(crypto.encrypt(keyset.cipherKey!, payload));
     }
 
     var params = PublishParams(keyset, channel, payload,
         storeMessage: storeMessage, ttl: ttl);
 
     if (meta != null && !(meta is String)) {
-      params..meta = await super.parser.encode(meta);
+      params.meta = await super.parser.encode(meta);
     }
 
     _logger.verbose('Publishing a message to a channel $channel');

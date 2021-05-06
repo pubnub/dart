@@ -1,4 +1,4 @@
-import 'package:pubnub/src/core/keyset.dart';
+import '../../../core/keyset/keyset.dart' show Keyset;
 
 /// @nodoc
 extension FileKeysetExtension on Keyset {

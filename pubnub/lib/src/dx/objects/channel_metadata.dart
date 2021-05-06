@@ -36,15 +36,15 @@ class ChannelMetadata {
   /// The default sort direction is ascending.
   Future<ChannelMembersResult> setChannelMembersMetadata(
           List<ChannelMemberMetadataInput> channelMembersMetadata,
-          {int limit,
-          String start,
-          String end,
-          bool includeCustomFields,
-          bool includeUUIDFields,
-          bool includeUUIDCustomFields,
-          bool includeCount,
-          String filter,
-          Set<String> sort}) =>
+          {int? limit,
+          String? start,
+          String? end,
+          bool? includeCustomFields,
+          bool? includeUUIDFields,
+          bool? includeUUIDCustomFields,
+          bool? includeCount,
+          String? filter,
+          Set<String>? sort}) =>
       _objects.setChannelMembers(_id, channelMembersMetadata,
           limit: limit,
           start: start,
@@ -79,15 +79,15 @@ class ChannelMetadata {
   /// Append :asc or :desc to an attribute to specify sort direction.
   /// The default sort direction is ascending.
   Future<ChannelMembersResult> removeChannelMembersMetadata(Set<String> uuids,
-          {int limit,
-          String start,
-          String end,
-          bool includeCustomFields,
-          bool includeUUIDFields,
-          bool includeUUIDCustomFields,
-          bool includeCount,
-          String filter,
-          Set<String> sort}) =>
+          {int? limit,
+          String? start,
+          String? end,
+          bool? includeCustomFields,
+          bool? includeUUIDFields,
+          bool? includeUUIDCustomFields,
+          bool? includeCount,
+          String? filter,
+          Set<String>? sort}) =>
       _objects.removeChannelMembers(_id, uuids,
           keyset: _keyset,
           limit: limit,
@@ -122,17 +122,17 @@ class ChannelMetadata {
   /// Append :asc or :desc to an attribute to specify sort direction.
   /// The default sort direction is ascending.
   Future<ChannelMembersResult> getChannelMembersMetadata(
-          {int limit,
-          String start,
-          String end,
-          bool includeCustomFields,
-          bool includeUUIDFields,
-          bool includeUUIDCustomFields,
-          bool includeCount,
-          String filter,
-          Set<String> sort,
-          Keyset keyset,
-          String using}) =>
+          {int? limit,
+          String? start,
+          String? end,
+          bool? includeCustomFields,
+          bool? includeUUIDFields,
+          bool? includeUUIDCustomFields,
+          bool? includeCount,
+          String? filter,
+          Set<String>? sort,
+          Keyset? keyset,
+          String? using}) =>
       _objects.getChannelMembers(_id,
           limit: limit,
           start: start,

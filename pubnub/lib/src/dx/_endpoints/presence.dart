@@ -3,11 +3,11 @@ import 'package:pubnub/src/dx/_utils/utils.dart';
 
 class HeartbeatParams extends Parameters {
   Keyset keyset;
-  Set<String> channels;
-  Set<String> channelGroups;
+  Set<String>? channels;
+  Set<String>? channelGroups;
 
-  int heartbeat;
-  String state;
+  int? heartbeat;
+  String? state;
 
   HeartbeatParams(this.keyset,
       {this.channels, this.channelGroups, this.heartbeat, this.state});
@@ -20,15 +20,15 @@ class HeartbeatParams extends Parameters {
       'sub_key',
       keyset.subscribeKey,
       'channel',
-      channels.isNotEmpty ? channels.join(',') : ',',
+      if (channels != null) channels!.isNotEmpty ? channels!.join(',') : ',',
       'heartbeat'
     ];
 
     var queryParameters = {
-      if (channelGroups != null && channelGroups.isNotEmpty)
-        'channel-group': channelGroups.join(','),
+      if (channelGroups != null && channelGroups!.isNotEmpty)
+        'channel-group': channelGroups?.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid.value}',
+      'uuid': '${keyset.uuid.value}',
       if (state != null) 'state': '$state',
       if (heartbeat != null) 'heartbeat': '$heartbeat'
     };
@@ -50,8 +50,8 @@ class HeartbeatResult extends Result {
 
 class SetUserStateParams extends Parameters {
   Keyset keyset;
-  Set<String> channels;
-  Set<String> channelGroups;
+  Set<String>? channels;
+  Set<String>? channelGroups;
 
   String state;
 
@@ -66,7 +66,7 @@ class SetUserStateParams extends Parameters {
       'sub-key',
       keyset.subscribeKey,
       'channel',
-      channels.isNotEmpty ? channels.join(',') : ',',
+      if (channels != null) channels!.isNotEmpty ? channels!.join(',') : ',',
       'uuid',
       keyset.uuid.value,
       'data'
@@ -86,23 +86,22 @@ class SetUserStateParams extends Parameters {
 ///
 /// {@category Results}
 class SetUserStateResult extends Result {
-  String state;
+  final String state;
 
-  SetUserStateResult._();
+  SetUserStateResult._(this.state);
 
   /// @nodoc
   factory SetUserStateResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
 
-    return SetUserStateResult._()
-      ..state = result.otherKeys['payload'] as String;
+    return SetUserStateResult._(result.otherKeys['payload'] as String);
   }
 }
 
 class GetUserStateParams extends Parameters {
   Keyset keyset;
-  Set<String> channels;
-  Set<String> channelGroups;
+  Set<String>? channels;
+  Set<String>? channelGroups;
 
   GetUserStateParams(this.keyset, {this.channels, this.channelGroups});
 
@@ -114,7 +113,7 @@ class GetUserStateParams extends Parameters {
       'sub-key',
       keyset.subscribeKey,
       'channel',
-      channels.isNotEmpty ? channels.join(',') : ',',
+      if (channels != null) channels!.isNotEmpty ? channels!.join(',') : ',',
       'uuid',
       keyset.uuid.value
     ];
@@ -132,23 +131,22 @@ class GetUserStateParams extends Parameters {
 ///
 /// {@category Results}
 class GetUserStateResult extends Result {
-  String state;
+  final String state;
 
-  GetUserStateResult._();
+  GetUserStateResult._(this.state);
 
   /// @nodoc
   factory GetUserStateResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
 
-    return GetUserStateResult._()
-      ..state = result.otherKeys['payload'] as String;
+    return GetUserStateResult._(result.otherKeys['payload'] as String);
   }
 }
 
 class LeaveParams extends Parameters {
   Keyset keyset;
-  Set<String> channels;
-  Set<String> channelGroups;
+  Set<String>? channels;
+  Set<String>? channelGroups;
 
   LeaveParams(this.keyset, {this.channels, this.channelGroups});
 
@@ -160,15 +158,15 @@ class LeaveParams extends Parameters {
       'sub_key',
       keyset.subscribeKey,
       'channel',
-      channels.isNotEmpty ? channels.join(',') : ',',
+      if (channels != null) channels!.isNotEmpty ? channels!.join(',') : ',',
       'leave'
     ];
 
     var queryParameters = {
-      if (channelGroups != null && channelGroups.isNotEmpty)
-        'channel-group': channelGroups.join(','),
+      if (channelGroups != null && channelGroups!.isNotEmpty)
+        'channel-group': channelGroups!.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid.value}',
+      'uuid': '${keyset.uuid.value}',
     };
 
     return Request.get(
@@ -180,15 +178,15 @@ class LeaveParams extends Parameters {
 ///
 /// {@category Results}
 class LeaveResult extends Result {
-  String action;
+  final String action;
 
-  LeaveResult._();
+  LeaveResult._(this.action);
 
   /// @nodoc
   factory LeaveResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
 
-    return LeaveResult._()..action = result.otherKeys['action'] as String;
+    return LeaveResult._(result.otherKeys['action'] as String);
   }
 }
 
@@ -199,9 +197,9 @@ class HereNowParams extends Parameters {
   Keyset keyset;
 
   bool global;
-  Set<String> channels;
-  Set<String> channelGroups;
-  StateInfo stateInfo;
+  Set<String>? channels;
+  Set<String>? channelGroups;
+  StateInfo? stateInfo;
 
   HereNowParams(this.keyset,
       {this.global = false,
@@ -219,14 +217,15 @@ class HereNowParams extends Parameters {
             'sub_key',
             keyset.subscribeKey,
             'channel',
-            channels.isNotEmpty ? channels.join(',') : ','
+            if (channels != null)
+              channels!.isNotEmpty ? channels!.join(',') : ','
           ];
 
     var queryParameters = {
-      if (global != true && channelGroups != null && channelGroups.isNotEmpty)
-        'channel-group': channelGroups.join(','),
+      if (global != true && channelGroups != null && channelGroups!.isNotEmpty)
+        'channel-group': channelGroups!.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid.value}',
+      'uuid': '${keyset.uuid.value}',
       if (stateInfo == StateInfo.all || stateInfo == StateInfo.onlyUUIDs)
         'disable_uuids': '0',
       if (stateInfo == StateInfo.all) 'state': '1'
@@ -242,21 +241,21 @@ class HereNowParams extends Parameters {
 /// {@category Results}
 class ChannelOccupancy {
   String channelName;
-  Map<String, UUID> uuids;
+  Map<String, OccupantInfo> uuids;
   int count;
 
   ChannelOccupancy(this.channelName, this.uuids, this.count);
 
   factory ChannelOccupancy.fromJson(
       String channelName, Map<String, dynamic> channelObject) {
-    var uuids = <String, UUID>{};
+    var uuids = <String, OccupantInfo>{};
 
     if (channelObject['uuids'] != null) {
       for (var uuid in channelObject['uuids']) {
         if (uuid is String) {
-          uuids[uuid] = UUID(uuid);
+          uuids[uuid] = OccupantInfo(uuid);
         } else if (uuid is Map<String, dynamic>) {
-          uuids[uuid['uuid'] as String] = UUID(uuid['uuid'] as String,
+          uuids[uuid['uuid'] as String] = OccupantInfo(uuid['uuid'] as String,
               state: uuid['state'] as Map<String, dynamic>);
         }
       }
@@ -267,36 +266,45 @@ class ChannelOccupancy {
   }
 }
 
+class OccupantInfo {
+  String uuid;
+  Map<String, dynamic>? state;
+
+  OccupantInfo(this.uuid, {this.state});
+
+  factory OccupantInfo.fromJson(dynamic json) =>
+      OccupantInfo(json['uuid'], state: json['state']);
+}
+
 /// Result of here now endpoint call.
 ///
 /// {@category Results}
 class HereNowResult extends Result {
-  Map<String, ChannelOccupancy> channels = {};
+  Map<String?, ChannelOccupancy> channels = {};
 
-  int totalOccupancy;
-  int totalChannels;
+  final int totalOccupancy;
+  final int totalChannels;
 
-  HereNowResult._();
+  HereNowResult._(this.channels, this.totalOccupancy, this.totalChannels);
 
   factory HereNowResult.fromJson(Map<String, dynamic> object,
-      {String channelName}) {
+      {String? channelName}) {
     var result = DefaultResult.fromJson(object);
     if (result.otherKeys.containsKey('payload')) {
       var payload = result.otherKeys['payload'] as Map<String, dynamic>;
 
-      return HereNowResult._()
-        ..totalChannels = payload['total_channels'] as int
-        ..totalOccupancy = payload['total_occupancy'] as int
-        ..channels = (payload['channels'] as Map<String, dynamic>).map(
-            (key, value) => MapEntry(key,
-                ChannelOccupancy.fromJson(key, value as Map<String, dynamic>)));
+      return HereNowResult._(
+          (payload['channels'] as Map<String, dynamic>).map((key, value) =>
+              MapEntry(
+                  key,
+                  ChannelOccupancy.fromJson(
+                      key, value as Map<String, dynamic>))),
+          payload['total_occupancy'] as int,
+          payload['total_channels'] as int);
     } else {
-      return HereNowResult._()
-        ..channels = {
-          channelName: ChannelOccupancy.fromJson(channelName, result.otherKeys)
-        }
-        ..totalOccupancy = result.otherKeys['occupancy'] as int
-        ..totalChannels = 1;
+      return HereNowResult._({
+        channelName: ChannelOccupancy.fromJson(channelName!, result.otherKeys)
+      }, result.otherKeys['occupancy'] as int, 1);
     }
   }
 }
@@ -319,7 +327,7 @@ class WhereNowParams extends Parameters {
     ];
 
     var queryParameters = {
-      if (keyset.uuid != null) 'uuid': keyset.uuid,
+      'uuid': keyset.uuid,
       if (keyset.authKey != null) 'auth': keyset.authKey
     };
 
@@ -332,13 +340,13 @@ class WhereNowParams extends Parameters {
 ///
 /// {@category Results}
 class WhereNowResult extends Result {
-  Set<String> channels;
+  final Set<String> channels;
 
-  WhereNowResult._();
+  WhereNowResult._(this.channels);
 
   factory WhereNowResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
     var payload = result.otherKeys['payload'] as Map<String, dynamic>;
-    return WhereNowResult._()..channels = Set.from(payload['channels'] ?? []);
+    return WhereNowResult._(Set.from(payload['channels'] ?? []));
   }
 }

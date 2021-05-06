@@ -10,16 +10,17 @@ import '../net/fake_net.dart';
 part './fixtures/channel.dart';
 
 void main() {
-  PubNub pubnub;
+  PubNub? pubnub;
   group('DX [channel]', () {
     setUp(() {
-      pubnub = PubNub(networking: FakeNetworkingModule())
-        ..keysets.add(Keyset(subscribeKey: 'test', publishKey: 'test'),
-            name: 'default', useAsDefault: true);
+      pubnub = PubNub(
+          defaultKeyset: Keyset(
+              subscribeKey: 'test', publishKey: 'test', uuid: UUID('test')),
+          networking: FakeNetworkingModule());
     });
 
     test('#channel should return an instance of Channel', () {
-      var channel = pubnub.channel('name');
+      var channel = pubnub!.channel('name');
 
       expect(channel, isA<Channel>());
     });
@@ -27,7 +28,12 @@ void main() {
     group('[publish]', () {
       test('publish should delegate to Pubnub#publish', () async {
         var fakePubnub = FakePubNub();
-        var keyset = Keyset(subscribeKey: 'test', publishKey: 'test');
+
+        fakePubnub.returnWhen(
+            #publish, Future.value(PublishResult.fromJson([1, '', '123'])));
+
+        var keyset = Keyset(
+            subscribeKey: 'test', publishKey: 'test', uuid: UUID('test'));
         var channel = Channel(fakePubnub, keyset, 'test');
 
         await channel.publish({'my': 'message'}, ttl: 60);
@@ -55,9 +61,9 @@ void main() {
     });
 
     group('[history]', () {
-      Channel channel;
+      late Channel channel;
       setUp(() {
-        channel = pubnub.channel('test');
+        channel = pubnub!.channel('test');
       });
 
       test('#messages should return an instance of ChannelHistory', () {
@@ -65,8 +71,9 @@ void main() {
 
         expect(history, isA<ChannelHistory>());
       });
+
       group('[ChannelHistory]', () {
-        ChannelHistory history;
+        late ChannelHistory history;
         setUp(() {
           history = channel.messages();
         });
@@ -75,7 +82,7 @@ void main() {
           when(
             method: 'GET',
             path:
-                'v3/history/sub-key/test/message-counts/test?timetoken=1&pnsdk=PubNub-Dart%2F${PubNub.version}',
+                'v3/history/sub-key/test/message-counts/test?timetoken=1&uuid=test&pnsdk=PubNub-Dart%2F${PubNub.version}',
           ).then(status: 200, body: _historyMessagesCountResponse);
 
           var count = await history.count();
@@ -87,7 +94,7 @@ void main() {
           when(
             method: 'DELETE',
             path:
-                'v3/history/sub-key/test/channel/test?pnsdk=PubNub-Dart%2F${PubNub.version}',
+                'v3/history/sub-key/test/channel/test?uuid=test&pnsdk=PubNub-Dart%2F${PubNub.version}',
           ).then(status: 200, body: _historyMessagesDeleteResponse);
 
           await history.delete();
@@ -97,7 +104,7 @@ void main() {
           when(
             method: 'GET',
             path:
-                'v2/history/sub-key/test/channel/test?count=100&reverse=true&include_token=true&pnsdk=PubNub-Dart%2F${PubNub.version}',
+                'v2/history/sub-key/test/channel/test?count=100&reverse=true&include_token=true&uuid=test&pnsdk=PubNub-Dart%2F${PubNub.version}',
           ).then(status: 200, body: _historyMessagesFetchResponse);
 
           await history.fetch();
@@ -121,7 +128,7 @@ void main() {
           when(
             method: 'GET',
             path:
-                'v2/history/sub-key/test/channel/test?count=100&reverse=false&include_token=true&pnsdk=PubNub-Dart%2F${PubNub.version}',
+                'v2/history/sub-key/test/channel/test?count=100&reverse=false&include_token=true&uuid=test&pnsdk=PubNub-Dart%2F${PubNub.version}',
           ).then(status: 200, body: _historyMoreSuccessResponse);
 
           var history = channel.history();
@@ -129,25 +136,43 @@ void main() {
           await history.more();
 
           expect(history.messages.length, equals(1));
-          expect(history.startTimetoken.value, equals(10));
-          expect(history.endTimetoken.value, equals(20));
+          expect(history.startTimetoken?.value, equals(BigInt.from(10)));
+          expect(history.endTimetoken?.value, equals(BigInt.from(20)));
         });
       });
     });
     group('[messageAction]', () {
-      Channel channel;
-      FakePubNub fakePubnub;
-      Keyset keyset;
+      late Channel channel;
+      late FakePubNub fakePubnub;
+      late Keyset keyset;
       setUp(() {
         fakePubnub = FakePubNub();
-        keyset = Keyset(subscribeKey: 'test', publishKey: 'test');
+        keyset = Keyset(
+            subscribeKey: 'test', publishKey: 'test', uuid: UUID('test'));
         channel = Channel(fakePubnub, keyset, 'test');
       });
       test('fetchMessageActions should delegate to Pubnub#fetchMessageActions',
           () async {
-        var startTimetoken = Timetoken(15610547826970050);
-        var endTimetoken = Timetoken(15645905639093361);
+        var startTimetoken = Timetoken(BigInt.from(15610547826970050));
+        var endTimetoken = Timetoken(BigInt.from(15645905639093361));
         var limit = 5;
+
+        fakePubnub.returnWhen(
+          #fetchMessageActions,
+          Future.value(FetchMessageActionsResult.fromJson({
+            'status': 200,
+            'data': [
+              {
+                'type': 'reaction',
+                'value': 'smiley_face',
+                'actionTimetoken': '15610547826970050',
+                'messageTimetoken': '15610547826969050',
+                'uuid': 'terryterry69420'
+              }
+            ]
+          })),
+        );
+
         await channel.fetchMessageActions(
             from: startTimetoken, to: endTimetoken, limit: limit);
         var invocation = fakePubnub.invocations[0];
@@ -168,35 +193,64 @@ void main() {
           () async {
         var type = 'type';
         var value = 'value';
-        var messageTimetoken = Timetoken(15610547826970050);
+        var messageTimetoken = Timetoken(BigInt.from(15610547826970050));
 
-        await channel.addMessageAction(type, value, messageTimetoken);
+        fakePubnub.returnWhen(
+          #addMessageAction,
+          Future.value(AddMessageActionResult.fromJson({
+            'status': 200,
+            'data': {
+              'type': 'reaction',
+              'value': 'smiley_face',
+              'actionTimetoken': '15610547826970050',
+              'messageTimetoken': '15610547826969050',
+              'uuid': 'terryterry69420'
+            }
+          })),
+        );
+
+        await channel.addMessageAction(
+            type: type, value: value, timetoken: messageTimetoken);
         var invocation = fakePubnub.invocations[0];
         expect(invocation.isMethod, equals(true));
         expect(invocation.memberName, equals(#addMessageAction));
-        expect(invocation.positionalArguments,
-            equals(['type', 'value', 'test', messageTimetoken]));
         expect(
-            invocation.namedArguments, equals({#keyset: keyset, #using: null}));
+            invocation.namedArguments,
+            equals({
+              #type: type,
+              #value: value,
+              #channel: 'test',
+              #timetoken: messageTimetoken,
+              #keyset: keyset,
+              #using: null
+            }));
       });
       test('deleteMessageAction should delegate to Pubnub#deleteMessageAction',
           () async {
-        var messageTimetoken = Timetoken(15610547826970050);
-        var actionTimetoken = Timetoken(15645905639093361);
+        var messageTimetoken = Timetoken(BigInt.from(15610547826970050));
+        var actionTimetoken = Timetoken(BigInt.from(15645905639093361));
 
-        await channel.deleteMessageAction(messageTimetoken, actionTimetoken);
+        fakePubnub.returnWhen(
+          #deleteMessageAction,
+          Future.value(
+              DeleteMessageActionResult.fromJson({'status': 200, 'data': {}})),
+        );
+
+        await channel.deleteMessageAction(
+            messageTimetoken: messageTimetoken,
+            actionTimetoken: actionTimetoken);
         var invocation = fakePubnub.invocations[0];
         expect(invocation.isMethod, equals(true));
         expect(invocation.memberName, equals(#deleteMessageAction));
+        expect(invocation.positionalArguments, equals(['test']));
         expect(
-            invocation.positionalArguments,
-            equals([
-              'test',
-              messageTimetoken,
-              actionTimetoken,
-            ]));
-        expect(
-            invocation.namedArguments, equals({#keyset: keyset, #using: null}));
+            invocation.namedArguments,
+            equals({
+              #messageTimetoken: messageTimetoken,
+              #actionTimetoken: actionTimetoken,
+              #keyset: keyset,
+              #using: null
+            }));
       });
     });
   });

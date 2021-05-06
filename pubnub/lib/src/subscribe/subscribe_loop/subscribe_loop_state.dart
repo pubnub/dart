@@ -5,7 +5,7 @@ class SubscribeLoopState {
   Keyset keyset;
 
   Timetoken timetoken;
-  int region;
+  int? region;
 
   bool isActive;
 
@@ -13,21 +13,22 @@ class SubscribeLoopState {
   Set<String> channelGroups;
 
   SubscribeLoopState(this.keyset,
-      {this.timetoken = const Timetoken(0),
+      {Timetoken? timetoken,
       this.region,
       this.channels = const {},
       this.channelGroups = const {},
-      this.isActive = false});
+      this.isActive = false})
+      : timetoken = timetoken ?? Timetoken(BigInt.zero);
 
   bool get shouldRun =>
       isActive && (channels.isNotEmpty || channelGroups.isNotEmpty);
 
   SubscribeLoopState clone(
-          {Timetoken timetoken,
-          int region,
-          Set<String> channels,
-          Set<String> channelGroups,
-          bool isActive}) =>
+          {Timetoken? timetoken,
+          int? region,
+          Set<String>? channels,
+          Set<String>? channelGroups,
+          bool? isActive}) =>
       SubscribeLoopState(keyset)
         ..timetoken = timetoken ?? this.timetoken
         ..region = region ?? this.region

@@ -8,32 +8,31 @@ class MockException extends PubNubException {
 }
 
 class FakeRequestHandler extends IRequestHandler {
-  FakeNetworkingModule module;
-  Request request;
-  Mock mock;
+  final FakeNetworkingModule module;
+  final Mock mock;
 
   FakeRequestHandler(this.module, this.mock);
 
   @override
   Future<IResponse> response(Request request) {
-    var actualUri = prepareUri(module.getOrigin(), request.uri);
+    var actualUri = prepareUri(module.getOrigin(), request.uri ?? Uri());
     var expectedUri =
         prepareUri(module.getOrigin(), Uri.parse(mock.request.path));
 
     var doesMethodMatch =
         mock.request.method.toUpperCase() == request.type.method.toUpperCase();
 
-    String body;
-    if (request.body is String) {
-      body = request.body;
-    } else if (request.body == null) {
+    String? body;
+    var requestBody = request.body;
+    if (requestBody is String) {
+      body = requestBody;
+    } else if (requestBody == null) {
       body = null;
     } else {
-      body = json.encode(request.body);
+      body = json.encode(requestBody);
     }
 
-    String mockBody;
-
+    String? mockBody;
     if (request.body is String) {
       mockBody = mock.request.body;
     } else if (request.body == null) {
@@ -49,7 +48,7 @@ class FakeRequestHandler extends IRequestHandler {
     return Future.microtask(() {
       if (doesMethodMatch && doesBodyMatch && doesUriMatch) {
         if (![200, 204].contains(mock.response.statusCode)) {
-          throw PubNubRequestFailureException(mock.response);
+          throw RequestFailureException(mock.response);
         } else {
           return mock.response;
         }
@@ -62,11 +61,11 @@ class FakeRequestHandler extends IRequestHandler {
         }
         if (!doesUriMatch) {
           exceptionBody +=
-              '\n* uri:\n| EXPECTED: ${expectedUri}\n| ACTUAL:   ${actualUri}';
+              '\n* uri:\n| EXPECTED: $expectedUri\n| ACTUAL:   $actualUri';
         }
         if (!doesBodyMatch) {
           exceptionBody +=
-              '\n* body:\n| EXPECTED:\n${mockBody}\n| ACTUAL:\n${body}';
+              '\n* body:\n| EXPECTED:\n$mockBody\n| ACTUAL:\n$body';
         }
 
         throw MockException(
@@ -77,6 +76,9 @@ class FakeRequestHandler extends IRequestHandler {
 
   @override
   void cancel([dynamic reason]) {}
+
+  @override
+  bool get isCancelled => false;
 }
 
 class MockRequest {
@@ -98,7 +100,8 @@ class MockResponse implements IResponse {
   @override
   final int statusCode;
 
-  const MockResponse({this.body, this.headers = const {}, this.statusCode});
+  const MockResponse(
+      {this.body, this.headers = const {}, required this.statusCode});
 
   @override
   List<int> get byteList => body;
@@ -120,11 +123,12 @@ class MockBuilder {
 
   MockBuilder(this._queue, this._request);
 
-  void then(
-      {Map<String, List<String>> headers,
-      dynamic body,
-      int status,
-      MockResponse response}) {
+  void then({
+    Map<String, List<String>> headers = const {},
+    dynamic body,
+    required int status,
+    MockResponse? response,
+  }) {
     var mock = Mock(
         _request,
         response ??
@@ -136,12 +140,13 @@ class MockBuilder {
 
 List<Mock> _queue = [];
 
-MockBuilder when(
-    {String method,
-    String path,
-    Map<String, List<String>> headers,
-    dynamic body,
-    MockRequest request}) {
+MockBuilder when({
+  required String method,
+  required String path,
+  Map<String, List<String>> headers = const {},
+  dynamic body,
+  MockRequest? request,
+}) {
   return MockBuilder(
       _queue, request ?? MockRequest(method, path, headers, body));
 }

@@ -7,52 +7,50 @@ import '../../net/fake_net.dart';
 part 'fixtures/uuid_metadata.dart';
 
 void main() {
-  PubNub pubnub;
+  late PubNub pubnub;
   group('DX [objects] [uuid]', () {
     setUp(() {
-      pubnub = PubNub(networking: FakeNetworkingModule())
-        ..keysets.add(
-            Keyset(
-                subscribeKey: 'demo', publishKey: 'demo', uuid: UUID('uuid-1')),
-            name: 'default',
-            useAsDefault: true);
+      pubnub = PubNub(
+          defaultKeyset: Keyset(
+              subscribeKey: 'demo', publishKey: 'demo', uuid: UUID('uuid-1')),
+          networking: FakeNetworkingModule());
     });
     test('#getAllUUIDMetadata()', () async {
       when(
         path:
-            'v2/objects/demo/uuids?limit=10&count=true&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/objects/demo/uuids?limit=10&count=true&pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=uuid-1',
         method: 'GET',
       ).then(status: 200, body: _getAllMetadataSuccessResponse);
       var response = await pubnub.objects.getAllUUIDMetadata(limit: 10);
       expect(response, isA<GetAllUuidMetadataResult>());
-      expect(response.metadataList[0].id, 'uuid-1');
+      expect(response.metadataList![0].id, 'uuid-1');
     });
     test('#getUUIDMetadata()', () async {
       when(
         path:
-            'v2/objects/demo/uuids/uuid-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/objects/demo/uuids/uuid-1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=uuid-1',
         method: 'GET',
       ).then(status: 200, body: _getMetadataSuccessResponse);
       var response = await pubnub.objects.getUUIDMetadata();
       expect(response, isA<GetUuidMetadataResult>());
-      expect(response.metadata.id, 'uuid-1');
+      expect(response.metadata!.id, 'uuid-1');
     });
     test('#getUUIDMetadata() with explicitly provided uuid', () async {
       when(
         path:
-            'v2/objects/demo/uuids/uuid-2?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/objects/demo/uuids/uuid-2?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=uuid-1',
         method: 'GET',
       ).then(status: 200, body: _getMetadataSuccessResponse);
       var response = await pubnub.objects.getUUIDMetadata(uuid: 'uuid-2');
       expect(response, isA<GetUuidMetadataResult>());
-      expect(response.metadata.id, 'uuid-1');
+      expect(response.metadata!.id, 'uuid-1');
     });
     test('#setUUIDMetadata()', () async {
       var uuidMetadataInput =
           UuidMetadataInput(name: 'John Doe', email: 'jack@twitter.com');
       when(
         path:
-            'v2/objects/demo/uuids/uuid-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/objects/demo/uuids/uuid-1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=uuid-1',
         method: 'PATCH',
         body: _setUuidMetadataBody,
       ).then(status: 200, body: _setUuidMetadataSuccessResponse);
@@ -65,7 +63,7 @@ void main() {
           UuidMetadataInput(name: 'John Doe', email: 'jack@twitter.com');
       when(
         path:
-            'v2/objects/demo/uuids/uuid-2?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/objects/demo/uuids/uuid-2?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=uuid-1',
         method: 'PATCH',
         body: _setUuidMetadataBody,
       ).then(status: 200, body: _setUuidMetadataSuccessResponse);
@@ -77,7 +75,7 @@ void main() {
     test('#removeUUIDMetadata()', () async {
       when(
         path:
-            'v2/objects/demo/uuids/uuid-1?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/objects/demo/uuids/uuid-1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=uuid-1',
         method: 'DELETE',
       ).then(status: 200, body: _removeMetadataSuccessResponse);
       var response = await pubnub.objects.removeUUIDMetadata();

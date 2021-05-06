@@ -8,7 +8,7 @@ export 'cipher_key.dart';
 ///
 /// {@category Exceptions}
 class CryptoException extends PubNubException {
-  CryptoException([String message]) : super(message);
+  CryptoException(String message) : super(message);
 }
 
 /// @nodoc

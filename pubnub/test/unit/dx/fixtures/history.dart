@@ -4,7 +4,7 @@ final _batchFetchMessagesSuccessResponse = '''{
   "error":false,
   "status":200,
   "error_message":"",
-  "channels":{"test-1":[{"message": 42, "timetoken": "1231231231231"}], "test-2": [{"message": 10, "timetoken": "1231231231231"}]}
+  "channels":{"test-1":[{"message": 42, "timetoken": "1231231231231", "uuid": "test-uuid" }], "test-2": [{"message": 10, "timetoken": "1231231231231", "uuid": "test-uuid" }]}
 }''';
 
 final _batchCountMessagesSuccessResponse = '''{
@@ -23,6 +23,7 @@ final _batchFetchMessagesWithActionSuccessResponse = '''{
       {
         "message": "Hi",
         "timetoken": "15610547826970040",
+        "uuid": "test-uuid",
         "actions": {
           "receipt": {
             "read": [
@@ -37,6 +38,7 @@ final _batchFetchMessagesWithActionSuccessResponse = '''{
       {
         "message": "Hello",
         "timetoken": "15610547826970000",
+        "uuid": "test-uuid",
         "actions": {
           "reaction": {
             "smiley_face": [
@@ -71,6 +73,7 @@ final _batchFetchMessagesWithActionsWithMore = '''{
       {
         "message": "Hi",
         "timetoken": "15610547826970040",
+        "uuid": "test-uuid",
         "actions": {
           "receipt": {
             "read": [
@@ -85,6 +88,7 @@ final _batchFetchMessagesWithActionsWithMore = '''{
       {
         "message": "Hello",
         "timetoken": "15610547826970000",
+        "uuid": "test-uuid",
         "actions": {
           "reaction": {
             "smiley_face": [

@@ -7,32 +7,30 @@ import '../../net/fake_net.dart';
 part 'fixtures/channel_metadata.dart';
 
 void main() {
-  PubNub pubnub;
+  late PubNub pubnub;
   group('DX [objectMetadata] [channel]', () {
     setUp(() {
-      pubnub = PubNub(networking: FakeNetworkingModule())
-        ..keysets.add(
-            Keyset(
-                subscribeKey: 'demo', publishKey: 'demo', uuid: UUID('uuid-1')),
-            name: 'default',
-            useAsDefault: true);
+      pubnub = PubNub(
+          defaultKeyset: Keyset(
+              subscribeKey: 'demo', publishKey: 'demo', uuid: UUID('uuid-1')),
+          networking: FakeNetworkingModule());
     });
 
     test('#getAllChannelMetadata()', () async {
       when(
         path:
-            'v2/objects/demo/channels?limit=10&count=true&pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/objects/demo/channels?limit=10&count=true&pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=uuid-1',
         method: 'GET',
       ).then(status: 200, body: _getAllMetadataSuccessResponse);
       var response = await pubnub.objects.getAllChannelMetadata(limit: 10);
       expect(response, isA<GetAllChannelMetadataResult>());
-      expect(response.metadataList[0].id, 'my-channel');
+      expect(response.metadataList![0].id, 'my-channel');
     });
 
     test('#getChannelMetadata()', () async {
       when(
         path:
-            'v2/objects/demo/channels/my-channel?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/objects/demo/channels/my-channel?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=uuid-1',
         method: 'GET',
       ).then(status: 200, body: _getMetadataSuccessResponse);
       var response = await pubnub.objects.getChannelMetadata('my-channel');
@@ -45,7 +43,7 @@ void main() {
           name: 'My channel', description: 'A channel that is mine');
       when(
         path:
-            'v2/objects/demo/channels/my-channel?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/objects/demo/channels/my-channel?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=uuid-1',
         method: 'PATCH',
         body: _setChannelMetadataBody,
       ).then(status: 200, body: _setChannelMetadataSuccessResponse);
@@ -57,7 +55,7 @@ void main() {
     test('#removeChannelMetadata()', () async {
       when(
         path:
-            'v2/objects/demo/channels/my-channel?pnsdk=PubNub-Dart%2F${PubNub.version}',
+            'v2/objects/demo/channels/my-channel?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=uuid-1',
         method: 'DELETE',
       ).then(status: 200, body: _removeMetadataSuccessResponse);
       var response = await pubnub.objects.removeChannelMetadata('my-channel');

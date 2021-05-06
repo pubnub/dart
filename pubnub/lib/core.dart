@@ -3,7 +3,8 @@ library pubnub.core;
 
 export 'src/core/core.dart';
 
-export 'src/core/keyset.dart';
+export 'src/core/keyset/keyset.dart';
+export 'src/core/keyset/store.dart';
 export 'src/core/endpoint.dart';
 export 'src/core/message/message.dart';
 export 'src/core/exceptions.dart';

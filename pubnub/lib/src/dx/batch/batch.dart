@@ -1,4 +1,6 @@
 import 'package:pubnub/core.dart';
+import 'package:pubnub/src/default.dart';
+
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/history.dart';
 
@@ -18,17 +20,18 @@ class BatchDx {
   ///
   /// If [includeMessageActions] is `true`, then you can only pass in one channel in [channels].
   Future<BatchHistoryResult> fetchMessages(Set<String> channels,
-      {Keyset keyset,
-      String using,
-      int count,
-      Timetoken start,
-      Timetoken end,
-      bool reverse,
-      bool includeMeta,
+      {Keyset? keyset,
+      String? using,
+      int? count,
+      Timetoken? start,
+      Timetoken? end,
+      bool? reverse,
+      bool? includeMeta,
       bool includeMessageActions = false,
       bool includeMessageType = true,
       bool includeUUID = true}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+    keyset ??= _core.keysets[using];
+
     var SINGLE_CHANNEL_MAX = 100;
     var MULTIPLE_CHANNEL_MAX = 25;
     var max = count;
@@ -57,7 +60,7 @@ class BatchDx {
         core: _core,
         params: params,
         serialize: (object, [_]) =>
-            BatchHistoryResult.fromJson(object, cipherKey: keyset.cipherKey));
+            BatchHistoryResult.fromJson(object, cipherKey: keyset?.cipherKey));
   }
 
   /// Get multiple channels' message count using one call.
@@ -67,10 +70,10 @@ class BatchDx {
   /// * if you want to specify separate timetoken for each channel, pass in a `Map<String, Timetoken>`.
   ///   Additionally, if a value in the map is null, it will use a timetoken from a named parameter [timetoken].
   Future<CountMessagesResult> countMessages(dynamic channels,
-      {Keyset keyset, String using, Timetoken timetoken}) {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+      {Keyset? keyset, String? using, Timetoken? timetoken}) {
+    keyset ??= _core.keysets[using];
 
-    CountMessagesParams params;
+    var params = CountMessagesParams(keyset);
     if (channels is Set<String>) {
       Ensure(timetoken)
           .isNotNull('When you pass in a Set, timetoken cannot be null.');
@@ -80,7 +83,7 @@ class BatchDx {
     } else if (channels is Map<String, Timetoken>) {
       params = CountMessagesParams(keyset,
           channelsTimetoken:
-              channels.map((key, value) => MapEntry(key, value ?? timetoken)));
+              channels.map((key, value) => MapEntry(key, value)));
     } else {
       Ensure.fail('invalid-type', 'channels',
           ['Set<String>', 'Map<String, Timetoken>']);

@@ -45,17 +45,16 @@ class ObjectsDx {
   /// Append :asc or :desc to an attribute to specify sort direction.
   /// The default sort direction is ascending.
   Future<GetAllUuidMetadataResult> getAllUUIDMetadata(
-      {bool includeCustomFields,
-      int limit,
-      String start,
-      String end,
+      {bool? includeCustomFields,
+      int? limit,
+      String? start,
+      String? end,
       bool includeCount = true,
-      String filter,
-      Set<String> sort,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      String? filter,
+      Set<String>? sort,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
 
     var include = <String>{};
     if (includeCustomFields != null && includeCustomFields) {
@@ -89,16 +88,11 @@ class ObjectsDx {
   /// * If no `uuid` is set in PubNub instance default keyset, `keyset` does not hold uuid
   /// and `uuid`not provided in argument then it throws InvariantException
   Future<GetUuidMetadataResult> getUUIDMetadata(
-      {String uuid,
-      Keyset keyset,
-      String using,
-      bool includeCustomFields}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
-
-    if (keyset.uuid == null) {
-      Ensure(uuid).isNotNull('uuid');
-    }
+      {String? uuid,
+      Keyset? keyset,
+      String? using,
+      bool? includeCustomFields}) async {
+    keyset ??= _core.keysets[using];
 
     var include = <String>{};
     if (includeCustomFields != null && includeCustomFields) {
@@ -132,17 +126,12 @@ class ObjectsDx {
   /// and `uuid` not provided in method argument then it throws InvariantException
   Future<SetUuidMetadataResult> setUUIDMetadata(
       UuidMetadataInput uuidMetadataInput,
-      {String uuid,
-      bool includeCustomFields,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      {String? uuid,
+      bool? includeCustomFields,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
     Ensure(uuidMetadataInput).isNotNull('uuid metadata input');
-
-    if (keyset.uuid == null) {
-      Ensure(uuid).isNotNull('uuid');
-    }
 
     var include = <String>{};
     if (includeCustomFields != null && includeCustomFields) {
@@ -166,13 +155,8 @@ class ObjectsDx {
   /// If no `uuid` is set in PubNub instance default keyset, `keyset` does not hold uuid
   /// and `uuid` not provided in argument then it throws InvariantException
   Future<RemoveUuidMetadataResult> removeUUIDMetadata(
-      {String uuid, Keyset keyset, String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
-
-    if (keyset.uuid == null) {
-      Ensure(uuid).isNotNull('uuid');
-    }
+      {String? uuid, Keyset? keyset, String? using}) async {
+    keyset ??= _core.keysets[using];
 
     var params = RemoveUuidMetadataParams(keyset, uuid: uuid);
 
@@ -207,17 +191,16 @@ class ObjectsDx {
   /// Append :asc or :desc to an attribute to specify sort direction.
   /// The default sort direction is ascending.
   Future<GetAllChannelMetadataResult> getAllChannelMetadata(
-      {int limit,
-      String start,
-      String end,
-      bool includeCustomFields,
-      bool includeCount = true,
-      String filter,
-      Set<String> sort,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      {int? limit,
+      String? start,
+      String? end,
+      bool? includeCustomFields,
+      bool? includeCount = true,
+      String? filter,
+      Set<String>? sort,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
 
     var include = <String>{};
     if (includeCustomFields != null && includeCustomFields) {
@@ -250,9 +233,8 @@ class ObjectsDx {
   /// `channelId` is Channel identifier. Must not be empty, and may contain up to 92 UTF-8 byte sequences.
   /// Prohibited characters are ,, /, \, *, :, channel, non-printable ASCII control characters, and Unicode zero.
   Future<GetChannelMetadataResult> getChannelMetadata(String channelId,
-      {Keyset keyset, String using, bool includeCustomFields}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      {Keyset? keyset, String? using, bool? includeCustomFields}) async {
+    keyset ??= _core.keysets[using];
     Ensure(channelId).isNotEmpty('channelIds');
 
     var include = <String>{};
@@ -283,10 +265,9 @@ class ObjectsDx {
   /// Omit this parameter if you don't want to retrieve additional metadata.
   Future<SetChannelMetadataResult> setChannelMetadata(
       String channelId, ChannelMetadataInput channelMetadataInput,
-      {bool includeCustomFields, Keyset keyset, String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+      {bool? includeCustomFields, Keyset? keyset, String? using}) async {
+    keyset ??= _core.keysets[using];
 
-    Ensure(keyset).isNotNull('keyset');
     Ensure(channelId).isNotNull('channelId');
     Ensure(channelMetadataInput).isNotNull('channelMetadataInput');
 
@@ -311,9 +292,9 @@ class ObjectsDx {
   /// `channelId` is Channel identifier. Must not be empty, and may contain up to 92 UTF-8 byte sequences.
   /// Prohibited characters are ,, /, \, *, :, channel, non-printable ASCII control characters, and Unicode zero.
   Future<RemoveChannelMetadataResult> removeChannelMetadata(String channelId,
-      {Keyset keyset, String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      {Keyset? keyset, String? using}) async {
+    keyset ??= _core.keysets[using];
+
     Ensure(channelId).isNotEmpty('channelId');
     var params = RemoveChannelMetadataParams(keyset, channelId);
 
@@ -356,21 +337,19 @@ class ObjectsDx {
   /// Append :asc or :desc to an attribute to specify sort direction.
   /// The default sort direction is ascending.
   Future<MembershipsResult> getMemberships(
-      {String uuid,
-      int limit,
-      String start,
-      String end,
-      bool includeCustomFields,
-      bool includeChannelFields,
-      bool includeChannelCustomFields,
-      bool includeCount = true,
-      String filter,
-      Set<String> sort,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
-    if (keyset.uuid == null) Ensure(uuid).isNotNull('uuid');
+      {String? uuid,
+      int? limit,
+      String? start,
+      String? end,
+      bool? includeCustomFields,
+      bool? includeChannelFields,
+      bool? includeChannelCustomFields,
+      bool? includeCount = true,
+      String? filter,
+      Set<String>? sort,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
 
     var include = <String>{};
     if (includeCustomFields != null && includeCustomFields) {
@@ -438,24 +417,19 @@ class ObjectsDx {
   /// The default sort direction is ascending.
   Future<MembershipsResult> manageMemberships(
       List<MembershipMetadataInput> setMetadata, Set<String> removeChannelIds,
-      {String uuid,
-      int limit,
-      String start,
-      String end,
-      bool includeCustomFields,
-      bool includeChannelFields,
-      bool includeChannelCustomFields,
-      bool includeCount = true,
-      String filter,
-      Set<String> sort,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
-
-    if (keyset.uuid == null) {
-      Ensure(uuid).isNotNull('uuid');
-    }
+      {String? uuid,
+      int? limit,
+      String? start,
+      String? end,
+      bool? includeCustomFields,
+      bool? includeChannelFields,
+      bool? includeChannelCustomFields,
+      bool? includeCount = true,
+      String? filter,
+      Set<String>? sort,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
 
     var manageMembershipMetadata = <String, dynamic>{};
     manageMembershipMetadata['set'] = setMetadata;
@@ -530,24 +504,19 @@ class ObjectsDx {
   /// The default sort direction is ascending.
   Future<MembershipsResult> setMemberships(
       List<MembershipMetadataInput> setMetadata,
-      {String uuid,
-      int limit,
-      String start,
-      String end,
-      bool includeCustomFields,
-      bool includeChannelFields,
-      bool includeChannelCustomFields,
-      bool includeCount = true,
-      String filter,
-      Set<String> sort,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
-
-    if (keyset.uuid == null) {
-      Ensure(uuid).isNotNull('uuid');
-    }
+      {String? uuid,
+      int? limit,
+      String? start,
+      String? end,
+      bool? includeCustomFields,
+      bool? includeChannelFields,
+      bool? includeChannelCustomFields,
+      bool? includeCount = true,
+      String? filter,
+      Set<String>? sort,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
 
     var manageMembershipMetadata = <String, dynamic>{};
     manageMembershipMetadata['set'] = setMetadata;
@@ -613,24 +582,19 @@ class ObjectsDx {
   /// Append :asc or :desc to an attribute to specify sort direction.
   /// The default sort direction is ascending.
   Future<MembershipsResult> removeMemberships(Set<String> channelIds,
-      {String uuid,
-      int limit,
-      String start,
-      String end,
-      bool includeCustomFields,
-      bool includeChannelFields,
-      bool includeChannelCustomFields,
-      bool includeCount = true,
-      String filter,
-      Set<String> sort,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
-
-    if (keyset.uuid == null) {
-      Ensure(uuid).isNotNull('uuid');
-    }
+      {String? uuid,
+      int? limit,
+      String? start,
+      String? end,
+      bool? includeCustomFields,
+      bool? includeChannelFields,
+      bool? includeChannelCustomFields,
+      bool? includeCount = true,
+      String? filter,
+      Set<String>? sort,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
 
     var manageMembershipMetadata = <String, dynamic>{};
 
@@ -692,19 +656,19 @@ class ObjectsDx {
   /// Append :asc or :desc to an attribute to specify sort direction.
   /// The default sort direction is ascending.
   Future<ChannelMembersResult> getChannelMembers(String channelId,
-      {int limit,
-      String start,
-      String end,
-      bool includeCustomFields,
-      bool includeUUIDFields,
-      bool includeUUIDCustomFields,
-      bool includeCount = true,
-      String filter,
-      Set<String> sort,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      {int? limit,
+      String? start,
+      String? end,
+      bool? includeCustomFields,
+      bool? includeUUIDFields,
+      bool? includeUUIDCustomFields,
+      bool? includeCount = true,
+      String? filter,
+      Set<String>? sort,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
+
     Ensure(channelId).isNotEmpty('channelId');
 
     var include = <String>{};
@@ -764,19 +728,18 @@ class ObjectsDx {
       String channelId,
       List<ChannelMemberMetadataInput> setMetadata,
       Set<String> removeMemberUuids,
-      {int limit,
-      String start,
-      String end,
-      bool includeCustomFields,
-      bool includeUUIDFields,
-      bool includeUUIDCustomFields,
-      bool includeCount = true,
-      String filter,
-      Set<String> sort,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      {int? limit,
+      String? start,
+      String? end,
+      bool? includeCustomFields,
+      bool? includeUUIDFields,
+      bool? includeUUIDCustomFields,
+      bool? includeCount = true,
+      String? filter,
+      Set<String>? sort,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
 
     Ensure(channelId).isNotEmpty('channelId');
 
@@ -842,19 +805,18 @@ class ObjectsDx {
   /// The default sort direction is ascending.
   Future<ChannelMembersResult> setChannelMembers(
       String channelId, List<ChannelMemberMetadataInput> setMetadata,
-      {int limit,
-      String start,
-      String end,
-      bool includeCustomFields,
-      bool includeUUIDFields,
-      bool includeUUIDCustomFields,
-      bool includeCount = true,
-      String filter,
-      Set<String> sort,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      {int? limit,
+      String? start,
+      String? end,
+      bool? includeCustomFields,
+      bool? includeUUIDFields,
+      bool? includeUUIDCustomFields,
+      bool? includeCount = true,
+      String? filter,
+      Set<String>? sort,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
 
     Ensure(channelId).isNotEmpty('channelId');
 
@@ -917,19 +879,18 @@ class ObjectsDx {
   /// The default sort direction is ascending.
   Future<ChannelMembersResult> removeChannelMembers(
       String channelId, Set<String> uuids,
-      {int limit,
-      String start,
-      String end,
-      bool includeCustomFields,
-      bool includeUUIDFields,
-      bool includeUUIDCustomFields,
-      bool includeCount = true,
-      String filter,
-      Set<String> sort,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      {int? limit,
+      String? start,
+      String? end,
+      bool? includeCustomFields,
+      bool? includeUUIDFields,
+      bool? includeUUIDCustomFields,
+      bool? includeCount = true,
+      String? filter,
+      Set<String>? sort,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
 
     Ensure(channelId).isNotEmpty('channelId');
 

@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:pubnub/core.dart';
 
 /// Represents a base message.
@@ -24,8 +23,8 @@ class BaseMessage {
   dynamic get message => content;
 
   const BaseMessage({
-    @required this.publishedAt,
-    @required this.content,
-    @required this.originalMessage,
+    required this.publishedAt,
+    required this.content,
+    required this.originalMessage,
   });
 }

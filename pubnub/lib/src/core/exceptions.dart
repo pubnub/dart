@@ -2,17 +2,23 @@
 ///
 /// {@category Exceptions}
 class PubNubException implements Exception {
-  String message;
-  StackTrace stackTrace;
+  final String message;
+  final StackTrace stackTrace;
 
-  PubNubException(this.message) {
-    stackTrace = StackTrace.current;
-  }
+  PubNubException(this.message, [StackTrace? stackTrace])
+      : stackTrace = stackTrace ?? StackTrace.current;
 
   @override
   String toString() {
-    return 'PubNubException: $message\n${stackTrace.toString()} ';
+    return '$runtimeType: $message\n$stackTrace';
   }
+}
+
+/// An exception that happens during keyset creation or resolution.
+///
+/// {@category Exceptions}
+class KeysetException extends PubNubException {
+  KeysetException(String message) : super(message);
 }
 
 /// An exception thrown when a disabled API has been requested.

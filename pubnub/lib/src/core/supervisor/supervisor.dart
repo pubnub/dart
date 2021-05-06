@@ -13,10 +13,10 @@ abstract class Diagnostic {
 }
 
 abstract class Strategy {
-  List<Resolution> resolve(Fiber fiber, Diagnostic diagnostic);
+  List<Resolution>? resolve(Fiber fiber, Diagnostic diagnostic);
 }
 
-typedef DiagnosticHandler = Diagnostic Function(dynamic exception);
+typedef DiagnosticHandler = Diagnostic? Function(Object exception);
 
 class SupervisorModule {
   final Set<DiagnosticHandler> _handlers = {};
@@ -34,15 +34,15 @@ class SupervisorModule {
 
   void notify(SupervisorEvent event) => signals.notify(event);
 
-  Diagnostic runDiagnostics(Fiber fiber, Exception exception) {
+  Diagnostic? runDiagnostics(Fiber fiber, Object exception) {
     return _handlers
         .map((handler) => handler(exception))
         .firstWhere((diagnostic) => diagnostic != null, orElse: () => null);
   }
 
-  List<Resolution> runStrategies(Fiber fiber, Diagnostic diagnostic) {
+  List<Resolution>? runStrategies(Fiber fiber, Diagnostic diagnostic) {
     return _strategies
         .map((strategy) => strategy.resolve(fiber, diagnostic))
-        .firstWhere((resolutions) => resolutions != null, orElse: () => []);
+        .firstWhere((resolutions) => resolutions != null, orElse: () => null);
   }
 }

@@ -6,8 +6,8 @@ import 'package:pubnub/src/logging/logging.dart';
 void main() {
   group('Logging', () {
     group('[StreamLogger]', () {
-      StreamLogger logger;
-      StreamLogger testLogger;
+      late StreamLogger logger;
+      late StreamLogger testLogger;
 
       setUp(() {
         logger = StreamLogger.root('root');

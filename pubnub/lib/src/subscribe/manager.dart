@@ -10,18 +10,18 @@ import 'envelope.dart';
 /// @nodoc
 class Manager {
   final Keyset keyset;
-
   final Set<Subscription> subscriptions = {};
-
-  SubscribeLoop _loop;
+  late final SubscribeLoop _loop;
 
   Stream<Envelope> get envelopes => _loop.envelopes;
+
+  Future<void> get whenStarts => _loop.whenStarts;
 
   Manager(Core core, this.keyset) {
     _loop = SubscribeLoop(core, SubscribeLoopState(keyset));
   }
 
-  void _updateLoop() {
+  void _updateLoop([bool skipCancel = false]) {
     var channels = subscriptions.fold<Set<String>>(
         <String>{},
         (s, sub) => s
@@ -37,14 +37,14 @@ class Manager {
             if (sub.withPresence == true) ...sub.presenceChannelGroups
           }));
 
-    _loop.update((state) =>
-        state.clone(channels: channels, channelGroups: channelGroups));
+    _loop.update(
+        (state) =>
+            state.clone(channels: channels, channelGroups: channelGroups),
+        skipCancel: skipCancel);
   }
 
   Subscription createSubscription(
-      {Set<String> channels,
-      Set<String> channelGroups,
-      bool withPresence = false}) {
+      {Set<String>? channels, Set<String>? channelGroups, bool? withPresence}) {
     var subscription =
         Subscription(this, channels, channelGroups, withPresence);
 
@@ -55,8 +55,14 @@ class Manager {
     return subscription;
   }
 
+  void removeSubscription(Subscription subscription) {
+    subscriptions.remove(subscription);
+
+    _updateLoop(true);
+  }
+
   Future<void> unsubscribeAll() async {
-    for (var subscription in subscriptions) {
+    for (var subscription in subscriptions.toList()) {
       await subscription.cancel();
     }
   }

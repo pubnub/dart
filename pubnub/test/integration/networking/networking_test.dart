@@ -14,7 +14,7 @@ final timeEndpoint = Uri.parse('/time/0');
 class MockClient implements HttpClient {
   final _client = HttpClient();
 
-  InstanceMirror _mirror;
+  late InstanceMirror _mirror;
 
   MockClient() {
     _mirror = reflect(_client);
@@ -36,8 +36,8 @@ class MockClient implements HttpClient {
 }
 
 void main() {
-  NetworkingModule networking;
-  MockClient mockClient;
+  late NetworkingModule networking;
+  late MockClient mockClient;
 
   setUp(() {
     networking = NetworkingModule(origin: 'ps1.pndsn.com');
@@ -45,7 +45,7 @@ void main() {
   });
 
   test('RequestHandler uses the custom origin', () async {
-    RequestHandler handler = await networking.handler();
+    var handler = await networking.handler() as RequestHandler;
 
     handler.client = mockClient;
 
@@ -70,7 +70,7 @@ void main() {
     var reason = Exception('cancel immediately');
     handler.cancel(reason);
 
-    await expectLater(responseF, throwsA(isA<PubNubRequestCancelException>()));
+    await expectLater(responseF, throwsA(isA<RequestCancelException>()));
   });
 
   test(
@@ -95,7 +95,7 @@ void main() {
 
     var responseF = handler.response(request);
 
-    await expectLater(responseF, throwsA(isA<PubNubRequestTimeoutException>()));
+    await expectLater(responseF, throwsA(isA<RequestTimeoutException>()));
   });
 
   test(
@@ -111,6 +111,6 @@ void main() {
 
     await Future.delayed(Duration(seconds: 1), () => handler.cancel());
 
-    await expectLater(responseF, throwsA(isA<PubNubRequestCancelException>()));
+    await expectLater(responseF, throwsA(isA<RequestCancelException>()));
   });
 }

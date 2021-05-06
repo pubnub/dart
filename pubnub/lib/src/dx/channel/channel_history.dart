@@ -10,7 +10,7 @@ enum ChannelHistoryOrder { ascending, descending }
 
 /// @nodoc
 extension ChannelHistoryOrderExtension on ChannelHistoryOrder {
-  T choose<T>({T ascending, T descending}) {
+  T choose<T>({required T ascending, required T descending}) {
     switch (this) {
       case ChannelHistoryOrder.descending:
         return descending;
@@ -32,13 +32,13 @@ class ChannelHistory {
   ///
   /// It is inclusive, meaning if a message has the same timetoken as [from] field,
   /// it will be matched.
-  Timetoken from;
+  Timetoken? from;
 
   /// Upper bound on the messages timetoken.
   ///
   /// It is exclusive, meaning if a message has the same timetoken as [to] field
   /// it will NOT be matched.
-  Timetoken to;
+  Timetoken? to;
 
   /// Readonly list of fetched messages. It will be empty before first [fetch].
   List<BaseMessage> get messages => _messages;
@@ -56,10 +56,11 @@ class ChannelHistory {
         keyset: _keyset,
         core: _core,
         params: CountMessagesParams(_keyset,
-            channels: {_channel.name}, timetoken: from ?? Timetoken(1)),
+            channels: {_channel.name},
+            timetoken: from ?? Timetoken(BigInt.one)),
         serialize: (object, [_]) => CountMessagesResult.fromJson(object));
 
-    return result.channels[_channel.name];
+    return result.channels[_channel.name]!;
   }
 
   /// Delete all matching messages based on [Channel.history] description.
@@ -104,15 +105,16 @@ class ChannelHistory {
       _messages.addAll(await Future.wait(result.messages.map((message) async {
         if (_keyset.cipherKey != null) {
           message['message'] = await _core.parser.decode(_core.crypto
-              .decrypt(_keyset.cipherKey, message['message'] as String));
+              .decrypt(_keyset.cipherKey!, message['message'] as String));
         }
+        print(message);
         return BaseMessage(
-          publishedAt: Timetoken(message['timetoken']),
+          publishedAt: Timetoken(BigInt.from(message['timetoken'])),
           content: message['message'],
           originalMessage: message,
         );
       })));
-    } while (_cursor?.value != 0);
+    } while (_cursor.value != BigInt.from(0));
   }
 }
 
@@ -129,12 +131,12 @@ class PaginatedChannelHistory {
   final List<BaseMessage> _messages = [];
 
   /// Lower bound of fetched messages timetokens. Readonly.
-  Timetoken get startTimetoken => _startTimetoken;
-  Timetoken _startTimetoken;
+  Timetoken? get startTimetoken => _startTimetoken;
+  Timetoken? _startTimetoken;
 
   /// Upper bound of fetched messages timetokens. Readonly.
-  Timetoken get endTimetoken => _endTimetoken;
-  Timetoken _endTimetoken;
+  Timetoken? get endTimetoken => _endTimetoken;
+  Timetoken? _endTimetoken;
 
   /// Order in which messages are fetched.
   ChannelHistoryOrder get order => _order;
@@ -149,13 +151,14 @@ class PaginatedChannelHistory {
       this._core, this._channel, this._keyset, this._order, this._chunkSize);
 
   bool _hasMoreOverride = false;
-  Timetoken _cursor;
+  Timetoken? _cursor;
 
   /// Returns true if there are more messages to be fetched.
   ///
   /// Keep in mind, that before the first [more] call,
   /// it will always be true.
-  bool get hasMore => _hasMoreOverride == false && _cursor?.value != 0;
+  bool get hasMore =>
+      _hasMoreOverride == false && _cursor?.value != BigInt.zero;
 
   /// Resets the history to the beginning.
   void reset() {
@@ -187,13 +190,13 @@ class PaginatedChannelHistory {
     if (_order == ChannelHistoryOrder.descending) {
       _cursor = result.startTimetoken;
 
-      if (result.startTimetoken?.value != 0) {
+      if (result.startTimetoken.value != BigInt.zero) {
         _startTimetoken = result.startTimetoken;
       }
     } else {
       _cursor = result.endTimetoken;
 
-      if (result.endTimetoken?.value != 0) {
+      if (result.endTimetoken.value != BigInt.zero) {
         _endTimetoken = result.endTimetoken;
       }
     }
@@ -201,11 +204,11 @@ class PaginatedChannelHistory {
     _messages.addAll(await Future.wait(result.messages.map((message) async {
       if (_keyset.cipherKey != null) {
         message['message'] = await _core.parser.decode(_core.crypto
-            .decrypt(_keyset.cipherKey, message['message'] as String));
+            .decrypt(_keyset.cipherKey!, message['message'] as String));
       }
       return BaseMessage(
         originalMessage: message,
-        publishedAt: Timetoken(message['timetoken']),
+        publishedAt: Timetoken(BigInt.from(message['timetoken'])),
         content: message['message'],
       );
     })));

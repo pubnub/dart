@@ -4,9 +4,9 @@ class Time {
   Time._();
   factory Time() => _time;
 
-  DateTime _mockedTime;
+  DateTime? _mockedTime;
 
-  DateTime now() {
+  DateTime? now() {
     if (_mockedTime != null) {
       return _mockedTime;
     } else {

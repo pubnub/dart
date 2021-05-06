@@ -72,7 +72,7 @@ abstract class ILogger {
 
   void shout(dynamic message) => log(Level.shout, message);
   void fatal(dynamic message) => log(Level.fatal, message);
-  void severe(dynamic message) => log(Level.warning, message);
+  void severe(dynamic message) => log(Level.severe, message);
   void warning(dynamic message) => log(Level.warning, message);
   void info(dynamic message) => log(Level.info, message);
   void verbose(dynamic message) => log(Level.verbose, message);
@@ -124,10 +124,6 @@ abstract class Level {
   };
 
   static String getName(int level) {
-    if (level == null) {
-      return 'null';
-    }
-
     return levels.entries
         .map((entry) => MapEntry((entry.key - level).abs(), entry.value))
         .reduce((current, next) => current.key > next.key ? next : current)

@@ -16,15 +16,11 @@ abstract class RetryPolicy {
 
   /// Linear retry policy. Useful for development.
   factory RetryPolicy.linear(
-          {int backoff = 5, int maxRetries = 5, int maximumDelay = 60000}) =>
-      LinearRetryPolicy(
-          backoff: backoff, maxRetries: maxRetries, maximumDelay: maximumDelay);
+      {int? backoff, int? maxRetries, int? maximumDelay}) = LinearRetryPolicy;
 
   /// Exponential retry policy. Useful for production.
-  factory RetryPolicy.exponential(
-          {int maxRetries = 5, int maximumDelay = 60000}) =>
-      ExponentialRetryPolicy(
-          maxRetries: maxRetries, maximumDelay: maximumDelay);
+  factory RetryPolicy.exponential({int? maxRetries, int? maximumDelay}) =
+      ExponentialRetryPolicy;
 }
 
 /// Linear retry policy.
@@ -37,8 +33,10 @@ class LinearRetryPolicy extends RetryPolicy {
   /// Maximum amount of milliseconds to wait until retry is executed
   final int maximumDelay;
 
-  const LinearRetryPolicy({this.backoff, int maxRetries, this.maximumDelay})
-      : super(maxRetries);
+  const LinearRetryPolicy({int? backoff, int? maxRetries, int? maximumDelay})
+      : backoff = backoff ?? 5,
+        maximumDelay = maximumDelay ?? 60000,
+        super(maxRetries ?? 5);
 
   @override
   Duration getDelay(Fiber fiber) {
@@ -54,13 +52,14 @@ class ExponentialRetryPolicy extends RetryPolicy {
   /// Maximum amount of milliseconds to wait until retry is executed
   final int maximumDelay;
 
-  const ExponentialRetryPolicy({int maxRetries, this.maximumDelay})
-      : super(maxRetries);
+  const ExponentialRetryPolicy({int? maxRetries, int? maximumDelay})
+      : maximumDelay = maximumDelay ?? 60000,
+        super(maxRetries ?? 5);
 
   @override
   Duration getDelay(Fiber fiber) {
     return Duration(
         milliseconds: min(maximumDelay,
-            pow(2, fiber.tries - 1) * 1000 + Random().nextInt(1000)));
+            pow(2, fiber.tries - 1).toInt() * 1000 + Random().nextInt(1000)));
   }
 }

@@ -21,7 +21,7 @@ PubNubException getExceptionFromAny(dynamic error) {
     }
   }
 
-  return PubNubException('unknown exception');
+  return PubNubException('unknown exception: $error');
 }
 
 PubNubException getExceptionFromDefaultResult(DefaultResult result) {
@@ -30,12 +30,12 @@ PubNubException getExceptionFromDefaultResult(DefaultResult result) {
   }
 
   if (result.status == 403 &&
-      result.message.startsWith('Use of the history Delete API')) {
-    return MethodDisabledException(result.message);
+      result.message!.startsWith('Use of the history Delete API')) {
+    return MethodDisabledException(result.message!);
   }
 
   if (result.status == 403 && result.message == 'Forbidden') {
-    return ForbiddenException(result.service);
+    return ForbiddenException(result.service!);
   }
 
   return PubNubException('${result.status} error: ${result.message}');

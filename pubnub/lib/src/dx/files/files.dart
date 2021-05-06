@@ -53,17 +53,14 @@ class FileDx {
   /// * Provide [fileMessageMeta] for additional information.
   Future<PublishFileMessageResult> sendFile(
       String channel, String fileName, List<int> file,
-      {CipherKey cipherKey,
-      dynamic fileMessage,
-      bool storeFileMessage,
-      int fileMessageTtl,
-      dynamic fileMessageMeta,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-
-    Ensure(keyset.publishKey)
-        .isNotNull('publish key is required for file upload');
+      {CipherKey? cipherKey,
+      dynamic? fileMessage,
+      bool? storeFileMessage,
+      int? fileMessageTtl,
+      dynamic? fileMessageMeta,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
 
     var requestPayload = await _core.parser.encode({'name': fileName});
 
@@ -76,7 +73,7 @@ class FileDx {
             GenerateFileUploadUrlResult.fromJson(object));
 
     if (keyset.cipherKey != null || cipherKey != null) {
-      file = _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey, file);
+      file = _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey!, file);
     }
 
     var fileInfo = FileInfo(
@@ -115,10 +112,10 @@ class FileDx {
               using: using);
         } catch (e) {
           publishFileResult.description =
-              'File message publish failed due to ${e.message} please refer fileInfo for file details';
+              'File message publish failed due to $e please refer fileInfo for file details';
           publishFileResult.isError = true;
         }
-        if (!publishFileResult.isError) {
+        if (!publishFileResult.isError!) {
           publishFileResult.fileInfo = fileInfo;
           return publishFileResult;
         }
@@ -151,19 +148,19 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   Future<PublishFileMessageResult> publishFileMessage(
       String channel, FileMessage message,
-      {bool storeMessage,
-      int ttl,
-      dynamic meta,
-      CipherKey cipherKey,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+      {bool? storeMessage,
+      int? ttl,
+      dynamic? meta,
+      CipherKey? cipherKey,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= _core.keysets[using];
     Ensure(keyset.publishKey).isNotNull('publish key');
 
     var messagePayload = await _core.parser.encode(message);
     if (cipherKey != null || keyset.cipherKey != null) {
       messagePayload = await _core.parser.encode(
-          _core.crypto.encrypt(cipherKey ?? keyset.cipherKey, messagePayload));
+          _core.crypto.encrypt(cipherKey ?? keyset.cipherKey!, messagePayload));
     }
     if (meta != null) meta = await _core.parser.encode(meta);
     return defaultFlow(
@@ -184,20 +181,17 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   Future<DownloadFileResult> downloadFile(
       String channel, String fileId, String fileName,
-      {CipherKey cipherKey, Keyset keyset, String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    Function decrypter;
-    if (keyset.cipherKey != null || cipherKey != null) {
-      decrypter = _core.crypto.decryptFileData;
-    }
+      {CipherKey? cipherKey, Keyset? keyset, String? using}) async {
+    keyset ??= _core.keysets[using];
+
     return defaultFlow<DownloadFileParams, DownloadFileResult>(
         keyset: keyset,
         core: _core,
         params: DownloadFileParams(getFileUrl(channel, fileId, fileName)),
         deserialize: false,
         serialize: (object, [_]) => DownloadFileResult.fromJson(object,
-            cipherKey: cipherKey ?? keyset.cipherKey,
-            decryptFunction: decrypter));
+            cipherKey: cipherKey ?? keyset!.cipherKey,
+            decryptFunction: _core.crypto.decryptFileData));
   }
 
   /// Lists all files in a [channel].
@@ -210,8 +204,8 @@ class FileDx {
   /// If that fails, then it uses the default keyset.
   /// If that fails as well, then it will throw [InvariantException].
   Future<ListFilesResult> listFiles(String channel,
-      {int limit, String next, Keyset keyset, String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+      {int? limit, String? next, Keyset? keyset, String? using}) async {
+    keyset ??= _core.keysets[using];
 
     return defaultFlow<ListFilesParams, ListFilesResult>(
         keyset: keyset,
@@ -227,8 +221,8 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   Future<DeleteFileResult> deleteFile(
       String channel, String fileId, String fileName,
-      {Keyset keyset, String using}) async {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+      {Keyset? keyset, String? using}) async {
+    keyset ??= _core.keysets[using];
     return defaultFlow<DeleteFileParams, DeleteFileResult>(
         keyset: keyset,
         core: _core,
@@ -246,8 +240,8 @@ class FileDx {
   /// If that fails, then it uses the default keyset.
   /// If that fails as well, then it will throw [InvariantException].
   Uri getFileUrl(String channel, String fileId, String fileName,
-      {Keyset keyset, String using}) {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
+      {Keyset? keyset, String? using}) {
+    keyset ??= _core.keysets[using];
     var pathSegments = [
       'v1',
       'files',
@@ -261,8 +255,8 @@ class FileDx {
     var queryParams = {
       'pnsdk': 'PubNub-Dart/${Core.version}',
       if (keyset.secretKey != null)
-        'timestamp': '${Time().now().millisecondsSinceEpoch ~/ 1000}',
-      if (keyset.authKey != null) 'auth': keyset.authKey
+        'timestamp': '${Time().now()!.millisecondsSinceEpoch ~/ 1000}',
+      if (keyset.authKey != null) 'auth': keyset.authKey!
     };
     if (keyset.secretKey != null) {
       queryParams.addAll(
@@ -284,9 +278,10 @@ class FileDx {
   /// If that fails, then it uses the default keyset.
   /// If that fails as well, then it will throw [InvariantException].
   List<int> encryptFile(List<int> bytes,
-      {CipherKey cipherKey, Keyset keyset, String using}) {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    return _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey, bytes);
+      {CipherKey? cipherKey, Keyset? keyset, String? using}) {
+    keyset ??= _core.keysets[using];
+    return _core.crypto
+        .encryptFileData((cipherKey ?? keyset.cipherKey)!, bytes);
   }
 
   /// Decrypts file content in bytes format.
@@ -297,8 +292,9 @@ class FileDx {
   /// If that fails, then it uses the default keyset.
   /// If that fails as well, then it will throw [InvariantException].
   List<int> decryptFile(List<int> bytes,
-      {CipherKey cipherKey, Keyset keyset, String using}) {
-    keyset ??= _core.keysets.get(using, defaultIfNameIsNull: true);
-    return _core.crypto.decryptFileData(cipherKey ?? keyset.cipherKey, bytes);
+      {CipherKey? cipherKey, Keyset? keyset, String? using}) {
+    keyset ??= _core.keysets[using];
+    return _core.crypto
+        .decryptFileData((cipherKey ?? keyset.cipherKey)!, bytes);
   }
 }

@@ -15,19 +15,25 @@ void main() {
   final PUBLISH_KEY = Platform.environment['PUB'] ??
       'pub-c-8d1dad1a-ed99-4cb4-926c-cee03e792fd4';
 
-  Subscriber subscriber;
-  PubNub pubnub;
+  late Subscriber subscriber;
+  late PubNub pubnub;
 
   group('Subscribe_loop', () {
     test('without message encryption', () async {
       pubnub = PubNub(
-          defaultKeyset:
-              Keyset(subscribeKey: SUBSCRIBE_KEY, publishKey: PUBLISH_KEY));
+        defaultKeyset: Keyset(
+          subscribeKey: SUBSCRIBE_KEY,
+          publishKey: PUBLISH_KEY,
+          uuid: UUID('dart-test'),
+        ),
+      );
       var channel = 'test-${DateTime.now().millisecondsSinceEpoch}';
       var message = 'hello';
       subscriber = Subscriber.init(pubnub, SUBSCRIBE_KEY);
 
       subscriber.subscribe(channel);
+
+      await Future.delayed(Duration(seconds: 2));
 
       await pubnub.publish(channel, message);
 
@@ -39,14 +45,19 @@ void main() {
       var channel = 'test-${DateTime.now().millisecondsSinceEpoch}';
       var message = 'hello pubnub!';
       pubnub = PubNub(
-          defaultKeyset: Keyset(
-              subscribeKey: SUBSCRIBE_KEY,
-              publishKey: PUBLISH_KEY,
-              cipherKey: cipherKey));
+        defaultKeyset: Keyset(
+          subscribeKey: SUBSCRIBE_KEY,
+          publishKey: PUBLISH_KEY,
+          cipherKey: cipherKey,
+          uuid: UUID('dart-test'),
+        ),
+      );
 
       subscriber = Subscriber.init(pubnub, SUBSCRIBE_KEY, cipherKey: cipherKey);
 
       subscriber.subscribe(channel);
+
+      await Future.delayed(Duration(seconds: 2));
 
       await pubnub.publish(channel, message);
 

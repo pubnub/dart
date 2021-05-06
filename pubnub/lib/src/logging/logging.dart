@@ -22,14 +22,18 @@ class LogRecord {
   /// Stack trace recorded when this record was created.
   ///
   /// May be null if stack trace recording is not turned on.
-  final StackTrace stackTrace;
+  final StackTrace? stackTrace;
 
   static int _counter = 0;
 
   final int id;
 
-  LogRecord({this.level, this.message, this.scope, this.stackTrace})
-      : time = DateTime.now(),
+  LogRecord({
+    required this.level,
+    required this.message,
+    required this.scope,
+    this.stackTrace,
+  })  : time = DateTime.now(),
         zone = Zone.current,
         id = _counter++;
 
@@ -99,9 +103,9 @@ class LogRecord {
 class StreamLogger extends ILogger {
   /// Name of this logger.
   final String name;
-  final StreamLogger _parent;
+  final StreamLogger? _parent;
 
-  int _logLevel;
+  int? _logLevel;
 
   final StreamController<LogRecord> _streamController =
       StreamController.broadcast(sync: true);
@@ -111,7 +115,7 @@ class StreamLogger extends ILogger {
   final bool _recordStackTraces;
 
   StreamLogger._(this.name, this._parent,
-      {bool recordStackTraces, int logLevel})
+      {bool recordStackTraces = false, int logLevel = 10000})
       : _recordStackTraces = recordStackTraces,
         _logLevel = logLevel;
 
@@ -140,9 +144,9 @@ class StreamLogger extends ILogger {
   /// Log level of this logger.
   int get logLevel {
     if (_logLevel == null) {
-      return _root._logLevel;
+      return _root._logLevel!;
     } else {
-      return _logLevel;
+      return _logLevel!;
     }
   }
 
@@ -154,7 +158,7 @@ class StreamLogger extends ILogger {
     var current = this;
 
     while (!current.isRoot) {
-      current = current._parent;
+      current = current._parent!;
     }
 
     return current;
@@ -187,17 +191,17 @@ class StreamLogger extends ILogger {
       _children[childName] = child;
     }
 
-    return _children[childName];
+    return _children[childName]!;
   }
 
   /// Returns full name of this logger.
   ///
   /// This name will be a dot-separated string that uniquely identifies this logger.
-  String get fullName => !isRoot ? '${_parent.fullName}.${name}' : name;
+  String get fullName => !isRoot ? '${_parent!.fullName}.$name' : name;
 
   /// Creates or retrieves a logger that exists under this node.
   @override
-  StreamLogger get(String id) {
+  StreamLogger get(String? id) {
     if (id == null) {
       return this;
     }
@@ -211,7 +215,7 @@ class StreamLogger extends ILogger {
   @override
   void log(int level, message) {
     if (level <= logLevel) {
-      StackTrace stackTrace;
+      StackTrace? stackTrace;
 
       if (recordStackTraces) {
         stackTrace = StackTrace.current;

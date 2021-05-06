@@ -8,7 +8,7 @@ class SubscribeFiber implements Fiber {
   SubscribeFiber(this.tries);
 
   @override
-  final action = null;
+  final action = () async => {};
 
   @override
   final bool isSubscribe = true;

@@ -11,7 +11,7 @@ mixin SubscribeDx on Core {
       _managers[keyset] = Manager(this, keyset);
     }
 
-    return _managers[keyset];
+    return _managers[keyset]!;
   }
 
   /// Returns a set of channels that [uuid] is currently subscribed to.
@@ -21,6 +21,7 @@ mixin SubscribeDx on Core {
           .where((keyset) => keyset.uuid == uuid)
           .map((keyset) => _managers[keyset])
           .where((manager) => manager != null)
+          .cast<Manager>()
           .expand((manager) => manager.subscriptions)
           .where(
               (sub) => !sub.isCancelled && (countPaused ? !sub.isPaused : true))
@@ -34,6 +35,7 @@ mixin SubscribeDx on Core {
           .where((keyset) => keyset.uuid == uuid)
           .map((keyset) => _managers[keyset])
           .where((manager) => manager != null)
+          .cast<Manager>()
           .expand((manager) => manager.subscriptions)
           .where(
               (sub) => !sub.isCancelled && (countPaused ? !sub.isPaused : true))
@@ -51,20 +53,22 @@ mixin SubscribeDx on Core {
   ///   // handle envelope
   /// });
   /// ```
-  Subscription subscribe(
-      {Keyset keyset,
-      String using,
-      Set<String> channels,
-      Set<String> channelGroups,
-      bool withPresence}) {
-    keyset ??= keysets.obtain(keyset, using);
+  Subscription subscribe({
+    Set<String>? channels,
+    Set<String>? channelGroups,
+    bool withPresence = false,
+    Keyset? keyset,
+    String? using,
+  }) {
+    keyset ??= keysets[using];
 
     var manager = _getOrCreateManager(keyset);
 
     var subscription = manager.createSubscription(
-        channels: channels,
-        channelGroups: channelGroups,
-        withPresence: withPresence);
+      channels: channels,
+      channelGroups: channelGroups,
+      withPresence: withPresence,
+    );
 
     subscription.resume();
 
@@ -74,13 +78,14 @@ mixin SubscribeDx on Core {
   /// Creates an inactive subscription to [channels] and [channelGroups]. Returns [Subscription].
   ///
   /// You can activate an inactive subscription by calling `subscription.subscribe()`.
-  Subscription subscription(
-      {Keyset keyset,
-      String using,
-      Set<String> channels,
-      Set<String> channelGroups,
-      bool withPresence}) {
-    keyset ??= keysets.obtain(keyset, using);
+  Subscription subscription({
+    Set<String>? channels,
+    Set<String>? channelGroups,
+    bool withPresence = false,
+    Keyset? keyset,
+    String? using,
+  }) {
+    keyset ??= keysets[using];
 
     var manager = _getOrCreateManager(keyset);
 

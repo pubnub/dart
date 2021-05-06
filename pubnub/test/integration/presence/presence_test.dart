@@ -10,7 +10,7 @@ import 'package:pubnub/pubnub.dart';
 import '_utils.dart';
 
 void main() {
-  String channel;
+  late String channel;
 
   final PRODUCER = UUID('PRODUCER');
 
@@ -19,17 +19,16 @@ void main() {
   final PUBLISH_KEY = Platform.environment['PUB'] ??
       'pub-c-8d1dad1a-ed99-4cb4-926c-cee03e792fd4';
 
-  PubNub pubnub;
-  Keyset keyset;
-  PresenceConsumer consumer;
+  var keyset = Keyset(
+      subscribeKey: SUBSCRIBE_KEY, publishKey: PUBLISH_KEY, uuid: PRODUCER);
 
   group('Presence', () {
+    late PubNub pubnub;
+    late PresenceConsumer consumer;
+
     setUp(() async {
       channel =
           'dart-presence-test-${Random().nextInt(99999).toString().padLeft(5, '0')}';
-
-      keyset = Keyset(
-          subscribeKey: SUBSCRIBE_KEY, publishKey: PUBLISH_KEY, uuid: PRODUCER);
 
       pubnub = PubNub(defaultKeyset: keyset);
 

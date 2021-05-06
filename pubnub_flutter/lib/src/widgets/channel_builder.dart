@@ -124,7 +124,7 @@ class _ChannelBuilderState extends State<ChannelBuilder>
         if (!widget.disableHistory)
           ...history.messages.map((msg) => ChannelMessage(msg.publishedAt,
               msg.content, msg.originalMessage, ChannelMessageSource.history)),
-      ]..sort((a, b) => b.publishedAt.value - a.publishedAt.value);
+      ]..sort((a, b) => (b.publishedAt.value - a.publishedAt.value).toInt());
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +134,7 @@ class _ChannelBuilderState extends State<ChannelBuilder>
   @override
   void didInitState() {
     provider = PubNubProvider.of(context);
-    keyset = provider.instance.keysets.obtain(widget.keyset, widget.using);
+    keyset = widget.keyset ?? provider.instance.keysets[widget.using];
 
     if (cacheEnabled) {
       var messages = provider.cache.get<List<dynamic>>(cacheKey) ?? [];

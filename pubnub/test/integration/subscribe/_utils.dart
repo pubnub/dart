@@ -6,28 +6,32 @@ import 'package:test/test.dart';
 
 class Subscriber {
   final PubNub _pn;
-  Keyset _keyset;
-  Subscription subscription;
+  late final Keyset _keyset;
+  Subscription? subscription;
 
-  StreamQueue<Envelope> queue;
+  StreamQueue<Envelope>? queue;
 
-  Subscriber.init(this._pn, String subscribeKey, {CipherKey cipherKey}) {
-    _keyset = Keyset(subscribeKey: subscribeKey, cipherKey: cipherKey);
+  Subscriber.init(this._pn, String subscribeKey, {CipherKey? cipherKey}) {
+    _keyset = Keyset(
+      subscribeKey: subscribeKey,
+      cipherKey: cipherKey,
+      uuid: UUID('dart-test-subscriber'),
+    );
   }
 
   void subscribe(String channel) async {
     subscription = _pn.subscribe(keyset: _keyset, channels: {channel});
 
-    queue = StreamQueue(subscription.messages);
+    queue = StreamQueue(subscription!.messages);
   }
 
   Future<void> cleanup() async {
-    await queue.cancel(immediate: true);
-    return subscription.cancel();
+    await queue?.cancel(immediate: true);
+    return subscription?.cancel();
   }
 
   Future<void> expectMessage(String channel, String message) {
-    var actual = queue.next;
+    var actual = queue?.next;
 
     return expectLater(
         actual, completion(SubscriptionMessageMatcher(channel, message)));

@@ -1,17 +1,15 @@
-import 'package:meta/meta.dart';
-
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
 typedef Serialize<R> = R Function(dynamic object,
-    [Map<String, List<String>> headers]);
+    [Map<String, List<String>>? headers]);
 
 Future<R> defaultFlow<P extends Parameters, R>({
-  @required Core core,
-  @required P params,
+  required Core core,
+  required P params,
   bool deserialize = true,
-  @required Serialize<R> serialize,
-  Keyset keyset,
+  required Serialize<R> serialize,
+  Keyset? keyset,
 }) async {
   var fiber = Fiber(
     core,
@@ -30,32 +28,39 @@ Future<R> defaultFlow<P extends Parameters, R>({
 }
 
 Future<R> _defaultFlow<P extends Parameters, R>({
-  @required Core core,
-  @required P params,
+  required Core core,
+  required P params,
   bool deserialize = true,
-  @required Serialize<R> serialize,
-  Keyset keyset,
+  required Serialize<R> serialize,
+  Keyset? keyset,
 }) async {
   var request = params.toRequest();
+
+  if (keyset != null && request.uri?.authority == '') {
+    request.uri = request.uri?.replace(queryParameters: {
+      ...request.uri?.queryParameters ?? {},
+      'uuid': keyset.uuid.value,
+    });
+  }
 
   if (keyset != null &&
       keyset.secretKey != null &&
       (request.body is String || request.body == null)) {
-    request.uri = request.uri.replace(queryParameters: {
-      ...request.uri.queryParameters,
-      'timestamp': '${Time().now().millisecondsSinceEpoch ~/ 1000}',
+    request.uri = request.uri?.replace(queryParameters: {
+      ...request.uri!.queryParameters,
+      'timestamp': '${Time().now()!.millisecondsSinceEpoch ~/ 1000}',
     });
 
     var signature = computeV2Signature(
       keyset,
       request.type,
-      request.uri.pathSegments,
-      request.uri.queryParameters,
-      request.body,
+      request.uri!.pathSegments,
+      request.uri!.queryParameters,
+      '${request.body}',
     );
 
-    request.uri = request.uri.replace(queryParameters: {
-      ...request.uri.queryParameters,
+    request.uri = request.uri?.replace(queryParameters: {
+      ...request.uri!.queryParameters,
       'signature': signature
     });
   }
@@ -71,12 +76,17 @@ Future<R> _defaultFlow<P extends Parameters, R>({
     } else {
       return serialize(response);
     }
-  } on PubNubRequestFailureException catch (exception) {
-    var error = await core.parser.decode(exception.response.text,
-        type: request.type == RequestType.file ? 'xml' : 'json');
+  } on RequestFailureException catch (exception) {
+    dynamic error;
+    try {
+      error = await core.parser.decode(exception.response.text,
+          type: request.type == RequestType.file ? 'xml' : 'json');
 
-    if (error is Map) {
-      error = DefaultResult.fromJson(error);
+      if (error is Map) {
+        error = DefaultResult.fromJson(error);
+      }
+    } on ParserException {
+      error = exception.response.text;
     }
 
     throw getExceptionFromAny(error);

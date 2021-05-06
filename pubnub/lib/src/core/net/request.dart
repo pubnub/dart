@@ -3,9 +3,9 @@ import 'request_type.dart';
 /// @nodoc
 class Request {
   RequestType type;
-  Uri uri;
-  Map<String, String> headers;
-  dynamic body;
+  Uri? uri;
+  Map<String, String>? headers;
+  Object? body;
 
   Request.get({this.uri, this.headers, this.body}) : type = RequestType.get;
   Request.post({this.uri, this.headers, this.body}) : type = RequestType.post;
@@ -18,6 +18,6 @@ class Request {
 
   @override
   String toString() {
-    return 'Request { [${type}] ${uri} }';
+    return 'Request { [$type] $uri }';
   }
 }

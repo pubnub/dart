@@ -18,10 +18,10 @@ class RequestHandler extends IRequestHandler {
   HttpClient client = HttpClient();
   final _cancel = Completer<Exception>();
 
-  Timer _sendTimeoutTimer;
-  Response _response;
+  Timer? _sendTimeoutTimer;
+  Response? _response;
   bool _isReleased = false;
-  void Function(dynamic) _abortRequest;
+  void Function(dynamic)? _abortRequest;
 
   RequestHandler(this._module, this._id, this._resource);
 
@@ -31,10 +31,10 @@ class RequestHandler extends IRequestHandler {
       _logger.info(
           '($_id) Request has been cancelled (reason: ${reason.runtimeType}).');
 
-      _cancel.complete(PubNubRequestCancelException(reason));
+      _cancel.complete(RequestCancelException(reason));
 
       if (_abortRequest != null) {
-        _abortRequest(PubNubRequestCancelException(reason));
+        _abortRequest!(RequestCancelException(reason));
       }
     }
   }
@@ -51,15 +51,15 @@ class RequestHandler extends IRequestHandler {
     _logger.info('($_id) Preparing request.');
 
     var headers = {...(data.headers ?? {})};
-    var uri = prepareUri(_module.getOrigin(), data.uri);
-    List<int> body;
+    var uri = prepareUri(_module.getOrigin(), data.uri ?? Uri());
+    List<int>? body;
 
     if (data.type == RequestType.file) {
       var formData = FormData();
 
       for (var entry in (data.body as Map<String, dynamic>).entries) {
         if (entry.value is List<int>) {
-          formData.addFile(entry.key, entry.value);
+          formData.addBytes(entry.key, entry.value);
         } else {
           formData.add(entry.key, entry.value);
         }
@@ -70,11 +70,12 @@ class RequestHandler extends IRequestHandler {
       body = formData.body;
     } else {
       if (data.body != null) {
+        headers['Content-Type'] = 'application/json';
         body = utf8.encode(data.body.toString());
       }
     }
 
-    _logger.info('($_id) Starting request to "${uri}"...');
+    _logger.info('($_id) Starting request to "$uri"...');
 
     try {
       if (isCancelled) {
@@ -97,17 +98,19 @@ class RequestHandler extends IRequestHandler {
       _sendTimeoutTimer =
           Timer(Duration(milliseconds: data.type.sendTimeout), () {
         if (!isDone) {
-          _cancel.complete(PubNubRequestTimeoutException());
-          _abortRequest(PubNubRequestTimeoutException());
+          _cancel.complete(RequestTimeoutException());
+          if (_abortRequest != null) {
+            _abortRequest!(RequestTimeoutException());
+          }
         }
       });
 
-      if (body != null) {
-        request.add(body);
-      }
-
       for (var header in headers.entries) {
         request.headers.set(header.key, header.value);
+      }
+
+      if (body != null) {
+        request.add(body);
       }
 
       var clientResponse = await request.close();
@@ -115,28 +118,29 @@ class RequestHandler extends IRequestHandler {
       var byteList =
           await clientResponse.fold<List<int>>(<int>[], (a, b) => [...a, ...b]);
 
-      _response = Response(byteList, clientResponse);
+      var response = Response(byteList, clientResponse);
+      _response = response;
 
-      if (_response.statusCode < 200 || _response.statusCode > 299) {
-        throw PubNubRequestFailureException(_response);
+      if (response.statusCode < 200 || response.statusCode > 299) {
+        throw RequestFailureException(response);
       }
 
-      _logger.info('(${_id}) Request succeed!');
+      _logger.info('($_id) Request succeed!');
 
-      return _response;
-    } on PubNubRequestCancelException {
+      return response;
+    } on RequestCancelException {
       rethrow;
-    } on PubNubRequestFailureException {
+    } on RequestFailureException {
       rethrow;
-    } on PubNubRequestTimeoutException {
+    } on RequestTimeoutException {
       rethrow;
     } catch (e) {
-      _logger.fatal('($_id) Request failed (${e.runtimeType}) (${e})');
-      throw PubNubRequestOtherException(e);
+      _logger.fatal('($_id) Request failed (${e.runtimeType}) ($e)');
+      throw RequestOtherException(e);
     } finally {
       if (!_isReleased) {
         _isReleased = true;
-        _resource?.release();
+        _resource.release();
         client.close(force: true);
         _sendTimeoutTimer?.cancel();
         _logger.info('($_id) Resource released...');

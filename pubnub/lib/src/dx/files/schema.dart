@@ -4,7 +4,7 @@
 class FileInfo {
   String id;
   String name;
-  String url;
+  String? url;
 
   FileInfo(this.id, this.name, [this.url]);
 

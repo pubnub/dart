@@ -52,25 +52,25 @@ class PubNub extends Core
         SupervisorDx {
   /// Contains methods that allow running batch operations on channels,
   /// channel groups and other features.
-  BatchDx batch;
+  late final BatchDx batch;
 
   /// Contains methods that allow manipulating channel groups.
-  ChannelGroupDx channelGroups;
+  late final ChannelGroupDx channelGroups;
 
   /// Contains methods to manage channel and uuids metadata and their relationships.
-  ObjectsDx objects;
+  late final ObjectsDx objects;
 
   /// Contains methods that allow managing files.
-  FileDx files;
+  late final FileDx files;
 
   /// Current version of this library.
   static String version = Core.version;
 
   PubNub(
-      {Keyset defaultKeyset,
-      INetworkingModule networking,
-      IParserModule parser,
-      ICryptoModule crypto})
+      {Keyset? defaultKeyset,
+      INetworkingModule? networking,
+      IParserModule? parser,
+      ICryptoModule? crypto})
       : super(
             defaultKeyset: defaultKeyset,
             networking: networking ?? NetworkingModule(),
@@ -85,8 +85,8 @@ class PubNub extends Core
   /// Returns a representation of a channel.
   ///
   /// Useful if you need to work on only one channel.
-  Channel channel(String name, {Keyset keyset, String using}) {
-    keyset ??= keysets.get(using, defaultIfNameIsNull: true);
+  Channel channel(String name, {Keyset? keyset, String? using}) {
+    keyset ??= keysets[using];
 
     return Channel(this, keyset, name);
   }
@@ -95,16 +95,16 @@ class PubNub extends Core
   ///
   /// If [uuid] is null, then it uses [Keyset.uuid].
   Future<UUIDMetadata> uuidMetadata(
-      {String uuid,
-      String name,
-      String email,
-      Map<String, dynamic> custom,
-      String externalId,
-      String profileUrl,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= keysets.get(using, defaultIfNameIsNull: true);
-    UUIDMetadata uuidMetadata;
+      {String? uuid,
+      String? name,
+      String? email,
+      Map<String, dynamic>? custom,
+      String? externalId,
+      String? profileUrl,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= keysets[using];
+
     var result = await objects.setUUIDMetadata(
         UuidMetadataInput(
             name: name,
@@ -114,39 +114,32 @@ class PubNub extends Core
             custom: custom),
         uuid: uuid,
         keyset: keyset);
-    if (result.metadata != null) {
-      uuidMetadata = UUIDMetadata(objects, keyset, result.metadata.id);
-    }
-    return uuidMetadata;
+    return UUIDMetadata(objects, keyset, result.metadata.id);
   }
 
   /// Creates [ChannelMetadata] and sets metadata for given [channel] in the database.
   Future<ChannelMetadata> channelMetadata(String channelId,
-      {String name,
-      String description,
-      Map<String, dynamic> custom,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= keysets.get(using, defaultIfNameIsNull: true);
+      {String? name,
+      String? description,
+      Map<String, dynamic>? custom,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= keysets[using];
 
-    ChannelMetadata channelMetadata;
     var result = await objects.setChannelMetadata(
         channelId,
         ChannelMetadataInput(
             name: name, description: description, custom: custom),
         keyset: keyset);
 
-    if (result.metadata != null) {
-      channelMetadata = ChannelMetadata(objects, keyset, result.metadata.id);
-    }
-    return channelMetadata;
+    return ChannelMetadata(objects, keyset, result.metadata.id);
   }
 
   /// Returns a new instance of [Device] (from Push Notification API).
   ///
   /// [deviceId] should be non-empty and valid.
-  Device device(String deviceId, {Keyset keyset, String using}) {
-    keyset ??= keysets.get(using, defaultIfNameIsNull: true);
+  Device device(String deviceId, {Keyset? keyset, String? using}) {
+    keyset ??= keysets[using];
     return Device(this, keyset, deviceId);
   }
 }

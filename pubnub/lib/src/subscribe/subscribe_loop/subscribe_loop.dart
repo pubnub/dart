@@ -61,22 +61,28 @@ class SubscribeLoop {
         .listen((_) => update((state) => state));
   }
 
-  StreamController<Envelope> _messagesController;
+  late StreamController<Envelope> _messagesController;
   Stream<Envelope> get envelopes => _messagesController.stream;
+
+  Completer<void> _whenStarts = Completer();
+  Future<void> get whenStarts => _whenStarts.future;
 
   final StreamController<Exception> _queueController =
       StreamController.broadcast();
 
-  void update(UpdateCallback callback) {
+  void update(UpdateCallback callback, {bool skipCancel = false}) {
     var newState = callback(_state);
 
     _state = newState;
     _logger.silly('State has been updated.');
-    _queueController.add(CancelException());
+
+    if (skipCancel == false) {
+      _queueController.add(CancelException());
+    }
   }
 
   Stream<Envelope> _loop() async* {
-    IRequestHandler handler;
+    IRequestHandler? handler;
     var tries = 0;
 
     while (true) {
@@ -98,13 +104,18 @@ class SubscribeLoop {
             channels: state.channels,
             channelGroups: state.channelGroups);
 
+        if (!_whenStarts.isCompleted && state.timetoken.value != BigInt.zero) {
+          _whenStarts.complete();
+          _whenStarts = Completer();
+        }
+
         var response =
-            await withCancel(handler.response(params.toRequest()), queue.peek);
+            await withCancel(handler!.response(params.toRequest()), queue.peek);
 
         core.supervisor.notify(NetworkIsUpEvent());
 
-        var object = await withCancel(
-            core.parser.decode(await response.text), queue.peek);
+        var object =
+            await withCancel(core.parser.decode(response.text), queue.peek);
 
         var result = SubscribeResult.fromJson(object);
 
@@ -118,7 +129,7 @@ class SubscribeLoop {
             try {
               _logger.silly('decrypting message...');
               object['d'] = await core.parser.decode(
-                  core.crypto.decrypt(state.keyset.cipherKey, object['d']));
+                  core.crypto.decrypt(state.keyset.cipherKey!, object['d']));
             } catch (e) {
               throw PubNubException(
                   'Can not decrypt the message payload. Please check keyset configuration.');
@@ -145,17 +156,26 @@ class SubscribeLoop {
         }
 
         _logger.warning(
-            'An exception has occured while running a subscribe fiber (retry #${tries}).');
+            'An exception (${exception.runtimeType}) has occured while running a subscribe fiber (retry #$tries).');
         var diagnostic = core.supervisor.runDiagnostics(fiber, exception);
 
         if (diagnostic == null) {
           _logger.warning('No diagnostics found.');
+
+          if (!_whenStarts.isCompleted) {
+            _whenStarts.completeError(Exception('subscribe failed'));
+          }
           rethrow;
         }
 
         _logger.silly('Possible reason found: $diagnostic');
 
         var resolutions = core.supervisor.runStrategies(fiber, diagnostic);
+
+        if (resolutions == null) {
+          _logger.silly('No resolutions found.');
+          rethrow;
+        }
 
         for (var resolution in resolutions) {
           if (resolution is FailResolution) {

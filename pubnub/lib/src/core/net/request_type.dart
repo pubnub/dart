@@ -39,9 +39,9 @@ extension RequestTypeExtension on RequestType {
     RequestType.file: 'POST',
   };
 
-  String get method => methods[this];
+  String get method => methods[this]!;
 
-  int get sendTimeout => _sendTimeoutRequestDefault[this];
-  int get receiveTimeout => _receiveTimeoutRequestDefault[this];
-  int get connectTimeout => _connectTimeoutRequestDefault[this];
+  int get sendTimeout => _sendTimeoutRequestDefault[this]!;
+  int get receiveTimeout => _receiveTimeoutRequestDefault[this]!;
+  int get connectTimeout => _connectTimeoutRequestDefault[this]!;
 }

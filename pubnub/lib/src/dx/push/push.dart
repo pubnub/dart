@@ -23,12 +23,12 @@ mixin PushNotificationDx on Core {
   /// * [Environment.production].
   Future<ListPushChannelsResult> listPushChannels(
       String deviceId, PushGateway gateway,
-      {String topic,
-      Environment environment,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      {String? topic,
+      Environment? environment,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= keysets[using];
+
     Ensure(deviceId).isNotEmpty('deviceId');
     if (gateway == PushGateway.apns2) Ensure(topic).isNotNull('topic');
 
@@ -58,12 +58,12 @@ mixin PushNotificationDx on Core {
   /// default value for [environment] is [Environment.development]
   Future<AddPushChannelsResult> addPushChannels(
       String deviceId, PushGateway gateway, Set<String> channels,
-      {String topic,
-      Environment environment,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      {String? topic,
+      Environment? environment,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= keysets[using];
+
     Ensure(deviceId).isNotEmpty('deviceId');
     if (gateway == PushGateway.apns2) Ensure(topic).isNotNull('topic');
 
@@ -93,12 +93,12 @@ mixin PushNotificationDx on Core {
   /// default value for [environment] is [Environment.development]
   Future<RemovePushChannelsResult> removePushChannels(
       String deviceId, PushGateway gateway, Set<String> channels,
-      {String topic,
-      Environment environment,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      {String? topic,
+      Environment? environment,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= keysets[using];
+
     Ensure(deviceId).isNotEmpty('deviceId');
     if (gateway == PushGateway.apns2) Ensure(topic).isNotNull('topic');
 
@@ -127,12 +127,12 @@ mixin PushNotificationDx on Core {
   /// it can be either [Environment.development] or [Environment.production]
   /// default value for [environment] is [Environment.development]
   Future<RemoveDeviceResult> removeDevice(String deviceId, PushGateway gateway,
-      {String topic,
-      Environment environment,
-      Keyset keyset,
-      String using}) async {
-    keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
-    Ensure(keyset).isNotNull('keyset');
+      {String? topic,
+      Environment? environment,
+      Keyset? keyset,
+      String? using}) async {
+    keyset ??= keysets[using];
+
     Ensure(deviceId).isNotEmpty('deviceId');
     if (gateway == PushGateway.apns2) Ensure(topic).isNotNull('topic');
 
@@ -160,7 +160,7 @@ class Device {
   /// In case of apns2 gateway please provide topic and environment(default: development) values
   Future<AddPushChannelsResult> registerToChannels(
       Set<String> channels, PushGateway gateway,
-      {String topic, Environment environment}) {
+      {String? topic, Environment? environment}) {
     return _core.addPushChannels(deviceId, gateway, channels,
         topic: topic, environment: environment, keyset: _keyset);
   }
@@ -171,7 +171,7 @@ class Device {
   /// In case of apns2 gateway please provide topic and environment(default: development) values
   Future<RemovePushChannelsResult> deregisterFromChannels(
       Set<String> channels, PushGateway gateway,
-      {String topic, Environment environment}) {
+      {String? topic, Environment? environment}) {
     return _core.removePushChannels(deviceId, gateway, channels,
         topic: topic, environment: environment, keyset: _keyset);
   }
@@ -182,7 +182,7 @@ class Device {
   ///
   /// In case of apns2 gateway please provide topic and environment(default: development) values
   Future<RemoveDeviceResult> remove(PushGateway gateway,
-      {String topic, Environment environment}) {
+      {String? topic, Environment? environment}) {
     return _core.removeDevice(deviceId, gateway,
         topic: topic, environment: environment, keyset: _keyset);
   }

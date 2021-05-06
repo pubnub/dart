@@ -5,9 +5,9 @@ class PublishParams extends Parameters {
   String channel;
   String message;
 
-  String meta;
-  bool storeMessage;
-  int ttl;
+  String? meta;
+  bool? storeMessage;
+  int? ttl;
 
   PublishParams(this.keyset, this.channel, this.message,
       {this.storeMessage, this.ttl});
@@ -16,7 +16,7 @@ class PublishParams extends Parameters {
   Request toRequest() {
     var pathSegments = [
       'publish',
-      keyset.publishKey,
+      keyset.publishKey!,
       keyset.subscribeKey,
       '0',
       channel,
@@ -31,7 +31,7 @@ class PublishParams extends Parameters {
         'store': '0',
       if (meta != null) 'meta': meta,
       if (keyset.authKey != null) 'auth': keyset.authKey,
-      if (keyset.uuid != null) 'uuid': keyset.uuid.value,
+      'uuid': keyset.uuid.value,
       if (ttl != null) 'ttl': ttl.toString()
     };
 
@@ -47,16 +47,14 @@ class PublishParams extends Parameters {
 ///
 /// {@category Results}
 class PublishResult extends Result {
-  bool isError;
-  String description;
-  int timetoken;
+  final bool isError;
+  final String description;
+  final int timetoken;
 
-  PublishResult();
+  PublishResult._(this.timetoken, this.description, this.isError);
 
   factory PublishResult.fromJson(dynamic object) {
-    return PublishResult()
-      ..timetoken = int.tryParse(object[2])
-      ..description = object[1]
-      ..isError = object[0] == 1 ? false : true;
+    return PublishResult._(
+        int.parse(object[2]), object[1], object[0] == 1 ? false : true);
   }
 }

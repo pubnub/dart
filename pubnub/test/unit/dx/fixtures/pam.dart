@@ -1,7 +1,10 @@
 part of '../pam_test.dart';
 
 final _grantRequest = MockRequest('GET',
-    'v2/auth/grant/sub-key/test?auth=authKey&channel=my_channel&ttl=1440&m=0&r=1&w=0&pnsdk=PubNub-Dart%2F${PubNub.version}&timestamp=1234567890&signature=v2.GeR1r2jVlxg-5zv7SnS176bbIqqya3jIoJ8cH0YDJtU');
+    'v2/auth/grant/sub-key/test?pnsdk=PubNub-Dart%2F${PubNub.version}&auth=authKey&channel=my_channel&ttl=1440&uuid=test&m=0&r=1&w=0&timestamp=1234567890&signature=v2.lnTIPOj-_hXM25l0KU75YdUBEyK_Ax7ZgWJHuLC3yus');
+
+final _grantWithUUIDRequest = MockRequest('GET',
+    'v2/auth/grant/sub-key/test?pnsdk=PubNub-Dart%2F${PubNub.version}&auth=authKey&target-uuid=uuid1&ttl=1440&uuid=test&m=0&r=1&w=0&timestamp=1234567890&signature=v2.8YYcO1vpAxkLRGxCyinQH-4bSiBO8nvwOwIpv6wEFGo');
 
 final _grantSuccessResponse =
     MockResponse(statusCode: 200, headers: {}, body: '''
@@ -26,9 +29,38 @@ final _grantSuccessResponse =
 }
 ''');
 
+final _grantWithUUIDSuccessResponse =
+    MockResponse(statusCode: 200, headers: {}, body: '''
+{
+   "status":200,
+   "message":"Success",
+   "payload":{
+      "uuids":{
+         "uuid1":{
+            "auths":{
+               "myAuthKey":{
+                  "d":0,
+                  "g":1,
+                  "j":0,
+                  "m":0,
+                  "r":0,
+                  "u":1,
+                  "w":0
+               }
+            }
+         }
+      },
+      "subscribe_key":"mySubKey",
+      "ttl":300,
+      "level":"uuid"
+   },
+   "service":"Access Manager"
+}
+''');
+
 final _grantTokenRequest = MockRequest(
     'POST',
-    'v3/pam/test/grant?timestamp=1234567890&pnsdk=PubNub-Dart%2F${PubNub.version}&signature=v2.5kWsV-b4rDjsFxiccnB64OMnHq8fdVaS7mlEWPU2Uuw',
+    'v3/pam/test/grant?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test&timestamp=1234567890&signature=v2.tPl4dEkBmYR7vN1FnPF5_A5RQFFGG8fuKzj7RWTDkNw',
     {},
     '{"ttl":1440,"permissions":{"resources":{"channels":{"inbox-jay":3},"groups":{},"users":{},"spaces":{}},"patterns":{"channels":{},"groups":{},"users":{},"spaces":{}},"meta":{"user-id":"jay@example.com","contains-unicode":"The 來 test."}}}');
 

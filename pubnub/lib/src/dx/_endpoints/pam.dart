@@ -12,7 +12,7 @@ class PamGrantTokenParams extends Parameters {
   Request toRequest() {
     var pathSegments = ['v3', 'pam', keyset.subscribeKey, 'grant'];
     var queryParameters = <String, String>{
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid.value}',
+      'uuid': '${keyset.uuid.value}',
     };
 
     return Request.post(
@@ -39,17 +39,17 @@ class PamGrantParams extends Parameters {
   final Keyset keyset;
 
   final Set<String> authKeys;
-  final int ttl;
-  final Set<String> channels;
-  final Set<String> channelGroups;
-  final Set<String> uuids;
-  final bool write;
-  final bool read;
-  final bool manage;
-  final bool delete;
-  final bool get;
-  final bool update;
-  final bool join;
+  final int? ttl;
+  final Set<String>? channels;
+  final Set<String>? channelGroups;
+  final Set<String>? uuids;
+  final bool? write;
+  final bool? read;
+  final bool? manage;
+  final bool? delete;
+  final bool? get;
+  final bool? update;
+  final bool? join;
 
   PamGrantParams(this.keyset, this.authKeys,
       {this.ttl,
@@ -69,21 +69,21 @@ class PamGrantParams extends Parameters {
     var pathSegments = ['v2', 'auth', 'grant', 'sub-key', keyset.subscribeKey];
 
     var queryParameters = {
-      if (authKeys != null && authKeys.isNotEmpty) 'auth': authKeys.join(','),
-      if ((channels != null && channels.isNotEmpty))
-        'channel': channels.join(','),
-      if ((channelGroups != null && channelGroups.isNotEmpty))
-        'channel-group': channelGroups.join(','),
-      if (uuids != null && uuids.isNotEmpty) 'target-uuid': uuids.join(','),
+      if (authKeys.isNotEmpty) 'auth': authKeys.join(','),
+      if ((channels != null && channels!.isNotEmpty))
+        'channel': channels!.join(','),
+      if ((channelGroups != null && channelGroups!.isNotEmpty))
+        'channel-group': channelGroups!.join(','),
+      if (uuids != null && uuids!.isNotEmpty) 'target-uuid': uuids!.join(','),
       if (ttl != null) 'ttl': '$ttl',
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid}',
-      if (delete != null) 'd': delete ? '1' : '0',
-      if (manage != null) 'm': manage ? '1' : '0',
-      if (read != null) 'r': read ? '1' : '0',
-      if (write != null) 'w': write ? '1' : '0',
-      if (get != null) 'g': get ? '1' : '0',
-      if (update != null) 'u': update ? '1' : '0',
-      if (join != null) 'j': join ? '1' : '0'
+      'uuid': '${keyset.uuid}',
+      if (delete != null) 'd': delete! ? '1' : '0',
+      if (manage != null) 'm': manage! ? '1' : '0',
+      if (read != null) 'r': read! ? '1' : '0',
+      if (write != null) 'w': write! ? '1' : '0',
+      if (get != null) 'g': get! ? '1' : '0',
+      if (update != null) 'u': update! ? '1' : '0',
+      if (join != null) 'j': join! ? '1' : '0'
     };
     return Request.get(
         uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters));
@@ -91,16 +91,28 @@ class PamGrantParams extends Parameters {
 }
 
 class Permission {
-  final String channel;
+  final String? channel;
+  final String? uuid;
   final String authKey;
 
-  final bool read;
-  final bool write;
-  final bool manage;
-  final bool delete;
+  final bool? read;
+  final bool? write;
+  final bool? manage;
+  final bool? delete;
+  final bool? get;
+  final bool? update;
+  final bool? join;
 
-  const Permission(this.channel, this.authKey,
-      {this.read, this.write, this.manage, this.delete});
+  const Permission(this.authKey,
+      {this.channel,
+      this.uuid,
+      this.read,
+      this.write,
+      this.manage,
+      this.delete,
+      this.get,
+      this.join,
+      this.update});
 }
 
 class PamGrantResult extends Result {
@@ -111,7 +123,7 @@ class PamGrantResult extends Result {
 
   final List<Permission> permissions;
 
-  PamGrantResult(
+  PamGrantResult._(
       this.warning, this.message, this.level, this.ttl, this.permissions);
 
   factory PamGrantResult.fromJson(dynamic object) {
@@ -125,11 +137,15 @@ class PamGrantResult extends Result {
 
     void addPermissions(String channel, Map auths) {
       for (var entry in auths.entries) {
-        permissions.add(Permission(channel, entry.key,
+        permissions.add(Permission(entry.key,
+            channel: channel,
             read: entry.value['r'] == 1 ? true : false,
             write: entry.value['w'] == 1 ? true : false,
             manage: entry.value['m'] == 1 ? true : false,
-            delete: entry.value['d'] == 1 ? true : false));
+            delete: entry.value['d'] == 1 ? true : false,
+            update: entry.value['u'] == 1 ? true : false,
+            join: entry.value['j'] == 1 ? true : false,
+            get: entry.value['g'] == 1 ? true : false));
       }
     }
 
@@ -147,7 +163,28 @@ class PamGrantResult extends Result {
       }
     }
 
-    return PamGrantResult(hasWarning, result.message, payload['level'],
+    void addUuidPermissions(String uuid, Map auths) {
+      for (var entry in auths.entries) {
+        permissions.add(Permission(entry.key,
+            uuid: uuid,
+            read: entry.value['r'] == 1 ? true : false,
+            write: entry.value['w'] == 1 ? true : false,
+            manage: entry.value['m'] == 1 ? true : false,
+            delete: entry.value['d'] == 1 ? true : false,
+            update: entry.value['u'] == 1 ? true : false,
+            join: entry.value['j'] == 1 ? true : false,
+            get: entry.value['g'] == 1 ? true : false));
+      }
+    }
+
+    if (payload['uuids'] != null) {
+      var uuids = payload['uuids'];
+      for (var entry in uuids.entries) {
+        addUuidPermissions(entry.key, entry.value['auths']);
+      }
+    }
+
+    return PamGrantResult._(hasWarning, result.message!, payload['level'],
         payload['ttl'], permissions);
   }
 }

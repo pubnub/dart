@@ -2,11 +2,11 @@
 ///
 /// {@category Objects}
 class UuidMetadataInput {
-  String name;
-  String email;
-  dynamic custom;
-  String externalId;
-  String profileUrl;
+  String? name;
+  String? email;
+  dynamic? custom;
+  String? externalId;
+  String? profileUrl;
 
   UuidMetadataInput(
       {this.name, this.email, this.externalId, this.profileUrl, this.custom});
@@ -24,9 +24,9 @@ class UuidMetadataInput {
 ///
 /// {@category Objects}
 class ChannelMetadataInput {
-  String name;
-  String description;
-  dynamic custom;
+  String? name;
+  String? description;
+  dynamic? custom;
 
   ChannelMetadataInput({this.name, this.description, this.custom});
 
@@ -42,7 +42,7 @@ class ChannelMetadataInput {
 /// {@category Objects}
 class ChannelMemberMetadataInput {
   String uuid;
-  Map<String, dynamic> custom;
+  Map<String, dynamic>? custom;
 
   ChannelMemberMetadataInput(this.uuid, {this.custom});
 
@@ -57,7 +57,7 @@ class ChannelMemberMetadataInput {
 /// {@category Objects}
 class MembershipMetadataInput {
   String channelId;
-  Map<String, dynamic> custom;
+  Map<String, dynamic>? custom;
 
   MembershipMetadataInput(this.channelId, {this.custom});
 

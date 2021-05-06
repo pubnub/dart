@@ -37,7 +37,7 @@ class Channel {
   /// If set to `0`, message won't expire.
   /// If unset, expiration will fall back to default.
   Future<PublishResult> publish(dynamic message,
-      {bool storeMessage, int ttl, dynamic meta}) {
+      {bool? storeMessage, int? ttl, dynamic meta}) {
     return _core.publish(name, message,
         storeMessage: storeMessage, ttl: ttl, keyset: _keyset, meta: meta);
   }
@@ -62,7 +62,7 @@ class Channel {
   /// * if [to] is `null` and [from] is defined, then it will work on all messages since [from].
   /// * if [to] is defined and [from] is `null`, then it will work on all messages up to [to].
   /// * if both [to] and [from] are defined, then it will work on messages that were sent between [from] and [to].
-  ChannelHistory messages({Timetoken from, Timetoken to}) =>
+  ChannelHistory messages({Timetoken? from, Timetoken? to}) =>
       ChannelHistory(_core, this, _keyset, from, to);
 
   /// Explicitly announces a leave event for this keyset/channel combination.
@@ -79,7 +79,7 @@ class Channel {
   /// If both [to] or [limit] are null, it will fetch the maximum amount of message actions -
   /// the server will try and retrieve all actions for the channel, going back in time forever.
   Future<FetchMessageActionsResult> fetchMessageActions(
-          {Timetoken from, Timetoken to, int limit}) =>
+          {Timetoken? from, Timetoken? to, int? limit}) =>
       _core.fetchMessageActions(name,
           from: from, to: to, limit: limit, keyset: _keyset);
 
@@ -96,8 +96,15 @@ class Channel {
   ///
   /// In other words, for a given parent message, there can be only one message action with [type] and [value].
   Future<AddMessageActionResult> addMessageAction(
-          String type, String value, Timetoken timetoken) =>
-      _core.addMessageAction(type, value, name, timetoken, keyset: _keyset);
+          {required String type,
+          required String value,
+          required Timetoken timetoken}) =>
+      _core.addMessageAction(
+          type: type,
+          value: value,
+          channel: name,
+          timetoken: timetoken,
+          keyset: _keyset);
 
   /// This method removes an existing message action (identified by [actionTimetoken]) from a parent message (identified by [messageTimetoken]).
   ///
@@ -108,7 +115,10 @@ class Channel {
   /// and one or more "action remove event" messages will be published in realtime
   /// on the same channel as the parent message.
   Future<DeleteMessageActionResult> deleteMessageAction(
-          Timetoken messageTimetoken, Timetoken actionTimetoken) =>
-      _core.deleteMessageAction(name, messageTimetoken, actionTimetoken,
+          {required Timetoken messageTimetoken,
+          required Timetoken actionTimetoken}) =>
+      _core.deleteMessageAction(name,
+          messageTimetoken: messageTimetoken,
+          actionTimetoken: actionTimetoken,
           keyset: _keyset);
 }

@@ -1,8 +1,9 @@
-import 'package:pubnub/src/core/keyset.dart';
 import 'package:test/test.dart';
 
+import 'package:pubnub/pubnub.dart';
+
 void main() {
-  KeysetStore store;
+  late KeysetStore store;
   group('Core [keyset]', () {
     group('#add', () {
       setUp(() {
@@ -10,9 +11,11 @@ void main() {
       });
 
       test('throws when adding two keys with the same name', () {
-        store.add(Keyset(subscribeKey: 'test'), name: 'test');
+        store.add('test', Keyset(subscribeKey: 'test', uuid: UUID('test')));
 
-        expect(() => store.add(Keyset(subscribeKey: 'test'), name: 'test'),
+        expect(
+            () => store.add(
+                'test', Keyset(subscribeKey: 'test', uuid: UUID('test'))),
             throwsA(TypeMatcher<KeysetException>()));
       });
     });
@@ -20,40 +23,25 @@ void main() {
     group('#get', () {
       setUp(() {
         store = KeysetStore();
-        store.add(Keyset(subscribeKey: 'default'),
-            name: 'default', useAsDefault: true);
-      });
-
-      test('throws if name is null and defaultIfNameIsNull is false', () {
-        expect(() => store.get(null, defaultIfNameIsNull: false),
-            throwsA(TypeMatcher<KeysetException>()));
+        store.add(
+          'default',
+          Keyset(subscribeKey: 'default', uuid: UUID('test')),
+          useAsDefault: true,
+        );
       });
 
       test('throws if keyset name is not recognized', () {
-        expect(
-            () => store.get('some'), throwsA(TypeMatcher<KeysetException>()));
+        expect(() => store['some'], throwsA(TypeMatcher<KeysetException>()));
       });
 
       test('throws if name is null and default key is not defined', () {
         store.remove('default');
-        expect(() => store.get(null, defaultIfNameIsNull: true),
-            throwsA(TypeMatcher<KeysetException>()));
-      });
-
-      test('returns null instead of throwing if throwOnNull is false', () {
-        expect(store.get(null, defaultIfNameIsNull: false, throwOnNull: false),
-            equals(null));
-
-        expect(store.get('some', throwOnNull: false), equals(null));
-
-        store.remove('default');
-        expect(store.get(null, defaultIfNameIsNull: true, throwOnNull: false),
-            equals(null));
+        expect(() => store[null], throwsA(TypeMatcher<KeysetException>()));
       });
 
       test('returns default keyset if name is null', () {
         expect(
-            store.get(null, defaultIfNameIsNull: true),
+            store[null],
             allOf(
                 isA<Keyset>(),
                 predicate(
@@ -62,7 +50,7 @@ void main() {
 
       test('returns correct keyset if name is recognized', () {
         expect(
-            store.get('default'),
+            store['default'],
             allOf(
                 isA<Keyset>(),
                 predicate(

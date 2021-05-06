@@ -30,7 +30,7 @@ class TokenRequest {
   /// * If [name] is a `String`, it adds a normal resource.
   /// * If [name] is a `RegExp`, it adds a pattern instead.
   void add(ResourceType type, Pattern name,
-      {bool create, bool delete, bool manage, bool read, bool write}) {
+      {bool? create, bool? delete, bool? manage, bool? read, bool? write}) {
     _resources.add(Resource(type, name,
         create: create,
         delete: delete,

@@ -12,12 +12,12 @@ mixin PresenceDx on Core {
   /// If [stateInfo] is `.all`, then it will include each `UUID`s state.
   /// If [stateInfo] is `.onlyUUIDs` (as by default), then it will include `UUID`s without state.
   Future<HereNowResult> hereNow(
-      {Keyset keyset,
-      String using,
+      {Keyset? keyset,
+      String? using,
       Set<String> channels = const {},
       Set<String> channelGroups = const {},
-      StateInfo stateInfo}) async {
-    keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
+      StateInfo? stateInfo}) async {
+    keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
 
@@ -34,12 +34,12 @@ mixin PresenceDx on Core {
 
   /// Announce in [channels] and [channelGroups] that a device linked to the UUID in the keyset left.
   Future<LeaveResult> announceLeave({
-    Keyset keyset,
-    String using,
+    Keyset? keyset,
+    String? using,
     Set<String> channels = const {},
     Set<String> channelGroups = const {},
   }) {
-    keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
+    keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
 
@@ -53,12 +53,12 @@ mixin PresenceDx on Core {
 
   /// Anounce in [channels] and [channelGroups] that a device linked to the UUID in the keyset is alive.
   Future<HeartbeatResult> announceHeartbeat(
-      {Keyset keyset,
-      String using,
+      {Keyset? keyset,
+      String? using,
       Set<String> channels = const {},
       Set<String> channelGroups = const {},
-      int heartbeat}) {
-    keyset ??= super.keysets.get(using, defaultIfNameIsNull: true);
+      int? heartbeat}) {
+    keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
 

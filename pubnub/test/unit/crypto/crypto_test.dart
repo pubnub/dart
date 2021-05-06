@@ -4,8 +4,8 @@ import 'package:pubnub/src/crypto/crypto.dart';
 import 'package:test/test.dart';
 
 void main() {
-  CryptoModule crypto;
-  CipherKey key;
+  late CryptoModule crypto;
+  late CipherKey key;
 
   group('Crypto [PubNubCryptoModule]', () {
     setUp(() {

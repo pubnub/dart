@@ -12,12 +12,12 @@ class NetworkingModule extends INetworkingModule {
   /// Retry policy.
   ///
   /// If retry policy is null, then retries are not attempted.
-  final RetryPolicy retryPolicy;
+  final RetryPolicy? retryPolicy;
 
   /// Origin used for all requests.
   ///
   /// If `null`, then defaults to the PubNub default origin.
-  final String origin;
+  final String? origin;
 
   /// Whether `https` or `http` should be used.
   final bool ssl;
@@ -27,7 +27,7 @@ class NetworkingModule extends INetworkingModule {
   @override
   Uri getOrigin() {
     var originUri = origin != null
-        ? (ssl ? Uri.https(origin, '') : Uri.http(origin, ''))
+        ? (ssl ? Uri.https(origin!, '') : Uri.http(origin!, ''))
         : null;
 
     return Uri(

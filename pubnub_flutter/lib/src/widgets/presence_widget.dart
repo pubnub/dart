@@ -116,7 +116,7 @@ class PresenceWidgetState extends State<PresenceWidget> with DidInitState {
   }
 
   Future<void> _sendHeartbeat(Timer timer) async {
-    var keyset = _pubnub.keysets.obtain(widget.keyset, widget.using);
+    var keyset = widget.keyset ?? _pubnub.keysets[widget.using];
 
     var channels =
         widget.channels ?? _pubnub.getSubscribedChannelsForUUID(keyset.uuid);
@@ -134,7 +134,7 @@ class PresenceWidgetState extends State<PresenceWidget> with DidInitState {
 
   Future<void> _announceLeave() async {
     if (widget.announceLeave) {
-      var keyset = _pubnub.keysets.obtain(widget.keyset, widget.using);
+      var keyset = widget.keyset ?? _pubnub.keysets[widget.using];
 
       var channels =
           widget.channels ?? _pubnub.getSubscribedChannelsForUUID(keyset.uuid);

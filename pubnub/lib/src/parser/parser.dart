@@ -55,7 +55,7 @@ class ParserModule implements IParserModule {
     }
 
     try {
-      return await _parserMap[type].decode(input);
+      return await _parserMap[type]!.decode(input);
     } catch (e) {
       throw ParserException('Cannot decode input string as $type.', e);
     }
@@ -68,7 +68,7 @@ class ParserModule implements IParserModule {
     }
 
     try {
-      return await _parserMap[type].encode(input);
+      return await _parserMap[type]!.encode(input);
     } catch (e) {
       throw ParserException('Cannot encode input object as $type.', e);
     }

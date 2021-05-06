@@ -9,8 +9,8 @@ import 'resource.dart';
 class Token {
   final String _stringToken;
 
-  Map<String, dynamic> _memoizedData;
-  Map<String, dynamic> get _data {
+  Map<String, dynamic>? _memoizedData;
+  Map<String, dynamic>? get _data {
     if (_memoizedData == null) {
       var object = parseToken(_stringToken);
 
@@ -42,34 +42,34 @@ class Token {
         }
       }
 
-      _memoizedData['resources'] = resources;
+      _memoizedData!['resources'] = resources;
     }
 
     return _memoizedData;
   }
 
   /// Version of the token encoding.
-  int get version => _data['v'] as int;
+  int get version => _data!['v'] as int;
 
   /// Time-to-live for this token.
-  int get ttl => _data['ttl'] as int;
+  int get ttl => _data!['ttl'] as int;
 
   /// Timetoken that is the start time for [ttl].
-  Timetoken get timetoken => Timetoken(_data['t'] as int);
+  Timetoken get timetoken => Timetoken(BigInt.from(_data!['t'] as int));
 
   /// Meta data attached to this token.
-  dynamic get meta => _data['meta'];
+  dynamic get meta => _data!['meta'];
 
   /// Signature encoded as base64 string.
-  String get signature => _data['sig'] as String;
+  String get signature => _data!['sig'] as String;
 
   /// All resources attached to this token.
-  List<Resource> get resources => (_data['resources'] as List<Resource>)
+  List<Resource> get resources => (_data!['resources'] as List<Resource>)
       .where((resource) => resource.name is String)
       .toList();
 
   /// All patterns attached to this token.
-  List<Resource> get patterns => (_data['resources'] as List<Resource>)
+  List<Resource> get patterns => (_data!['resources'] as List<Resource>)
       .where((resource) => resource.name is RegExp)
       .toList();
 

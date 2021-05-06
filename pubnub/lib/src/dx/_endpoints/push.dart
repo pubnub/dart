@@ -54,8 +54,8 @@ class ListPushChannelsParams extends Parameters {
   String deviceId;
 
   PushGateway pushGateway;
-  Environment environment;
-  String topic;
+  Environment? environment;
+  String? topic;
 
   ListPushChannelsParams(this.keyset, this.deviceId, this.pushGateway,
       {this.topic, this.environment});
@@ -73,13 +73,13 @@ class ListPushChannelsParams extends Parameters {
 
     var queryParameters = {
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid}',
+      'uuid': '${keyset.uuid}',
       'type': pushGateway.value()
     };
     if (pushGateway == PushGateway.apns2) {
       queryParameters['environment'] =
-          environment != null ? environment.value() : 'development';
-      queryParameters['topic'] = topic;
+          environment != null ? environment!.value() : 'development';
+      queryParameters['topic'] = topic!;
       queryParameters.remove('type');
     }
     return Request.get(
@@ -92,13 +92,13 @@ class ListPushChannelsParams extends Parameters {
 /// {@category Results}
 /// {@category Push}
 class ListPushChannelsResult extends Result {
-  List<dynamic> channels;
+  final List<dynamic> channels;
 
-  ListPushChannelsResult();
+  ListPushChannelsResult._(this.channels);
 
   factory ListPushChannelsResult.fromJson(dynamic object) {
     if (object is List) {
-      return ListPushChannelsResult()..channels = object;
+      return ListPushChannelsResult._(object);
     }
 
     throw getExceptionFromDefaultResult(DefaultResult.fromJson(object));
@@ -110,8 +110,8 @@ class AddPushChannelsParams extends Parameters {
   String deviceId;
   Set<String> channels;
   PushGateway pushGateway;
-  Environment environment;
-  String topic;
+  Environment? environment;
+  String? topic;
 
   AddPushChannelsParams(
       this.keyset, this.deviceId, this.pushGateway, this.channels,
@@ -130,13 +130,13 @@ class AddPushChannelsParams extends Parameters {
     var queryParameters = {
       if (channels.isNotEmpty) 'add': channels.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid}',
+      'uuid': '${keyset.uuid}',
       'type': pushGateway.value()
     };
     if (pushGateway == PushGateway.apns2) {
       queryParameters['environment'] =
-          environment != null ? environment.value() : 'development';
-      queryParameters['topic'] = topic;
+          environment != null ? environment!.value() : 'development';
+      queryParameters['topic'] = topic!;
       queryParameters.remove('type');
     }
     return Request.get(
@@ -149,14 +149,13 @@ class AddPushChannelsParams extends Parameters {
 /// {@category Results}
 /// {@category Push}
 class AddPushChannelsResult extends Result {
-  int status;
-  String description;
-  AddPushChannelsResult();
+  final int status;
+  final String description;
+
+  AddPushChannelsResult._(this.status, this.description);
   factory AddPushChannelsResult.fromJson(dynamic object) {
     if (object is List) {
-      return AddPushChannelsResult()
-        ..status = object[0]
-        ..description = object[1];
+      return AddPushChannelsResult._(object[0], object[1]);
     }
 
     throw getExceptionFromDefaultResult(DefaultResult.fromJson(object));
@@ -168,8 +167,8 @@ class RemovePushChannelsParams extends Parameters {
   String deviceId;
   Set<String> channels;
   PushGateway pushGateway;
-  Environment environment;
-  String topic;
+  Environment? environment;
+  String? topic;
 
   RemovePushChannelsParams(
       this.keyset, this.deviceId, this.pushGateway, this.channels,
@@ -188,13 +187,13 @@ class RemovePushChannelsParams extends Parameters {
     var queryParameters = {
       if (channels.isNotEmpty) 'remove': channels.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid}',
+      'uuid': '${keyset.uuid}',
       'type': pushGateway.value()
     };
     if (pushGateway == PushGateway.apns2) {
       queryParameters['environment'] =
-          environment != null ? environment.value() : 'development';
-      queryParameters['topic'] = topic;
+          environment != null ? environment!.value() : 'development';
+      queryParameters['topic'] = topic!;
       queryParameters.remove('type');
     }
     return Request.get(
@@ -207,14 +206,14 @@ class RemovePushChannelsParams extends Parameters {
 /// {@category Results}
 /// {@category Push}
 class RemovePushChannelsResult extends Result {
-  int status;
-  String description;
-  RemovePushChannelsResult();
+  final int status;
+  final String description;
+
+  RemovePushChannelsResult._(this.status, this.description);
+
   factory RemovePushChannelsResult.fromJson(dynamic object) {
     if (object is List) {
-      return RemovePushChannelsResult()
-        ..status = object[0]
-        ..description = object[1];
+      return RemovePushChannelsResult._(object[0], object[1]);
     }
 
     throw getExceptionFromDefaultResult(DefaultResult.fromJson(object));
@@ -226,8 +225,8 @@ class RemoveDeviceParams extends Parameters {
   String deviceId;
 
   PushGateway pushGateway;
-  Environment environment;
-  String topic;
+  Environment? environment;
+  String? topic;
 
   RemoveDeviceParams(this.keyset, this.deviceId, this.pushGateway,
       {this.topic, this.environment});
@@ -246,13 +245,13 @@ class RemoveDeviceParams extends Parameters {
 
     var queryParameters = {
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      if (keyset.uuid != null) 'uuid': '${keyset.uuid}',
+      'uuid': '${keyset.uuid}',
       'type': pushGateway.value()
     };
     if (pushGateway == PushGateway.apns2) {
       queryParameters['environment'] =
-          environment != null ? environment.value() : 'development';
-      queryParameters['topic'] = topic;
+          environment != null ? environment!.value() : 'development';
+      queryParameters['topic'] = topic!;
       queryParameters.remove('type');
     }
     return Request.get(
@@ -265,14 +264,14 @@ class RemoveDeviceParams extends Parameters {
 /// {@category Results}
 /// {@category Push}
 class RemoveDeviceResult extends Result {
-  int status;
-  String description;
-  RemoveDeviceResult();
+  final int status;
+  final String description;
+
+  RemoveDeviceResult._(this.status, this.description);
+
   factory RemoveDeviceResult.fromJson(dynamic object) {
     if (object is List) {
-      return RemoveDeviceResult()
-        ..status = object[0]
-        ..description = object[1];
+      return RemoveDeviceResult._(object[0], object[1]);
     }
 
     throw getExceptionFromDefaultResult(DefaultResult.fromJson(object));
