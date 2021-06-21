@@ -64,6 +64,33 @@ void main() {
       await subscriber.expectMessage(channel, message);
     });
 
+    test('with custom timetoken', () async {
+      pubnub = PubNub(
+        defaultKeyset: Keyset(
+          subscribeKey: SUBSCRIBE_KEY,
+          publishKey: PUBLISH_KEY,
+          uuid: UUID('dart-test'),
+        ),
+      );
+      var customOldTimetoken =
+          Timetoken(BigInt.from(DateTime.now().microsecondsSinceEpoch * 10));
+      var channel = 'test-${DateTime.now().millisecondsSinceEpoch}';
+      var message = 'hello';
+
+      await pubnub.publish(channel, message);
+
+      subscriber = Subscriber.init(pubnub, SUBSCRIBE_KEY);
+
+      var subscription =
+          subscriber.createSubscription(channel, timetoken: customOldTimetoken);
+
+      subscription!.subscribe();
+
+      await Future.delayed(Duration(seconds: 2));
+
+      await subscriber.expectMessage(channel, message);
+    });
+
     tearDown(() async {
       await subscriber.cleanup();
       await pubnub.unsubscribeAll();

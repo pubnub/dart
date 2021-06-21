@@ -144,5 +144,17 @@ void main() {
 
       expect(result.channels['my_channel']![0].meta!['hello'], equals('world'));
     });
+
+    test('.batch#fetchMessages with include_meta and null meta value',
+        () async {
+      when(
+              path:
+                  '/v3/history/sub-key/test/channel/my_channel?max=100&include_meta=true&include_message_type=true&include_uuid=true&uuid=test&pnsdk=PubNub-Dart%2F${PubNub.version}',
+              method: 'GET')
+          .then(status: 200, body: _batchFetchMessagesWithMetaEmptyString);
+      var result =
+          await pubnub.batch.fetchMessages({'my_channel'}, includeMeta: true);
+      expect(result.channels['my_channel']![0].meta, equals(null));
+    });
   });
 }

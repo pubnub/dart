@@ -83,7 +83,7 @@ class RequestHandler extends IRequestHandler {
       request
         ..open(
           data.type.method,
-          Uri.parse(uri.toString().replaceAll('+', '%20')).toString(),
+          uri.replace(query: uri.query.replaceAll('+', '%20')).toString(),
         )
         ..responseType = 'arraybuffer';
 

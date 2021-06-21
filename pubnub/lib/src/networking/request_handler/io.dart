@@ -82,10 +82,8 @@ class RequestHandler extends IRequestHandler {
         throw await cancelReason;
       }
 
-      var request = await client.openUrl(
-        data.type.method,
-        Uri.parse(uri.toString().replaceAll('+', '%20')),
-      );
+      var request = await client.openUrl(data.type.method,
+          Uri.parse('${uri.replace(query: uri.query.replaceAll('+', '%20'))}'));
 
       _abortRequest = (reason) {
         request.abort(reason);

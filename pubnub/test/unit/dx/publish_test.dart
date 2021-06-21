@@ -62,19 +62,5 @@ void main() {
           ?.publish('test', {'hello': 'world'}, meta: {'hello': 'world'});
       expect(response?.description, equals('Sent'));
     });
-
-    test('#publish with string meta', () async {
-      when(
-        path:
-            'publish/demo/demo/0/test/0/%7B%22hello%22:%22world%22%7D?uuid=test&pnsdk=PubNub-Dart%2F${PubNub.version}',
-        method: 'GET',
-      ).then(status: 200, body: _publishSuccessResponse);
-
-      var response = await pubnub?.publish('test', {'hello': 'world'},
-          meta: 'meta_sample');
-
-      expect(response?.isError, equals(false));
-      expect(response?.description, equals('Sent'));
-    });
   });
 }

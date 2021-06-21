@@ -6,6 +6,7 @@ class SubscribeLoopState {
 
   Timetoken timetoken;
   int? region;
+  Timetoken? customTimetoken;
 
   bool isActive;
 
@@ -17,7 +18,8 @@ class SubscribeLoopState {
       this.region,
       this.channels = const {},
       this.channelGroups = const {},
-      this.isActive = false})
+      this.isActive = false,
+      this.customTimetoken})
       : timetoken = timetoken ?? Timetoken(BigInt.zero);
 
   bool get shouldRun =>
@@ -28,13 +30,17 @@ class SubscribeLoopState {
           int? region,
           Set<String>? channels,
           Set<String>? channelGroups,
-          bool? isActive}) =>
+          bool? isActive,
+          Timetoken? customTimetoken}) =>
       SubscribeLoopState(keyset)
         ..timetoken = timetoken ?? this.timetoken
         ..region = region ?? this.region
         ..channels = channels ?? this.channels
         ..channelGroups = channelGroups ?? this.channelGroups
-        ..isActive = isActive ?? this.isActive;
+        ..isActive = isActive ?? this.isActive
+        ..customTimetoken = timetoken == null
+            ? customTimetoken ?? this.customTimetoken
+            : customTimetoken;
 
   @override
   bool operator ==(Object other) {

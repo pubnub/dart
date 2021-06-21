@@ -48,27 +48,27 @@ mixin SubscribeDx on Core {
   /// Example:
   ///
   /// ```dart
-  /// var subscription = await pubnub.subscribe(channels: {'my_test_channel'});
+  /// var subscription = pubnub.subscribe(channels: {'my_test_channel'});
   /// subscription.messages.listen((envelope) {
   ///   // handle envelope
   /// });
   /// ```
-  Subscription subscribe({
-    Set<String>? channels,
-    Set<String>? channelGroups,
-    bool withPresence = false,
-    Keyset? keyset,
-    String? using,
-  }) {
+  Subscription subscribe(
+      {Set<String>? channels,
+      Set<String>? channelGroups,
+      bool withPresence = false,
+      Keyset? keyset,
+      String? using,
+      Timetoken? timetoken}) {
     keyset ??= keysets[using];
 
     var manager = _getOrCreateManager(keyset);
 
     var subscription = manager.createSubscription(
-      channels: channels,
-      channelGroups: channelGroups,
-      withPresence: withPresence,
-    );
+        channels: channels,
+        channelGroups: channelGroups,
+        withPresence: withPresence,
+        timetoken: timetoken);
 
     subscription.resume();
 
@@ -78,13 +78,13 @@ mixin SubscribeDx on Core {
   /// Creates an inactive subscription to [channels] and [channelGroups]. Returns [Subscription].
   ///
   /// You can activate an inactive subscription by calling `subscription.subscribe()`.
-  Subscription subscription({
-    Set<String>? channels,
-    Set<String>? channelGroups,
-    bool withPresence = false,
-    Keyset? keyset,
-    String? using,
-  }) {
+  Subscription subscription(
+      {Set<String>? channels,
+      Set<String>? channelGroups,
+      bool withPresence = false,
+      Keyset? keyset,
+      String? using,
+      Timetoken? timetoken}) {
     keyset ??= keysets[using];
 
     var manager = _getOrCreateManager(keyset);
@@ -92,9 +92,8 @@ mixin SubscribeDx on Core {
     var subscription = manager.createSubscription(
         channels: channels,
         channelGroups: channelGroups,
-        withPresence: withPresence);
-
-    subscription.resume();
+        withPresence: withPresence,
+        timetoken: timetoken);
 
     return subscription;
   }

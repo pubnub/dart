@@ -91,6 +91,8 @@ class SubscribeLoop {
       try {
         _logger.silly('Starting new loop iteration.');
         tries += 1;
+
+        var customTimetoken = _state.customTimetoken;
         var state = _state;
 
         if (!state.shouldRun) {
@@ -129,7 +131,7 @@ class SubscribeLoop {
             try {
               _logger.silly('decrypting message...');
               object['d'] = await core.parser.decode(
-                  core.crypto.decrypt(state.keyset.cipherKey!, object['d']));
+                  core.crypto.decrypt(state.keyset.cipherKey!, (object['d'])));
             } catch (e) {
               throw PubNubException(
                   'Can not decrypt the message payload. Please check keyset configuration.');
@@ -141,8 +143,9 @@ class SubscribeLoop {
 
         tries = 0;
 
-        update((state) =>
-            state.clone(timetoken: result.timetoken, region: result.region));
+        update((state) => state.clone(
+            timetoken: customTimetoken ?? result.timetoken,
+            region: result.region));
       } catch (exception) {
         var fiber = SubscribeFiber(tries);
 

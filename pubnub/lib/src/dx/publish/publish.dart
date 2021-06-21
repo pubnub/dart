@@ -19,9 +19,7 @@ mixin PublishDx on Core {
   /// If unset, expiration will fall back to default.
   ///
   /// [meta] parameter is for providing additional information with message
-  /// that can be used for stream filtering
-  /// * Inorder to make stream filtering work, Provide valid `Object` as meta.
-  /// * Invalid type (e.g String) data won't be passed to server.
+  /// that can be used for stream filtering.
   ///
   /// If [keyset] is not provided, then it tries to obtain a keyset [using] name.
   /// If that fails, then it uses the default keyset.
@@ -34,7 +32,7 @@ mixin PublishDx on Core {
   Future<PublishResult> publish(String channel, dynamic message,
       {Keyset? keyset,
       String? using,
-      dynamic meta,
+      Map<String, dynamic>? meta,
       bool? storeMessage,
       int? ttl}) async {
     Ensure(channel).isNotEmpty('channel name');
@@ -53,7 +51,7 @@ mixin PublishDx on Core {
     var params = PublishParams(keyset, channel, payload,
         storeMessage: storeMessage, ttl: ttl);
 
-    if (meta != null && !(meta is String)) {
+    if (meta != null) {
       params.meta = await super.parser.encode(meta);
     }
 

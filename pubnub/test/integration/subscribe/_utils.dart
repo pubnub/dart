@@ -25,6 +25,12 @@ class Subscriber {
     queue = StreamQueue(subscription!.messages);
   }
 
+  Subscription? createSubscription(String channel, {Timetoken? timetoken}) {
+    subscription = _pn.subscription(channels: {channel}, timetoken: timetoken);
+    queue = StreamQueue(subscription!.messages);
+    return subscription;
+  }
+
   Future<void> cleanup() async {
     await queue?.cancel(immediate: true);
     return subscription?.cancel();

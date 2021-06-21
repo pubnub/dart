@@ -20,7 +20,7 @@ changelog:
       -
         text: "Fixes message decryption in subscribe loop."
         type: bug
-    date: Feb 16, 21
+    date: 2021-02-16
     version: v3.1.0
   -
     changes:
@@ -39,14 +39,14 @@ changelog:
       -
         text: "Adds additional diagnostics to the networking module."
         type: bug
-    date: Oct 8, 20
+    date: 2020-10-08
     version: v3.0.0
   -
     changes:
       -
         text: "Fixes issue of upgrade failure."
         type: bug
-    date: Sep 7, 20
+    date: 2020-09-07
     version: v2.0.1
   -
     changes:
@@ -65,7 +65,7 @@ changelog:
       -
         text: "Fixes a typo in BatchHistory where timetoken was returned null."
         type: bug
-    date: Aug 31, 20
+    date: 2020-08-31
     version: v2.0.0
   -
     changes:
@@ -78,7 +78,7 @@ changelog:
       -
         text: "Refactor for error message parsing for files."
         type: improvement
-    date: Aug 19, 20
+    date: 2020-08-19
     version: v1.4.4
   -
     changes:
@@ -88,21 +88,21 @@ changelog:
       -
         text: "Fixes missing url component in file publish message for sendFile and support for message encryption."
         type: bug
-    date: Aug 5, 20
+    date: 2020-08-05
     version: v1.4.3
   -
     changes:
       -
         text: "Fixes issue of invalid type argument for fcm push gateway type."
         type: bug
-    date: Jul 27, 20
+    date: 2020-07-27
     version: v1.4.2
   -
     changes:
       -
         text: "Fixes issue of missing exposed MessageType enum."
         type: bug
-    date: Jul 24, 20
+    date: 2020-07-24
     version: v1.4.1
   -
     changes:
@@ -112,14 +112,14 @@ changelog:
       -
         text: "Add support for random initialization vector for messages and file."
         type: improvement
-    date: Jul 23, 20
+    date: 2020-07-23
     version: v1.4.0
   -
     changes:
       -
         text: "Add message encryption support."
         type: feature
-    date: Jun 25, 20
+    date: 2020-06-25
     version: v1.3.0
   -
     changes:
@@ -129,7 +129,7 @@ changelog:
       -
         text: "Fixes missing PushGateway type support of fcm for Push Notification."
         type: bug
-    date: Jun 10, 20
+    date: 2020-06-10
     version: v1.2.0
   -
     changes:
@@ -139,21 +139,21 @@ changelog:
       -
         text: "Fixes exports to include presence and channel group results."
         type: bug
-    date: May 11, 20
+    date: 2020-05-11
     version: v1.1.3
   -
     changes:
       -
         text: "Fixes issues of missing types for objects and push-notification."
         type: bug
-    date: May 6, 20
+    date: 2020-05-06
     version: v1.1.2
   -
     changes:
       -
         text: "Expose missing types."
         type: bug
-    date: May 6, 20
+    date: 2020-05-06
     version: v1.1.1
   -
     changes:
@@ -163,7 +163,7 @@ changelog:
       -
         text: "Fixes issues with resubscribing and improves injectLogger."
         type: bug
-    date: May 5, 20
+    date: 2020-05-05
     version: v1.1.0
   -
     changes:
@@ -173,7 +173,7 @@ changelog:
       -
         text: "Fix Subscription.unsubscribe to correctly close the messages stream."
         type: bug
-    date: May 4, 20
+    date: 2020-05-04
     version: v1.0.5
   -
     changes:
@@ -183,14 +183,14 @@ changelog:
       -
         text: "Fix subscribe `withPresence: true` not properly forwarding messages when used with wildcard channels."
         type: bug
-    date: Apr 27, 20
+    date: 2020-04-27
     version: v1.0.4
   -
     changes:
       -
         text: "Change all Symbols to Strings to support Flutter better, fix a typo in SubscribeParams preventing subscribe from working."
         type: bug
-    date: Apr 22, 20
+    date: 2020-04-22
     version: v1.0.3
   -
     changes:
@@ -200,7 +200,7 @@ changelog:
       -
         text: "Prevent tests from breaking when version is bumped."
         type: improvement
-    date: Apr 18, 20
+    date: 2020-04-18
     version: v1.0.2
   -
     changes:
@@ -219,7 +219,7 @@ changelog:
       -
         text: "Consistently use PubNubversion in tests."
         type: bug
-    date: Apr 18, 20
+    date: 2020-04-18
     version: v1.0.1
   -
     changes:
@@ -247,13 +247,12 @@ changelog:
       -
         text: "Add channel and channel group abstractions to allow using History."
         type: feature
-    date: Apr 15, 20
+    date: 2020-04-15
     version: v1.0.0
 features:
   access:
     - ACCESS-GRANT
     - ACCESS-SECRET-KEY-ALL-ACCESS
-    - ACCESS-GRANT-TOKEN
   channel-groups:
     - CHANNEL-GROUPS-ADD-CHANNELS
     - CHANNEL-GROUPS-REMOVE-CHANNELS
@@ -352,3 +351,686 @@ supported-platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
 version: "3.1.0"
+sdks:
+  -
+    full-name: PubNub Dart SDK
+    short-name: Dart
+    artifacts:
+      -
+        artifact-type: package
+        language: Dart
+        tier: 2
+        tags:
+          - Mobile
+          - Web
+          - Desktop
+          - Server
+        source-repository: https://github.com/pubnub/dart
+        documentation: https://www.pubnub.com/docs/sdks/dart
+        distributions:
+          -
+            distribution-type: package
+            distribution-repository: pub.dev
+            package-name: pubnub
+            location: https://pub.dev/packages/pubnub
+            requires:
+              -
+                name: "Dart SDK"
+                min-version: "2.12.0"
+                license: "BSD3"
+                license-url: "https://github.com/dart-lang/sdk/blob/master/LICENSE"
+                location: "Should be installed on computer"
+                location-url: "https://dart.dev/get-dart"
+                is-required: "Required"
+              -
+                name: "async"
+                min-version: "2.5.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/async/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/async"
+                is-required: "Required"
+              -
+                name: "args"
+                min-version: "2.0.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/args/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/args"
+                is-required: "Required"
+              -
+                name: "asn1lib"
+                min-version: "0.9.0-nullsafety.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/asn1lib/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/asn1lib"
+                is-required: "Required"
+              -
+                name: "boolean_selector"
+                min-version: "2.1.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/boolean_selector/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/boolean_selector"
+                is-required: "Required"
+              -
+                name: "cbor"
+                min-version: "4.0.0"
+                license: "MIT"
+                license-url: "https://pub.dev/packages/cbor/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/cbor"
+                is-required: "Required"
+              -
+                name: "charcode"
+                min-version: "1.2.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/charcode/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/charcode"
+                is-required: "Required"
+              -
+                name: "cli_util"
+                min-version: "0.3.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/cli_util/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/cli_util"
+                is-required: "Required"
+              -
+                name: "clock"
+                min-version: "1.1.0"
+                license: "Apache 2.0"
+                license-url: "https://pub.dev/packages/clock/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/clock"
+                is-required: "Required"
+              -
+                name: "collection"
+                min-version: "1.15.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/collection/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/collection"
+                is-required: "Required"
+              -
+                name: "convert"
+                min-version: "3.0.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/convert/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/convert"
+                is-required: "Required"
+              -
+                name: "crypto"
+                min-version: "3.0.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/crypto/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/crypto"
+                is-required: "Required"
+              -
+                name: "encrypt"
+                min-version: "5.0.0-beta.1"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/encrypt/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/encrypt"
+                is-required: "Required"
+              -
+                name: "file"
+                min-version: "6.1.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/file/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/file"
+                is-required: "Required"
+              -
+                name: "form_data"
+                min-version: "1.0.0-nullsafety.1"
+                license: "MIT"
+                license-url: "https://pub.dev/packages/form_data/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/form_data"
+                is-required: "Required"
+              -
+                name: "glob"
+                min-version: "2.0.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/glob/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/glob"
+                is-required: "Required"
+              -
+                name: "js"
+                min-version: "0.6.3"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/js/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/js"
+                is-required: "Required"
+              -
+                name: "matcher"
+                min-version: "0.12.10"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/matcher/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/matcher"
+                is-required: "Required"
+              -
+                name: "meta"
+                min-version: "1.3.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/meta/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/meta"
+                is-required: "Required"
+              -
+                name: "mime"
+                min-version: "1.0.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/mime/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/mime"
+                is-required: "Required"
+              -
+                name: "path"
+                min-version: "1.8.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/path/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/path"
+                is-required: "Required"
+              -
+                name: "pedantic"
+                min-version: "1.11.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/pedantic/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/pedantic"
+                is-required: "Required"
+              -
+                name: "petitparser"
+                min-version: "4.0.2"
+                license: "MIT"
+                license-url: "https://pub.dev/packages/petitparser/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/petitparser"
+                is-required: "Required"
+              -
+                name: "pointycastle"
+                min-version: "3.0.0-nullsafety.2"
+                license: "MIT"
+                license-url: "https://pub.dev/packages/pointycastle/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/pointycastle"
+                is-required: "Required"
+              -
+                name: "pool"
+                min-version: "1.5.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/pool/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/pool"
+                is-required: "Required"
+              -
+                name: "source_map_stack_trace"
+                min-version: "2.1.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/source_map_stack_trace/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/source_map_stack_trace"
+                is-required: "Required"
+              -
+                name: "source_maps"
+                min-version: "0.10.10"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/source_maps/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/source_maps"
+                is-required: "Required"
+              -
+                name: "source_span"
+                min-version: "1.8.1"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/source_span/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/source_span"
+                is-required: "Required"
+              -
+                name: "stack_trace"
+                min-version: "1.10.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/stack_trace/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/stack_trace"
+                is-required: "Required"
+              -
+                name: "stream_channel"
+                min-version: "2.1.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/stream_channel/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/stream_channel"
+                is-required: "Required"
+              -
+                name: "string_scanner"
+                min-version: "1.1.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/string_scanner/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/string_scanner"
+                is-required: "Required"
+              -
+                name: "term_glyph"
+                min-version: "1.2.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/term_glyph/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/term_glyph"
+                is-required: "Required"
+              -
+                name: "typed_data"
+                min-version: "1.3.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/typed_data/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/typed_data"
+                is-required: "Required"
+              -
+                name: "watcher"
+                min-version: "1.0.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/watcher/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/watcher"
+                is-required: "Required"
+              -
+                name: "xml"
+                min-version: "5.0.2"
+                license: "MIT"
+                license-url: "https://pub.dev/packages/xml/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/xml"
+                is-required: "Required"
+              -
+                name: "yaml"
+                min-version: "3.1.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/yaml/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/yaml"
+                is-required: "Required"
+            supported-platforms:
+                supported-operating-systems:
+                  Linux:
+                    target-architecture:
+                      - x86-64
+                      - ia32
+                      - armeabi-v7a
+                      - arm64-v8a
+                    runtime-version:
+                      - Dart SDK 2.12
+                    maximum-os-version:
+                      - Ubuntu 20.04 LTS
+                    minimum-os-version:
+                      - Debian 10.9
+                  Windows:
+                    target-architecture:
+                      - x86-64
+                      - ia32
+                    runtime-version:
+                      - Dart SDK 2.12
+                    minimum-os-version:
+                      - Windows 10 Home
+                    maximum-os-version:
+                      - Windows 10 Enterprise
+                  macOS:
+                    target-architecture:
+                      - x86-64
+                    runtime-version:
+                      - Dart SDK 2.12
+                    minimum-os-version:
+                      - macOS 10.14
+                    maximum-os-version:
+                      - macOS 11.0
+      -
+        artifact-type: api-client
+        language: Dart
+        tier: 2
+        tags:
+          - Mobile
+          - Web
+          - Desktop
+          - Server
+        source-repository: https://github.com/pubnub/dart
+        documentation: https://www.pubnub.com/docs/sdks/dart
+        distributions:
+          -
+            distribution-type: source
+            distribution-repository: GitHub
+            package-name: PubNub Dart SDK
+            location: https://github.com/pubnub/dart
+            requires:
+              -
+                name: "Dart SDK"
+                min-version: "2.12.0"
+                license: "BSD3"
+                license-url: "https://github.com/dart-lang/sdk/blob/master/LICENSE"
+                location: "Should be installed on computer"
+                location-url: "https://dart.dev/get-dart"
+                is-required: "Required"
+              -
+                name: "async"
+                min-version: "2.5.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/async/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/async"
+                is-required: "Required"
+              -
+                name: "args"
+                min-version: "2.0.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/args/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/args"
+                is-required: "Required"
+              -
+                name: "asn1lib"
+                min-version: "0.9.0-nullsafety.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/asn1lib/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/asn1lib"
+                is-required: "Required"
+              -
+                name: "boolean_selector"
+                min-version: "2.1.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/boolean_selector/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/boolean_selector"
+                is-required: "Required"
+              -
+                name: "cbor"
+                min-version: "4.0.0"
+                license: "MIT"
+                license-url: "https://pub.dev/packages/cbor/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/cbor"
+                is-required: "Required"
+              -
+                name: "charcode"
+                min-version: "1.2.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/charcode/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/charcode"
+                is-required: "Required"
+              -
+                name: "cli_util"
+                min-version: "0.3.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/cli_util/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/cli_util"
+                is-required: "Required"
+              -
+                name: "clock"
+                min-version: "1.1.0"
+                license: "Apache 2.0"
+                license-url: "https://pub.dev/packages/clock/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/clock"
+                is-required: "Required"
+              -
+                name: "collection"
+                min-version: "1.15.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/collection/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/collection"
+                is-required: "Required"
+              -
+                name: "convert"
+                min-version: "3.0.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/convert/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/convert"
+                is-required: "Required"
+              -
+                name: "crypto"
+                min-version: "3.0.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/crypto/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/crypto"
+                is-required: "Required"
+              -
+                name: "encrypt"
+                min-version: "5.0.0-beta.1"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/encrypt/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/encrypt"
+                is-required: "Required"
+              -
+                name: "file"
+                min-version: "6.1.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/file/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/file"
+                is-required: "Required"
+              -
+                name: "form_data"
+                min-version: "1.0.0-nullsafety.1"
+                license: "MIT"
+                license-url: "https://pub.dev/packages/form_data/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/form_data"
+                is-required: "Required"
+              -
+                name: "glob"
+                min-version: "2.0.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/glob/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/glob"
+                is-required: "Required"
+              -
+                name: "js"
+                min-version: "0.6.3"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/js/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/js"
+                is-required: "Required"
+              -
+                name: "matcher"
+                min-version: "0.12.10"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/matcher/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/matcher"
+                is-required: "Required"
+              -
+                name: "meta"
+                min-version: "1.3.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/meta/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/meta"
+                is-required: "Required"
+              -
+                name: "mime"
+                min-version: "1.0.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/mime/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/mime"
+                is-required: "Required"
+              -
+                name: "path"
+                min-version: "1.8.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/path/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/path"
+                is-required: "Required"
+              -
+                name: "pedantic"
+                min-version: "1.11.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/pedantic/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/pedantic"
+                is-required: "Required"
+              -
+                name: "petitparser"
+                min-version: "4.0.2"
+                license: "MIT"
+                license-url: "https://pub.dev/packages/petitparser/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/petitparser"
+                is-required: "Required"
+              -
+                name: "pointycastle"
+                min-version: "3.0.0-nullsafety.2"
+                license: "MIT"
+                license-url: "https://pub.dev/packages/pointycastle/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/pointycastle"
+                is-required: "Required"
+              -
+                name: "pool"
+                min-version: "1.5.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/pool/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/pool"
+                is-required: "Required"
+              -
+                name: "source_map_stack_trace"
+                min-version: "2.1.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/source_map_stack_trace/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/source_map_stack_trace"
+                is-required: "Required"
+              -
+                name: "source_maps"
+                min-version: "0.10.10"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/source_maps/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/source_maps"
+                is-required: "Required"
+              -
+                name: "source_span"
+                min-version: "1.8.1"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/source_span/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/source_span"
+                is-required: "Required"
+              -
+                name: "stack_trace"
+                min-version: "1.10.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/stack_trace/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/stack_trace"
+                is-required: "Required"
+              -
+                name: "stream_channel"
+                min-version: "2.1.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/stream_channel/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/stream_channel"
+                is-required: "Required"
+              -
+                name: "string_scanner"
+                min-version: "1.1.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/string_scanner/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/string_scanner"
+                is-required: "Required"
+              -
+                name: "term_glyph"
+                min-version: "1.2.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/term_glyph/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/term_glyph"
+                is-required: "Required"
+              -
+                name: "typed_data"
+                min-version: "1.3.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/typed_data/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/typed_data"
+                is-required: "Required"
+              -
+                name: "watcher"
+                min-version: "1.0.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/watcher/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/watcher"
+                is-required: "Required"
+              -
+                name: "xml"
+                min-version: "5.0.2"
+                license: "MIT"
+                license-url: "https://pub.dev/packages/xml/license"
+                location: "Shipped within package"
+                location-url: "https://pub.dev/packages/xml"
+                is-required: "Required"
+              -
+                name: "yaml"
+                min-version: "3.1.0"
+                license: "BSD"
+                license-url: "https://pub.dev/packages/yaml/license"
+                location: "Transitive"
+                location-url: "https://pub.dev/packages/yaml"
+                is-required: "Required"
+            supported-platforms:
+                supported-operating-systems:
+                  Linux:
+                    target-architecture:
+                      - x86-64
+                      - ia32
+                      - armeabi-v7a
+                      - arm64-v8a
+                    runtime-version:
+                      - Dart SDK 2.12
+                    maximum-os-version:
+                      - Ubuntu 20.04 LTS
+                    minimum-os-version:
+                      - Debian 10.9
+                  Windows:
+                    target-architecture:
+                      - x86-64
+                      - ia32
+                    runtime-version:
+                      - Dart SDK 2.12
+                    minimum-os-version:
+                      - Windows 10 Home
+                    maximum-os-version:
+                      - Windows 10 Enterprise
+                  macOS:
+                    target-architecture:
+                      - x86-64
+                    runtime-version:
+                      - Dart SDK 2.12
+                    minimum-os-version:
+                      - macOS 10.14
+                    maximum-os-version:
+                      - macOS 11.0

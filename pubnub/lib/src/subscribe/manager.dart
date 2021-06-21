@@ -21,7 +21,7 @@ class Manager {
     _loop = SubscribeLoop(core, SubscribeLoopState(keyset));
   }
 
-  void _updateLoop([bool skipCancel = false]) {
+  void _updateLoop({bool skipCancel = false, Timetoken? customTimetoken}) {
     var channels = subscriptions.fold<Set<String>>(
         <String>{},
         (s, sub) => s
@@ -38,19 +38,25 @@ class Manager {
           }));
 
     _loop.update(
-        (state) =>
-            state.clone(channels: channels, channelGroups: channelGroups),
+        (state) => state.clone(
+            timetoken: Timetoken(BigInt.zero),
+            customTimetoken: customTimetoken,
+            channels: channels,
+            channelGroups: channelGroups),
         skipCancel: skipCancel);
   }
 
   Subscription createSubscription(
-      {Set<String>? channels, Set<String>? channelGroups, bool? withPresence}) {
+      {Set<String>? channels,
+      Set<String>? channelGroups,
+      bool? withPresence,
+      Timetoken? timetoken}) {
     var subscription =
         Subscription(this, channels, channelGroups, withPresence);
 
     subscriptions.add(subscription);
 
-    _updateLoop();
+    _updateLoop(customTimetoken: timetoken);
 
     return subscription;
   }
@@ -58,7 +64,7 @@ class Manager {
   void removeSubscription(Subscription subscription) {
     subscriptions.remove(subscription);
 
-    _updateLoop(true);
+    _updateLoop(skipCancel: true);
   }
 
   Future<void> unsubscribeAll() async {

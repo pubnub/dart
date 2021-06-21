@@ -164,7 +164,7 @@ class BatchHistoryResultEntry {
         object['uuid'],
         MessageTypeExtension.fromInt(object['message_type']),
         object['actions'],
-        object['meta']);
+        object['meta'] == '' ? null : object['meta']);
   }
 }
 

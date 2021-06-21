@@ -139,3 +139,20 @@ final _batchFetchMessagesWithMetaSuccessResponse = '''{
     }
 }
 ''';
+final _batchFetchMessagesWithMetaEmptyString = '''{
+    "status": 200,
+    "error": false,
+    "error_message": "",
+    "channels": {
+        "my_channel": [
+            {
+                "message_type": null,
+                "message": "hello world",
+                "timetoken": "16048329933709932",
+                "meta": "",
+                "uuid": "test-uuid"
+            }
+        ]
+    }
+}
+''';
