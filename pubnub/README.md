@@ -26,7 +26,9 @@ If you want to use the latest, unreleased version of `pubnub`, you can add it to
 ```yaml
 dependencies:
   pubnub:
-    git: git://github.com/pubnub/dart.git
+    git:
+      url: https://github.com/pubnub/dart
+      path: pubnub
 ```
 
 ### Using a local copy of the repository
