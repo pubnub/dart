@@ -1,0 +1,14 @@
+{
+  ".pubnub.yml": [
+    { "pattern": "^version: \"((\\d+\\.?){2,}(-[a-zA-Z]+(.\\d+)?)?)\"$", "cleared": false }
+  ],
+  "pubspec.yaml": [
+    { "pattern": "^version: ((\\d+\\.?){2,}(-[a-zA-Z]+(.\\d+)?)?)$", "cleared": false }
+  ],
+  "README.md": [
+    { "pattern": "^\\s{2,}pubnub: \\^((\\d+\\.?){2,}(-[a-zA-Z]+(.\\d+)?)?)$", "cleared": false }
+  ],
+  "lib/src/core/core.dart": [
+    { "pattern": "version = '\\^((\\d+\\.?){2,}(-[a-zA-Z]+(.\\d+)?)?)';$", "cleared": false }
+  ]
+}
