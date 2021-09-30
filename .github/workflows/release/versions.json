@@ -1,14 +1,14 @@
 {
   ".pubnub.yml": [
-    { "pattern": "^version: \"((\\d+\\.?){2,}(-[a-zA-Z]+(.\\d+)?)?)\"$", "cleared": false }
+    { "pattern": "^version: \"(v?(\\d+\\.?){2,}(-[a-zA-Z0-9]+(\\.\\d+)?)?)\"$", "cleared": false }
   ],
   "pubspec.yaml": [
-    { "pattern": "^version: ((\\d+\\.?){2,}(-[a-zA-Z]+(.\\d+)?)?)$", "cleared": false }
+    { "pattern": "^version: (v?(\\d+\\.?){2,}(-[a-zA-Z0-9]+(\\.\\d+)?)?)$", "cleared": false }
   ],
   "README.md": [
-    { "pattern": "^\\s{2,}pubnub: \\^((\\d+\\.?){2,}(-[a-zA-Z]+(.\\d+)?)?)$", "cleared": false }
+    { "pattern": "^\\s{2,}pubnub: \\^(v?(\\d+\\.?){2,}(-[a-zA-Z0-9]+(\\.\\d+)?)?)$", "cleared": false }
   ],
   "lib/src/core/core.dart": [
-    { "pattern": "version = '\\^((\\d+\\.?){2,}(-[a-zA-Z]+(.\\d+)?)?)';$", "cleared": false }
+    { "pattern": "version = '(v?(\\d+\\.?){2,}(-[a-zA-Z0-9]+(\\.\\d+)?)?)';$", "cleared": false }
   ]
 }
