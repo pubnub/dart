@@ -22,7 +22,8 @@ class RequestOtherException extends PubNubException {
 
 class RequestFailureException extends PubNubException {
   final IResponse response;
+  final int? statusCode;
 
-  RequestFailureException(this.response)
-      : super('request returned non-success status code');
+  RequestFailureException(this.response, {this.statusCode})
+      : super('request returned non-success status code: $statusCode');
 }

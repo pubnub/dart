@@ -36,7 +36,7 @@ class DefaultResult extends Result {
       errorMessage = errorDetails['message'];
       if (errorDetails['details'] != null) {
         (errorDetails['details'] as List).forEach((e) => errorMessage +=
-            '\n Error Details: ${e['message']} for ${e['location']} in ${e['locationType']}');
+            '\n Error Details: ${e['message']} for ${e['location']} in ${e['locationType']} of ${errorDetails['source']} api');
       }
     } else if (object['error'] is bool) {
       hasError = object['error'] as bool;

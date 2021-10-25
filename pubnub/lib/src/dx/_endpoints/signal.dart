@@ -43,7 +43,7 @@ class SignalResult extends Result {
   factory SignalResult.fromJson(dynamic object) {
     if (object is List) {
       return SignalResult._(
-          object[0] == 0 ? false : true, object[1], int.parse(object[2]));
+          object[0] == 1 ? false : true, object[1], int.parse(object[2]));
     }
 
     throw getExceptionFromDefaultResult(DefaultResult.fromJson(object));

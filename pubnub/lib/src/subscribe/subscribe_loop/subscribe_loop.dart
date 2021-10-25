@@ -126,10 +126,10 @@ class SubscribeLoop {
 
         yield* Stream.fromIterable(result.messages).asyncMap((object) async {
           if (state.keyset.cipherKey != null &&
-              (object['e'] == null || object['e'] == 4) &&
+              (object['e'] == null || object['e'] == 4 || object['e'] == 0) &&
               !object['c'].endsWith('-pnpres')) {
             try {
-              _logger.silly('decrypting message...');
+              _logger.info('Decrypting message...');
               object['d'] = await core.parser.decode(
                   core.crypto.decrypt(state.keyset.cipherKey!, (object['d'])));
             } catch (e) {

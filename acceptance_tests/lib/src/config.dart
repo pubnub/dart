@@ -1,8 +1,12 @@
-import 'package:gherkin/gherkin.dart';
+import 'dart:io';
 
-import 'mock_server/mock_server.dart';
+import 'package:gherkin/gherkin.dart';
+import 'package:glob/glob.dart';
+
 import 'hooks/mock_server_hook.dart';
 import 'steps/steps.dart';
+import 'parameters/parameters.dart';
+import 'reporter.dart';
 import 'world.dart';
 import 'logger.dart';
 
@@ -10,28 +14,37 @@ class PubNubConfiguration extends TestConfiguration {
   @override
   final Iterable<Pattern> features;
   final TestLogger logger;
+  final String tags;
 
   PubNubConfiguration(
-      {required Pattern featureFiles,
-      required this.blueprint,
-      required this.logger})
-      : features = [featureFiles];
+      {required String featureFiles, required this.logger, required this.tags})
+      : features = [Glob('**/*.feature')],
+        featureFileMatcher =
+            IoFeatureFileAccessor(workingDirectory: Directory(featureFiles));
 
-  final MockServerBlueprint blueprint;
+  @override
+  FeatureFileMatcher featureFileMatcher;
 
   @override
   var createWorld = PubNubWorld.create;
 
+  var reporter = PubNubReporter();
+
   @override
-  var reporters = [
-    // StdoutReporter(MessageLevel.warning),
-    TestRunSummaryReporter(),
-    ProgressReporter()
-  ];
+  List<Reporter> get reporters => [reporter];
 
   @override
   var hooks = [MockServerHook()];
 
   @override
+  var customStepParameterDefinitions = customParameters;
+
+  @override
   var stepDefinitions = steps;
+
+  @override
+  ExecutionOrder get order => ExecutionOrder.alphabetical;
+
+  @override
+  String? get tagExpression => tags;
 }

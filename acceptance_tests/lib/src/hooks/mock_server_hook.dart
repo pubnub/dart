@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:gherkin/gherkin.dart';
 import 'package:http/http.dart' as http;
 
-import '../config.dart';
 import '../world.dart';
 
 class MockServerHook extends Hook {
@@ -21,46 +20,46 @@ class MockServerHook extends Hook {
 
       var contract = tagParts.skip(1).first;
 
-      await world.mockServer.start();
-
-      await Future.delayed(Duration(seconds: 3));
+      // await Future.delayed(Duration(seconds: 3));
 
       var res = await http.get(Uri.parse(
           'http://localhost:8090/init?__contract__script__=$contract'));
 
-      world.logger.severe(
-          '[Hook] Mock server initialized with "$contract": ${res.body}');
+      // check for 200 response and fail scenario if not 200
 
-      await Future.delayed(Duration(seconds: 3));
-    } on StateError {
-      world.logger.fatal('[Hook] Mock server skipped.');
-    }
+      if (res.statusCode != 200) {
+        throw Exception('Mock server is not ready for initialization.');
+      }
+      // ignore: empty_catches
+    } on StateError {}
   }
 
+  int myData = 0;
+
   @override
-  Future<void> onAfterScenario(
-    covariant PubNubConfiguration config,
-    String scenario,
-    Iterable<Tag> tags,
-  ) async {
-    try {
-      var tagParts = tags
-          .firstWhere((element) => element.name.startsWith('@contract='))
-          .name
-          .split('=');
+  Future<StepResult?> onAfterStep(
+      covariant PubNubWorld world, String step, StepResult stepResult) async {
+    // print(
+    //     'Hook step: $step, result: ${stepResult.result} ${stepResult.resultReason}');
 
-      var contract = tagParts.skip(1).first;
-
+    if (stepResult.result == StepExecutionResult.pass) {
+      // await Future.delayed(Duration(seconds: 1));
       var res = await http.get(Uri.parse('http://localhost:8090/expect'));
       var data = json.decode(res.body);
 
       var failedExp = data['expectations']['failed'] as List;
-      var succeededExp = data['expectations']['succeeded'] as List;
+      // var succeededExp = data['expectations']['succeeded'] as List;
+      // var pendingExp = data['expectations']['pending'] as List;
 
-      config.logger.severe(
-          '[Hook] ${failedExp.length} failed expectations, ${succeededExp.length} succeeded expectations');
-    } on StateError {
-      config.logger.fatal('[Hook] Expectations skipped.');
+      // world.logger.severe(
+      //     '[Hook] x ${failedExp.length}, . ${pendingExp.length}, v ${succeededExp.length}');
+
+      if (failedExp.isNotEmpty) {
+        return StepResult(stepResult.elapsedMilliseconds,
+            StepExecutionResult.fail, 'Failed expectations: $failedExp.');
+      }
     }
+
+    return stepResult;
   }
 }

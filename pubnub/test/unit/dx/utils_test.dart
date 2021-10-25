@@ -34,7 +34,7 @@ void main() {
         var queryParams = {'b': 'second', 'c': 'third', 'a': 'first'};
         var path = ['test', 'test'];
         var body = 'test';
-        var expectedSign = 'v2.oJhS84g84BXVr3QwKIAt0w7MnlB-kCW3RF5jJgZWufM';
+        var expectedSign = 'v2.6UBAX_8m4xezj6eTDrrxUkXMXOtXkolfIbzx1yCwpUY';
 
         var response =
             computeV2Signature(keyset, requestType, path, queryParams, body);

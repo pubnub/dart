@@ -3,16 +3,12 @@ import 'package:pubnub/pubnub.dart';
 
 import '../world.dart';
 
-class StepGivenDemoKeyset extends GivenWithWorld<PubNubWorld> {
+class StepGivenDemoKeyset extends Given1WithWorld<Keyset, PubNubWorld> {
   @override
-  RegExp get pattern => RegExp(r'the demo keyset');
+  RegExp get pattern => RegExp(r'the {keyset} keyset');
 
   @override
-  Future<void> executeStep() async {
-    world.keyset = Keyset(
-      subscribeKey: 'demo',
-      publishKey: 'demo',
-      uuid: UUID('dart-acceptance-testing'),
-    );
+  Future<void> executeStep(Keyset keyset) async {
+    world.keyset = keyset;
   }
 }

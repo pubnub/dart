@@ -1,5 +1,6 @@
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
+import 'package:pubnub/src/dx/pam/extensions/keyset.dart';
 
 typedef Serialize<R> = R Function(dynamic object,
     [Map<String, List<String>>? headers]);
@@ -37,10 +38,14 @@ Future<R> _defaultFlow<P extends Parameters, R>({
   var request = params.toRequest();
 
   if (keyset != null && request.uri?.authority == '') {
-    request.uri = request.uri?.replace(queryParameters: {
-      ...request.uri?.queryParameters ?? {},
-      'uuid': keyset.uuid.value,
-    });
+    request.uri = request.uri?.replace(
+      queryParameters: {
+        ...request.uri?.queryParameters ?? {},
+        'uuid': keyset.uuid.value,
+        if (keyset.hasAuth() && !request.uri!.pathSegments.contains('grant'))
+          'auth': keyset.getAuth(),
+      },
+    );
   }
 
   if (keyset != null &&

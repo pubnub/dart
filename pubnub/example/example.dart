@@ -9,15 +9,16 @@ void main() async {
   // Subscribe to a channel
   var subscription = pubnub.subscribe(channels: {'test'});
 
-  subscription.messages.take(1).listen((message) {
-    print(message);
+  subscription.messages.take(1).listen((envelope) async {
+    print(envelope.payload);
+
+    await subscription.dispose();
   });
+
+  await Future.delayed(Duration(seconds: 3));
 
   // Publish a message
   await pubnub.publish('test', {'message': 'My message!'});
-
-  // Unsubscribe
-  await subscription.dispose();
 
   // Channel abstraction for easier usage
   var channel = pubnub.channel('test');

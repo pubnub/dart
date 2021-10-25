@@ -1,10 +1,10 @@
 part of '../pam_test.dart';
 
 final _grantRequest = MockRequest('GET',
-    'v2/auth/grant/sub-key/test?pnsdk=PubNub-Dart%2F${PubNub.version}&auth=authKey&channel=my_channel&ttl=1440&uuid=test&m=0&r=1&w=0&timestamp=1234567890&signature=v2.lnTIPOj-_hXM25l0KU75YdUBEyK_Ax7ZgWJHuLC3yus');
+    'v2/auth/grant/sub-key/test?pnsdk=PubNub-Dart%2F${PubNub.version}&auth=authKey&channel=my_channel&ttl=1440&uuid=test&m=0&r=1&w=0&timestamp=1234567890&signature=v2.b03n4VbdzmcaTQ7my7n53FHx51G1JZRwzd16WKEUS2s');
 
 final _grantWithUUIDRequest = MockRequest('GET',
-    'v2/auth/grant/sub-key/test?pnsdk=PubNub-Dart%2F${PubNub.version}&auth=authKey&target-uuid=uuid1&ttl=1440&uuid=test&m=0&r=1&w=0&timestamp=1234567890&signature=v2.8YYcO1vpAxkLRGxCyinQH-4bSiBO8nvwOwIpv6wEFGo');
+    'v2/auth/grant/sub-key/test?pnsdk=PubNub-Dart%2F${PubNub.version}&auth=authKey&target-uuid=uuid1&ttl=1440&uuid=test&m=0&r=1&w=0&timestamp=1234567890&signature=v2.lViScuTbVX_HUoA8zeR5vZuGswS5Tn9IaaBmOawow7o');
 
 final _grantSuccessResponse =
     MockResponse(statusCode: 200, headers: {}, body: '''
@@ -60,9 +60,9 @@ final _grantWithUUIDSuccessResponse =
 
 final _grantTokenRequest = MockRequest(
     'POST',
-    'v3/pam/test/grant?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test&timestamp=1234567890&signature=v2.tPl4dEkBmYR7vN1FnPF5_A5RQFFGG8fuKzj7RWTDkNw',
+    'v3/pam/test/grant?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test&timestamp=1234567890&signature=v2.6idWWLsaFHCqICaw2eAXAXjlZokGe2x-heqmhYEp5Dg',
     {},
-    '{"ttl":1440,"permissions":{"resources":{"channels":{"inbox-jay":3},"groups":{},"users":{},"spaces":{}},"patterns":{"channels":{},"groups":{},"users":{},"spaces":{}},"meta":{"user-id":"jay@example.com","contains-unicode":"The 來 test."}}}');
+    '{"ttl":1440,"permissions":{"resources":{"channels":{"inbox-jay":3},"groups":{},"uuids":{}},"patterns":{"channels":{},"groups":{},"uuids":{}},"meta":{"user-id":"jay@example.com","contains-unicode":"The 來 test."}}}');
 
 final _grantTokenSuccessResponse =
     MockResponse(statusCode: 200, headers: {}, body: '''{

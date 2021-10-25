@@ -187,7 +187,8 @@ class FileDx {
     return defaultFlow<DownloadFileParams, DownloadFileResult>(
         keyset: keyset,
         core: _core,
-        params: DownloadFileParams(getFileUrl(channel, fileId, fileName)),
+        params: DownloadFileParams(getFileUrl(channel, fileId, fileName)
+            .replace(scheme: '', host: '')),
         deserialize: false,
         serialize: (object, [_]) => DownloadFileResult.fromJson(object,
             cipherKey: cipherKey ?? keyset!.cipherKey,
@@ -264,10 +265,11 @@ class FileDx {
     }
 
     return Uri(
-        scheme: 'https',
-        host: 'ps.pndsn.com',
-        pathSegments: pathSegments,
-        queryParameters: queryParams);
+      scheme: 'https',
+      host: 'ps.pndsn.com',
+      pathSegments: pathSegments,
+      queryParameters: queryParams,
+    );
   }
 
   /// Encrypts file content in bytes format.

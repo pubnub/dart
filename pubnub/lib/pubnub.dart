@@ -86,7 +86,13 @@ export 'src/dx/objects/objects.dart'
         UuidMetadataDetails,
         UuidMetadataInput;
 export 'src/dx/pam/pam.dart'
-    show Resource, ResourceType, ResourceTypeExtension, Token, TokenRequest;
+    show
+        Resource,
+        ResourceType,
+        ResourceTypeExtension,
+        Token,
+        TokenRequest,
+        PamKeysetExtension;
 export 'src/dx/presence/presence.dart'
     show
         GetUserStateResult,
