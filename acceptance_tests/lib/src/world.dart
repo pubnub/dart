@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:gherkin/gherkin.dart';
 import 'package:pubnub/networking.dart';
 import 'package:pubnub/pubnub.dart';
 
 import 'logger.dart';
-import 'mock_server/mock_server.dart';
 import 'config.dart';
 
 class PubNubWorld extends World {
@@ -11,9 +12,7 @@ class PubNubWorld extends World {
 
   static Future<World> create(TestConfiguration config) async {
     if (config is PubNubConfiguration) {
-      var mockServer = config.blueprint.create();
-
-      return PubNubWorld(mockServer, config.logger);
+      return PubNubWorld(config.logger);
     } else {
       throw Exception('Invalid configuration');
     }
@@ -23,14 +22,19 @@ class PubNubWorld extends World {
 
   Keyset? keyset;
   late Channel currentChannel;
-  late Subscription currentSubscription;
+  Subscription? currentSubscription;
+
+  List<Envelope> messages = [];
+  Completer<Envelope> firstMessageCompleter = Completer();
+  Future<Envelope> get firstMessage => firstMessageCompleter.future;
 
   String? latestResultType;
   dynamic latestResult;
+  Object? latestException;
 
-  final MockServer mockServer;
+  Map<String, dynamic> scenarioContext = {};
 
-  PubNubWorld(this.mockServer, this.logger) {
+  PubNubWorld(this.logger) {
     pubnub = PubNub(
       defaultKeyset: Keyset(
         subscribeKey: 'demo',
@@ -43,5 +47,12 @@ class PubNubWorld extends World {
 
   Future<void> cleanup() async {
     await pubnub.unsubscribeAll();
+  }
+
+  @override
+  void dispose() {
+    if (currentSubscription != null && !currentSubscription!.isCancelled) {
+      currentSubscription!.cancel();
+    }
   }
 }

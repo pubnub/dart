@@ -99,7 +99,7 @@ void main() {
         'user-id': 'jay@example.com',
         'contains-unicode': 'The 來 test.'
       })
-        ..add(ResourceType.channel, 'inbox-jay', read: true, write: true);
+        ..add(ResourceType.channel, name: 'inbox-jay', read: true, write: true);
 
       var response = await request.send();
 
@@ -113,7 +113,7 @@ void main() {
         'user-id': 'jay@example.com',
         'contains-unicode': 'The 來 test.'
       })
-        ..add(ResourceType.channel, 'inbox-jay', read: true, write: true);
+        ..add(ResourceType.channel, name: 'inbox-jay', read: true, write: true);
 
       expect(request.send(), throwsA(TypeMatcher<PubNubException>()));
     });

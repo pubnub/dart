@@ -25,7 +25,7 @@ install:
       git clone https://github.com/flutter/flutter.git -b stable "$FLUTTER_PATH"
       export PATH="$PATH:$FLUTTER_PATH/bin"
     fi
-  - pub global activate derry 1.1.1
+  - pub global activate derry 1.3.0
 
 before_script:
   - cd "$TRAVIS_BUILD_DIR/$PKG"

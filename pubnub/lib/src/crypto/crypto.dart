@@ -30,7 +30,7 @@ class CryptoModule implements ICryptoModule {
   /// Default configuration is:
   /// * `encryptionMode` set to [EncryptionMode.CBC].
   /// * `encryptKey` set to `true`.
-  /// * `useRandomInitializationVector` set to `false`.
+  /// * `useRandomInitializationVector` set to `true`.
   CryptoModule({this.defaultConfiguration = const CryptoConfiguration()});
 
   crypto.Key _getKey(CipherKey cipherKey, CryptoConfiguration configuration) {

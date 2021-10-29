@@ -1,3 +1,3 @@
 part of '../signal_test.dart';
 
-final _signalSuccessResponse = '[0, "Sent", "1"]';
+final _signalSuccessResponse = '[1, "Sent", "1"]';

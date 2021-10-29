@@ -17,11 +17,11 @@ class Keyset {
   /// Secret key used for administrative tasks.
   final String? secretKey;
 
-  /// If PAM is enabled, authentication key is required to access channels.
-  final String? authKey;
-
   /// Used for message encryption.
   final CipherKey? cipherKey;
+
+  /// If PAM is enabled, authentication key is required to access channels.
+  String? authKey;
 
   /// A map of settings that can be set and used by specific DX extensions.
   Map<String, dynamic> settings = {};

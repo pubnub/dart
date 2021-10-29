@@ -103,7 +103,7 @@ final _generateFileUploadUrl =
     'v1/files/test/channels/channel/generate-upload-url?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test';
 
 final _downloadFileUrl =
-    'https://ps.pndsn.com/v1/files/test/channels/channel/files/5a3eb38c-483a-4b25-ac01-c4e20deba6d6/cat_file.jpg?pnsdk=PubNub-Dart%2F${PubNub.version}';
+    'https://ps.pndsn.com/v1/files/test/channels/channel/files/5a3eb38c-483a-4b25-ac01-c4e20deba6d6/cat_file.jpg?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test';
 
 final _getFileUrl =
     'https://ps.pndsn.com/v1/files/test/channels/channel/files/fileId/fileName?pnsdk=PubNub-Dart%2F${PubNub.version}';

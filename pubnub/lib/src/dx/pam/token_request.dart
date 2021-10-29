@@ -15,28 +15,45 @@ class TokenRequest {
   final Keyset _keyset;
 
   /// Time to live in seconds.
-  final int ttl;
-
-  /// Token metadata.
-  final dynamic meta;
+  int ttl;
 
   final List<Resource> _resources = [];
 
-  TokenRequest(this._core, this._keyset, this.ttl, [this.meta]);
+  /// Token metadata.
+  final Map<String, dynamic>? meta;
+
+  String? authorizedUUID;
+
+  TokenRequest(this._core, this._keyset, this.ttl,
+      {this.meta, this.authorizedUUID});
 
   /// Adds new resource to this token request.
   ///
   /// [name] can either be a `String` or a `RegExp`.
   /// * If [name] is a `String`, it adds a normal resource.
   /// * If [name] is a `RegExp`, it adds a pattern instead.
-  void add(ResourceType type, Pattern name,
-      {bool? create, bool? delete, bool? manage, bool? read, bool? write}) {
-    _resources.add(Resource(type, name,
+  void add(ResourceType type,
+      {String? name,
+      String? pattern,
+      bool? create,
+      bool? delete,
+      bool? manage,
+      bool? read,
+      bool? write,
+      bool? get,
+      bool? update,
+      bool? join}) {
+    _resources.add(Resource(type,
+        name: name,
+        pattern: pattern,
         create: create,
         delete: delete,
         manage: manage,
         read: read,
-        write: write));
+        write: write,
+        get: get,
+        update: update,
+        join: join));
   }
 
   /// Sends the request to the server.
@@ -46,9 +63,7 @@ class TokenRequest {
     Map<String, dynamic> combine<T extends Pattern>(
         Map<String, dynamic> accumulator, Resource resource) {
       var type = resource.type.value;
-      var name = resource.name is String
-          ? resource.name
-          : (resource.name as RegExp).pattern;
+      var name = resource.name ?? resource.pattern;
 
       return {
         ...accumulator,
@@ -58,18 +73,19 @@ class TokenRequest {
 
     var resources = _resources
         .where((resource) => resource.name is String)
-        .fold(
-            {'channels': {}, 'groups': {}, 'users': {}, 'spaces': {}}, combine);
+        .fold({'channels': {}, 'groups': {}, 'uuids': {}}, combine);
 
-    var patterns = _resources.where((resource) => resource.name is RegExp).fold(
-        {'channels': {}, 'groups': {}, 'users': {}, 'spaces': {}}, combine);
+    var patterns = _resources
+        .where((resource) => resource.pattern is String)
+        .fold({'channels': {}, 'groups': {}, 'uuids': {}}, combine);
 
     var data = {
       'ttl': ttl,
       'permissions': {
         'resources': resources,
         'patterns': patterns,
-        'meta': meta
+        if (authorizedUUID != null) 'uuid': authorizedUUID,
+        if (meta != null) 'meta': meta
       }
     };
 

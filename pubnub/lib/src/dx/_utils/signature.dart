@@ -33,13 +33,18 @@ String computeV2Signature(
     List<String> pathSegments,
     Map<String, String> queryParameters,
     String body) {
-  var queryString = _encodeQueryParameters(queryParameters);
+  var queryString = _encodeQueryParameters(
+      {'pnsdk': 'PubNub-Dart/${Core.version}', ...queryParameters});
+
+  var encodedPathSegments = <String>[];
+  pathSegments.forEach(
+      (component) => encodedPathSegments.add(Uri.encodeFull(component)));
 
   var plaintext = '''${type.method.toUpperCase()}
 ${keyset.publishKey}
-/${pathSegments.join('/')}
+/${encodedPathSegments.join('/')}
 $queryString
-$body''';
+${'$body' == 'null' ? '' : '$body'}''';
 
   var hmac = Hmac(sha256, utf8.encode(keyset.secretKey!));
   var digest = hmac.convert(utf8.encode(plaintext));

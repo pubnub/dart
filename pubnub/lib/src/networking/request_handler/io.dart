@@ -120,7 +120,8 @@ class RequestHandler extends IRequestHandler {
       _response = response;
 
       if (response.statusCode < 200 || response.statusCode > 299) {
-        throw RequestFailureException(response);
+        throw RequestFailureException(response,
+            statusCode: response.statusCode);
       }
 
       _logger.info('($_id) Request succeed!');

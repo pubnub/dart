@@ -4,11 +4,14 @@ import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_endpoints/pam.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
+import 'token.dart';
 import 'token_request.dart';
+import 'extensions/keyset.dart';
 
 export 'package:pubnub/src/dx/_endpoints/pam.dart' show PamGrantResult;
 export 'token.dart' show Token;
 export 'resource.dart' show Resource, ResourceType, ResourceTypeExtension;
+export 'extensions/keyset.dart' show PamKeysetExtension;
 export 'token_request.dart' show TokenRequest;
 
 final _logger = injectLogger('pubnub.dx.pam');
@@ -79,11 +82,29 @@ mixin PamDx on Core {
 
   /// Creates a [TokenRequest] that can be used to obtain a [Token].
   TokenRequest requestToken(
-      {@required int? ttl, dynamic meta, String? using, Keyset? keyset}) {
+      {@required int? ttl,
+      Map<String, dynamic>? meta,
+      String? authorizedUUID,
+      String? using,
+      Keyset? keyset}) {
     Ensure(ttl).isNotNull('ttl');
 
     keyset ??= keysets[using];
 
-    return TokenRequest(this, keyset, ttl!, meta);
+    return TokenRequest(this, keyset, ttl!,
+        meta: meta, authorizedUUID: authorizedUUID);
+  }
+
+  Future<Token> grantToken(TokenRequest tokenRequest) {
+    return tokenRequest.send();
+  }
+
+  Token parseToken(String token) {
+    return Token(token);
+  }
+
+  void setToken(String token, {String? using, Keyset? keyset}) {
+    keyset ??= keysets[using];
+    keyset.token = token;
   }
 }

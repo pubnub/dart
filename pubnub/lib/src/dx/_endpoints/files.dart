@@ -214,7 +214,7 @@ class ListFilesResult extends Result {
   factory ListFilesResult.fromJson(dynamic object) => ListFilesResult._(
       (object['data'] as List).map((e) => FileDetail.fromJson(e)).toList(),
       object['count'] as int,
-      object['next'] as String);
+      object['next'] as String?);
 }
 
 /// Represents a file uploaded to PubNub.
