@@ -44,6 +44,8 @@ jobs:
           ref: v1
           token: ${{ secrets.GH_TOKEN }}
           path: .github/.release/actions
+      - name: Install Dart SDK
+        uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
       - name: Publish to Pub
         uses: ./.github/.release/actions/actions/services/pub
         with:
@@ -60,6 +62,6 @@ jobs:
         uses: ./.github/.release/actions/actions/services/github-pages
         with:
           token: ${{ secrets.GH_TOKEN }}
-          source-folder: pubnub/doc/api
+          source-folder: doc/api
           last-service: true
 
