@@ -27,6 +27,7 @@ If you want to use the latest, unreleased version of `pubnub`, you can add it to
 dependencies:
   pubnub:
     git: git://github.com/pubnub/dart.git
+    path: pubnub
 ```
 
 ### Using a local copy of the repository

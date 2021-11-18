@@ -72,4 +72,8 @@ class Manager {
       await subscription.cancel();
     }
   }
+
+  Future<void> restore() async {
+    _loop.update((state) => state.clone(isErrored: false), skipCancel: false);
+  }
 }

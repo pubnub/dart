@@ -1,6 +1,6 @@
 import 'package:pubnub/core.dart';
 
-import 'diagnostics.dart';
+import 'diagnostics/diagnostics.dart';
 
 /// @nodoc
 class NetworkingStrategy extends Strategy {

@@ -49,6 +49,8 @@ class SubscribeLoop {
       onCancel: () => update((state) => state.clone(isActive: false)),
     );
 
+    _whenStartsController = StreamController.broadcast();
+
     var loopStream = _loop();
 
     loopStream.listen((envelope) {
@@ -64,8 +66,8 @@ class SubscribeLoop {
   late StreamController<Envelope> _messagesController;
   Stream<Envelope> get envelopes => _messagesController.stream;
 
-  Completer<void> _whenStarts = Completer();
-  Future<void> get whenStarts => _whenStarts.future;
+  late StreamController<void> _whenStartsController;
+  Future<void> get whenStarts => _whenStartsController.stream.take(1).first;
 
   final StreamController<Exception> _queueController =
       StreamController.broadcast();
@@ -74,7 +76,7 @@ class SubscribeLoop {
     var newState = callback(_state);
 
     _state = newState;
-    _logger.silly('State has been updated.');
+    _logger.silly('State has been updated ($newState).');
 
     if (skipCancel == false) {
       _queueController.add(CancelException());
@@ -106,9 +108,8 @@ class SubscribeLoop {
             channels: state.channels,
             channelGroups: state.channelGroups);
 
-        if (!_whenStarts.isCompleted && state.timetoken.value != BigInt.zero) {
-          _whenStarts.complete();
-          _whenStarts = Completer();
+        if (state.timetoken.value != BigInt.zero) {
+          _whenStartsController.add(null);
         }
 
         var response =
@@ -139,6 +140,7 @@ class SubscribeLoop {
           }
           return Envelope.fromJson(object);
         });
+
         _logger.silly('Updating the state...');
 
         tries = 0;
@@ -165,10 +167,9 @@ class SubscribeLoop {
         if (diagnostic == null) {
           _logger.warning('No diagnostics found.');
 
-          if (!_whenStarts.isCompleted) {
-            _whenStarts.completeError(Exception('subscribe failed'));
-          }
-          rethrow;
+          update((state) => state.clone(isErrored: true));
+          yield* Stream<Envelope>.error(exception);
+          continue;
         }
 
         _logger.silly('Possible reason found: $diagnostic');
@@ -177,12 +178,17 @@ class SubscribeLoop {
 
         if (resolutions == null) {
           _logger.silly('No resolutions found.');
-          rethrow;
+
+          update((state) => state.clone(isErrored: true));
+          yield* Stream<Envelope>.error(exception);
+          continue;
         }
 
         for (var resolution in resolutions) {
           if (resolution is FailResolution) {
-            rethrow;
+            update((state) => state.clone(isErrored: true));
+            yield* Stream<Envelope>.error(exception);
+            continue;
           } else if (resolution is DelayResolution) {
             await Future.delayed(resolution.delay);
           } else if (resolution is RetryResolution) {

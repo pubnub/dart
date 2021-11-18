@@ -3,7 +3,7 @@ import 'package:pubnub/logging.dart';
 import 'package:pubnub/networking.dart';
 
 void main() async {
-  var logger = StreamLogger.root('root', logLevel: Level.warning);
+  var logger = StreamLogger.root('root', logLevel: Level.all);
 
   // Subscribe to messages with a default printer
   logger.stream.listen(
@@ -18,27 +18,27 @@ void main() async {
   );
 
   print(
-      'Network reconnection test. Please wait few seconds for further instructions...');
-
-  var sub = pubnub.subscribe(channels: {'test2'});
-
-  await Future.delayed(Duration(seconds: 5));
-
-  print('Subscribed. Disconnect your network for few seconds.');
-
-  await Future.delayed(Duration(seconds: 5));
+      '*\n*** Network reconnection test. Please wait few seconds for further instructions. You will see few diagnostic log lines in the meantime.\n*');
 
   await provideLogger(logger, () async {
+    var sub = pubnub.subscribe(channels: {'test2'});
+
+    await Future.delayed(Duration(seconds: 5));
+
+    print('*\n*** Subscribed. Disconnect your network for few seconds.\n*');
+
+    await Future.delayed(Duration(seconds: 5));
+
     var f = pubnub.publish('test2', {'myMessage': 'it works!'});
 
     print(
-        'Now reconnect your network again! If everything goes well, you should see the message. You will see few diagnostic log lines in the meantime.');
+        '*\n*** Now reconnect your network again! If everything goes well, you should see the message.\n*');
 
     await f;
 
     var message = await sub.messages.first;
 
-    print(message.payload);
+    print('*\n*** ${message.payload}\n*');
 
     await sub.dispose();
 
