@@ -1,0 +1,12 @@
+{
+  "dart": {
+    "path": "./pubnub",
+    "name": "PubNub Dart SDK",
+    "main": true
+  },
+  "flutter": {
+    "path": "./pubnub_flutter",
+    "name": "PubNub Flutter SDK",
+    "main": false
+  }
+}
