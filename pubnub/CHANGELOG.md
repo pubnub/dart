@@ -1,3 +1,18 @@
+## v4.0.0
+November 22 2021
+
+#### Added
+- Adds PAM v3 support with `grantToken` and `setToken`.
+- After subscribe loop fails, call restore to restart it.
+
+#### Fixed
+- Subscribe loop no longer throws on unrecoverable failure, instead waits for restart. Fixed the following issues reported by [@willbryant](https://github.com/willbryant): [#63](https://github.com/pubnub/dart/issues/63).
+- Adds more diagnostics for network module. Fixed the following issues reported by [@willbryant](https://github.com/willbryant): [#65](https://github.com/pubnub/dart/issues/65).
+- WhenStarts future no longer throws and is now based on a stream. Fixed the following issues reported by [@willbryant](https://github.com/willbryant): [#64](https://github.com/pubnub/dart/issues/64).
+- Networking should now release all resources after a failure. Fixed the following issues reported by [@aadil058](https://github.com/aadil058): [#62](https://github.com/pubnub/dart/issues/62).
+- Fixes issue of Signature mismatch with PAM enabled keysets. Fixed the following issues reported by [@mahmoudsalah37](https://github.com/mahmoudsalah37): [#50](https://github.com/pubnub/dart/issues/50).
+- Fixes issue of message decryption with subscription. Fixed the following issues reported by [@TabooSun](https://github.com/TabooSun): [#46](https://github.com/pubnub/dart/issues/46).
+
 ## [v3.0.0](https://github.com/pubnub/dart/releases/tag/v3.0.0)
 October 8 2020
 
