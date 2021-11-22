@@ -53,6 +53,7 @@ jobs:
           pub-token-endpoint: ${{ secrets.DART_TOKEN_ENDPOINT }}
           pub-access-token: ${{ secrets.DART_ACCESS_TOKEN }}
           pub-refresh-token: ${{ secrets.DART_REFRESH_TOKEN }}
+          pub-id-token: ${{ secrets.DART_ID_TOKEN }}
           pub-token-expiration: ${{ secrets.DART_TOKEN_EXPIRATION }}
       - name: Create Release
         uses: ./.github/.release/actions/actions/services/github-release
@@ -63,5 +64,6 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           source-folder: doc/api
+          jira-api-key: ${{ secrets.JIRA_API_KEY }}
           last-service: true
 
