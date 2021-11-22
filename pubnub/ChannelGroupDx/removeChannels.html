@@ -7,14 +7,19 @@
   <meta name="description" content="API docs for the removeChannels method from the ChannelGroupDx class, for the Dart programming language.">
   <title>removeChannels method - ChannelGroupDx class - pubnub library - Dart API</title>
 
-  
-  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../../static-assets/github.css">
-  <link rel="stylesheet" href="../../static-assets/styles.css">
-  <link rel="icon" href="../../static-assets/favicon.png">
 
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
 </head>
+
 
 <body data-base-href="../../"
       data-using-base-href="false">
@@ -37,70 +42,82 @@
 
 <main>
 
-  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
-    <header id="header-search-sidebar" class="hidden-l">
-      <form class="search-sidebar" role="search">
-        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
-      </form>
-    </header>
-    
-    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-      <li><a href="../../index.html">pubnub</a></li>
-      <li><a href="../../pubnub/pubnub-library.html">pubnub</a></li>
-      <li><a href="../../pubnub/ChannelGroupDx-class.html">ChannelGroupDx</a></li>
-      <li class="self-crumb">removeChannels method</li>
-    </ol>
-    
-    <h5>ChannelGroupDx class</h5>
-    <ol>
-    
-    
-        <li class="section-title inherited">
-            <a href="../../pubnub/ChannelGroupDx-class.html#instance-properties">Properties</a>
-        </li>
-        <li class="inherited"><a href="https://api.dart.dev/stable/2.10.1/dart-core/Object/hashCode.html">hashCode</a></li>
-        <li class="inherited"><a href="https://api.dart.dev/stable/2.10.1/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    
-        <li class="section-title"><a href="../../pubnub/ChannelGroupDx-class.html#instance-methods">Methods</a></li>
-        <li><a href="../../pubnub/ChannelGroupDx/addChannels.html">addChannels</a></li>
-        <li><a href="../../pubnub/ChannelGroupDx/delete.html">delete</a></li>
-        <li><a href="../../pubnub/ChannelGroupDx/listChannels.html">listChannels</a></li>
-        <li class="inherited"><a href="https://api.dart.dev/stable/2.10.1/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-        <li><a href="../../pubnub/ChannelGroupDx/removeChannels.html">removeChannels</a></li>
-        <li class="inherited"><a href="https://api.dart.dev/stable/2.10.1/dart-core/Object/toString.html">toString</a></li>
-    
-        <li class="section-title inherited"><a href="../../pubnub/ChannelGroupDx-class.html#operators">Operators</a></li>
-        <li class="inherited"><a href="https://api.dart.dev/stable/2.10.1/dart-core/Object/operator_equals.html">operator ==</a></li>
-    
-    
-    
-    
-    
-    </ol>
-  </div><!--/.sidebar-offcanvas-->
 
-  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
-      <div><h1><span class="kind-method">removeChannels</span> method </h1></div>
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">removeChannels</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
 
     <section class="multi-line-signature">
-      <span class="returntype"><a href="https://api.dart.dev/stable/2.10.1/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/ChannelGroupChangeChannelsResult-class.html">ChannelGroupChangeChannelsResult</a></span>&gt;</span></span>
-            <span class="name ">removeChannels</span>
-(<wbr><ol class="parameter-list"><li><span class="parameter" id="removeChannels-param-group"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.10.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">group</span>, </span></li>
-<li><span class="parameter" id="removeChannels-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.10.1/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.10.1/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span>, </span></li>
-<li><span class="parameter" id="removeChannels-param-keyset">{<span class="type-annotation"><a href="../../pubnub/Keyset-class.html">Keyset</a></span> <span class="parameter-name">keyset</span>, </span></li>
-<li><span class="parameter" id="removeChannels-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.10.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">using</span>}</span></li>
-</ol>)
       
-    </section>
-    <section class="desc markdown">
-      <p>Removes <code>channels</code> from a channel <code>group</code>.</p>
+
+<span class="returntype"><a href="https://api.dart.dev/stable/2.14.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/ChannelGroupChangeChannelsResult-class.html">ChannelGroupChangeChannelsResult</a></span>&gt;</span></span>
+<span class="name ">removeChannels</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="removeChannels-param-group"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">group</span>, </span></li>
+<li><span class="parameter" id="removeChannels-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.14.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span>, </span></li>
+<li><span class="parameter" id="removeChannels-param-keyset">{<span class="type-annotation"><a href="../../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span></li>
+<li><span class="parameter" id="removeChannels-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.14.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span></li>
+</ol>)
+
+      
+
     </section>
     
+<section class="desc markdown">
+  <p>Removes <code>channels</code> from a channel <code>group</code>.</p>
+</section>
+
+
     
+
 
   </div> <!-- /.main-content -->
 
-  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">pubnub</a></li>
+  <li><a href="../../pubnub/pubnub-library.html">pubnub</a></li>
+  <li><a href="../../pubnub/ChannelGroupDx-class.html">ChannelGroupDx</a></li>
+  <li class="self-crumb">removeChannels method</li>
+</ol>
+
+
+    <h5>ChannelGroupDx class</h5>
+    <ol>
+
+
+
+    <li class="section-title inherited">
+      <a href="../../pubnub/ChannelGroupDx-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.14.4/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.14.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
+
+    <li class="section-title"><a href="../../pubnub/ChannelGroupDx-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../pubnub/ChannelGroupDx/addChannels.html">addChannels</a></li>
+    <li><a href="../../pubnub/ChannelGroupDx/delete.html">delete</a></li>
+    <li><a href="../../pubnub/ChannelGroupDx/listChannels.html">listChannels</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.14.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li><a href="../../pubnub/ChannelGroupDx/removeChannels.html">removeChannels</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.14.4/dart-core/Object/toString.html">toString</a></li>
+
+    <li class="section-title inherited"><a href="../../pubnub/ChannelGroupDx-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.14.4/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
 
 </main>
@@ -108,18 +125,20 @@
 <footer>
   <span class="no-break">
     pubnub
-      3.0.2
+      4.0.0
   </span>
 
+  
 </footer>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="../../static-assets/typeahead.bundle.min.js"></script>
-<script src="../../static-assets/highlight.pack.js"></script>
-<script src="../../static-assets/URI.js"></script>
-<script src="../../static-assets/script.js"></script>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/script.js?v1"></script>
+
 
 
 </body>
 
 </html>
+

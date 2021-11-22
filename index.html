@@ -4,18 +4,23 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="generator" content="made with love by dartdoc 0.32.4">
+  <meta name="generator" content="made with love by dartdoc 2.0.0">
   <meta name="description" content="pubnub API docs, for the Dart programming language.">
   <title>pubnub - Dart API docs</title>
 
-  
-  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="static-assets/github.css">
-  <link rel="stylesheet" href="static-assets/styles.css">
-  <link rel="icon" href="static-assets/favicon.png">
 
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
 </head>
+
 
 <body data-base-href=""
       data-using-base-href="false">
@@ -25,7 +30,7 @@
 <header id="title">
   <button id="sidenav-left-toggle" type="button">&nbsp;</button>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="https://www.pubnub.com/docs/platform/home">pubnub package</a></li>
+    <li><a href="https://www.pubnub.com/docs">pubnub package</a></li>
   </ol>
   <div class="self-name">pubnub</div>
   <form class="search navbar-right" role="search">
@@ -35,39 +40,11 @@
 
 <main>
 
-  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
-    <header id="header-search-sidebar" class="hidden-l">
-      <form class="search-sidebar" role="search">
-        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
-      </form>
-    </header>
-    
-    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-      <li><a href="https://www.pubnub.com/docs/platform/home">pubnub package</a></li>
-    </ol>
-    
-    <h5 class="hidden-xs"><span class="package-name">pubnub</span> <span class="package-kind">package</span></h5>
-    <ol>
-          <li class="section-title">Topics</li>
-            <li><a href="topics/Basic Features-topic.html">Basic&nbsp;Features</a></li>
-            <li><a href="topics/Objects-topic.html">Objects</a></li>
-            <li><a href="topics/Files-topic.html">Files</a></li>
-            <li><a href="topics/Push-topic.html">Push</a></li>
-            <li><a href="topics/Access Manager-topic.html">Access&nbsp;Manager</a></li>
-            <li><a href="topics/Exceptions-topic.html">Exceptions</a></li>
-            <li><a href="topics/Results-topic.html">Results</a></li>
-          <li class="section-title">Libraries</li>
-          <li><a href="pubnub/pubnub-library.html">pubnub</a></li>
-          <li class="section-subtitle">Modules</li>
-            <li class="section-subitem"><a href="pubnub.crypto/pubnub.crypto-library.html">pubnub.crypto</a></li>
-            <li class="section-subitem"><a href="pubnub.logging/pubnub.logging-library.html">pubnub.logging</a></li>
-            <li class="section-subitem"><a href="pubnub.networking/pubnub.networking-library.html">pubnub.networking</a></li>
-    </ol>
-  </div>
 
-  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
-      <section class="desc markdown">
-        <h1 id="pubnub-dart-sdk">PubNub Dart SDK</h1>
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="pubnub-dart-sdk">PubNub Dart SDK</h1>
 <p><a href="https://pub.dev/packages/pubnub"><img src="https://img.shields.io/pub/v/pubnub" alt="Pub Version"></a></p>
 <blockquote>
 <p><code>pubnub</code> is a Flutter-friendly SDK written in Dart that allows you to connect to PubNub Data Streaming Network and add real-time features to your application.</p>
@@ -77,7 +54,7 @@
 <p><code>pubnub</code> uses the standard <code>pub</code> tool for package management to distribute Dart code.</p>
 <p>To add the package to your Dart or Flutter project, add <code>pubnub</code> as a dependency in your <code>pubspec.yaml</code>.</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  pubnub: ^1.0.0
+  pubnub: ^4.0.0
 </code></pre>
 <p>After adding the dependency to <code>pubspec.yaml</code>, run the <code>pub get</code> command in the root directory of your project (the same that the <code>pubspec.yaml</code> is in).</p>
 <h3 id="using-git">Using Git</h3>
@@ -85,6 +62,7 @@
 <pre class="language-yaml"><code class="language-yaml">dependencies:
   pubnub:
     git: git://github.com/pubnub/dart.git
+    path: pubnub
 </code></pre>
 <h3 id="using-a-local-copy-of-the-repository">Using a local copy of the repository</h3>
 <p>If you want to copy the Dart repository and modify it locally, clone it using <code>git clone https://github.com/pubnub/dart</code> and then import it into <code>pubspec.yaml</code> as follows:</p>
@@ -201,46 +179,83 @@ var myChannel = pubnub.channel('channel', using: 'keyset2');
 </code></pre>
 </li>
 </ol>
-      </section>
-      
-        <section class="summary">
-            <h2>Libraries</h2>
-          <dl>
-            <dt id="pubnub">
-              <span class="name"><a href="pubnub/pubnub-library.html">pubnub</a></span>             
-            </dt>
-            <dd>
-              PubNub is an SDK that allows you to communicate with
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="pubnub">
+  <span class="name"><a href="pubnub/pubnub-library.html">pubnub</a></span> 
+
+</dt>
+<dd>PubNub is an SDK that allows you to communicate with
 PubNub Data Streaming Network in a fast and easy manner. <a href="pubnub/pubnub-library.html">[...]</a>
-            </dd>
-            <h3>Modules</h3>
-              <dt id="pubnub.crypto">
-                <span class="name"><a href="pubnub.crypto/pubnub.crypto-library.html">pubnub.crypto</a></span>                   <span class="category modules cp-7" title="This is part of the Modules Topic.">Modules</span>
-              
-              </dt>
-              <dd>
-                Default cryptography module used by PubNub SDK. <a href="pubnub.crypto/pubnub.crypto-library.html">[...]</a>
-              </dd>
-              <dt id="pubnub.logging">
-                <span class="name"><a href="pubnub.logging/pubnub.logging-library.html">pubnub.logging</a></span>                   <span class="category modules cp-7" title="This is part of the Modules Topic.">Modules</span>
-              
-              </dt>
-              <dd>
-                Default logging module used by PubNub SDK. 
-              </dd>
-              <dt id="pubnub.networking">
-                <span class="name"><a href="pubnub.networking/pubnub.networking-library.html">pubnub.networking</a></span>                   <span class="category modules cp-7" title="This is part of the Modules Topic.">Modules</span>
-              
-              </dt>
-              <dd>
-                Default networking module used by PubNub SDK. <a href="pubnub.networking/pubnub.networking-library.html">[...]</a>
-              </dd>
-          </dl>
-        </section>
+</dd>
+
+          <h3>Modules</h3>
+            <dt id="pubnub.crypto">
+  <span class="name"><a href="pubnub.crypto/pubnub.crypto-library.html">pubnub.crypto</a></span> 
+    <span class="category modules cp-7" title="This is part of the Modules Topic.">Modules</span>
+
+</dt>
+<dd>Default cryptography module used by PubNub SDK. <a href="pubnub.crypto/pubnub.crypto-library.html">[...]</a>
+</dd>
+
+            <dt id="pubnub.logging">
+  <span class="name"><a href="pubnub.logging/pubnub.logging-library.html">pubnub.logging</a></span> 
+    <span class="category modules cp-7" title="This is part of the Modules Topic.">Modules</span>
+
+</dt>
+<dd>Default logging module used by PubNub SDK. 
+</dd>
+
+            <dt id="pubnub.networking">
+  <span class="name"><a href="pubnub.networking/pubnub.networking-library.html">pubnub.networking</a></span> 
+    <span class="category modules cp-7" title="This is part of the Modules Topic.">Modules</span>
+
+</dt>
+<dd>Default networking module used by PubNub SDK. <a href="pubnub.networking/pubnub.networking-library.html">[...]</a>
+</dd>
+
+        </dl>
+      </section>
 
   </div> <!-- /.main-content -->
 
-  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="https://www.pubnub.com/docs">pubnub package</a></li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">pubnub</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Topics</li>
+        <li><a href="topics/Access Manager-topic.html">Access&nbsp;Manager</a></li>
+        <li><a href="topics/Basic Features-topic.html">Basic&nbsp;Features</a></li>
+        <li><a href="topics/Exceptions-topic.html">Exceptions</a></li>
+        <li><a href="topics/Files-topic.html">Files</a></li>
+        <li><a href="topics/Objects-topic.html">Objects</a></li>
+        <li><a href="topics/Push-topic.html">Push</a></li>
+        <li><a href="topics/Results-topic.html">Results</a></li>
+      <li class="section-title">Libraries</li>
+      <li><a href="pubnub/pubnub-library.html">pubnub</a></li>
+      <li class="section-subtitle">Modules</li>
+        <li class="section-subitem"><a href="pubnub.crypto/pubnub.crypto-library.html">pubnub.crypto</a></li>
+        <li class="section-subitem"><a href="pubnub.logging/pubnub.logging-library.html">pubnub.logging</a></li>
+        <li class="section-subitem"><a href="pubnub.networking/pubnub.networking-library.html">pubnub.networking</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div>
 
 </main>
@@ -248,18 +263,20 @@ PubNub Data Streaming Network in a fast and easy manner. <a href="pubnub/pubnub-
 <footer>
   <span class="no-break">
     pubnub
-      3.0.2
+      4.0.0
   </span>
 
+  
 </footer>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="static-assets/typeahead.bundle.min.js"></script>
-<script src="static-assets/highlight.pack.js"></script>
-<script src="static-assets/URI.js"></script>
-<script src="static-assets/script.js"></script>
-<!-- TODO: remove this comment -->
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/script.js?v1"></script>
+
+
 
 </body>
 
 </html>
+
