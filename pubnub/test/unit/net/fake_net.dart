@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:pool/pool.dart';
 import 'package:pubnub/core.dart';
 
 class MockException extends PubNubException {
@@ -10,8 +10,9 @@ class MockException extends PubNubException {
 class FakeRequestHandler extends IRequestHandler {
   final FakeNetworkingModule module;
   final Mock mock;
+  final PoolResource resource;
 
-  FakeRequestHandler(this.module, this.mock);
+  FakeRequestHandler(this.module, this.mock, this.resource);
 
   @override
   Future<IResponse> response(Request request) {
@@ -46,9 +47,12 @@ class FakeRequestHandler extends IRequestHandler {
     var doesUriMatch = expectedUri.toString() == actualUri.toString();
 
     return Future.microtask(() {
+      resource.release();
+
       if (doesMethodMatch && doesBodyMatch && doesUriMatch) {
         if (![200, 204].contains(mock.response.statusCode)) {
-          throw RequestFailureException(mock.response);
+          throw RequestFailureException(mock.response,
+              statusCode: mock.response.statusCode);
         } else {
           return mock.response;
         }
@@ -152,17 +156,22 @@ MockBuilder when({
 }
 
 class FakeNetworkingModule implements INetworkingModule {
+  final Pool _pool = Pool(2);
+
   FakeNetworkingModule() {
     _queue.clear();
   }
 
   @override
   Future<IRequestHandler> handler() async {
+    var resource = await _pool.request();
+
     if (_queue.isEmpty) {
+      resource.release();
       throw MockException('set up the mock first');
     }
 
-    return FakeRequestHandler(this, _queue.removeAt(0));
+    return FakeRequestHandler(this, _queue.removeAt(0), resource);
   }
 
   @override

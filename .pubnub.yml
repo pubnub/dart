@@ -1,5 +1,24 @@
 ---
 changelog:
+  - date: 2021-11-22
+    version: v4.0.0
+    changes:
+      - type: feature
+        text: "Adds PAM v3 support with `grantToken` and `setToken`."
+      - type: feature
+        text: "After subscribe loop fails, call restore to restart it."
+      - type: bug
+        text: "Subscribe loop no longer throws on unrecoverable failure, instead waits for restart."
+      - type: bug
+        text: "Adds more diagnostics for network module."
+      - type: bug
+        text: "WhenStarts future no longer throws and is now based on a stream."
+      - type: bug
+        text: "Networking should now release all resources after a failure."
+      - type: bug
+        text: "Fixes issue of Signature mismatch with PAM enabled keysets."
+      - type: bug
+        text: "Fixes issue of message decryption with subscription."
   -
     changes:
       -
@@ -351,7 +370,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "3.1.0"
+version: "4.0.0"
 sdks:
   -
     full-name: PubNub Dart SDK

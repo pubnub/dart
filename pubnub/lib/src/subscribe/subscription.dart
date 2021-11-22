@@ -186,4 +186,9 @@ class Subscription {
 
   /// Alias for [pause].
   void unsubscribe() => pause();
+
+  /// Restores the subscription and its shared, underlying subscribe loop after an exception.
+  Future<void> restore() async {
+    await _manager.restore();
+  }
 }

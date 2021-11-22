@@ -15,7 +15,7 @@ Future<void> main() async {
     featureFiles:
         env['FEATURES_PATH'] ?? '../../service-contract-mock/contract/features',
     logger: logger,
-    tags: 'not @skip',
+    tags: 'not @skip and not @na=dart and not @beta',
   );
 
   var exitCode = 0;

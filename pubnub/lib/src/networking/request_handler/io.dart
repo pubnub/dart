@@ -48,36 +48,36 @@ class RequestHandler extends IRequestHandler {
 
   @override
   Future<IResponse> response(Request data) async {
-    _logger.info('($_id) Preparing request.');
+    try {
+      _logger.info('($_id) Preparing request.');
 
-    var headers = {...(data.headers ?? {})};
-    var uri = prepareUri(_module.getOrigin(), data.uri ?? Uri());
-    List<int>? body;
+      var headers = {...(data.headers ?? {})};
+      var uri = prepareUri(_module.getOrigin(), data.uri ?? Uri());
+      List<int>? body;
 
-    if (data.type == RequestType.file) {
-      var formData = FormData();
+      if (data.type == RequestType.file) {
+        var formData = FormData();
 
-      for (var entry in (data.body as Map<String, dynamic>).entries) {
-        if (entry.value is List<int>) {
-          formData.addBytes(entry.key, entry.value);
-        } else {
-          formData.add(entry.key, entry.value);
+        for (var entry in (data.body as Map<String, dynamic>).entries) {
+          if (entry.value is List<int>) {
+            formData.addBytes(entry.key, entry.value);
+          } else {
+            formData.add(entry.key, entry.value);
+          }
+        }
+
+        headers['Content-Type'] = formData.contentType;
+        headers['Content-Length'] = formData.contentLength.toString();
+        body = formData.body;
+      } else {
+        if (data.body != null) {
+          headers['Content-Type'] = 'application/json';
+          body = utf8.encode(data.body.toString());
         }
       }
 
-      headers['Content-Type'] = formData.contentType;
-      headers['Content-Length'] = formData.contentLength.toString();
-      body = formData.body;
-    } else {
-      if (data.body != null) {
-        headers['Content-Type'] = 'application/json';
-        body = utf8.encode(data.body.toString());
-      }
-    }
+      _logger.info('($_id) Starting request to "$uri"...');
 
-    _logger.info('($_id) Starting request to "$uri"...');
-
-    try {
       if (isCancelled) {
         throw await cancelReason;
       }

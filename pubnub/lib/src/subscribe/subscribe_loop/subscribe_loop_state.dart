@@ -2,16 +2,17 @@ import 'package:pubnub/core.dart';
 
 /// @nodoc
 class SubscribeLoopState {
-  Keyset keyset;
+  final Keyset keyset;
 
-  Timetoken timetoken;
-  int? region;
-  Timetoken? customTimetoken;
+  final Timetoken timetoken;
+  final int? region;
+  final Timetoken? customTimetoken;
 
-  bool isActive;
+  final bool isActive;
+  final bool isErrored;
 
-  Set<String> channels;
-  Set<String> channelGroups;
+  final Set<String> channels;
+  final Set<String> channelGroups;
 
   SubscribeLoopState(this.keyset,
       {Timetoken? timetoken,
@@ -19,11 +20,14 @@ class SubscribeLoopState {
       this.channels = const {},
       this.channelGroups = const {},
       this.isActive = false,
+      this.isErrored = false,
       this.customTimetoken})
       : timetoken = timetoken ?? Timetoken(BigInt.zero);
 
   bool get shouldRun =>
-      isActive && (channels.isNotEmpty || channelGroups.isNotEmpty);
+      isActive &&
+      !isErrored &&
+      (channels.isNotEmpty || channelGroups.isNotEmpty);
 
   SubscribeLoopState clone(
           {Timetoken? timetoken,
@@ -31,21 +35,26 @@ class SubscribeLoopState {
           Set<String>? channels,
           Set<String>? channelGroups,
           bool? isActive,
+          bool? isErrored,
           Timetoken? customTimetoken}) =>
-      SubscribeLoopState(keyset)
-        ..timetoken = timetoken ?? this.timetoken
-        ..region = region ?? this.region
-        ..channels = channels ?? this.channels
-        ..channelGroups = channelGroups ?? this.channelGroups
-        ..isActive = isActive ?? this.isActive
-        ..customTimetoken = timetoken == null
+      SubscribeLoopState(
+        keyset,
+        timetoken: timetoken ?? this.timetoken,
+        region: region ?? this.region,
+        channels: channels ?? this.channels,
+        channelGroups: channelGroups ?? this.channelGroups,
+        isActive: isActive ?? this.isActive,
+        isErrored: isErrored ?? this.isErrored,
+        customTimetoken: timetoken == null
             ? customTimetoken ?? this.customTimetoken
-            : customTimetoken;
+            : customTimetoken,
+      );
 
   @override
   bool operator ==(Object other) {
     if (other is SubscribeLoopState) {
       return isActive == other.isActive &&
+          isErrored == other.isErrored &&
           timetoken.value == other.timetoken.value &&
           region == other.region &&
           channels.containsAll(other.channels) &&
@@ -55,5 +64,10 @@ class SubscribeLoopState {
     }
 
     return false;
+  }
+
+  @override
+  String toString() {
+    return '${isActive ? 1 : 0}${isErrored ? 1 : 0}$region $timetoken $customTimetoken $channels $channelGroups';
   }
 }
