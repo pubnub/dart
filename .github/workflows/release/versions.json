@@ -1,0 +1,29 @@
+{
+  ".pubnub.yml": [
+    { "pattern": "^version: \"(v?(\\d+\\.?){2,}([a-zA-Z0-9-]+(\\.?\\d+)?)?)\"$",
+      "clearedPrefix": true,
+      "clearedSuffix": false
+    }
+  ],
+  "pubspec.yaml": [
+    {
+      "pattern": "^version: (v?(\\d+\\.?){2,}([a-zA-Z0-9-]+(\\.?\\d+)?)?)$",
+      "clearedPrefix": true,
+      "clearedSuffix": false
+    }
+  ],
+  "README.md": [
+    {
+      "pattern": "^\\s{2,}pubnub: \\^(v?(\\d+\\.?){2,}([a-zA-Z0-9-]+(\\.?\\d+)?)?)$",
+      "clearedPrefix": true,
+      "clearedSuffix": false
+    }
+  ],
+  "lib/src/core/core.dart": [
+    {
+      "pattern": "version = '(v?(\\d+\\.?){2,}([a-zA-Z0-9-]+(\\.?\\d+)?)?)';$",
+      "clearedPrefix": true,
+      "clearedSuffix": false
+    }
+  ]
+}
