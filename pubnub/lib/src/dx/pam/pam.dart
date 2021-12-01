@@ -8,7 +8,8 @@ import 'token.dart';
 import 'token_request.dart';
 import 'extensions/keyset.dart';
 
-export 'package:pubnub/src/dx/_endpoints/pam.dart' show PamGrantResult;
+export 'package:pubnub/src/dx/_endpoints/pam.dart'
+    show PamGrantResult, PamGrantTokenResult, PamRevokeTokenResult;
 export 'token.dart' show Token;
 export 'resource.dart' show Resource, ResourceType, ResourceTypeExtension;
 export 'extensions/keyset.dart' show PamKeysetExtension;
@@ -106,5 +107,23 @@ mixin PamDx on Core {
   void setToken(String token, {String? using, Keyset? keyset}) {
     keyset ??= keysets[using];
     keyset.token = token;
+  }
+
+  Future<PamRevokeTokenResult> revokeToken(String token,
+      {String? using, Keyset? keyset}) async {
+    keyset ??= keysets[using];
+
+    Ensure(keyset.secretKey).isNotNull('secretKey');
+    Ensure(token).isNotEmpty('token');
+
+    var params = PamRevokeTokenParams(keyset, (token));
+
+    var result = await defaultFlow<PamRevokeTokenParams, PamRevokeTokenResult>(
+        keyset: keyset,
+        core: this,
+        params: params,
+        serialize: (object, [_]) => PamRevokeTokenResult.fromJson(object));
+
+    return result;
   }
 }

@@ -92,6 +92,8 @@ export 'src/dx/pam/pam.dart'
         ResourceTypeExtension,
         Token,
         TokenRequest,
+        PamGrantTokenResult,
+        PamRevokeTokenResult,
         PamKeysetExtension;
 export 'src/dx/presence/presence.dart'
     show

@@ -98,5 +98,8 @@ class MaximumRetriesException extends PubNubException {
 /// {@category Exceptions}
 class ForbiddenException extends PubNubException {
   final String service;
-  ForbiddenException(this.service) : super('Forbidden');
+  final String reason;
+
+  ForbiddenException(this.service, this.reason)
+      : super('Forbidden because $reason');
 }
