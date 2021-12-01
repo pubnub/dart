@@ -1,4 +1,5 @@
 import 'package:gherkin/gherkin.dart';
+import 'package:pubnub/core.dart';
 import 'package:test/test.dart';
 
 import '../../world.dart';
@@ -9,7 +10,12 @@ class StepThenErrorStatusCode extends Then1WithWorld<int, PubNubWorld> {
 
   @override
   Future<void> executeStep(int statusCode) async {
-    this.expect(
-        world.scenarioContext['errorDetails'], startsWith('$statusCode'));
+    if (statusCode == 403) {
+      this.expect(
+          world.scenarioContext['exception'], isA<ForbiddenException>());
+    } else {
+      this.expect(
+          world.scenarioContext['errorDetails'], contains('$statusCode'));
+    }
   }
 }

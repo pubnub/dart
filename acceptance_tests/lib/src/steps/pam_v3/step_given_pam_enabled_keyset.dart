@@ -10,15 +10,15 @@ class StepGivenPAMenabledKeyset extends GivenWithWorld<PubNubWorld> {
 
   @override
   Future<void> executeStep() async {
-    world.keyset = Keyset(
-      subscribeKey: 'demo',
-      publishKey: 'demo',
-      secretKey: 'demo',
-      uuid: UUID('dart-acceptance-testing'),
-    );
-    world.pubnub = PubNub(
-        defaultKeyset: world.keyset,
-        networking: NetworkingModule(origin: 'localhost:8090', ssl: false));
-    world.scenarioContext['tokenRequest'] = world.pubnub.requestToken(ttl: 15);
+    // world.keyset = Keyset(
+    //   subscribeKey: 'demo',
+    //   publishKey: 'demo',
+    //   secretKey: 'demo',
+    //   uuid: UUID('dart-acceptance-testing'),
+    // );
+    // world.pubnub = PubNub(
+    //     defaultKeyset: world.keyset,
+    //     networking: NetworkingModule(origin: 'localhost:8090', ssl: false));
+    // world.scenarioContext['tokenRequest'] = world.pubnub.requestToken(ttl: 15);
   }
 }

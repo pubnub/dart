@@ -23,6 +23,7 @@ import 'steps_files.dart';
 import 'steps_push.dart';
 
 final List<StepDefinitionGeneric<PubNubWorld>> steps = [
+  ...pamv3Steps,
   StepGivenChannel(),
   StepGivenDemoKeyset(),
   StepWhenIAddAMessageAction(),
@@ -53,5 +54,4 @@ final List<StepDefinitionGeneric<PubNubWorld>> steps = [
   StepWhenIRemovePushChannelsWithoutTopic(),
   StepWhenIRemoveDevice(),
   StepWhenIRemoveDeviceWithTopic(),
-  ...pamv3Steps
 ];

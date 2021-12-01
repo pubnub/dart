@@ -45,11 +45,7 @@ class StepWhenGrantToken extends WhenWithWorld<PubNubWorld> {
       }
     }
 
-    try {
-      world.latestResult = await world.pubnub.grantToken(tokenRequest);
-      world.scenarioContext['grantTokenString'] = '${world.latestResult}';
-    } catch (e) {
-      print(e);
-    }
+    world.latestResult = await world.pubnub.grantToken(tokenRequest);
+    world.scenarioContext['grantTokenString'] = '${world.latestResult}';
   }
 }
