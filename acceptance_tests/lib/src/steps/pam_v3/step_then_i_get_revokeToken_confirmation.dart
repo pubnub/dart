@@ -11,14 +11,6 @@ class StepThenIGetConfirmationRevokeToken extends ThenWithWorld<PubNubWorld> {
 
   @override
   Future<void> executeStep() async {
-    // try {
-    //   print('executing revke in confirmation');
-    //   world.latestResult = await world.pubnub
-    //       .revokeToken(world.scenarioContext['grantToken'] as String);
-    // } on PubNubException catch (e) {
-    //   print('error details');
-    //   world.scenarioContext['errorDetails'] = e.message;
-    // }
     var result = world.latestResult as PamRevokeTokenResult;
     this.expect(result, isNotNull);
   }
