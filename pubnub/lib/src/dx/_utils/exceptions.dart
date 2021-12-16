@@ -34,8 +34,11 @@ PubNubException getExceptionFromDefaultResult(DefaultResult result) {
     return MethodDisabledException(result.message!);
   }
 
-  if (result.status == 403 && result.message == 'Forbidden') {
-    return ForbiddenException(result.service!);
+  if (result.status == 403 &&
+          (result.message == 'Forbidden' ||
+              result.message == 'Token is expired.') ||
+      (result.message == 'Token is revoked.')) {
+    return ForbiddenException(result.service!, result.message ?? '');
   }
 
   return PubNubException('${result.status} error: ${result.message}');

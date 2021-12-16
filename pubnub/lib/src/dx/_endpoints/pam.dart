@@ -188,3 +188,30 @@ class PamGrantResult extends Result {
         payload['ttl'], permissions);
   }
 }
+
+class PamRevokeTokenParams extends Parameters {
+  final Keyset keyset;
+
+  final String token;
+
+  PamRevokeTokenParams(this.keyset, this.token);
+
+  @override
+  Request toRequest() {
+    var pathSegments = ['v3', 'pam', keyset.subscribeKey, 'grant', '$token'];
+
+    return Request.delete(uri: Uri(pathSegments: pathSegments));
+  }
+}
+
+/// Result of Revoke Token endpoint call.
+///
+/// {@category Results}
+/// {@category PAM v3}
+class PamRevokeTokenResult extends Result {
+  PamRevokeTokenResult._();
+
+  /// @nodoc
+  factory PamRevokeTokenResult.fromJson(dynamic object) =>
+      PamRevokeTokenResult._();
+}

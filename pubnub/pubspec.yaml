@@ -11,8 +11,8 @@ scripts:
     default: pub run test -P unit
     integration: pub run test -P integration
   validate:
-    analysis: dartanalyzer --fatal-warnings lib
-    formatting: dartfmt -n --set-exit-if-changed lib
+    analysis: dart analyze --fatal-warnings lib
+    formatting: dart format -o none --set-exit-if-changed lib
 
 dependencies:
   async: ^2.5.0
