@@ -24,4 +24,5 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           listener: client-engineering-bot
+          acceptance-tests-workflow: run_acceptance_tests
           jira-api-key: ${{ secrets.JIRA_API_KEY }}
