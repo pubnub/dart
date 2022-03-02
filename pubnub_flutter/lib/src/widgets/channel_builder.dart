@@ -29,10 +29,10 @@ class ChannelBuilder extends StatefulWidget {
   final String channel;
 
   /// [Keyset] instance that will be used by this widget.
-  final Keyset keyset;
+  final Keyset? keyset;
 
   /// Name of a named keyset that will be used by this widget.
-  final String using;
+  final String? using;
 
   /// Disable history fetching. Defaults to false.
   final bool disableHistory;
@@ -49,8 +49,8 @@ class ChannelBuilder extends StatefulWidget {
   final bool withPresence;
 
   ChannelBuilder({
-    @required this.channel,
-    @required this.builder,
+    required this.channel,
+    required this.builder,
     this.keyset,
     this.using,
     this.disableCache = false,
@@ -95,7 +95,7 @@ class ChannelSnapshot {
         isFetching = _state.isFetching;
 
   /// Subscription used to get the latest messages.
-  Subscription get subscription => _state.subscription;
+  Subscription? get subscription => _state.subscription;
 
   /// Fetches more messages from the history.
   Future<void> more() async {
@@ -105,8 +105,8 @@ class ChannelSnapshot {
 
 class _ChannelBuilderState extends State<ChannelBuilder>
     with SubscriptionMemory, DidInitState {
-  PubNubProvider provider;
-  Keyset keyset;
+  late PubNubProvider provider;
+  late Keyset keyset;
 
   bool get cacheEnabled => provider.cacheEnabled && !widget.disableCache;
   String get cacheKey =>
@@ -115,14 +115,15 @@ class _ChannelBuilderState extends State<ChannelBuilder>
   final List<ChannelMessage> localMessages = [];
   List<ChannelMessage> cachedMessages = [];
 
-  PaginatedChannelHistory history;
-  Subscription subscription;
+  PaginatedChannelHistory? history;
+  Subscription? subscription;
 
   List<ChannelMessage> get messages => [
-        if (cacheEnabled && history.messages.isEmpty) ...cachedMessages,
+        if (cacheEnabled && history != null && history!.messages.isEmpty)
+          ...cachedMessages,
         if (!widget.disableSubscription) ...localMessages,
         if (!widget.disableHistory)
-          ...history.messages.map((msg) => ChannelMessage(msg.publishedAt,
+          ...history!.messages.map((msg) => ChannelMessage(msg.publishedAt,
               msg.content, msg.originalMessage, ChannelMessageSource.history)),
       ]..sort((a, b) => (b.publishedAt.value - a.publishedAt.value).toInt());
 
@@ -137,7 +138,7 @@ class _ChannelBuilderState extends State<ChannelBuilder>
     keyset = widget.keyset ?? provider.instance.keysets[widget.using];
 
     if (cacheEnabled) {
-      var messages = provider.cache.get<List<dynamic>>(cacheKey) ?? [];
+      var messages = provider.cache!.get<List<dynamic>>(cacheKey) ?? [];
 
       cachedMessages = messages
           .map((msg) => ChannelMessage(Timetoken(msg['timetoken']),
@@ -149,7 +150,7 @@ class _ChannelBuilderState extends State<ChannelBuilder>
       subscription = remember(provider.instance.subscribe(
           channels: {widget.channel}, withPresence: widget.withPresence));
 
-      bind<Envelope>(subscription.messages, (envelope) {
+      bind<Envelope>(subscription!.messages, (envelope) {
         localMessages.add(ChannelMessage(envelope.publishedAt, envelope.payload,
             envelope.originalMessage, ChannelMessageSource.subscription));
 
@@ -191,12 +192,16 @@ class _ChannelBuilderState extends State<ChannelBuilder>
   bool isFetching = false;
 
   Future<void> fetchMore() async {
-    if (!widget.disableHistory && history.hasMore && !isFetching) {
+    if (history == null) {
+      return;
+    }
+
+    if (!widget.disableHistory && history!.hasMore && !isFetching) {
       setState(() {
         isFetching = true;
       });
 
-      await history.more();
+      await history!.more();
 
       cacheMessages();
 
@@ -217,7 +222,7 @@ class _ChannelBuilderState extends State<ChannelBuilder>
           )
           .toList();
 
-      provider.cache.set(cacheKey, preparedMessages);
+      provider.cache!.set(cacheKey, preparedMessages);
     }
   }
 }

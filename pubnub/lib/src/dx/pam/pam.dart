@@ -83,7 +83,7 @@ mixin PamDx on Core {
 
   /// Creates a [TokenRequest] that can be used to obtain a [Token].
   TokenRequest requestToken(
-      {@required int? ttl,
+      {required int? ttl,
       Map<String, dynamic>? meta,
       String? authorizedUUID,
       String? using,

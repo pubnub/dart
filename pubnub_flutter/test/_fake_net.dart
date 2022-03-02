@@ -8,7 +8,6 @@ class MockException extends PubNubException {
 }
 
 class FakeRequestHandler extends IRequestHandler {
-  Request request;
   Mock mock;
   FakeNetworkingModule module;
 
@@ -16,23 +15,23 @@ class FakeRequestHandler extends IRequestHandler {
 
   @override
   Future<IResponse> response(Request request) {
-    var actualUri = prepareUri(module.getOrigin(), request.uri);
+    var actualUri = prepareUri(module.getOrigin(), request.uri ?? Uri());
     var expectedUri =
         prepareUri(module.getOrigin(), Uri.parse(mock.request.path));
 
     var doesMethodMatch =
         mock.request.method.toUpperCase() == request.type.method.toUpperCase();
 
-    String body;
+    String? body;
     if (request.body is String) {
-      body = request.body;
+      body = request.body as String;
     } else if (request.body == null) {
       body = null;
     } else {
       body = json.encode(request.body);
     }
 
-    String mockBody;
+    String? mockBody;
 
     if (request.body is String) {
       mockBody = mock.request.body;
@@ -106,7 +105,8 @@ class MockResponse implements IResponse {
   @override
   final int statusCode;
 
-  const MockResponse({this.body, this.headers = const {}, this.statusCode});
+  const MockResponse(
+      {this.body, this.headers = const {}, required this.statusCode});
 
   @override
   List<int> get byteList => body;
@@ -129,10 +129,10 @@ class MockBuilder {
   MockBuilder(this._queue, this._request);
 
   void then(
-      {Map<String, List<String>> headers,
+      {Map<String, List<String>> headers = const {},
       dynamic body,
-      int status,
-      MockResponse response}) {
+      required int status,
+      MockResponse? response}) {
     var mock = Mock(
         _request,
         response ??
@@ -148,11 +148,11 @@ List<MockRequest> _expected = [];
 List<Request> _actual = [];
 
 MockBuilder when(
-    {String method,
-    String path,
-    Map<String, List<String>> headers,
+    {required String method,
+    required String path,
+    Map<String, List<String>> headers = const {},
     dynamic body,
-    MockRequest request}) {
+    MockRequest? request}) {
   return MockBuilder(
       _queue, request ?? MockRequest(method, path, headers, body));
 }

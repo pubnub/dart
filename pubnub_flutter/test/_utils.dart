@@ -8,7 +8,7 @@ class App extends StatelessWidget {
 
   final PubNub pubnub;
 
-  App({this.child, this.pubnub});
+  App({required this.child, required this.pubnub});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class App extends StatelessWidget {
 }
 
 Future<Widget> buildWidget(Widget widget,
-    {WidgetTester tester, PubNub pubnub}) async {
+    {required WidgetTester tester, required PubNub pubnub}) async {
   await tester.pumpWidget(App(child: widget, pubnub: pubnub));
 
   return widget;

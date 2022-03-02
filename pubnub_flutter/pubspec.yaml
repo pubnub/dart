@@ -1,13 +1,11 @@
 name: pubnub_flutter
 description: Flutter extensions for PubNub Dart SDK
-version: 0.0.1
+version: 1.0.0
 homepage: https://www.pubnub.com/docs/platform/home
 
-publish_to: none
-
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.17.0 <2.0.0"
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=2.0.0"
 
 scripts:
   test:
@@ -18,8 +16,7 @@ scripts:
 
 dependencies:
   async: ^2.4.2
-  pubnub:
-    path: ../pubnub
+  pubnub: ^4.0.0
   flutter:
     sdk: flutter
 
