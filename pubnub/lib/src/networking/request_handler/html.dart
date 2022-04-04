@@ -29,8 +29,7 @@ class RequestHandler extends IRequestHandler {
   @override
   void cancel([reason]) {
     if (!isDone) {
-      _logger.info(
-          '($_id) Request has been cancelled (reason: ${reason.runtimeType}).');
+      _logger.info('($_id) Request has been cancelled (reason: ${reason.runtimeType}).');
 
       _cancel.complete(RequestCancelException(reason));
 
@@ -71,6 +70,7 @@ class RequestHandler extends IRequestHandler {
       body = formData.body;
     } else {
       if (data.body != null) {
+        headers['Content-Type'] = 'application/json';
         body = utf8.encode(data.body.toString());
       }
     }
@@ -95,8 +95,7 @@ class RequestHandler extends IRequestHandler {
         throw await cancelReason;
       }
 
-      _sendTimeoutTimer =
-          Timer(Duration(milliseconds: data.type.sendTimeout), () {
+      _sendTimeoutTimer = Timer(Duration(milliseconds: data.type.sendTimeout), () {
         if (!isDone) {
           _cancel.complete(RequestTimeoutException());
           if (_abortRequest != null) {
@@ -112,15 +111,12 @@ class RequestHandler extends IRequestHandler {
       _logger.info('($_id) Starting request to "$uri"...');
 
       if (body != null) {
-        request.send(body);
+        request.send(Uint8List.fromList(body));
       } else {
         request.send();
       }
 
-      var event = await Future.any([
-        request.onLoad.first.then((_) => true),
-        request.onError.first.then((_) => false)
-      ]);
+      var event = await Future.any([request.onLoad.first.then((_) => true), request.onError.first.then((_) => false)]);
 
       if (!event) {
         throw Exception('XMLHttpRequest failed.');
