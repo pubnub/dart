@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
-<testsuites tests="43" failed="0">
+<testsuites tests="9" failed="6">
+  <testsuite name="Authorization Failure Reporting"/>
+  <testsuite name="Configure SDK to authorize all requests using a specific access token"/>
+  <testsuite name="Inspect the access token which the SDK is using to authorize requests"/>
   <testsuite name="Grant an access token">
     <testcase name="Grant an access token with all permissions on all resource types with authorized uuid" steps="66"/>
     <testcase name="Grant an access token without an authorized uuid" steps="9"/>
@@ -7,59 +10,62 @@
     <testcase name="Attempt to grant an access token with all permissions empty or false and expect a server error" steps="12"/>
     <testcase name="Attempt to grant an access token with a regular expression containing a syntax error and expect a server error" steps="12"/>
     <testcase name="Attempt to grant an access token with a regular expression containing capturing groups and expect a server error" steps="12"/>
+  </testsuite>
+  <testsuite name="Parse Access Token">
     <testcase name="Validate that a token containing authorized uuid can be parsed correctly" steps="4"/>
     <testcase name="Validate that a token containing uuid resource permissions can be parsed correctly" steps="5"/>
     <testcase name="Validate that a token containing uuid pattern permissions can be parsed correctly" steps="5"/>
   </testsuite>
-  <testsuite name="Files">
-    <testcase name="Listing files" steps="3"/>
-    <testcase name="Publishing file message" steps="3"/>
-    <testcase name="Publishing file message failure" steps="3"/>
-    <testcase name="Deleting a file" steps="3"/>
-    <testcase name="Downloading a file" steps="3"/>
-  </testsuite>
-  <testsuite name="History">
-    <testcase name="Fetching message history" steps="4"/>
-    <testcase name="Fetching message history for multiple channels" steps="3"/>
-    <testcase name="Fetching message history with message actions" steps="3"/>
-  </testsuite>
-  <testsuite name="Message Actions">
-    <testcase name="Adding a message action" steps="3"/>
-    <testcase name="Failing to add a message action" steps="3"/>
-    <testcase name="Fetching message actions with pagination" steps="4"/>
-    <testcase name="Deleting a message action" steps="3"/>
-    <testcase name="Failing to delete a message action" steps="3"/>
-  </testsuite>
-  <testsuite name="Publish a message">
-    <testcase name="Publishing a message" steps="3"/>
-    <testcase name="Publishing a message with JSON metadata" steps="3"/>
-    <testcase name="Publishing a message with string metadata" steps="3"/>
-    <testcase name="Failing publish" steps="3"/>
-  </testsuite>
-  <testsuite name="Signal">
-    <testcase name="Sending a signal" steps="3"/>
-  </testsuite>
-  <testsuite name="Push Notifications">
-    <testcase name="Listing push channels for GCM gateway" steps="3"/>
-    <testcase name="Listing push channels for APNS2 without topic" steps="3"/>
-    <testcase name="Listing push channels for APNS2" steps="3"/>
-    <testcase name="Adding push channels for GCM" steps="3"/>
-    <testcase name="Adding push channels for FCM" steps="3"/>
-    <testcase name="Adding push channels for APNS2 without topic" steps="3"/>
-    <testcase name="Adding push channels for APNS2" steps="3"/>
-    <testcase name="Removing push channels for GCM" steps="3"/>
-    <testcase name="Removing push channels for APNS2 without topic" steps="3"/>
-    <testcase name="Removing push channels for APNS2" steps="3"/>
-    <testcase name="Removing device for GCM" steps="3"/>
-    <testcase name="Removing device for APNS2 without topic" steps="3"/>
-    <testcase name="Removing device for APNS2" steps="3"/>
-  </testsuite>
-  <testsuite name="Message encryption">
-    <testcase name="Receiving an encrypted message with correct crypto key" steps="3"/>
-    <testcase name="Receiving an encrypted message with invalid crypto key" steps="3"/>
-  </testsuite>
+  <testsuite name="Revoke an access token"/>
+  <testsuite name="provide an access token to the the SDK to authorize requests"/>
+  <testsuite name="Message encryption"/>
+  <testsuite name="Files"/>
+  <testsuite name="History"/>
+  <testsuite name="Message Actions"/>
+  <testsuite name="Publish a message"/>
+  <testsuite name="Signal"/>
+  <testsuite name="Push Notifications"/>
+  <testsuite name="Subscribing to a channel automatically connects"/>
+  <testsuite name="Unsubscribing to all Channels automatically disconnects"/>
+  <testsuite name="Check for Messages"/>
+  <testsuite name="Maximum allowed reconnection attempt configuration"/>
+  <testsuite name="Reconnection policy"/>
+  <testsuite name="Continuously receive messages"/>
+  <testsuite name="Subscribe Loop auto-retry with access denied"/>
   <testsuite name="Subscribe Loop"/>
-  <testsuite name="Time">
-    <testcase name="Getting PubNub time" steps="2"/>
-  </testsuite>
+  <testsuite name="De-duplicate messages"/>
+  <testsuite name="Detect Missed Messages"/>
+  <testsuite name="Can stop receiving messages"/>
+  <testsuite name="Receiving a file event"/>
+  <testsuite name="Receiving a message action added event"/>
+  <testsuite name="Receiving a message action event"/>
+  <testsuite name="Receiving a message event"/>
+  <testsuite name="Receiving a channel metadata deleted event"/>
+  <testsuite name="Receiving a channel metadata set event"/>
+  <testsuite name="Receiving a membership added event"/>
+  <testsuite name="Receiving a membership removed event"/>
+  <testsuite name="Receiving a user metadata deleted event"/>
+  <testsuite name="Receiving a user metadata set event"/>
+  <testsuite name="Presence events"/>
+  <testsuite name="Receiving a join event"/>
+  <testsuite name="Receiving a leave event"/>
+  <testsuite name="Receiving a state change event"/>
+  <testsuite name="Receiving a timeout event"/>
+  <testsuite name="Receiving a signsal event"/>
+  <testsuite name="Receiving a status event"/>
+  <testsuite name="Limit unsuccessful reconnection attempts"/>
+  <testsuite name="Can trigger the SDK to receive messages"/>
+  <testsuite name="Exponential Reconnection Policy"/>
+  <testsuite name="Linear Reconnection Policy"/>
+  <testsuite name="Restore Serialized Connection State"/>
+  <testsuite name="Serialize Connection State"/>
+  <testsuite name="Get Connection Status"/>
+  <testsuite name="Inspect the number of subsequent failed reconnection attempts"/>
+  <testsuite name="Inspect automatic reconnection delay"/>
+  <testsuite name="Get Subscribed Channel Groups"/>
+  <testsuite name="Get Subscribed Channels"/>
+  <testsuite name="Get Subscription Cursor"/>
+  <testsuite name="Subscribe"/>
+  <testsuite name="Unsubscribe"/>
+  <testsuite name="Time"/>
 </testsuites>
