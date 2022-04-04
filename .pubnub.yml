@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2022-04-04
+    version: v4.1.1
+    changes:
+      - type: bug
+        text: "Fixes an issue in JS build of Dart SDK, where request bodies were improperly encoded and sent without a correct header."
   - date: 2021-12-16
     version: v4.1.0
     changes:
@@ -376,7 +381,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "4.1.0"
+version: "4.1.1"
 sdks:
   -
     full-name: PubNub Dart SDK
