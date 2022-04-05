@@ -8,6 +8,7 @@ import 'package:pool/pool.dart';
 import 'package:pubnub/core.dart';
 
 import '../response/response.dart';
+import '../utils.dart';
 
 final _logger = injectLogger('pubnub.networking.request_handler');
 
@@ -107,7 +108,10 @@ class RequestHandler extends IRequestHandler {
       });
 
       for (var header in headers.entries) {
-        request.setRequestHeader(header.key, header.value);
+        // NOTE: See https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name
+        if (!isHeaderForbidden(header.key)) {
+          request.setRequestHeader(header.key, header.value);
+        }
       }
 
       _logger.info('($_id) Starting request to "$uri"...');

@@ -255,6 +255,7 @@ class FileDx {
     ];
     var queryParams = {
       'pnsdk': 'PubNub-Dart/${Core.version}',
+      'uuid': keyset.uuid.value,
       if (keyset.secretKey != null)
         'timestamp': '${Time().now()!.millisecondsSinceEpoch ~/ 1000}',
       if (keyset.authKey != null) 'auth': keyset.authKey!
