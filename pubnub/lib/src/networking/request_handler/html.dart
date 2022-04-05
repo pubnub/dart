@@ -71,6 +71,7 @@ class RequestHandler extends IRequestHandler {
       body = formData.body;
     } else {
       if (data.body != null) {
+        headers['Content-Type'] = 'application/json';
         body = utf8.encode(data.body.toString());
       }
     }
@@ -112,7 +113,7 @@ class RequestHandler extends IRequestHandler {
       _logger.info('($_id) Starting request to "$uri"...');
 
       if (body != null) {
-        request.send(body);
+        request.send(Uint8List.fromList(body));
       } else {
         request.send();
       }

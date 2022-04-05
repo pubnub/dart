@@ -1,3 +1,9 @@
+## v4.1.1
+April 04 2022
+
+#### Fixed
+- Fixes an issue in JS build of Dart SDK, where request bodies were improperly encoded and sent without a correct header.
+
 ## v4.1.0
 December 16 2021
 
