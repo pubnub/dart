@@ -24,5 +24,6 @@ const _forbiddenHeaders = [
 ];
 
 bool isHeaderForbidden(String header) {
-  return _forbiddenHeaders.any((element) => element.matchAsPrefix(header) != null);
+  return _forbiddenHeaders
+      .any((element) => element.matchAsPrefix(header) != null);
 }
