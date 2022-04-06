@@ -1,3 +1,10 @@
+## v4.1.2
+April 06 2022
+
+#### Fixed
+- Adds a fix that prevents the SDK from adding forbidden headers in browser environments.
+- Fixes getFileUrl method by adding uuid in query parameters.
+
 ## v4.1.1
 April 04 2022
 
