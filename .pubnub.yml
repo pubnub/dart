@@ -1,5 +1,12 @@
 ---
 changelog:
+  - date: 2022-04-06
+    version: v4.1.2
+    changes:
+      - type: bug
+        text: "Adds a fix that prevents the SDK from adding forbidden headers in browser environments."
+      - type: bug
+        text: "Fixes getFileUrl method by adding uuid in query parameters."
   - date: 2022-04-04
     version: v4.1.1
     changes:
@@ -381,7 +388,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "4.1.1"
+version: "4.1.2"
 sdks:
   -
     full-name: PubNub Dart SDK
