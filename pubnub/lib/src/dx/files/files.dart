@@ -100,7 +100,7 @@ class FileDx {
 
     var publishFileResult = PublishFileMessageResult();
 
-    if (s3Response.statusCode == 204) {
+    if (s3Response.statusCode == 204 || s3Response.statusCode == 0) {
       do {
         try {
           publishFileResult = await publishFileMessage(channel, publishMessage,
