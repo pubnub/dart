@@ -132,7 +132,7 @@ class SubscribeLoop {
             try {
               _logger.info('Decrypting message...');
               object['d'] = await core.parser.decode(
-                  core.crypto.decrypt(state.keyset.cipherKey!, (object['d'])));
+                  core.crypto.decrypt(state.keyset.cipherKey!, object['d']));
             } catch (e) {
               throw PubNubException(
                   'Can not decrypt the message payload. Please check keyset configuration.');

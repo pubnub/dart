@@ -60,12 +60,9 @@ class FileUploadParams extends Parameters {
 }
 
 class FileUploadResult extends Result {
-  final int statusCode;
+  FileUploadResult._();
 
-  FileUploadResult._(this.statusCode);
-
-  factory FileUploadResult.fromJson(dynamic object) =>
-      FileUploadResult._(object.statusCode);
+  factory FileUploadResult.fromJson(dynamic object) => FileUploadResult._();
 }
 
 class PublishFileMessageParams extends Parameters {
