@@ -136,8 +136,9 @@ class BatchHistoryResultEntry {
   /// Original timetoken of the message.
   Timetoken timetoken;
 
-  /// UUID of the sender.
-  String uuid;
+  /// If `includeUUID` was true, this will contain UUID of the sender.
+  /// Otherwise, it will be `null`.
+  String? uuid;
 
   /// Type of the message.
   MessageType messageType;
