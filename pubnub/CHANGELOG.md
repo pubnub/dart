@@ -1,3 +1,10 @@
+## v4.1.3
+April 21 2022
+
+#### Fixed
+- Fixes issue of `fetchMessages` with false includeUUID response parse error. Fixed the following issues reported by [@linsdev](https://github.com/linsdev): [#89](https://github.com/pubnub/dart/issues/89).
+- Fixes issue of publish file message not triggered on browser.
+
 ## v4.1.2
 April 06 2022
 

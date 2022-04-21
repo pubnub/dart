@@ -1,5 +1,12 @@
 ---
 changelog:
+  - date: 2022-04-21
+    version: v4.1.3
+    changes:
+      - type: bug
+        text: "Fixes issue of `fetchMessages` with false includeUUID response parse error."
+      - type: bug
+        text: "Fixes issue of publish file message not triggered on browser."
   - date: 2022-04-06
     version: v4.1.2
     changes:
@@ -387,7 +394,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "4.1.2"
+version: "4.1.3"
 sdks:
   -
     full-name: PubNub Dart SDK
