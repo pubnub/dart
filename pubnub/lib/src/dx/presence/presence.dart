@@ -71,4 +71,24 @@ mixin PresenceDx on Core {
             heartbeat: heartbeat),
         serialize: (object, [_]) => HeartbeatResult.fromJson(object));
   }
+
+  Future<SetUserStateResult> setPresence({Keyset? keyset,
+    String? using,
+    Set<String> channels = const {},
+    Set<String> channelGroups = const {},
+    required String state}) {
+    keyset ??= keysets[using];
+
+    Ensure(keyset).isNotNull('keyset');
+    return defaultFlow<SetUserStateParams, SetUserStateResult>(
+        keyset: keyset,
+        core: this,
+        params: SetUserStateParams(
+          keyset,
+          state,
+          channels: channels,
+          channelGroups: channelGroups,
+        ),
+        serialize: (object, [_]) => SetUserStateResult.fromJson(object));
+  }
 }

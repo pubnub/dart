@@ -94,7 +94,7 @@ class SetUserStateResult extends Result {
   factory SetUserStateResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
 
-    return SetUserStateResult._(result.otherKeys['payload'] as String);
+    return SetUserStateResult._(result.otherKeys['payload'].toString());
   }
 }
 
