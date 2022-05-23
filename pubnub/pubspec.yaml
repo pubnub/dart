@@ -8,8 +8,8 @@ environment:
 
 scripts:
   test:
-    default: pub run test -P unit
-    integration: pub run test -P integration
+    default: dart pub run test -P unit
+    integration: dart pub run test -P integration
   validate:
     analysis: dart analyze --fatal-warnings lib
     formatting: dart format -o none --set-exit-if-changed lib
