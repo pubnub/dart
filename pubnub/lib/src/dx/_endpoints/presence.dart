@@ -73,6 +73,8 @@ class SetUserStateParams extends Parameters {
     ];
 
     var queryParameters = {
+      if (channelGroups != null && channelGroups!.isNotEmpty)
+        'channel-group': channelGroups!.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
       'state': '$state',
     };
@@ -86,7 +88,7 @@ class SetUserStateParams extends Parameters {
 ///
 /// {@category Results}
 class SetUserStateResult extends Result {
-  final String state;
+  final dynamic state;
 
   SetUserStateResult._(this.state);
 
@@ -94,7 +96,7 @@ class SetUserStateResult extends Result {
   factory SetUserStateResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
 
-    return SetUserStateResult._(result.otherKeys['payload'] as String);
+    return SetUserStateResult._(result.otherKeys['payload']);
   }
 }
 
@@ -119,6 +121,8 @@ class GetUserStateParams extends Parameters {
     ];
 
     var queryParameters = {
+      if (channelGroups != null && channelGroups!.isNotEmpty)
+        'channel-group': channelGroups!.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
     };
 
@@ -131,7 +135,7 @@ class GetUserStateParams extends Parameters {
 ///
 /// {@category Results}
 class GetUserStateResult extends Result {
-  final String state;
+  final dynamic state;
 
   GetUserStateResult._(this.state);
 
@@ -139,7 +143,7 @@ class GetUserStateResult extends Result {
   factory GetUserStateResult.fromJson(Map<String, dynamic> object) {
     var result = DefaultResult.fromJson(object);
 
-    return GetUserStateResult._(result.otherKeys['payload'] as String);
+    return GetUserStateResult._(result.otherKeys['payload']);
   }
 }
 

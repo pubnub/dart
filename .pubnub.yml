@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2022-05-30
+    version: v4.2.0
+    changes:
+      - type: feature
+        text: "Adds two presence methods, setState and getState."
   - date: 2022-04-21
     version: v4.1.3
     changes:
@@ -394,7 +399,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "4.1.3"
+version: "4.2.0"
 sdks:
   -
     full-name: PubNub Dart SDK
