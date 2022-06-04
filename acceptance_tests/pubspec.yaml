@@ -10,11 +10,11 @@ environment:
 dependencies:
   glob: ^2.0.1
   http: ^0.13.1
-  xml: ^5.1.0
+  xml: ^6.0.1
   archive: ^3.1.2
   dotenv: ^3.0.0-nullsafety.0
   gherkin:
-    git: 
+    git:
       url: https://github.com/are/dart_gherkin.git
       ref: "5735740"
   test: ^1.15.0
