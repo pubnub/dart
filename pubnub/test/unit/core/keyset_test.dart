@@ -57,5 +57,42 @@ void main() {
                     (Keyset keyset) => keyset.subscribeKey == 'default')));
       });
     });
+
+    group('#keyset with userId or uuid', () {
+      test('throws if userId and uuid provided in keyset', () {
+        expect(
+            () => Keyset(
+                subscribeKey: 'subscribeKey',
+                uuid: UUID('uuid'),
+                userId: UserId('userId')),
+            throwsA(TypeMatcher<AssertionError>()));
+      });
+
+      test('throws if userId and uuid missing in keyset', () {
+        expect(
+            () => Keyset(
+                  subscribeKey: 'subscribeKey',
+                ),
+            throwsA(TypeMatcher<AssertionError>()));
+      });
+
+      test('keyset with userId', () {
+        store = KeysetStore();
+        store.add('default',
+            Keyset(subscribeKey: 'subscribeKey', userId: UserId('user-Id')));
+
+        var key = store['default'];
+        expect(key.userId!.value, equals('user-Id'));
+      });
+
+      // test('returns correct keyset if name is recognized', () {
+      //   expect(
+      //       store['default'],
+      //       allOf(
+      //           isA<Keyset>(),
+      //           predicate(
+      //               (Keyset keyset) => keyset.subscribeKey == 'default')));
+      // });
+    });
   });
 }

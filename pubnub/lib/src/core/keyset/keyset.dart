@@ -1,4 +1,5 @@
 import '../uuid.dart';
+import '../userId.dart';
 import '../crypto/cipher_key.dart';
 
 /// Represents a configuration for a given subscribe key.
@@ -9,7 +10,15 @@ class Keyset {
   final String subscribeKey;
 
   /// Unique identifier of this device.
-  final UUID uuid;
+  ///
+  /// Please provide [userId] instead. To uniquely identify a PubNub user.
+  @deprecated
+  UUID? uuid;
+
+  /// Unique Id for user.
+  ///
+  /// Note: Keyset initialisation with both [uuid] and [userId] values is not allowed.
+  final UserId? userId;
 
   /// Publish key.
   final String? publishKey;
@@ -28,10 +37,19 @@ class Keyset {
 
   Keyset({
     required this.subscribeKey,
-    required this.uuid,
+    @deprecated this.uuid,
+    this.userId,
     this.publishKey,
     this.secretKey,
     this.authKey,
     this.cipherKey,
-  });
+  }) : assert(
+            (uuid != null && userId == null) ||
+                (uuid == null && userId != null),
+            'Please provide either `uuid` or `userId` parameter value. Both values are not allowed together.') {
+    if (userId != null) {
+      // ignore: deprecated_member_use_from_same_package
+      uuid = UUID(userId!.value);
+    }
+  }
 }
