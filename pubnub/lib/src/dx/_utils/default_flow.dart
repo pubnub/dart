@@ -41,7 +41,7 @@ Future<R> _defaultFlow<P extends Parameters, R>({
     request.uri = request.uri?.replace(
       queryParameters: {
         ...request.uri?.queryParameters ?? {},
-        'uuid': keyset.uuid.value,
+        'uuid': keyset.uuid!.value,
         if (keyset.hasAuth() && !request.uri!.pathSegments.contains('grant'))
           'auth': keyset.getAuth(),
       },

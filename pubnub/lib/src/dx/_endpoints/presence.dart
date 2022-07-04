@@ -28,7 +28,7 @@ class HeartbeatParams extends Parameters {
       if (channelGroups != null && channelGroups!.isNotEmpty)
         'channel-group': channelGroups?.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      'uuid': '${keyset.uuid.value}',
+      'uuid': '${keyset.uuid!.value}',
       if (state != null) 'state': '$state',
       if (heartbeat != null) 'heartbeat': '$heartbeat'
     };
@@ -68,7 +68,7 @@ class SetUserStateParams extends Parameters {
       'channel',
       if (channels != null) channels!.isNotEmpty ? channels!.join(',') : ',',
       'uuid',
-      keyset.uuid.value,
+      keyset.uuid!.value,
       'data'
     ];
 
@@ -117,7 +117,7 @@ class GetUserStateParams extends Parameters {
       'channel',
       if (channels != null) channels!.isNotEmpty ? channels!.join(',') : ',',
       'uuid',
-      keyset.uuid.value
+      keyset.uuid!.value
     ];
 
     var queryParameters = {
@@ -170,7 +170,7 @@ class LeaveParams extends Parameters {
       if (channelGroups != null && channelGroups!.isNotEmpty)
         'channel-group': channelGroups!.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      'uuid': '${keyset.uuid.value}',
+      'uuid': '${keyset.uuid!.value}',
     };
 
     return Request.get(
@@ -229,7 +229,7 @@ class HereNowParams extends Parameters {
       if (global != true && channelGroups != null && channelGroups!.isNotEmpty)
         'channel-group': channelGroups!.join(','),
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
-      'uuid': '${keyset.uuid.value}',
+      'uuid': '${keyset.uuid!.value}',
       if (stateInfo == StateInfo.all || stateInfo == StateInfo.onlyUUIDs)
         'disable_uuids': '0',
       if (stateInfo == StateInfo.all) 'state': '1'

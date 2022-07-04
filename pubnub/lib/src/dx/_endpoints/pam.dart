@@ -12,7 +12,7 @@ class PamGrantTokenParams extends Parameters {
   Request toRequest() {
     var pathSegments = ['v3', 'pam', keyset.subscribeKey, 'grant'];
     var queryParameters = <String, String>{
-      'uuid': '${keyset.uuid.value}',
+      'uuid': '${keyset.uuid!.value}',
     };
 
     return Request.post(

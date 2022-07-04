@@ -20,7 +20,7 @@ class ChannelGroupListChannelsParams extends Parameters {
 
     var queryParameters = {
       if (keyset.authKey != null) 'auth': keyset.authKey,
-      'uuid': keyset.uuid.value
+      'uuid': keyset.uuid!.value
     };
 
     return Request.get(
@@ -72,7 +72,7 @@ class ChannelGroupChangeChannelsParams extends Parameters {
 
     var queryParameters = {
       if (keyset.authKey != null) 'auth': keyset.authKey,
-      'uuid': keyset.uuid.value,
+      'uuid': keyset.uuid!.value,
       'add': add?.join(','),
       'remove': remove?.join(',')
     };
@@ -110,7 +110,7 @@ class ChannelGroupDeleteParams extends Parameters {
 
     var queryParameters = {
       if (keyset.authKey != null) 'auth': keyset.authKey,
-      'uuid': keyset.uuid.value
+      'uuid': keyset.uuid!.value
     };
 
     return Request.get(

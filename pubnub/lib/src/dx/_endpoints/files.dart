@@ -95,7 +95,7 @@ class PublishFileMessageParams extends Parameters {
         'store': '1'
       else if (storeMessage == false)
         'store': '0',
-      'uuid': keyset.uuid.value,
+      'uuid': keyset.uuid!.value,
       if (ttl != null) 'ttl': ttl.toString(),
       if (meta != null) 'meta': meta
     };

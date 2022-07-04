@@ -31,7 +31,7 @@ class PublishParams extends Parameters {
         'store': '0',
       if (meta != null) 'meta': meta,
       if (keyset.authKey != null) 'auth': keyset.authKey,
-      'uuid': keyset.uuid.value,
+      'uuid': keyset.uuid!.value,
       if (ttl != null) 'ttl': ttl.toString()
     };
 

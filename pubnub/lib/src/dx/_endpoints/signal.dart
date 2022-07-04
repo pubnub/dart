@@ -22,7 +22,7 @@ class SignalParams extends Parameters {
 
     var queryParameters = {
       if (keyset.authKey != null) 'auth': keyset.authKey,
-      'uuid': keyset.uuid.value,
+      'uuid': keyset.uuid!.value,
     };
 
     return Request.get(

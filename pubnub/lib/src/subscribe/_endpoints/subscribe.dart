@@ -41,7 +41,7 @@ class SubscribeParams extends Parameters {
       if (channelGroups != null && channelGroups!.isNotEmpty)
         'channel-group': channelGroups!.join(','),
       if (keyset.hasAuth()) 'auth': keyset.getAuth(),
-      'uuid': keyset.uuid.value,
+      'uuid': keyset.uuid!.value,
       if (keyset.filterExpression != null)
         'filter-expr': keyset.filterExpression!,
       if (keyset.heartbeatInterval != null)
