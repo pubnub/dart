@@ -38,6 +38,6 @@ class Keyset {
     this.secretKey,
     this.authKey,
     this.cipherKey,
-  })  : assert(uuid == null || userId == null),
+  })  : assert((uuid == null) ^ (userId == null)),
         uuid = userId != null ? UUID(userId.value) : uuid!;
 }
