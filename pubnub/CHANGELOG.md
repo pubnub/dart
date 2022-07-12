@@ -1,3 +1,11 @@
+## v4.2.1
+July 12 2022
+
+#### Added
+- Support for fire in publish feature.
+- Allow to specify access rights for user and space in grantToken request.
+- Allow users to specify userId instead of uuid.
+
 ## v4.1.3
 April 21 2022
 

@@ -1,5 +1,14 @@
 ---
 changelog:
+  - date: 2022-07-12
+    version: v4.2.1
+    changes:
+      - type: feature
+        text: "Support for fire in publish feature."
+      - type: feature
+        text: "Allow to specify access rights for user and space in grantToken request."
+      - type: feature
+        text: "Allow users to specify userId instead of uuid."
   - date: 2022-05-30
     version: v4.2.0
     changes:
@@ -399,7 +408,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "4.2.0"
+version: "4.2.1"
 sdks:
   -
     full-name: PubNub Dart SDK
