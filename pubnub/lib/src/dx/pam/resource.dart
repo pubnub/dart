@@ -8,9 +8,9 @@ extension ResourceTypeExtension on ResourceType {
   String get value {
     switch (this) {
       case ResourceType.user:
-        return 'users';
+        return 'uuids';
       case ResourceType.space:
-        return 'spaces';
+        return 'channels';
       case ResourceType.uuid:
         return 'uuids';
       case ResourceType.channel:
