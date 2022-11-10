@@ -1,5 +1,12 @@
 ---
 changelog:
+  - date: 2022-11-10
+    version: v4.2.2
+    changes:
+      - type: feature
+        text: "Support for Flutter 3."
+      - type: bug
+        text: "Fixes issue of having old version of xml package dependency."
   - date: 2022-07-12
     version: v4.2.1
     changes:
@@ -408,7 +415,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "4.2.1"
+version: "4.2.2"
 sdks:
   -
     full-name: PubNub Dart SDK
