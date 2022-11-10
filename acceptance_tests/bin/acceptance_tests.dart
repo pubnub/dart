@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dotenv/dotenv.dart' show load, env;
+import 'package:dotenv/dotenv.dart';
 import 'package:gherkin/gherkin.dart';
 
 import 'package:acceptance_tests/acceptance_tests.dart';
@@ -9,7 +9,7 @@ import 'package:xml/xml.dart';
 late final logger = TestLogger('Runner', debug: false);
 
 Future<void> main() async {
-  load();
+  var env = DotEnv(includePlatformEnvironment: true)..load();
 
   late final gherkinConfig = PubNubConfiguration(
     featureFiles:
