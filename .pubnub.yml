@@ -1,5 +1,12 @@
 ---
 changelog:
+  - date: 2022-11-14
+    version: v4.2.2
+    changes:
+      - type: feature
+        text: "Support for Flutter 3."
+      - type: bug
+        text: "Fixes issue of having old version of xml package dependency."
   - date: 2022-07-12
     version: v4.2.1
     changes:

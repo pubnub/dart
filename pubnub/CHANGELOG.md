@@ -1,3 +1,12 @@
+## v4.2.2
+November 14 2022
+
+#### Added
+- Support for Flutter 3.
+
+#### Fixed
+- Fixes issue of having old version of xml package dependency. Fixed the following issues reported by [@panalgin](https://github.com/panalgin): [#94](https://github.com/pubnub/dart/issues/94).
+
 ## v4.2.1
 July 12 2022
 
