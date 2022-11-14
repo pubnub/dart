@@ -21,8 +21,7 @@
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -54,7 +53,7 @@
 <section id="getter">
 
 <section class="multi-line-signature">
-  <span class="returntype"><a href="https://api.dart.dev/stable/2.16.2/dart-async/Stream-class.html">Stream</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.16.2/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
+  <span class="returntype"><a href="https://api.dart.dev/stable/2.18.4/dart-async/Stream-class.html">Stream</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
   <span class="name ">networkIsConnected</span>
   
 
@@ -66,6 +65,18 @@
 </section>
 
 
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Stream&lt;bool&gt; get networkIsConnected =&gt; _stream.map((event) {
+      if (event is NetworkIsUpEvent) {
+        return true;
+      } else if (event is NetworkIsDownEvent) {
+        return false;
+      }
+
+      return _isNetworkAvailable;
+    });</code></pre>
+</section>
 
 </section>
 
@@ -90,25 +101,25 @@
     <h5>Signals class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../pubnub/Signals-class.html#constructors">Constructors</a></li>
-    <li><a href="../../pubnub/Signals/Signals.html">Signals</a></li>
+        <li class="section-title"><a href="../../pubnub/Signals-class.html#constructors">Constructors</a></li>
+          <li><a href="../../pubnub/Signals/Signals.html">Signals</a></li>
 
 
     <li class="section-title">
       <a href="../../pubnub/Signals-class.html#instance-properties">Properties</a>
     </li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../../pubnub/Signals/networkIsConnected.html">networkIsConnected</a></li>
     <li><a href="../../pubnub/Signals/networkIsDown.html">networkIsDown</a></li>
     <li><a href="../../pubnub/Signals/networkIsUp.html">networkIsUp</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title"><a href="../../pubnub/Signals-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../../pubnub/Signals-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -125,7 +136,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.1.3
+      4.2.2
   </span>
 
   
@@ -134,7 +145,7 @@
 
 
 <script src="../../static-assets/highlight.pack.js?v1"></script>
-<script src="../../static-assets/script.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

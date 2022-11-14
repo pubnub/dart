@@ -21,8 +21,7 @@
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -52,14 +51,15 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/2.16.2/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/PublishResult-class.html">PublishResult</a></span>&gt;</span></span>
-<span class="name ">publish</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="publish-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/PublishResult-class.html">PublishResult</a></span>&gt;</span></span>
+<span class="name ">publish</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="publish-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span></li>
 <li><span class="parameter" id="publish-param-message"><span class="type-annotation">dynamic</span> <span class="parameter-name">message</span>, </span></li>
 <li><span class="parameter" id="publish-param-keyset">{<span class="type-annotation"><a href="../../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span></li>
-<li><span class="parameter" id="publish-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
-<li><span class="parameter" id="publish-param-meta"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">meta</span>, </span></li>
-<li><span class="parameter" id="publish-param-storeMessage"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">storeMessage</span>, </span></li>
-<li><span class="parameter" id="publish-param-ttl"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">ttl</span>}</span></li>
+<li><span class="parameter" id="publish-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
+<li><span class="parameter" id="publish-param-meta"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">meta</span>, </span></li>
+<li><span class="parameter" id="publish-param-storeMessage"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">storeMessage</span>, </span></li>
+<li><span class="parameter" id="publish-param-ttl"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">ttl</span>, </span></li>
+<li><span class="parameter" id="publish-param-fire"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">fire</span>}</span></li>
 </ol>)
 
       <div class="features">inherited</div>
@@ -76,6 +76,9 @@ If set to <code>0</code>, message won't expire.
 If unset, expiration will fall back to default.</p>
 <p><code>meta</code> parameter is for providing additional information with message
 that can be used for stream filtering.</p>
+<p>To send message to PubNub BLOCKS EventHandler, set <code>fire</code> param value to <code>true</code>.
+Fire message is not replicated, and so will not be received by any subscribers to the channel.
+Fire message is also not stored in history.</p>
 <p>If <code>keyset</code> is not provided, then it tries to obtain a keyset <code>using</code> name.
 If that fails, then it uses the default keyset.
 If that fails as well, then it will throw <a href="../../pubnub/InvariantException-class.html">InvariantException</a>.</p>
@@ -86,6 +89,49 @@ If that fails as well, then it will throw <a href="../../pubnub/InvariantExcepti
 
 
     
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;PublishResult&gt; publish(String channel, dynamic message,
+    {Keyset? keyset,
+    String? using,
+    Map&lt;String, dynamic&gt;? meta,
+    bool? storeMessage,
+    int? ttl,
+    bool? fire}) async {
+  Ensure(channel).isNotEmpty(&#39;channel name&#39;);
+  Ensure(message).isNotNull(&#39;message&#39;);
+
+  keyset ??= keysets[using];
+  Ensure(keyset.publishKey).isNotNull(&#39;publishKey&#39;);
+
+  var payload = await super.parser.encode(message);
+
+  if (keyset.cipherKey != null) {
+    payload =
+        await super.parser.encode(crypto.encrypt(keyset.cipherKey!, payload));
+  }
+
+  var params = PublishParams(keyset, channel, payload,
+      storeMessage: storeMessage, ttl: ttl);
+
+  if (meta != null) {
+    params.meta = await super.parser.encode(meta);
+  }
+
+  if (fire != null &amp;&amp; fire) {
+    params.storeMessage = false;
+    params.noReplication = true;
+  }
+
+  _logger.verbose(&#39;Publishing a message to a channel $channel&#39;);
+
+  return await defaultFlow&lt;PublishParams, PublishResult&gt;(
+      keyset: keyset,
+      core: this,
+      params: params,
+      serialize: (object, [_]) =&gt; PublishResult.fromJson(object));
+}</code></pre>
+</section>
 
 
   </div> <!-- /.main-content -->
@@ -108,8 +154,8 @@ If that fails as well, then it will throw <a href="../../pubnub/InvariantExcepti
     <h5>PubNub class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../pubnub/PubNub-class.html#constructors">Constructors</a></li>
-    <li><a href="../../pubnub/PubNub/PubNub.html">PubNub</a></li>
+        <li class="section-title"><a href="../../pubnub/PubNub-class.html#constructors">Constructors</a></li>
+          <li><a href="../../pubnub/PubNub/PubNub.html">PubNub</a></li>
 
 
     <li class="section-title">
@@ -119,12 +165,12 @@ If that fails as well, then it will throw <a href="../../pubnub/InvariantExcepti
     <li><a href="../../pubnub/PubNub/channelGroups.html">channelGroups</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/crypto.html">crypto</a></li>
     <li><a href="../../pubnub/PubNub/files.html">files</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/keysets.html">keysets</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/networking.html">networking</a></li>
     <li><a href="../../pubnub/PubNub/objects.html">objects</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/parser.html">parser</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/signals.html">signals</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/supervisor.html">supervisor</a></li>
 
@@ -138,13 +184,14 @@ If that fails as well, then it will throw <a href="../../pubnub/InvariantExcepti
     <li class="inherited"><a href="../../pubnub/PubNub/deleteMessageAction.html">deleteMessageAction</a></li>
     <li><a href="../../pubnub/PubNub/device.html">device</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/fetchMessageActions.html">fetchMessageActions</a></li>
+    <li class="inherited"><a href="../../pubnub/PubNub/getState.html">getState</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/getSubscribedChannelGroupsForUUID.html">getSubscribedChannelGroupsForUUID</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/getSubscribedChannelsForUUID.html">getSubscribedChannelsForUUID</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/grant.html">grant</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/grantToken.html">grantToken</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/hereNow.html">hereNow</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/listPushChannels.html">listPushChannels</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/parseToken.html">parseToken</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/publish.html">publish</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/reconnect.html">reconnect</a></li>
@@ -152,21 +199,22 @@ If that fails as well, then it will throw <a href="../../pubnub/InvariantExcepti
     <li class="inherited"><a href="../../pubnub/PubNub/removePushChannels.html">removePushChannels</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/requestToken.html">requestToken</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/revokeToken.html">revokeToken</a></li>
+    <li class="inherited"><a href="../../pubnub/PubNub/setState.html">setState</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/setToken.html">setToken</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/signal.html">signal</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/subscribe.html">subscribe</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/subscription.html">subscription</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/time.html">time</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/unsubscribeAll.html">unsubscribeAll</a></li>
     <li><a href="../../pubnub/PubNub/uuidMetadata.html">uuidMetadata</a></li>
 
     <li class="section-title inherited"><a href="../../pubnub/PubNub-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
-    <li class="section-title"><a href="../../pubnub/PubNub-class.html#static-properties">Static properties</a></li>
-    <li><a href="../../pubnub/PubNub/version.html">version</a></li>
+        <li class="section-title"><a href="../../pubnub/PubNub-class.html#static-properties">Static properties</a></li>
+          <li><a href="../../pubnub/PubNub/version.html">version</a></li>
 
 
 </ol>
@@ -181,7 +229,7 @@ If that fails as well, then it will throw <a href="../../pubnub/InvariantExcepti
 <footer>
   <span class="no-break">
     pubnub
-      4.1.3
+      4.2.2
   </span>
 
   
@@ -190,7 +238,7 @@ If that fails as well, then it will throw <a href="../../pubnub/InvariantExcepti
 
 
 <script src="../../static-assets/highlight.pack.js?v1"></script>
-<script src="../../static-assets/script.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

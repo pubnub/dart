@@ -21,8 +21,7 @@
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -53,10 +52,11 @@
       
 
 <span class="returntype"><a href="../../pubnub/TokenRequest-class.html">TokenRequest</a></span>
-<span class="name ">requestToken</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="requestToken-param-ttl">{<span>@<a href="https://pub.dev/documentation/meta/1.7.0/meta/required-constant.html">required</a></span> <span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">ttl</span>, </span></li>
-<li><span class="parameter" id="requestToken-param-meta"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">meta</span>, </span></li>
-<li><span class="parameter" id="requestToken-param-authorizedUUID"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">authorizedUUID</span>, </span></li>
-<li><span class="parameter" id="requestToken-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
+<span class="name ">requestToken</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="requestToken-param-ttl">{<span>@<a href="https://pub.dev/documentation/meta/1.8.0/meta/required-constant.html">required</a></span> <span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">ttl</span>, </span></li>
+<li><span class="parameter" id="requestToken-param-meta"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">meta</span>, </span></li>
+<li><span class="parameter" id="requestToken-param-authorizedUUID"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">authorizedUUID</span>, </span></li>
+<li><span class="parameter" id="requestToken-param-authorizedUserId"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">authorizedUserId</span>, </span></li>
+<li><span class="parameter" id="requestToken-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
 <li><span class="parameter" id="requestToken-param-keyset"><span class="type-annotation"><a href="../../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>}</span></li>
 </ol>)
 
@@ -70,6 +70,25 @@
 
 
     
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">TokenRequest requestToken(
+    {@required int? ttl,
+    Map&lt;String, dynamic&gt;? meta,
+    String? authorizedUUID,
+    String? authorizedUserId,
+    String? using,
+    Keyset? keyset}) {
+  Ensure(ttl).isNotNull(&#39;ttl&#39;);
+
+  keyset ??= keysets[using];
+
+  return TokenRequest(this, keyset, ttl!,
+      meta: meta,
+      authorizedUUID: authorizedUUID,
+      authorizedUserId: authorizedUserId);
+}</code></pre>
+</section>
 
 
   </div> <!-- /.main-content -->
@@ -92,8 +111,8 @@
     <h5>PubNub class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../pubnub/PubNub-class.html#constructors">Constructors</a></li>
-    <li><a href="../../pubnub/PubNub/PubNub.html">PubNub</a></li>
+        <li class="section-title"><a href="../../pubnub/PubNub-class.html#constructors">Constructors</a></li>
+          <li><a href="../../pubnub/PubNub/PubNub.html">PubNub</a></li>
 
 
     <li class="section-title">
@@ -103,12 +122,12 @@
     <li><a href="../../pubnub/PubNub/channelGroups.html">channelGroups</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/crypto.html">crypto</a></li>
     <li><a href="../../pubnub/PubNub/files.html">files</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/keysets.html">keysets</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/networking.html">networking</a></li>
     <li><a href="../../pubnub/PubNub/objects.html">objects</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/parser.html">parser</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/signals.html">signals</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/supervisor.html">supervisor</a></li>
 
@@ -122,13 +141,14 @@
     <li class="inherited"><a href="../../pubnub/PubNub/deleteMessageAction.html">deleteMessageAction</a></li>
     <li><a href="../../pubnub/PubNub/device.html">device</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/fetchMessageActions.html">fetchMessageActions</a></li>
+    <li class="inherited"><a href="../../pubnub/PubNub/getState.html">getState</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/getSubscribedChannelGroupsForUUID.html">getSubscribedChannelGroupsForUUID</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/getSubscribedChannelsForUUID.html">getSubscribedChannelsForUUID</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/grant.html">grant</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/grantToken.html">grantToken</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/hereNow.html">hereNow</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/listPushChannels.html">listPushChannels</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/parseToken.html">parseToken</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/publish.html">publish</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/reconnect.html">reconnect</a></li>
@@ -136,21 +156,22 @@
     <li class="inherited"><a href="../../pubnub/PubNub/removePushChannels.html">removePushChannels</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/requestToken.html">requestToken</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/revokeToken.html">revokeToken</a></li>
+    <li class="inherited"><a href="../../pubnub/PubNub/setState.html">setState</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/setToken.html">setToken</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/signal.html">signal</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/subscribe.html">subscribe</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/subscription.html">subscription</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/time.html">time</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></li>
     <li class="inherited"><a href="../../pubnub/PubNub/unsubscribeAll.html">unsubscribeAll</a></li>
     <li><a href="../../pubnub/PubNub/uuidMetadata.html">uuidMetadata</a></li>
 
     <li class="section-title inherited"><a href="../../pubnub/PubNub-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
-    <li class="section-title"><a href="../../pubnub/PubNub-class.html#static-properties">Static properties</a></li>
-    <li><a href="../../pubnub/PubNub/version.html">version</a></li>
+        <li class="section-title"><a href="../../pubnub/PubNub-class.html#static-properties">Static properties</a></li>
+          <li><a href="../../pubnub/PubNub/version.html">version</a></li>
 
 
 </ol>
@@ -165,7 +186,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.1.3
+      4.2.2
   </span>
 
   
@@ -174,7 +195,7 @@
 
 
 <script src="../../static-assets/highlight.pack.js?v1"></script>
-<script src="../../static-assets/script.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

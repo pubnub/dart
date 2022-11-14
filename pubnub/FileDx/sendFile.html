@@ -21,8 +21,7 @@
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -52,17 +51,17 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/2.16.2/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/PublishFileMessageResult-class.html">PublishFileMessageResult</a></span>&gt;</span></span>
-<span class="name ">sendFile</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="sendFile-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span></li>
-<li><span class="parameter" id="sendFile-param-fileName"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">fileName</span>, </span></li>
-<li><span class="parameter" id="sendFile-param-file"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.16.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">file</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/PublishFileMessageResult-class.html">PublishFileMessageResult</a></span>&gt;</span></span>
+<span class="name ">sendFile</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="sendFile-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-fileName"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">fileName</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-file"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">file</span>, </span></li>
 <li><span class="parameter" id="sendFile-param-cipherKey">{<span class="type-annotation"><a href="../../pubnub/CipherKey-class.html">CipherKey</a>?</span> <span class="parameter-name">cipherKey</span>, </span></li>
 <li><span class="parameter" id="sendFile-param-fileMessage"><span class="type-annotation">dynamic</span> <span class="parameter-name">fileMessage</span>, </span></li>
-<li><span class="parameter" id="sendFile-param-storeFileMessage"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">storeFileMessage</span>, </span></li>
-<li><span class="parameter" id="sendFile-param-fileMessageTtl"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">fileMessageTtl</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-storeFileMessage"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">storeFileMessage</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-fileMessageTtl"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">fileMessageTtl</span>, </span></li>
 <li><span class="parameter" id="sendFile-param-fileMessageMeta"><span class="type-annotation">dynamic</span> <span class="parameter-name">fileMessageMeta</span>, </span></li>
 <li><span class="parameter" id="sendFile-param-keyset"><span class="type-annotation"><a href="../../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span></li>
-<li><span class="parameter" id="sendFile-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span></li>
+<li><span class="parameter" id="sendFile-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span></li>
 </ol>)
 
       
@@ -100,6 +99,81 @@ Leave this option unset if you want to use the default.</p>
 
 
     
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;PublishFileMessageResult&gt; sendFile(
+    String channel, String fileName, List&lt;int&gt; file,
+    {CipherKey? cipherKey,
+    dynamic? fileMessage,
+    bool? storeFileMessage,
+    int? fileMessageTtl,
+    dynamic? fileMessageMeta,
+    Keyset? keyset,
+    String? using}) async {
+  keyset ??= _core.keysets[using];
+
+  var requestPayload = await _core.parser.encode({&#39;name&#39;: fileName});
+
+  var uploadDetails = await defaultFlow&lt;GenerateFileUploadUrlParams,
+          GenerateFileUploadUrlResult&gt;(
+      keyset: keyset,
+      core: _core,
+      params: GenerateFileUploadUrlParams(keyset, channel, requestPayload),
+      serialize: (object, [_]) =&gt;
+          GenerateFileUploadUrlResult.fromJson(object));
+
+  if (keyset.cipherKey != null || cipherKey != null) {
+    file = _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey!, file);
+  }
+
+  var fileInfo = FileInfo(
+    uploadDetails.fileId,
+    uploadDetails.fileName,
+    getFileUrl(channel, uploadDetails.fileId, uploadDetails.fileName,
+            keyset: keyset)
+        .toString(),
+  );
+
+  var publishMessage = FileMessage(fileInfo, message: fileMessage);
+
+  var retryCount = keyset.fileMessagePublishRetryLimit;
+
+  var params = FileUploadParams(
+      uploadDetails.uploadUri, {...uploadDetails.formFields, &#39;file&#39;: file});
+
+  await defaultFlow&lt;FileUploadParams, FileUploadResult&gt;(
+      keyset: keyset,
+      core: _core,
+      params: params,
+      deserialize: false,
+      serialize: (object, [_]) =&gt; FileUploadResult.fromJson(object));
+
+  var publishFileResult = PublishFileMessageResult();
+
+  do {
+    try {
+      publishFileResult = await publishFileMessage(channel, publishMessage,
+          ttl: fileMessageTtl,
+          storeMessage: storeFileMessage,
+          meta: fileMessageMeta,
+          cipherKey: cipherKey,
+          keyset: keyset,
+          using: using);
+    } catch (e) {
+      publishFileResult.description =
+          &#39;File message publish failed due to $e please refer fileInfo for file details&#39;;
+      publishFileResult.isError = true;
+    }
+    if (!publishFileResult.isError!) {
+      publishFileResult.fileInfo = fileInfo;
+      return publishFileResult;
+    }
+    --retryCount;
+  } while (retryCount &gt; 0);
+
+  return publishFileResult..fileInfo = fileInfo;
+}</code></pre>
+</section>
 
 
   </div> <!-- /.main-content -->
@@ -127,8 +201,8 @@ Leave this option unset if you want to use the default.</p>
     <li class="section-title inherited">
       <a href="../../pubnub/FileDx-class.html#instance-properties">Properties</a>
     </li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title"><a href="../../pubnub/FileDx-class.html#instance-methods">Methods</a></li>
     <li><a href="../../pubnub/FileDx/decryptFile.html">decryptFile</a></li>
@@ -137,13 +211,13 @@ Leave this option unset if you want to use the default.</p>
     <li><a href="../../pubnub/FileDx/encryptFile.html">encryptFile</a></li>
     <li><a href="../../pubnub/FileDx/getFileUrl.html">getFileUrl</a></li>
     <li><a href="../../pubnub/FileDx/listFiles.html">listFiles</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li><a href="../../pubnub/FileDx/publishFileMessage.html">publishFileMessage</a></li>
     <li><a href="../../pubnub/FileDx/sendFile.html">sendFile</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../../pubnub/FileDx-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -160,7 +234,7 @@ Leave this option unset if you want to use the default.</p>
 <footer>
   <span class="no-break">
     pubnub
-      4.1.3
+      4.2.2
   </span>
 
   
@@ -169,7 +243,7 @@ Leave this option unset if you want to use the default.</p>
 
 
 <script src="../../static-assets/highlight.pack.js?v1"></script>
-<script src="../../static-assets/script.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the PresenceEvent.fromEnvelope constructor from the Class PresenceEvent class from the pubnub library, for the Dart programming language.">
-  <title>PresenceEvent.fromEnvelope constructor - PresenceEvent class - pubnub library - Dart API</title>
+  <meta name="description" content="API docs for the PresenceEvent.fromEnvelope constructor from Class PresenceEvent from the pubnub library, for the Dart programming language.">
+  <title>PresenceEvent.fromEnvelope constructor - PresenceEvent - pubnub library - Dart API</title>
 
 
   
@@ -21,8 +21,7 @@
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -58,6 +57,16 @@
 
 
     
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">PresenceEvent.fromEnvelope(this.envelope)
+    : action = PresenceActionExtension.fromString(
+          envelope.payload[&#39;action&#39;] as String),
+      uuid = envelope.payload[&#39;uuid&#39;] != null
+          ? UUID(envelope.payload[&#39;uuid&#39;])
+          : null,
+      occupancy = envelope.payload[&#39;occupancy&#39;] as int;</code></pre>
+</section>
 
 
   </div> <!-- /.main-content -->
@@ -80,8 +89,8 @@
     <h5>PresenceEvent class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../pubnub/PresenceEvent-class.html#constructors">Constructors</a></li>
-    <li><a href="../../pubnub/PresenceEvent/PresenceEvent.fromEnvelope.html">fromEnvelope</a></li>
+        <li class="section-title"><a href="../../pubnub/PresenceEvent-class.html#constructors">Constructors</a></li>
+          <li><a href="../../pubnub/PresenceEvent/PresenceEvent.fromEnvelope.html">fromEnvelope</a></li>
 
 
     <li class="section-title">
@@ -89,20 +98,20 @@
     </li>
     <li><a href="../../pubnub/PresenceEvent/action.html">action</a></li>
     <li><a href="../../pubnub/PresenceEvent/envelope.html">envelope</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../../pubnub/PresenceEvent/join.html">join</a></li>
     <li><a href="../../pubnub/PresenceEvent/leave.html">leave</a></li>
     <li><a href="../../pubnub/PresenceEvent/occupancy.html">occupancy</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li><a href="../../pubnub/PresenceEvent/timetoken.html">timetoken</a></li>
     <li><a href="../../pubnub/PresenceEvent/uuid.html">uuid</a></li>
 
     <li class="section-title inherited"><a href="../../pubnub/PresenceEvent-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../../pubnub/PresenceEvent-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -119,7 +128,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.1.3
+      4.2.2
   </span>
 
   
@@ -128,7 +137,7 @@
 
 
 <script src="../../static-assets/highlight.pack.js?v1"></script>
-<script src="../../static-assets/script.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

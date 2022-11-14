@@ -21,8 +21,7 @@
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -52,7 +51,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/2.16.2/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/Token-class.html">Token</a></span>&gt;</span></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/Token-class.html">Token</a></span>&gt;</span></span>
 <span class="name ">send</span>(<wbr>)
 
       
@@ -65,6 +64,75 @@
 
 
     
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;Token&gt; send() async {
+  Ensure(_resources).isNotEmpty(&#39;resources&#39;);
+
+  var userSpaceEntities = [ResourceType.user, ResourceType.space];
+  var hasUserSpaceResourceType =
+      _resources.any((resource) =&gt; userSpaceEntities.contains(resource.type));
+  var hasLegacyResourceType = _resources
+      .any((resource) =&gt; !userSpaceEntities.contains(resource.type));
+
+  if (hasUserSpaceResourceType &amp;&amp; hasLegacyResourceType) {
+    Ensure.fail(
+        &#39;not-together&#39;, &#39;user&#47;space&#39;, [&#39;channel&#39;, &#39;uuid&#39;, &#39;channelGroup&#39;]);
+  }
+  if (authorizedUUID != null &amp;&amp; hasUserSpaceResourceType) {
+    Ensure.fail(&#39;not-together&#39;, &#39;authorizedUUID&#39;, [&#39;user&#39;, &#39;space&#39;]);
+  }
+  if (authorizedUserId != null &amp;&amp; hasLegacyResourceType) {
+    Ensure.fail(&#39;not-together&#39;, &#39;authorizedUserId&#39;,
+        [&#39;channel&#39;, &#39;uuid&#39;, &#39;channelGroup&#39;]);
+  }
+
+  Map&lt;String, dynamic&gt; combine&lt;T extends Pattern&gt;(
+      Map&lt;String, dynamic&gt; accumulator, Resource resource) {
+    var type = resource.type.value;
+    var name = resource.name ?? resource.pattern;
+
+    return {
+      ...accumulator,
+      type: {...(accumulator[type] ?? {}), name: resource.bit}
+    };
+  }
+
+  var resources = _resources
+      .where((resource) =&gt; resource.name is String)
+      .fold({&#39;channels&#39;: {}, &#39;groups&#39;: {}, &#39;uuids&#39;: {}}, combine);
+
+  var patterns = _resources
+      .where((resource) =&gt; resource.pattern is String)
+      .fold({&#39;channels&#39;: {}, &#39;groups&#39;: {}, &#39;uuids&#39;: {}}, combine);
+
+  var data = {
+    &#39;ttl&#39;: ttl,
+    &#39;permissions&#39;: {
+      &#39;resources&#39;: resources,
+      &#39;patterns&#39;: patterns,
+      if (authorizedUUID != null || authorizedUserId != null)
+        &#39;uuid&#39;: authorizedUUID ?? authorizedUserId,
+      if (meta != null) &#39;meta&#39;: meta
+    }
+  };
+
+  var payload = json.encode(data);
+
+  return defaultFlow&lt;PamGrantTokenParams, Token&gt;(
+      keyset: _keyset,
+      core: _core,
+      params: PamGrantTokenParams(
+        _keyset,
+        payload,
+      ),
+      serialize: (object, [_]) {
+        var result = PamGrantTokenResult.fromJson(object);
+
+        return Token(result.token);
+      });
+}</code></pre>
+</section>
 
 
   </div> <!-- /.main-content -->
@@ -87,27 +155,28 @@
     <h5>TokenRequest class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../pubnub/TokenRequest-class.html#constructors">Constructors</a></li>
-    <li><a href="../../pubnub/TokenRequest/TokenRequest.html">TokenRequest</a></li>
+        <li class="section-title"><a href="../../pubnub/TokenRequest-class.html#constructors">Constructors</a></li>
+          <li><a href="../../pubnub/TokenRequest/TokenRequest.html">TokenRequest</a></li>
 
 
     <li class="section-title">
       <a href="../../pubnub/TokenRequest-class.html#instance-properties">Properties</a>
     </li>
+    <li><a href="../../pubnub/TokenRequest/authorizedUserId.html">authorizedUserId</a></li>
     <li><a href="../../pubnub/TokenRequest/authorizedUUID.html">authorizedUUID</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../../pubnub/TokenRequest/meta.html">meta</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li><a href="../../pubnub/TokenRequest/ttl.html">ttl</a></li>
 
     <li class="section-title"><a href="../../pubnub/TokenRequest-class.html#instance-methods">Methods</a></li>
     <li><a href="../../pubnub/TokenRequest/add.html">add</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li><a href="../../pubnub/TokenRequest/send.html">send</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../../pubnub/TokenRequest-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -124,7 +193,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.1.3
+      4.2.2
   </span>
 
   
@@ -133,7 +202,7 @@
 
 
 <script src="../../static-assets/highlight.pack.js?v1"></script>
-<script src="../../static-assets/script.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

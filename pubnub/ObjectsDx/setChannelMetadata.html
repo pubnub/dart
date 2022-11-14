@@ -21,8 +21,7 @@
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -52,12 +51,12 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/2.16.2/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/SetChannelMetadataResult-class.html">SetChannelMetadataResult</a></span>&gt;</span></span>
-<span class="name ">setChannelMetadata</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="setChannelMetadata-param-channelId"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">channelId</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/SetChannelMetadataResult-class.html">SetChannelMetadataResult</a></span>&gt;</span></span>
+<span class="name ">setChannelMetadata</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="setChannelMetadata-param-channelId"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channelId</span>, </span></li>
 <li><span class="parameter" id="setChannelMetadata-param-channelMetadataInput"><span class="type-annotation"><a href="../../pubnub/ChannelMetadataInput-class.html">ChannelMetadataInput</a></span> <span class="parameter-name">channelMetadataInput</span>, </span></li>
-<li><span class="parameter" id="setChannelMetadata-param-includeCustomFields">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeCustomFields</span>, </span></li>
+<li><span class="parameter" id="setChannelMetadata-param-includeCustomFields">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeCustomFields</span>, </span></li>
 <li><span class="parameter" id="setChannelMetadata-param-keyset"><span class="type-annotation"><a href="../../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span></li>
-<li><span class="parameter" id="setChannelMetadata-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span></li>
+<li><span class="parameter" id="setChannelMetadata-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span></li>
 </ol>)
 
       
@@ -81,6 +80,33 @@ Omit this parameter if you don't want to retrieve additional metadata.</p>
 
 
     
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;SetChannelMetadataResult&gt; setChannelMetadata(
+    String channelId, ChannelMetadataInput channelMetadataInput,
+    {bool? includeCustomFields, Keyset? keyset, String? using}) async {
+  keyset ??= _core.keysets[using];
+
+  Ensure(channelId).isNotNull(&#39;channelId&#39;);
+  Ensure(channelMetadataInput).isNotNull(&#39;channelMetadataInput&#39;);
+
+  var payload = await _core.parser.encode(channelMetadataInput);
+
+  var include = &lt;String&gt;{};
+  if (includeCustomFields != null &amp;&amp; includeCustomFields) {
+    include.add(&#39;custom&#39;);
+  }
+
+  var params =
+      SetChannelMetadataParams(keyset, channelId, payload, include: include);
+
+  return defaultFlow&lt;SetChannelMetadataParams, SetChannelMetadataResult&gt;(
+      keyset: keyset,
+      core: _core,
+      params: params,
+      serialize: (object, [_]) =&gt; SetChannelMetadataResult.fromJson(object));
+}</code></pre>
+</section>
 
 
   </div> <!-- /.main-content -->
@@ -108,8 +134,8 @@ Omit this parameter if you don't want to retrieve additional metadata.</p>
     <li class="section-title inherited">
       <a href="../../pubnub/ObjectsDx-class.html#instance-properties">Properties</a>
     </li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title"><a href="../../pubnub/ObjectsDx-class.html#instance-methods">Methods</a></li>
     <li><a href="../../pubnub/ObjectsDx/getAllChannelMetadata.html">getAllChannelMetadata</a></li>
@@ -120,7 +146,7 @@ Omit this parameter if you don't want to retrieve additional metadata.</p>
     <li><a href="../../pubnub/ObjectsDx/getUUIDMetadata.html">getUUIDMetadata</a></li>
     <li><a href="../../pubnub/ObjectsDx/manageChannelMembers.html">manageChannelMembers</a></li>
     <li><a href="../../pubnub/ObjectsDx/manageMemberships.html">manageMemberships</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li><a href="../../pubnub/ObjectsDx/removeChannelMembers.html">removeChannelMembers</a></li>
     <li><a href="../../pubnub/ObjectsDx/removeChannelMetadata.html">removeChannelMetadata</a></li>
     <li><a href="../../pubnub/ObjectsDx/removeMemberships.html">removeMemberships</a></li>
@@ -129,10 +155,10 @@ Omit this parameter if you don't want to retrieve additional metadata.</p>
     <li><a href="../../pubnub/ObjectsDx/setChannelMetadata.html">setChannelMetadata</a></li>
     <li><a href="../../pubnub/ObjectsDx/setMemberships.html">setMemberships</a></li>
     <li><a href="../../pubnub/ObjectsDx/setUUIDMetadata.html">setUUIDMetadata</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../../pubnub/ObjectsDx-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -149,7 +175,7 @@ Omit this parameter if you don't want to retrieve additional metadata.</p>
 <footer>
   <span class="no-break">
     pubnub
-      4.1.3
+      4.2.2
   </span>
 
   
@@ -158,7 +184,7 @@ Omit this parameter if you don't want to retrieve additional metadata.</p>
 
 
 <script src="../../static-assets/highlight.pack.js?v1"></script>
-<script src="../../static-assets/script.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

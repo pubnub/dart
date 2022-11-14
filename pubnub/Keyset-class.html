@@ -21,8 +21,7 @@
 </head>
 
 
-<body data-base-href="../"
-      data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -57,18 +56,19 @@
 
 
 
-    <section class="summary offset-anchor" id="constructors">
-      <h2>Constructors</h2>
+    
+  <section class="summary offset-anchor" id="constructors">
+    <h2>Constructors</h2>
 
-      <dl class="constructor-summary-list">
+    <dl class="constructor-summary-list">
         <dt id="Keyset" class="callable">
-          <span class="name"><a href="../pubnub/Keyset/Keyset.html">Keyset</a></span><span class="signature">(<span class="parameter" id="-param-subscribeKey">{<span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">subscribeKey</span>, </span><span class="parameter" id="-param-uuid"><span>required</span> <span class="type-annotation"><a href="../pubnub/UUID-class.html">UUID</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="-param-publishKey"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">publishKey</span>, </span><span class="parameter" id="-param-secretKey"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">secretKey</span>, </span><span class="parameter" id="-param-authKey"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">authKey</span>, </span><span class="parameter" id="-param-cipherKey"><span class="type-annotation"><a href="../pubnub/CipherKey-class.html">CipherKey</a>?</span> <span class="parameter-name">cipherKey</span>}</span>)</span>
+          <span class="name"><a href="../pubnub/Keyset/Keyset.html">Keyset</a></span><span class="signature">(<span class="parameter" id="-param-uuid">{<span>@<a href="https://api.dart.dev/stable/2.18.4/dart-core/Deprecated-class.html">Deprecated</a>(&#39;Use `userId` instead&#39;)</span> <span class="type-annotation"><a href="../pubnub/UUID-class.html">UUID</a>?</span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="-param-userId"><span class="type-annotation"><a href="../pubnub/UserId-class.html">UserId</a>?</span> <span class="parameter-name">userId</span>, </span><span class="parameter" id="-param-subscribeKey"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">subscribeKey</span>, </span><span class="parameter" id="-param-publishKey"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">publishKey</span>, </span><span class="parameter" id="-param-secretKey"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">secretKey</span>, </span><span class="parameter" id="-param-authKey"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">authKey</span>, </span><span class="parameter" id="-param-cipherKey"><span class="type-annotation"><a href="../pubnub/CipherKey-class.html">CipherKey</a>?</span> <span class="parameter-name">cipherKey</span>}</span>)</span>
         </dt>
         <dd>
-           
+          
         </dd>
-      </dl>
-    </section>
+    </dl>
+  </section>
 
     <section class="summary offset-anchor" id="instance-properties">
       <h2>Properties</h2>
@@ -76,11 +76,11 @@
       <dl class="properties">
         <dt id="authKey" class="property">
   <span class="name"><a href="../pubnub/Keyset/authKey.html">authKey</a></span>
-  <span class="signature">&#8596; <a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a>?</span> 
+  <span class="signature">&#8596; <a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> 
 
 </dt>
 <dd>
-  If PAM is enabled, authentication key is required to access channels. 
+  If PAM is enabled, authentication key is required to access channels.
   <div class="features">read / write</div>
 
 </dd>
@@ -91,74 +91,85 @@
 
 </dt>
 <dd>
-  Used for message encryption. 
+  Used for message encryption.
   <div class="features">final</div>
 
 </dd>
 
         <dt id="hashCode" class="property inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/hashCode.html">hashCode</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/2.16.2/dart-core/int-class.html">int</a></span> 
+  <span class="name"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/int-class.html">int</a></span> 
 
 </dt>
 <dd class="inherited">
-  The hash code for this object. <a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/hashCode.html">[...]</a>
+  The hash code for this object.
   <div class="features">read-only, inherited</div>
 
 </dd>
 
         <dt id="publishKey" class="property">
   <span class="name"><a href="../pubnub/Keyset/publishKey.html">publishKey</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a>?</span> 
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> 
 
 </dt>
 <dd>
-  Publish key. 
+  Publish key.
   <div class="features">final</div>
 
 </dd>
 
         <dt id="runtimeType" class="property inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/runtimeType.html">runtimeType</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/2.16.2/dart-core/Type-class.html">Type</a></span> 
+  <span class="name"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/Type-class.html">Type</a></span> 
 
 </dt>
 <dd class="inherited">
-  A representation of the runtime type of the object. 
+  A representation of the runtime type of the object.
   <div class="features">read-only, inherited</div>
 
 </dd>
 
         <dt id="secretKey" class="property">
   <span class="name"><a href="../pubnub/Keyset/secretKey.html">secretKey</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a>?</span> 
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> 
 
 </dt>
 <dd>
-  Secret key used for administrative tasks. 
+  Secret key used for administrative tasks.
   <div class="features">final</div>
 
 </dd>
 
         <dt id="settings" class="property">
   <span class="name"><a href="../pubnub/Keyset/settings.html">settings</a></span>
-  <span class="signature">&#8596; <a href="https://api.dart.dev/stable/2.16.2/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> 
+  <span class="signature">&#8596; <a href="https://api.dart.dev/stable/2.18.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> 
 
 </dt>
 <dd>
-  A map of settings that can be set and used by specific DX extensions. 
+  A map of settings that can be set and used by specific DX extensions.
   <div class="features">read / write</div>
 
 </dd>
 
         <dt id="subscribeKey" class="property">
   <span class="name"><a href="../pubnub/Keyset/subscribeKey.html">subscribeKey</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a></span> 
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> 
 
 </dt>
 <dd>
-  Subscribe key. 
+  Subscribe key.
   <div class="features">final</div>
+
+</dd>
+
+        <dt id="userId" class="property">
+  <span class="name"><a href="../pubnub/Keyset/userId.html">userId</a></span>
+  <span class="signature">&#8594; <a href="../pubnub/UserId-class.html">UserId</a></span> 
+
+</dt>
+<dd>
+  Unique identifier of this user.
+  <div class="features">read-only</div>
 
 </dd>
 
@@ -168,7 +179,7 @@
 
 </dt>
 <dd>
-  Unique identifier of this device. 
+  Unique identifier of this device.
   <div class="features">final</div>
 
 </dd>
@@ -176,58 +187,64 @@
       </dl>
     </section>
 
-    <section class="summary offset-anchor inherited" id="instance-methods">
-      <h2>Methods</h2>
-      <dl class="callables">
+    
+  <section
+      class="summary offset-anchor inherited"
+      id="instance-methods">
+    <h2>Methods</h2>
+    <dl class="callables">
         <dt id="noSuchMethod" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+  <span class="name"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
     <span class="returntype parameter">&#8594; dynamic</span>
   </span>
   
 
 </dt>
 <dd class="inherited">
-  Invoked when a non-existent method or property is accessed. <a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/noSuchMethod.html">[...]</a>
+  Invoked when a non-existent method or property is accessed.
   <div class="features">inherited</div>
 
 </dd>
 
         <dt id="toString" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.16.2/dart-core/String-class.html">String</a></span>
+  <span class="name"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
-  A string representation of this object. <a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/toString.html">[...]</a>
+  A string representation of this object.
   <div class="features">inherited</div>
 
 </dd>
 
-      </dl>
-    </section>
-
-    <section class="summary offset-anchor inherited" id="operators">
-      <h2>Operators</h2>
-      <dl class="callables">
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor inherited"
+      id="operators">
+    <h2>Operators</h2>
+    <dl class="callables">
         <dt id="operator ==" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.16.2/dart-core/bool-class.html">bool</a></span>
+  <span class="name"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
-  The equality operator. <a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/operator_equals.html">[...]</a>
+  The equality operator.
   <div class="features">inherited</div>
 
 </dd>
 
-      </dl>
-    </section>
-
-
+    </dl>
+  </section>
+    
+    
+    
 
 
   </div> <!-- /.main-content -->
@@ -321,6 +338,7 @@
   <li><a href="../pubnub/Timetoken-class.html">Timetoken</a></li>
   <li><a href="../pubnub/Token-class.html">Token</a></li>
   <li><a href="../pubnub/TokenRequest-class.html">TokenRequest</a></li>
+  <li><a href="../pubnub/UserId-class.html">UserId</a></li>
   <li><a href="../pubnub/UUID-class.html">UUID</a></li>
   <li><a href="../pubnub/UuIdInfo-class.html">UuIdInfo</a></li>
   <li><a href="../pubnub/UuidMetadataDetails-class.html">UuidMetadataDetails</a></li>
@@ -360,8 +378,8 @@
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
     <ol>
 
-    <li class="section-title"><a href="../pubnub/Keyset-class.html#constructors">Constructors</a></li>
-    <li><a href="../pubnub/Keyset/Keyset.html">Keyset</a></li>
+        <li class="section-title"><a href="../pubnub/Keyset-class.html#constructors">Constructors</a></li>
+          <li><a href="../pubnub/Keyset/Keyset.html">Keyset</a></li>
 
 
     <li class="section-title">
@@ -369,20 +387,21 @@
     </li>
     <li><a href="../pubnub/Keyset/authKey.html">authKey</a></li>
     <li><a href="../pubnub/Keyset/cipherKey.html">cipherKey</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../pubnub/Keyset/publishKey.html">publishKey</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li><a href="../pubnub/Keyset/secretKey.html">secretKey</a></li>
     <li><a href="../pubnub/Keyset/settings.html">settings</a></li>
     <li><a href="../pubnub/Keyset/subscribeKey.html">subscribeKey</a></li>
+    <li><a href="../pubnub/Keyset/userId.html">userId</a></li>
     <li><a href="../pubnub/Keyset/uuid.html">uuid</a></li>
 
     <li class="section-title inherited"><a href="../pubnub/Keyset-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../pubnub/Keyset-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.16.2/dart-core/Object/operator_equals.html">operator ==</a></li>
+    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -396,7 +415,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.1.3
+      4.2.2
   </span>
 
   
@@ -405,7 +424,7 @@
 
 
 <script src="../static-assets/highlight.pack.js?v1"></script>
-<script src="../static-assets/script.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
 
 
 
