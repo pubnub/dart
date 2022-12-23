@@ -106,7 +106,9 @@ class PubNubReporter extends Reporter {
 
   @override
   Future<void> message(String message, MessageLevel level) async {
-    // print('${level}: ${message}');
+    if (level == MessageLevel.error) {
+      print(message);
+    }
   }
 
   void printSummary() {
@@ -140,7 +142,6 @@ class PubNubReporter extends Reporter {
     print('');
     print('  $scenarioCount scenarios executed');
     print('${Color.PASS}✓${Color.RESET} $passedScenarioCount scenarios passed');
-    print(
-        '${Color.FAIL}x${Color.RESET} ${scenarioCount - passedScenarioCount} scenarios failed');
+    print('${Color.FAIL}x${Color.RESET} ${scenarioCount - passedScenarioCount} scenarios failed');
   }
 }

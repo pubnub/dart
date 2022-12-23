@@ -20,7 +20,7 @@ You will need the publish and subscribe keys to authenticate your app. Get your 
 
     ```yaml
     dependencies:
-      pubnub: ^4.1.0
+      pubnub: ^4.2.2
     ```
 
     Make sure to provide the latest version of the `pubnub` package in the dependency declaration.

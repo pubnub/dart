@@ -33,13 +33,21 @@ class Channel {
   /// * Inorder to make stream filtering work, Provide valid `Object` as meta.
   /// * Invalid type (e.g String) data won't be passed to server.
   ///
+  /// To send message to PubNub BLOCKS EventHandler, set [fire] param value to `true`.
+  /// Fire message is not replicated, and so will not be received by any subscribers to the channel.
+  /// Fire message is also not stored in history.
+  ///
   /// You can set a per-message time to live in storage using [ttl] option.
   /// If set to `0`, message won't expire.
   /// If unset, expiration will fall back to default.
   Future<PublishResult> publish(dynamic message,
-      {bool? storeMessage, int? ttl, dynamic meta}) {
+      {bool? storeMessage, int? ttl, dynamic meta, bool? fire}) {
     return _core.publish(name, message,
-        storeMessage: storeMessage, ttl: ttl, keyset: _keyset, meta: meta);
+        storeMessage: storeMessage,
+        ttl: ttl,
+        keyset: _keyset,
+        meta: meta,
+        fire: fire);
   }
 
   /// Returns [PaginatedChannelHistory]. Most useful in infinite list type scenario.

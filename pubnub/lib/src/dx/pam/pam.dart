@@ -86,6 +86,7 @@ mixin PamDx on Core {
       {@required int? ttl,
       Map<String, dynamic>? meta,
       String? authorizedUUID,
+      String? authorizedUserId,
       String? using,
       Keyset? keyset}) {
     Ensure(ttl).isNotNull('ttl');
@@ -93,7 +94,9 @@ mixin PamDx on Core {
     keyset ??= keysets[using];
 
     return TokenRequest(this, keyset, ttl!,
-        meta: meta, authorizedUUID: authorizedUUID);
+        meta: meta,
+        authorizedUUID: authorizedUUID,
+        authorizedUserId: authorizedUserId);
   }
 
   Future<Token> grantToken(TokenRequest tokenRequest) {

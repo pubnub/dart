@@ -91,7 +91,7 @@ class FileDx {
     var params = FileUploadParams(
         uploadDetails.uploadUri, {...uploadDetails.formFields, 'file': file});
 
-    var s3Response = await defaultFlow<FileUploadParams, FileUploadResult>(
+    await defaultFlow<FileUploadParams, FileUploadResult>(
         keyset: keyset,
         core: _core,
         params: params,
@@ -100,28 +100,26 @@ class FileDx {
 
     var publishFileResult = PublishFileMessageResult();
 
-    if (s3Response.statusCode == 204) {
-      do {
-        try {
-          publishFileResult = await publishFileMessage(channel, publishMessage,
-              ttl: fileMessageTtl,
-              storeMessage: storeFileMessage,
-              meta: fileMessageMeta,
-              cipherKey: cipherKey,
-              keyset: keyset,
-              using: using);
-        } catch (e) {
-          publishFileResult.description =
-              'File message publish failed due to $e please refer fileInfo for file details';
-          publishFileResult.isError = true;
-        }
-        if (!publishFileResult.isError!) {
-          publishFileResult.fileInfo = fileInfo;
-          return publishFileResult;
-        }
-        --retryCount;
-      } while (retryCount > 0);
-    }
+    do {
+      try {
+        publishFileResult = await publishFileMessage(channel, publishMessage,
+            ttl: fileMessageTtl,
+            storeMessage: storeFileMessage,
+            meta: fileMessageMeta,
+            cipherKey: cipherKey,
+            keyset: keyset,
+            using: using);
+      } catch (e) {
+        publishFileResult.description =
+            'File message publish failed due to $e please refer fileInfo for file details';
+        publishFileResult.isError = true;
+      }
+      if (!publishFileResult.isError!) {
+        publishFileResult.fileInfo = fileInfo;
+        return publishFileResult;
+      }
+      --retryCount;
+    } while (retryCount > 0);
 
     return publishFileResult..fileInfo = fileInfo;
   }
@@ -255,6 +253,7 @@ class FileDx {
     ];
     var queryParams = {
       'pnsdk': 'PubNub-Dart/${Core.version}',
+      'uuid': keyset.uuid.value,
       if (keyset.secretKey != null)
         'timestamp': '${Time().now()!.millisecondsSinceEpoch ~/ 1000}',
       if (keyset.authKey != null) 'auth': keyset.authKey!

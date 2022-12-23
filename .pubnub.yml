@@ -1,5 +1,45 @@
 ---
 changelog:
+  - date: 2022-11-14
+    version: v4.2.2
+    changes:
+      - type: feature
+        text: "Support for Flutter 3."
+      - type: bug
+        text: "Fixes issue of having old version of xml package dependency."
+  - date: 2022-07-12
+    version: v4.2.1
+    changes:
+      - type: feature
+        text: "Support for fire in publish feature."
+      - type: feature
+        text: "Allow to specify access rights for user and space in grantToken request."
+      - type: feature
+        text: "Allow users to specify userId instead of uuid."
+  - date: 2022-05-30
+    version: v4.2.0
+    changes:
+      - type: feature
+        text: "Adds two presence methods, setState and getState."
+  - date: 2022-04-21
+    version: v4.1.3
+    changes:
+      - type: bug
+        text: "Fixes issue of `fetchMessages` with false includeUUID response parse error."
+      - type: bug
+        text: "Fixes issue of publish file message not triggered on browser."
+  - date: 2022-04-06
+    version: v4.1.2
+    changes:
+      - type: bug
+        text: "Adds a fix that prevents the SDK from adding forbidden headers in browser environments."
+      - type: bug
+        text: "Fixes getFileUrl method by adding uuid in query parameters."
+  - date: 2022-04-04
+    version: v4.1.1
+    changes:
+      - type: bug
+        text: "Fixes an issue in JS build of Dart SDK, where request bodies were improperly encoded and sent without a correct header."
   - date: 2021-12-16
     version: v4.1.0
     changes:
@@ -286,9 +326,6 @@ features:
     - CHANNEL-GROUPS-LIST-CHANNELS-IN-GROUP
   presence:
     - PRESENCE-HERE-NOW
-    - PRESENCE-WHERE-NOW
-    - PRESENCE-SET-STATE
-    - PRESENCE-GET-STATE
     - PRESENCE-HEARTBEAT
   publish:
     - PUBLISH-STORE-FLAG
@@ -306,6 +343,8 @@ features:
     - PUSH-REMOVE-DEVICE-FROM-CHANNELS
     - PUSH-LIST-CHANNELS-FROM-DEVICE
     - PUSH-REMOVE-DEVICE
+    - PUSH-TYPE-APNS2
+    - PUSH-TYPE-FCM
   storage:
     - STORAGE-REVERSE
     - STORAGE-INCLUDE-TIMETOKEN
@@ -376,7 +415,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "4.1.0"
+version: "4.2.2"
 sdks:
   -
     full-name: PubNub Dart SDK

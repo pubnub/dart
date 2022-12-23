@@ -24,8 +24,12 @@ class TokenRequest {
 
   String? authorizedUUID;
 
+  String? authorizedUserId;
+
   TokenRequest(this._core, this._keyset, this.ttl,
-      {this.meta, this.authorizedUUID});
+      {this.meta, this.authorizedUUID, this.authorizedUserId})
+      : assert(authorizedUUID == null || authorizedUserId == null,
+            'Either `authorizedUUID` or `authorizedUserId` is allowed');
 
   /// Adds new resource to this token request.
   ///
@@ -60,6 +64,24 @@ class TokenRequest {
   Future<Token> send() async {
     Ensure(_resources).isNotEmpty('resources');
 
+    var userSpaceEntities = [ResourceType.user, ResourceType.space];
+    var hasUserSpaceResourceType =
+        _resources.any((resource) => userSpaceEntities.contains(resource.type));
+    var hasLegacyResourceType = _resources
+        .any((resource) => !userSpaceEntities.contains(resource.type));
+
+    if (hasUserSpaceResourceType && hasLegacyResourceType) {
+      Ensure.fail(
+          'not-together', 'user/space', ['channel', 'uuid', 'channelGroup']);
+    }
+    if (authorizedUUID != null && hasUserSpaceResourceType) {
+      Ensure.fail('not-together', 'authorizedUUID', ['user', 'space']);
+    }
+    if (authorizedUserId != null && hasLegacyResourceType) {
+      Ensure.fail('not-together', 'authorizedUserId',
+          ['channel', 'uuid', 'channelGroup']);
+    }
+
     Map<String, dynamic> combine<T extends Pattern>(
         Map<String, dynamic> accumulator, Resource resource) {
       var type = resource.type.value;
@@ -84,7 +106,8 @@ class TokenRequest {
       'permissions': {
         'resources': resources,
         'patterns': patterns,
-        if (authorizedUUID != null) 'uuid': authorizedUUID,
+        if (authorizedUUID != null || authorizedUserId != null)
+          'uuid': authorizedUUID ?? authorizedUserId,
         if (meta != null) 'meta': meta
       }
     };

@@ -1,4 +1,5 @@
 import '../uuid.dart';
+import '../user_id.dart';
 import '../crypto/cipher_key.dart';
 
 /// Represents a configuration for a given subscribe key.
@@ -10,6 +11,9 @@ class Keyset {
 
   /// Unique identifier of this device.
   final UUID uuid;
+
+  /// Unique identifier of this user.
+  UserId get userId => UserId(uuid.value);
 
   /// Publish key.
   final String? publishKey;
@@ -27,11 +31,13 @@ class Keyset {
   Map<String, dynamic> settings = {};
 
   Keyset({
+    @Deprecated('Use `userId` instead') UUID? uuid,
+    UserId? userId,
     required this.subscribeKey,
-    required this.uuid,
     this.publishKey,
     this.secretKey,
     this.authKey,
     this.cipherKey,
-  });
+  })  : assert((uuid == null) ^ (userId == null)),
+        uuid = userId != null ? UUID(userId.value) : uuid!;
 }

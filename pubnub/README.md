@@ -14,10 +14,10 @@ To add the package to your Dart or Flutter project, add `pubnub` as a dependency
 
 ```yaml
 dependencies:
-  pubnub: ^4.1.0
+  pubnub: ^4.2.2
 ```
 
-After adding the dependency to `pubspec.yaml`, run the `pub get` command in the root directory of your project (the same that the `pubspec.yaml` is in).
+After adding the dependency to `pubspec.yaml`, run the `dart pub get` command in the root directory of your project (the same that the `pubspec.yaml` is in).
 
 ### Using Git
 
@@ -200,11 +200,11 @@ pubnub.subscribe(channels: {'channel'}, keyset: myKeyset1)
 
     ```bash
     cd dart
-    pub get
+    dart pub get
     ```
 
 1. Run the `build_runner` to generate necessary source files.
 
     ```bash
-    pub run build_runner build
+    dart pub run build_runner build
     ```

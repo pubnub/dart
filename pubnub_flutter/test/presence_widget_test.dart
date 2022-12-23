@@ -15,7 +15,7 @@ void main() {
         defaultKeyset: Keyset(
           subscribeKey: 'demo',
           publishKey: 'demo',
-          uuid: UUID('pubnub_flutter_test'),
+          userId: UserId('pubnub_flutter_test'),
         ),
         networking: FakeNetworkingModule());
   });

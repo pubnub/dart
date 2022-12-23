@@ -1,3 +1,40 @@
+## v4.2.2
+November 14 2022
+
+#### Added
+- Support for Flutter 3.
+
+#### Fixed
+- Fixes issue of having old version of xml package dependency. Fixed the following issues reported by [@panalgin](https://github.com/panalgin): [#94](https://github.com/pubnub/dart/issues/94).
+
+## v4.2.1
+July 12 2022
+
+#### Added
+- Support for fire in publish feature.
+- Allow to specify access rights for user and space in grantToken request.
+- Allow users to specify userId instead of uuid.
+
+## v4.1.3
+April 21 2022
+
+#### Fixed
+- Fixes issue of `fetchMessages` with false includeUUID response parse error. Fixed the following issues reported by [@linsdev](https://github.com/linsdev): [#89](https://github.com/pubnub/dart/issues/89).
+- Fixes issue of publish file message not triggered on browser.
+
+## v4.1.2
+April 06 2022
+
+#### Fixed
+- Adds a fix that prevents the SDK from adding forbidden headers in browser environments.
+- Fixes getFileUrl method by adding uuid in query parameters.
+
+## v4.1.1
+April 04 2022
+
+#### Fixed
+- Fixes an issue in JS build of Dart SDK, where request bodies were improperly encoded and sent without a correct header.
+
 ## v4.1.0
 December 16 2021
 
