@@ -32,6 +32,13 @@ jobs:
           ref: v1
           token: ${{ secrets.GH_TOKEN }}
           path: .github/.release/actions
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-${{ matrix.pkg }}-${{ hashFiles('${{ matrix.pkg }}/pubspec.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.pkg }}-
       - name: Setup Dart stable
         uses: dart-lang/setup-dart@v1.3
       - name: "Build and run tests for '${{ matrix.pkg }}'"
@@ -79,6 +86,13 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
       - name: Setup Dart
         uses: dart-lang/setup-dart@v1.3
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-${{ matrix.pkg }}-${{ hashFiles('${{ matrix.pkg }}/pubspec.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.pkg }}-
       - name: Run acceptance tests
         run: |
           cd acceptance_tests
