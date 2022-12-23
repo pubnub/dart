@@ -35,6 +35,7 @@ jobs:
       - name: Debug spec file path
         run: |
           echo "${{ github.workspace }}/${{ matrix.pkg }}/pubspec.yaml"
+          echo ${{ hashFiles(' matrix.pkg /pubspec.yaml') }}
           echo "**/${{ matrix.pkg }}/pubspec.yaml"
           echo "${{ matrix.pkg }}/pubspec.yaml"
       - name: Cache
