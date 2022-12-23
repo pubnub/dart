@@ -36,7 +36,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.pub-cache
-          key: ${{ runner.os }}-${{ matrix.pkg }}-${{ hashFiles('${{ github.workspace }}/${{ matrix.pkg }}/pubspec.yaml') }}
+          key: ${{ runner.os }}-${{ matrix.pkg }}-${{ hashFiles('**/${{ matrix.pkg }}/pubspec.yaml') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.pkg }}-
       - name: Setup Dart stable
@@ -90,7 +90,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.pub-cache
-          key: ${{ runner.os }}-${{ matrix.pkg }}-${{ hashFiles('${{ github.workspace }}/${{ matrix.pkg }}/pubspec.yaml') }}
+          key: ${{ runner.os }}-${{ matrix.pkg }}-${{ hashFiles('**/${{ matrix.pkg }}/pubspec.yaml') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.pkg }}-
       - name: Run acceptance tests
