@@ -13,13 +13,17 @@ class MockServerHook extends Hook {
     Iterable<Tag> tags,
   ) async {
     try {
-      var tagParts = tags.firstWhere((element) => element.name.startsWith('@contract=')).name.split('=');
+      var tagParts = tags
+          .firstWhere((element) => element.name.startsWith('@contract='))
+          .name
+          .split('=');
 
       var contract = tagParts.skip(1).first;
 
       // await Future.delayed(Duration(seconds: 3));
 
-      var res = await http.get(Uri.parse('http://localhost:8090/init?__contract__script__=$contract'));
+      var res = await http.get(Uri.parse(
+          'http://localhost:8090/init?__contract__script__=$contract'));
 
       // check for 200 response and fail scenario if not 200
 
@@ -35,8 +39,8 @@ class MockServerHook extends Hook {
   int myData = 0;
 
   @override
-  Future<StepResult?> onAfterStep(
-      covariant PubNubWorld world, ScenarioRunnable scenario, String step, StepResult stepResult) async {
+  Future<StepResult?> onAfterStep(covariant PubNubWorld world,
+      ScenarioRunnable scenario, String step, StepResult stepResult) async {
     // print(
     //     'Hook step: $step, result: ${stepResult.result} ${stepResult.resultReason}');
 
@@ -58,12 +62,12 @@ class MockServerHook extends Hook {
         //     '[Hook] x ${failedExp.length}, . ${pendingExp.length}, v ${succeededExp.length}');
 
         if (failedExp.isNotEmpty) {
-          return StepResult(
-              stepResult.elapsedMilliseconds, StepExecutionResult.fail, 'Failed expectations: $failedExp.');
+          return StepResult(stepResult.elapsedMilliseconds,
+              StepExecutionResult.fail, 'Failed expectations: $failedExp.');
         }
       } catch (e) {
-        return StepResult(
-            stepResult.elapsedMilliseconds, StepExecutionResult.error, 'Unable to verify expectations: $e.');
+        return StepResult(stepResult.elapsedMilliseconds,
+            StepExecutionResult.error, 'Unable to verify expectations: $e.');
       }
     }
 

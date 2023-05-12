@@ -10,17 +10,18 @@ class PubNubProvider extends InheritedWidget {
   final Widget child;
 
   PubNubProvider(
-      {Key key, @required this.instance, @required this.child, this.cache})
-      : assert(child != null),
-        assert(instance != null),
-        super(key: key, child: child);
+      {Key? key,
+      required this.instance,
+      required this.child,
+      required this.cache})
+      : super(key: key, child: child);
 
   static PubNubProvider of(BuildContext context) {
     var provider = context.dependOnInheritedWidgetOfExactType<PubNubProvider>();
 
     assert(provider != null);
 
-    return provider;
+    return provider!;
   }
 
   bool get cacheEnabled => cache != null;

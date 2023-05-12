@@ -15,8 +15,7 @@ class ChannelOccupancyBuilder extends StatefulWidget {
 
   final ChannelOccupancyWidgetBuilder builder;
 
-  ChannelOccupancyBuilder(
-      {@required this.subscription, @required this.builder});
+  ChannelOccupancyBuilder({required this.subscription, required this.builder});
 
   @override
   _ChannelOccupancyBuilderState createState() =>
@@ -41,7 +40,7 @@ class ChannelOccupancySnapshot {
 
 class _ChannelOccupancyBuilderState extends State<ChannelOccupancyBuilder>
     with SubscriptionMemory, DidInitState {
-  PubNub pubnub;
+  late PubNub pubnub;
 
   Set<String> uuids = {};
   int occupancy = 0;
@@ -61,11 +60,11 @@ class _ChannelOccupancyBuilderState extends State<ChannelOccupancyBuilder>
 
       switch (event.action) {
         case PresenceAction.join:
-          uuids.add(event.uuid.value);
+          uuids.add(event.uuid!.value);
           break;
         case PresenceAction.leave:
         case PresenceAction.timeout:
-          uuids.remove(event.uuid.value);
+          uuids.remove(event.uuid!.value);
           break;
         case PresenceAction.stateChange:
           break;
