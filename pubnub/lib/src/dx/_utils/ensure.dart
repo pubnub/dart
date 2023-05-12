@@ -9,7 +9,7 @@ final _invariantMessages = {
   'invalid-type': (String that, List<String> what) =>
       '$that must be either ${what.join(' or ')}.',
   'not-together': (String _this, List<String> _that) =>
-      '$_this and ${_that.join(',')} can not be provided together. Make separate call!',
+      '$_this and ${_that.join(',')} can not be provided together',
 };
 
 /// Exception thrown when one of the invariants of a method

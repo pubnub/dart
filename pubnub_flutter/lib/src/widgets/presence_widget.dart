@@ -51,9 +51,9 @@ class PresenceWidget extends StatefulWidget {
   final Set<String> channelGroups;
 
   PresenceWidget({
-    this.child,
-    this.keyset,
-    this.using,
+    required this.child,
+    required this.keyset,
+    required this.using,
     this.online = true,
     this.announceLeave = false,
     this.heartbeatInterval = 200,
@@ -66,8 +66,8 @@ class PresenceWidget extends StatefulWidget {
 }
 
 class PresenceWidgetState extends State<PresenceWidget> with DidInitState {
-  Timer timer;
-  PubNub _pubnub;
+  Timer? timer;
+  PubNub? _pubnub;
 
   @override
   void dispose() {
@@ -101,7 +101,7 @@ class PresenceWidgetState extends State<PresenceWidget> with DidInitState {
 
   void _cancelTimer() {
     if (timer != null) {
-      timer.cancel();
+      timer?.cancel();
       timer = null;
     }
   }
@@ -116,17 +116,17 @@ class PresenceWidgetState extends State<PresenceWidget> with DidInitState {
   }
 
   Future<void> _sendHeartbeat(Timer timer) async {
-    var keyset = widget.keyset ?? _pubnub.keysets[widget.using];
+    var keyset = widget.keyset ?? _pubnub?.keysets[widget.using];
 
     var channels =
-        widget.channels ?? _pubnub.getSubscribedChannelsForUUID(keyset.uuid);
+        widget.channels ?? _pubnub?.getSubscribedChannelsForUUID(keyset!.uuid);
     var channelGroups = widget.channelGroups ??
-        _pubnub.getSubscribedChannelGroupsForUUID(keyset.uuid);
+        _pubnub?.getSubscribedChannelGroupsForUUID(keyset!.uuid);
 
-    await _pubnub.announceHeartbeat(
+    await _pubnub?.announceHeartbeat(
       heartbeat: widget.heartbeatInterval,
-      channels: channels,
-      channelGroups: channelGroups,
+      channels: channels!,
+      channelGroups: channelGroups!,
       keyset: widget.keyset,
       using: widget.using,
     );
@@ -134,18 +134,18 @@ class PresenceWidgetState extends State<PresenceWidget> with DidInitState {
 
   Future<void> _announceLeave() async {
     if (widget.announceLeave) {
-      var keyset = widget.keyset ?? _pubnub.keysets[widget.using];
+      var keyset = widget.keyset ?? _pubnub?.keysets[widget.using];
 
-      var channels =
-          widget.channels ?? _pubnub.getSubscribedChannelsForUUID(keyset.uuid);
+      var channels = widget.channels ??
+          _pubnub?.getSubscribedChannelsForUUID(keyset!.uuid);
       var channelGroups = widget.channelGroups ??
-          _pubnub.getSubscribedChannelGroupsForUUID(keyset.uuid);
+          _pubnub?.getSubscribedChannelGroupsForUUID(keyset!.uuid);
 
-      await _pubnub.announceLeave(
+      await _pubnub?.announceLeave(
         keyset: widget.keyset,
         using: widget.using,
-        channels: channels,
-        channelGroups: channelGroups,
+        channels: channels!,
+        channelGroups: channelGroups!,
       );
     }
   }

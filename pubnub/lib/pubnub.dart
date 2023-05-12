@@ -10,6 +10,7 @@ export 'src/default.dart';
 // Core
 export 'src/core/timetoken.dart' show Timetoken, TimetokenDateTimeExtentions;
 export 'src/core/uuid.dart' show UUID;
+export 'src/core/user_id.dart' show UserId;
 export 'src/core/keyset/keyset.dart' show Keyset;
 export 'src/core/keyset/store.dart' show KeysetStore;
 export 'src/core/message/message.dart' show MessageType, BaseMessage;

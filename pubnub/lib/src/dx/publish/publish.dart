@@ -21,6 +21,10 @@ mixin PublishDx on Core {
   /// [meta] parameter is for providing additional information with message
   /// that can be used for stream filtering.
   ///
+  /// To send message to PubNub BLOCKS EventHandler, set [fire] param value to `true`.
+  /// Fire message is not replicated, and so will not be received by any subscribers to the channel.
+  /// Fire message is also not stored in history.
+  ///
   /// If [keyset] is not provided, then it tries to obtain a keyset [using] name.
   /// If that fails, then it uses the default keyset.
   /// If that fails as well, then it will throw [InvariantException].
@@ -34,7 +38,8 @@ mixin PublishDx on Core {
       String? using,
       Map<String, dynamic>? meta,
       bool? storeMessage,
-      int? ttl}) async {
+      int? ttl,
+      bool? fire}) async {
     Ensure(channel).isNotEmpty('channel name');
     Ensure(message).isNotNull('message');
 
@@ -53,6 +58,11 @@ mixin PublishDx on Core {
 
     if (meta != null) {
       params.meta = await super.parser.encode(meta);
+    }
+
+    if (fire != null && fire) {
+      params.storeMessage = false;
+      params.noReplication = true;
     }
 
     _logger.verbose('Publishing a message to a channel $channel');

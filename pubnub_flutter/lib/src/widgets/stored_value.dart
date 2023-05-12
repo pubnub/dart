@@ -31,10 +31,10 @@ class StoredValue<T> extends StatefulWidget {
   final bool disableCache;
 
   StoredValue(
-      {@required this.channel,
-      @required this.builder,
-      this.keyset,
-      this.using,
+      {required this.channel,
+      required this.builder,
+      required this.keyset,
+      required this.using,
       this.disableCache = false,
       this.disableHistory = false});
 
@@ -44,9 +44,9 @@ class StoredValue<T> extends StatefulWidget {
 
 class _StoredValueState<T> extends State<StoredValue<T>>
     with SubscriptionMemory, DidInitState {
-  PubNubProvider provider;
-  Keyset keyset;
-  Stream<T> stream;
+  late PubNubProvider provider;
+  late Keyset keyset;
+  late Stream<T> stream;
 
   bool get cacheEnabled => provider.cacheEnabled && !widget.disableCache;
   String get cacheKey =>
@@ -63,8 +63,8 @@ class _StoredValueState<T> extends State<StoredValue<T>>
     ));
 
     stream = StreamGroup.mergeBroadcast([
-      if (!widget.disableHistory) _fetchLatest().asStream(),
-      subscription.messages.map((envelope) => envelope.payload)
+      if (!widget.disableHistory) _fetchLatest().asStream().cast<T>(),
+      subscription.messages.map((envelope) => envelope.payload).cast<T>()
     ]);
 
     if (cacheEnabled) {
@@ -73,7 +73,7 @@ class _StoredValueState<T> extends State<StoredValue<T>>
   }
 
   @override
-  void didUpdateWidget(covariant StoredValue oldWidget) {
+  void didUpdateWidget(covariant StoredValue<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     forget();
@@ -81,7 +81,7 @@ class _StoredValueState<T> extends State<StoredValue<T>>
     didInitState();
   }
 
-  Future<T> _fetchLatest() async {
+  Future<T?> _fetchLatest() async {
     var result = await provider.instance
         .channel(widget.channel, keyset: keyset)
         .history(chunkSize: 1)

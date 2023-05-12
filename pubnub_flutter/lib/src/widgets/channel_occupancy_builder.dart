@@ -60,11 +60,11 @@ class _ChannelOccupancyBuilderState extends State<ChannelOccupancyBuilder>
 
       switch (event.action) {
         case PresenceAction.join:
-          uuids.add(event.uuid.value);
+          uuids.add(event.uuid!.value);
           break;
         case PresenceAction.leave:
         case PresenceAction.timeout:
-          uuids.remove(event.uuid.value);
+          uuids.remove(event.uuid!.value);
           break;
         case PresenceAction.stateChange:
           break;
