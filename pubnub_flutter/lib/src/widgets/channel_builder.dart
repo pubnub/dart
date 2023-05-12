@@ -49,10 +49,10 @@ class ChannelBuilder extends StatefulWidget {
   final bool withPresence;
 
   ChannelBuilder({
-    @required this.channel,
-    @required this.builder,
-    this.keyset,
-    this.using,
+    required this.channel,
+    required this.builder,
+    required this.keyset,
+    required this.using,
     this.disableCache = false,
     this.disableHistory = false,
     this.disableSubscription = false,
@@ -105,8 +105,8 @@ class ChannelSnapshot {
 
 class _ChannelBuilderState extends State<ChannelBuilder>
     with SubscriptionMemory, DidInitState {
-  PubNubProvider provider;
-  Keyset keyset;
+  late PubNubProvider provider;
+  late Keyset keyset;
 
   bool get cacheEnabled => provider.cacheEnabled && !widget.disableCache;
   String get cacheKey =>
@@ -115,8 +115,8 @@ class _ChannelBuilderState extends State<ChannelBuilder>
   final List<ChannelMessage> localMessages = [];
   List<ChannelMessage> cachedMessages = [];
 
-  PaginatedChannelHistory history;
-  Subscription subscription;
+  late PaginatedChannelHistory history;
+  late Subscription subscription;
 
   List<ChannelMessage> get messages => [
         if (cacheEnabled && history.messages.isEmpty) ...cachedMessages,
