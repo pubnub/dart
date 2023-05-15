@@ -65,8 +65,8 @@ class FetchHistoryResult extends Result {
     if (object is List) {
       return FetchHistoryResult._(
           object[0],
-          Timetoken(BigInt.from(object[1] as int)),
-          Timetoken(BigInt.from(object[2] as int)));
+          Timetoken(BigInt.parse(object[1])),
+          Timetoken(BigInt.parse(object[2])));
     }
 
     throw getExceptionFromAny(object);
