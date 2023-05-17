@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:pubnub/core.dart';
-import 'event.dart';
 
 final _logger = injectLogger('pubnub.core.supervisor.signals');
 

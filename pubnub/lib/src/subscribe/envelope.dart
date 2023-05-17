@@ -1,5 +1,4 @@
 import 'package:pubnub/core.dart';
-import 'package:pubnub/pubnub.dart';
 
 /// Represents a message received from a subscription.
 ///
@@ -17,7 +16,7 @@ class Envelope extends BaseMessage {
   final Timetoken? originalTimetoken;
   final int? originalRegion;
 
-  final dynamic? userMeta;
+  final dynamic userMeta;
 
   dynamic get payload => content;
 

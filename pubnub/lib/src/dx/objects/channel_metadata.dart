@@ -1,7 +1,5 @@
 import 'package:pubnub/core.dart';
-import '../_endpoints/objects/objects_types.dart';
 import 'objects.dart';
-import 'objects_types.dart';
 
 /// Represents a channel metadata.
 ///

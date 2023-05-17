@@ -1,7 +1,6 @@
 //
 import 'package:gherkin/gherkin.dart';
 import 'package:pubnub/core.dart';
-import 'package:pubnub/pubnub.dart';
 import 'package:test/test.dart';
 
 import '../../world.dart';

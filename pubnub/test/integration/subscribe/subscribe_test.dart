@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:test/test.dart';
 
 import 'package:pubnub/pubnub.dart';
-import 'package:pubnub/core.dart';
 
 import '_utils.dart';
 

@@ -4,7 +4,7 @@
 class UuidMetadataInput {
   String? name;
   String? email;
-  dynamic? custom;
+  dynamic custom;
   String? externalId;
   String? profileUrl;
 
@@ -26,7 +26,7 @@ class UuidMetadataInput {
 class ChannelMetadataInput {
   String? name;
   String? description;
-  dynamic? custom;
+  dynamic custom;
 
   ChannelMetadataInput({this.name, this.description, this.custom});
 

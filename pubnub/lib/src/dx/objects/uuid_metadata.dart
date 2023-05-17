@@ -1,7 +1,5 @@
 import 'package:pubnub/core.dart';
-import '../_endpoints/objects/objects_types.dart';
 import 'objects.dart';
-import 'schema.dart';
 
 /// Representation of UuidMetadata object
 /// Useful while dealing with one specific `uuid` details

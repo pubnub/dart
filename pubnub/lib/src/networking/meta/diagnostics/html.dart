@@ -42,4 +42,5 @@ Diagnostic? getNetworkDiagnostic(dynamic exception) {
       return AccessDeniedDiagnostic();
     }
   }
+  return null;
 }

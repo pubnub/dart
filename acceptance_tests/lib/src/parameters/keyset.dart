@@ -35,5 +35,6 @@ class KeysetParameter extends CustomParameter<Keyset> {
                 cipherKey: CipherKey.fromUtf8('invalid'),
               );
           }
+          return null;
         });
 }
