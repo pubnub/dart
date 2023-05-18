@@ -40,7 +40,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.pkg }}-
       - name: Setup Dart stable
-        uses: dart-lang/setup-dart@v1.3
+        uses: dart-lang/setup-dart@v1.5.0
       - name: "Build and run tests for '${{ matrix.pkg }}'"
         env:
           PKG: ${{ matrix.pkg }}
