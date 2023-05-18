@@ -8,7 +8,7 @@ environment:
 
 scripts:
   test:
-    default: dart pub run test -P unit
+    default: dart run test -P unit
     integration: dart pub run test -P integration
   validate:
     analysis: dart analyze --fatal-warnings lib
