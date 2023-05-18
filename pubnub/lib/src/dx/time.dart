@@ -9,6 +9,6 @@ mixin TimeDx on Core {
     return defaultFlow<TimeParams, Timetoken>(
         core: this,
         params: TimeParams(),
-        serialize: (object, [_]) => Timetoken(BigInt.parse(object[0])));
+        serialize: (object, [_]) => Timetoken(BigInt.parse('${object[0]}')));
   }
 }

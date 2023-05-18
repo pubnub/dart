@@ -52,10 +52,10 @@ class Envelope extends BaseMessage {
       flags: object['f'] as int,
       uuid: UUID(object['i'] ?? ''),
       originalTimetoken: object['o'] != null
-          ? Timetoken(BigInt.parse(object['o']['t']))
+          ? Timetoken(BigInt.parse('${object['o']['t']}'))
           : null,
       originalRegion: object['o']?['r'],
-      publishedAt: Timetoken(BigInt.parse(object['p']['t'])),
+      publishedAt: Timetoken(BigInt.parse('${object['p']['t']}')),
       region: object['p']['r'],
       userMeta: object['u'],
     );

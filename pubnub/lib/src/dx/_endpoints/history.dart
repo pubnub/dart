@@ -63,8 +63,8 @@ class FetchHistoryResult extends Result {
 
   factory FetchHistoryResult.fromJson(dynamic object) {
     if (object is List) {
-      return FetchHistoryResult._(object[0], Timetoken(BigInt.parse(object[1])),
-          Timetoken(BigInt.parse(object[2])));
+      return FetchHistoryResult._(object[0], Timetoken(BigInt.parse('${object[1]}')),
+          Timetoken(BigInt.parse('${object[2]}')));
     }
 
     throw getExceptionFromAny(object);
@@ -159,7 +159,7 @@ class BatchHistoryResultEntry {
         cipherKey == null
             ? object['message']
             : decryptFunction!(cipherKey, object['message']),
-        Timetoken(BigInt.parse(object['timetoken'])),
+        Timetoken(BigInt.parse('${object['timetoken']}')),
         object['uuid'],
         MessageTypeExtension.fromInt(object['message_type']),
         object['actions'],
