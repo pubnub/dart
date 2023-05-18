@@ -63,7 +63,9 @@ class FetchHistoryResult extends Result {
 
   factory FetchHistoryResult.fromJson(dynamic object) {
     if (object is List) {
-      return FetchHistoryResult._(object[0], Timetoken(BigInt.parse('${object[1]}')),
+      return FetchHistoryResult._(
+          object[0],
+          Timetoken(BigInt.parse('${object[1]}')),
           Timetoken(BigInt.parse('${object[2]}')));
     }
 
