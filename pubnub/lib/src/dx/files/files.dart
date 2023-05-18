@@ -54,10 +54,10 @@ class FileDx {
   Future<PublishFileMessageResult> sendFile(
       String channel, String fileName, List<int> file,
       {CipherKey? cipherKey,
-      dynamic? fileMessage,
+      dynamic fileMessage,
       bool? storeFileMessage,
       int? fileMessageTtl,
-      dynamic? fileMessageMeta,
+      dynamic fileMessageMeta,
       Keyset? keyset,
       String? using}) async {
     keyset ??= _core.keysets[using];
@@ -148,7 +148,7 @@ class FileDx {
       String channel, FileMessage message,
       {bool? storeMessage,
       int? ttl,
-      dynamic? meta,
+      dynamic meta,
       CipherKey? cipherKey,
       Keyset? keyset,
       String? using}) async {

@@ -1,10 +1,6 @@
 import 'package:test/test.dart';
 
 import 'package:pubnub/pubnub.dart';
-import 'package:pubnub/core.dart';
-
-import 'package:pubnub/src/dx/channel/channel.dart';
-import 'package:pubnub/src/dx/channel/channel_history.dart';
 
 import '../net/fake_net.dart';
 part './fixtures/channel.dart';

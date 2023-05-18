@@ -2,19 +2,19 @@ import '../exceptions.dart';
 import 'response.dart';
 
 class RequestTimeoutException extends PubNubException {
-  final dynamic? additionalData;
+  final dynamic additionalData;
 
   RequestTimeoutException([this.additionalData]) : super('request timed out');
 }
 
 class RequestCancelException extends PubNubException {
-  final dynamic? additionalData;
+  final dynamic additionalData;
 
   RequestCancelException([this.additionalData]) : super('request cancelled');
 }
 
 class RequestOtherException extends PubNubException {
-  final dynamic? additionalData;
+  final dynamic additionalData;
 
   RequestOtherException([this.additionalData])
       : super('request failed ($additionalData)');

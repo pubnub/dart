@@ -3,8 +3,6 @@ import 'package:xml/xml.dart' show XmlDocument;
 
 import 'package:pubnub/core.dart';
 
-import '../core/parser.dart';
-
 /// @nodoc
 abstract class Parser<T> {
   Future<T> decode(String input);

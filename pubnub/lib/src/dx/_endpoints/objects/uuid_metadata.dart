@@ -56,7 +56,7 @@ class UuidMetadataDetails {
   String? get externalId => _externalId;
   String? get profileUrl => _profileUrl;
   String? get email => _email;
-  dynamic? get custom => _custom;
+  dynamic get custom => _custom;
   String? get updated => _updated;
   String? get eTag => _eTag;
 

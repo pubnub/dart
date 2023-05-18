@@ -59,7 +59,7 @@ class GetMembershipsMetadataParams extends Parameters {
 /// {@category Objects}
 class MembershipMetadata {
   ChannelMetadataDetails _channel;
-  dynamic? _custom;
+  dynamic _custom;
   String _updated;
   String _eTag;
 
@@ -212,12 +212,12 @@ class GetChannelMembersParams extends Parameters {
 /// {@category Objects}
 class ChannelMemberMetadata {
   final UuidMetadataDetails _uuid;
-  final dynamic? _custom;
+  final dynamic _custom;
   final String _updated;
   final String _eTag;
 
   UuidMetadataDetails get uuid => _uuid;
-  dynamic? get custom => _custom;
+  dynamic get custom => _custom;
   String get updated => _updated;
   String get eTag => _eTag;
 

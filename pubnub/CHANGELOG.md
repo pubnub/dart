@@ -1,3 +1,9 @@
+## v4.2.3
+May 18 2023
+
+#### Fixed
+- Fixes issue of losing timetoken value precision in web environment. Fixed the following issues reported by [@RicharC293](https://github.com/RicharC293): [#110](https://github.com/pubnub/dart/issues/110).
+
 ## v4.2.2
 November 14 2022
 

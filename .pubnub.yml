@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2023-05-18
+    version: v4.2.3
+    changes:
+      - type: bug
+        text: "Fixes issue of losing timetoken value precision in web environment."
   - date: 2022-11-14
     version: v4.2.2
     changes:
@@ -415,7 +420,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "4.2.2"
+version: "4.2.3"
 sdks:
   -
     full-name: PubNub Dart SDK

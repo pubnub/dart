@@ -8,7 +8,7 @@ PubNubException getExceptionFromAny(dynamic error) {
   }
 
   if (error is XmlDocument) {
-    var details = error.rootElement.getElement('Message')?.text;
+    var details = error.rootElement.getElement('Message')?.value;
 
     return PubNubException(
         'Request to third party service failed. Details: $details');

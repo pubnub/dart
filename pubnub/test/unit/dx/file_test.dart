@@ -3,7 +3,6 @@ import 'package:pubnub/crypto.dart';
 import 'package:test/test.dart';
 
 import 'package:pubnub/pubnub.dart';
-import 'package:pubnub/core.dart';
 
 import '../net/fake_net.dart';
 part 'fixtures/files.dart';

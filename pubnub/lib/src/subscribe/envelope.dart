@@ -1,5 +1,4 @@
 import 'package:pubnub/core.dart';
-import 'package:pubnub/pubnub.dart';
 
 /// Represents a message received from a subscription.
 ///
@@ -17,7 +16,7 @@ class Envelope extends BaseMessage {
   final Timetoken? originalTimetoken;
   final int? originalRegion;
 
-  final dynamic? userMeta;
+  final dynamic userMeta;
 
   dynamic get payload => content;
 
@@ -53,10 +52,10 @@ class Envelope extends BaseMessage {
       flags: object['f'] as int,
       uuid: UUID(object['i'] ?? ''),
       originalTimetoken: object['o'] != null
-          ? Timetoken(BigInt.parse(object['o']['t']))
+          ? Timetoken(BigInt.parse('${object['o']['t']}'))
           : null,
       originalRegion: object['o']?['r'],
-      publishedAt: Timetoken(BigInt.parse(object['p']['t'])),
+      publishedAt: Timetoken(BigInt.parse('${object['p']['t']}')),
       region: object['p']['r'],
       userMeta: object['u'],
     );
