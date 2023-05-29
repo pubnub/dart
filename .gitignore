@@ -80,8 +80,8 @@ build/
 # Scratchpad
 scratchpad.dart
 
-# pubspec.lock
-pubspec.lock
+# 
+
 
 # test_coverage generated files
 coverage
