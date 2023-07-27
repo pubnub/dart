@@ -1,3 +1,9 @@
+## v4.2.4
+July 27 2023
+
+#### Fixed
+- Fixes issue of missing decrypt function in batch history api.
+
 ## v4.2.3
 May 18 2023
 
