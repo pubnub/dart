@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../../static-assets/github.css?v1">
   <link rel="stylesheet" href="../../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../../" data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">pubnub</a></li>
     <li><a href="../../pubnub/pubnub-library.html">pubnub</a></li>
@@ -37,30 +37,39 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-constructor">Resource</span> constructor 
-    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
+      
       <span class="name ">Resource</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-type"><span class="type-annotation"><a href="../../pubnub/ResourceType.html">ResourceType</a></span> <span class="parameter-name">type</span>, </span></li>
-<li><span class="parameter" id="-param-name">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span></li>
-<li><span class="parameter" id="-param-pattern"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">pattern</span>, </span></li>
-<li><span class="parameter" id="-param-create"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">create</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-delete"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">delete</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-manage"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">manage</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-read"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">read</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-write"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">write</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-get"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">get</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-update"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">update</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-join"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">join</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-bit"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/int-class.html">int</a></span> <span class="parameter-name">bit</span> = <span class="default-value">0</span>}</span></li>
+<li><span class="parameter" id="-param-name">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span></li>
+<li><span class="parameter" id="-param-pattern"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">pattern</span>, </span></li>
+<li><span class="parameter" id="-param-create"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">create</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-delete"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">delete</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-manage"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">manage</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-read"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">read</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-write"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">write</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-get"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">get</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-update"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">update</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-join"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">join</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-bit"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/int-class.html">int</a></span> <span class="parameter-name">bit</span> = <span class="default-value">0</span>}</span></li>
 </ol>)
     </section>
 
@@ -119,31 +128,31 @@
           <li><a href="../../pubnub/Resource/Resource.html">Resource</a></li>
 
 
-    <li class="section-title">
-      <a href="../../pubnub/Resource-class.html#instance-properties">Properties</a>
-    </li>
-    <li><a href="../../pubnub/Resource/bit.html">bit</a></li>
-    <li><a href="../../pubnub/Resource/create.html">create</a></li>
-    <li><a href="../../pubnub/Resource/delete.html">delete</a></li>
-    <li><a href="../../pubnub/Resource/get.html">get</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li><a href="../../pubnub/Resource/join.html">join</a></li>
-    <li><a href="../../pubnub/Resource/manage.html">manage</a></li>
-    <li><a href="../../pubnub/Resource/name.html">name</a></li>
-    <li><a href="../../pubnub/Resource/pattern.html">pattern</a></li>
-    <li><a href="../../pubnub/Resource/read.html">read</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li><a href="../../pubnub/Resource/type.html">type</a></li>
-    <li><a href="../../pubnub/Resource/update.html">update</a></li>
-    <li><a href="../../pubnub/Resource/write.html">write</a></li>
+        <li class="section-title">
+          <a href="../../pubnub/Resource-class.html#instance-properties">Properties</a>
+        </li>
+          <li><a href="../../pubnub/Resource/bit.html">bit</a></li>
+          <li><a href="../../pubnub/Resource/create.html">create</a></li>
+          <li><a href="../../pubnub/Resource/delete.html">delete</a></li>
+          <li><a href="../../pubnub/Resource/get.html">get</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li><a href="../../pubnub/Resource/join.html">join</a></li>
+          <li><a href="../../pubnub/Resource/manage.html">manage</a></li>
+          <li><a href="../../pubnub/Resource/name.html">name</a></li>
+          <li><a href="../../pubnub/Resource/pattern.html">pattern</a></li>
+          <li><a href="../../pubnub/Resource/read.html">read</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li><a href="../../pubnub/Resource/type.html">type</a></li>
+          <li><a href="../../pubnub/Resource/update.html">update</a></li>
+          <li><a href="../../pubnub/Resource/write.html">write</a></li>
 
-    <li class="section-title"><a href="../../pubnub/Resource-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li><a href="../../pubnub/Resource/replace.html">replace</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></li>
+        <li class="section-title"><a href="../../pubnub/Resource-class.html#instance-methods">Methods</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li><a href="../../pubnub/Resource/replace.html">replace</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/toString.html">toString</a></li>
 
-    <li class="section-title inherited"><a href="../../pubnub/Resource-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../../pubnub/Resource-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -160,7 +169,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.2.2
+      4.2.4
   </span>
 
   

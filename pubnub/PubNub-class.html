@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">pubnub</a></li>
     <li><a href="../pubnub/pubnub-library.html">pubnub</a></li>
@@ -36,17 +36,25 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-class">PubNub</span> class 
-    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
  
-    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features Topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
+    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 </h1></div>
 
     
@@ -99,7 +107,7 @@ will be executed with a keyset that was obtained when the <a href="../pubnub/Pub
 <dd>
   Contains methods that allow running batch operations on channels,
 channel groups and other features.
-  <div class="features">late, final</div>
+  <div class="features"><span class="feature">late</span><span class="feature">final</span></div>
 
 </dd>
 
@@ -110,7 +118,7 @@ channel groups and other features.
 </dt>
 <dd>
   Contains methods that allow manipulating channel groups.
-  <div class="features">late, final</div>
+  <div class="features"><span class="feature">late</span><span class="feature">final</span></div>
 
 </dd>
 
@@ -121,7 +129,7 @@ channel groups and other features.
 </dt>
 <dd class="inherited">
   Internal module responsible for cryptography.
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -132,18 +140,18 @@ channel groups and other features.
 </dt>
 <dd>
   Contains methods that allow managing files.
-  <div class="features">late, final</div>
+  <div class="features"><span class="feature">late</span><span class="feature">final</span></div>
 
 </dd>
 
         <dt id="hashCode" class="property inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/int-class.html">int</a></span> 
+  <span class="name"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-core/int-class.html">int</a></span> 
 
 </dt>
 <dd class="inherited">
   The hash code for this object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -154,7 +162,7 @@ channel groups and other features.
 </dt>
 <dd class="inherited">
   Allows to have multiple <a href="../pubnub/Keyset-class.html">Keyset</a> associated with one instance.
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -165,7 +173,7 @@ channel groups and other features.
 </dt>
 <dd class="inherited">
   Internal module responsible for networking.
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -176,7 +184,7 @@ channel groups and other features.
 </dt>
 <dd>
   Contains methods to manage channel and uuids metadata and their relationships.
-  <div class="features">late, final</div>
+  <div class="features"><span class="feature">late</span><span class="feature">final</span></div>
 
 </dd>
 
@@ -187,18 +195,18 @@ channel groups and other features.
 </dt>
 <dd class="inherited">
   Internal module responsible for parsing.
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="runtimeType" class="property inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/Type-class.html">Type</a></span> 
+  <span class="name"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-core/Type-class.html">Type</a></span> 
 
 </dt>
 <dd class="inherited">
   A representation of the runtime type of the object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -209,7 +217,7 @@ channel groups and other features.
 </dt>
 <dd class="inherited">
   Internal signals.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -220,7 +228,7 @@ channel groups and other features.
 </dt>
 <dd class="inherited">
   Internal module responsible for supervising.
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -234,21 +242,21 @@ channel groups and other features.
     <h2>Methods</h2>
     <dl class="callables">
         <dt id="addMessageAction" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/addMessageAction.html">addMessageAction</a></span><span class="signature">(<wbr><span class="parameter" id="addMessageAction-param-type">{<span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">type</span>, </span><span class="parameter" id="addMessageAction-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">value</span>, </span><span class="parameter" id="addMessageAction-param-channel"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span><span class="parameter" id="addMessageAction-param-timetoken"><span>required</span> <span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a></span> <span class="parameter-name">timetoken</span>, </span><span class="parameter" id="addMessageAction-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="addMessageAction-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/AddMessageActionResult-class.html">AddMessageActionResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/addMessageAction.html">addMessageAction</a></span><span class="signature">(<wbr><span class="parameter" id="addMessageAction-param-type">{<span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">type</span>, </span><span class="parameter" id="addMessageAction-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">value</span>, </span><span class="parameter" id="addMessageAction-param-channel"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span><span class="parameter" id="addMessageAction-param-timetoken"><span>required</span> <span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a></span> <span class="parameter-name">timetoken</span>, </span><span class="parameter" id="addMessageAction-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="addMessageAction-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/AddMessageActionResult-class.html">AddMessageActionResult</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   This method adds a message action to a parent message.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="addPushChannels" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/addPushChannels.html">addPushChannels</a></span><span class="signature">(<wbr><span class="parameter" id="addPushChannels-param-deviceId"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">deviceId</span>, </span><span class="parameter" id="addPushChannels-param-gateway"><span class="type-annotation"><a href="../pubnub/PushGateway.html">PushGateway</a></span> <span class="parameter-name">gateway</span>, </span><span class="parameter" id="addPushChannels-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span>, </span><span class="parameter" id="addPushChannels-param-topic">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">topic</span>, </span><span class="parameter" id="addPushChannels-param-environment"><span class="type-annotation"><a href="../pubnub/Environment.html">Environment</a>?</span> <span class="parameter-name">environment</span>, </span><span class="parameter" id="addPushChannels-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="addPushChannels-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/AddPushChannelsResult-class.html">AddPushChannelsResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/addPushChannels.html">addPushChannels</a></span><span class="signature">(<wbr><span class="parameter" id="addPushChannels-param-deviceId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">deviceId</span>, </span><span class="parameter" id="addPushChannels-param-gateway"><span class="type-annotation"><a href="../pubnub/PushGateway.html">PushGateway</a></span> <span class="parameter-name">gateway</span>, </span><span class="parameter" id="addPushChannels-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span>, </span><span class="parameter" id="addPushChannels-param-topic">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">topic</span>, </span><span class="parameter" id="addPushChannels-param-environment"><span class="type-annotation"><a href="../pubnub/Environment.html">Environment</a>?</span> <span class="parameter-name">environment</span>, </span><span class="parameter" id="addPushChannels-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="addPushChannels-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/AddPushChannelsResult-class.html">AddPushChannelsResult</a></span>&gt;</span></span>
   </span>
   
 
@@ -256,38 +264,38 @@ channel groups and other features.
 <dd class="inherited">
   It registers device <code>deviceId</code> for push notifications from <code>channels</code>
 So the device <code>deviceId</code> will receive push notifications from those channels mentioned in list <code>channels</code>
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="announceHeartbeat" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/announceHeartbeat.html">announceHeartbeat</a></span><span class="signature">(<wbr><span class="parameter" id="announceHeartbeat-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="announceHeartbeat-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="announceHeartbeat-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="announceHeartbeat-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channelGroups</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="announceHeartbeat-param-heartbeat"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">heartbeat</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/HeartbeatResult-class.html">HeartbeatResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/announceHeartbeat.html">announceHeartbeat</a></span><span class="signature">(<wbr><span class="parameter" id="announceHeartbeat-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="announceHeartbeat-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="announceHeartbeat-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="announceHeartbeat-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channelGroups</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="announceHeartbeat-param-heartbeat"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">heartbeat</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/HeartbeatResult-class.html">HeartbeatResult</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   Anounce in <code>channels</code> and <code>channelGroups</code> that a device linked to the UUID in the keyset is alive.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="announceLeave" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/announceLeave.html">announceLeave</a></span><span class="signature">(<wbr><span class="parameter" id="announceLeave-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="announceLeave-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="announceLeave-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="announceLeave-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channelGroups</span> = <span class="default-value">const {}</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/LeaveResult-class.html">LeaveResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/announceLeave.html">announceLeave</a></span><span class="signature">(<wbr><span class="parameter" id="announceLeave-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="announceLeave-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="announceLeave-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="announceLeave-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channelGroups</span> = <span class="default-value">const {}</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/LeaveResult-class.html">LeaveResult</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   Announce in <code>channels</code> and <code>channelGroups</code> that a device linked to the UUID in the keyset left.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="channel" class="callable">
-  <span class="name"><a href="../pubnub/PubNub/channel.html">channel</a></span><span class="signature">(<wbr><span class="parameter" id="channel-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="channel-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="channel-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+  <span class="name"><a href="../pubnub/PubNub/channel.html">channel</a></span><span class="signature">(<wbr><span class="parameter" id="channel-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="channel-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="channel-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
     <span class="returntype parameter">&#8594; <a href="../pubnub/Channel-class.html">Channel</a></span>
   </span>
   
@@ -300,8 +308,8 @@ So the device <code>deviceId</code> will receive push notifications from those c
 </dd>
 
         <dt id="channelMetadata" class="callable">
-  <span class="name"><a href="../pubnub/PubNub/channelMetadata.html">channelMetadata</a></span><span class="signature">(<wbr><span class="parameter" id="channelMetadata-param-channelId"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channelId</span>, </span><span class="parameter" id="channelMetadata-param-name">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="channelMetadata-param-description"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">description</span>, </span><span class="parameter" id="channelMetadata-param-custom"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">custom</span>, </span><span class="parameter" id="channelMetadata-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="channelMetadata-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">ChannelMetadata</span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/channelMetadata.html">channelMetadata</a></span><span class="signature">(<wbr><span class="parameter" id="channelMetadata-param-channelId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">channelId</span>, </span><span class="parameter" id="channelMetadata-param-name">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="channelMetadata-param-description"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">description</span>, </span><span class="parameter" id="channelMetadata-param-custom"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">custom</span>, </span><span class="parameter" id="channelMetadata-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="channelMetadata-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">ChannelMetadata</span>&gt;</span></span>
   </span>
   
 
@@ -313,8 +321,8 @@ So the device <code>deviceId</code> will receive push notifications from those c
 </dd>
 
         <dt id="deleteMessageAction" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/deleteMessageAction.html">deleteMessageAction</a></span><span class="signature">(<wbr><span class="parameter" id="deleteMessageAction-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span><span class="parameter" id="deleteMessageAction-param-messageTimetoken">{<span>required</span> <span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a></span> <span class="parameter-name">messageTimetoken</span>, </span><span class="parameter" id="deleteMessageAction-param-actionTimetoken"><span>required</span> <span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a></span> <span class="parameter-name">actionTimetoken</span>, </span><span class="parameter" id="deleteMessageAction-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="deleteMessageAction-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/DeleteMessageActionResult-class.html">DeleteMessageActionResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/deleteMessageAction.html">deleteMessageAction</a></span><span class="signature">(<wbr><span class="parameter" id="deleteMessageAction-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span><span class="parameter" id="deleteMessageAction-param-messageTimetoken">{<span>required</span> <span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a></span> <span class="parameter-name">messageTimetoken</span>, </span><span class="parameter" id="deleteMessageAction-param-actionTimetoken"><span>required</span> <span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a></span> <span class="parameter-name">actionTimetoken</span>, </span><span class="parameter" id="deleteMessageAction-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="deleteMessageAction-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/DeleteMessageActionResult-class.html">DeleteMessageActionResult</a></span>&gt;</span></span>
   </span>
   
 
@@ -322,12 +330,12 @@ So the device <code>deviceId</code> will receive push notifications from those c
 <dd class="inherited">
   This method removes an existing message action (identified by <code>actionTimetoken</code>)
 from a parent message (identified by <code>messageTimetoken</code>) on a <code>channel</code>.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="device" class="callable">
-  <span class="name"><a href="../pubnub/PubNub/device.html">device</a></span><span class="signature">(<wbr><span class="parameter" id="device-param-deviceId"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">deviceId</span>, </span><span class="parameter" id="device-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="device-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+  <span class="name"><a href="../pubnub/PubNub/device.html">device</a></span><span class="signature">(<wbr><span class="parameter" id="device-param-deviceId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">deviceId</span>, </span><span class="parameter" id="device-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="device-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
     <span class="returntype parameter">&#8594; <a href="../pubnub/Device-class.html">Device</a></span>
   </span>
   
@@ -340,124 +348,124 @@ from a parent message (identified by <code>messageTimetoken</code>) on a <code>c
 </dd>
 
         <dt id="fetchMessageActions" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/fetchMessageActions.html">fetchMessageActions</a></span><span class="signature">(<wbr><span class="parameter" id="fetchMessageActions-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span><span class="parameter" id="fetchMessageActions-param-from">{<span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a>?</span> <span class="parameter-name">from</span>, </span><span class="parameter" id="fetchMessageActions-param-to"><span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a>?</span> <span class="parameter-name">to</span>, </span><span class="parameter" id="fetchMessageActions-param-limit"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">limit</span> = <span class="default-value">100</span>, </span><span class="parameter" id="fetchMessageActions-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="fetchMessageActions-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/FetchMessageActionsResult-class.html">FetchMessageActionsResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/fetchMessageActions.html">fetchMessageActions</a></span><span class="signature">(<wbr><span class="parameter" id="fetchMessageActions-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span><span class="parameter" id="fetchMessageActions-param-from">{<span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a>?</span> <span class="parameter-name">from</span>, </span><span class="parameter" id="fetchMessageActions-param-to"><span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a>?</span> <span class="parameter-name">to</span>, </span><span class="parameter" id="fetchMessageActions-param-limit"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">limit</span> = <span class="default-value">100</span>, </span><span class="parameter" id="fetchMessageActions-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="fetchMessageActions-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/FetchMessageActionsResult-class.html">FetchMessageActionsResult</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   Returns all message actions of a given <code>channel</code>.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="getState" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/getState.html">getState</a></span><span class="signature">(<wbr><span class="parameter" id="getState-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="getState-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="getState-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="getState-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channelGroups</span> = <span class="default-value">const {}</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/GetUserStateResult-class.html">GetUserStateResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/getState.html">getState</a></span><span class="signature">(<wbr><span class="parameter" id="getState-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="getState-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="getState-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="getState-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channelGroups</span> = <span class="default-value">const {}</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/GetUserStateResult-class.html">GetUserStateResult</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="getSubscribedChannelGroupsForUUID" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/getSubscribedChannelGroupsForUUID.html">getSubscribedChannelGroupsForUUID</a></span><span class="signature">(<wbr><span class="parameter" id="getSubscribedChannelGroupsForUUID-param-uuid"><span class="type-annotation"><a href="../pubnub/UUID-class.html">UUID</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="getSubscribedChannelGroupsForUUID-param-countPaused">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">countPaused</span> = <span class="default-value">true</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/getSubscribedChannelGroupsForUUID.html">getSubscribedChannelGroupsForUUID</a></span><span class="signature">(<wbr><span class="parameter" id="getSubscribedChannelGroupsForUUID-param-uuid"><span class="type-annotation"><a href="../pubnub/UUID-class.html">UUID</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="getSubscribedChannelGroupsForUUID-param-countPaused">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">countPaused</span> = <span class="default-value">true</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   Returns a set of channel groups that <code>uuid</code> is currently subscribed to.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="getSubscribedChannelsForUUID" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/getSubscribedChannelsForUUID.html">getSubscribedChannelsForUUID</a></span><span class="signature">(<wbr><span class="parameter" id="getSubscribedChannelsForUUID-param-uuid"><span class="type-annotation"><a href="../pubnub/UUID-class.html">UUID</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="getSubscribedChannelsForUUID-param-countPaused">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">countPaused</span> = <span class="default-value">true</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/getSubscribedChannelsForUUID.html">getSubscribedChannelsForUUID</a></span><span class="signature">(<wbr><span class="parameter" id="getSubscribedChannelsForUUID-param-uuid"><span class="type-annotation"><a href="../pubnub/UUID-class.html">UUID</a></span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="getSubscribedChannelsForUUID-param-countPaused">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">countPaused</span> = <span class="default-value">true</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   Returns a set of channels that <code>uuid</code> is currently subscribed to.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="grant" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/grant.html">grant</a></span><span class="signature">(<wbr><span class="parameter" id="grant-param-authKeys"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">authKeys</span>, </span><span class="parameter" id="grant-param-ttl">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">ttl</span>, </span><span class="parameter" id="grant-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">channels</span>, </span><span class="parameter" id="grant-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">channelGroups</span>, </span><span class="parameter" id="grant-param-uuids"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">uuids</span>, </span><span class="parameter" id="grant-param-write"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">write</span>, </span><span class="parameter" id="grant-param-read"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">read</span>, </span><span class="parameter" id="grant-param-manage"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">manage</span>, </span><span class="parameter" id="grant-param-delete"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">delete</span>, </span><span class="parameter" id="grant-param-get"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">get</span>, </span><span class="parameter" id="grant-param-update"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">update</span>, </span><span class="parameter" id="grant-param-join"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">join</span>, </span><span class="parameter" id="grant-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="grant-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">PamGrantResult</span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/grant.html">grant</a></span><span class="signature">(<wbr><span class="parameter" id="grant-param-authKeys"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">authKeys</span>, </span><span class="parameter" id="grant-param-ttl">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">ttl</span>, </span><span class="parameter" id="grant-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">channels</span>, </span><span class="parameter" id="grant-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">channelGroups</span>, </span><span class="parameter" id="grant-param-uuids"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">uuids</span>, </span><span class="parameter" id="grant-param-write"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">write</span>, </span><span class="parameter" id="grant-param-read"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">read</span>, </span><span class="parameter" id="grant-param-manage"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">manage</span>, </span><span class="parameter" id="grant-param-delete"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">delete</span>, </span><span class="parameter" id="grant-param-get"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">get</span>, </span><span class="parameter" id="grant-param-update"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">update</span>, </span><span class="parameter" id="grant-param-join"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">join</span>, </span><span class="parameter" id="grant-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="grant-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">PamGrantResult</span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   Use this method to modify permissions for provided <code>authKeys</code>.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="grantToken" class="callable inherited">
   <span class="name"><a href="../pubnub/PubNub/grantToken.html">grantToken</a></span><span class="signature">(<wbr><span class="parameter" id="grantToken-param-tokenRequest"><span class="type-annotation"><a href="../pubnub/TokenRequest-class.html">TokenRequest</a></span> <span class="parameter-name">tokenRequest</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/Token-class.html">Token</a></span>&gt;</span></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/Token-class.html">Token</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="hereNow" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/hereNow.html">hereNow</a></span><span class="signature">(<wbr><span class="parameter" id="hereNow-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="hereNow-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="hereNow-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="hereNow-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channelGroups</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="hereNow-param-stateInfo"><span class="type-annotation"><a href="../pubnub/StateInfo.html">StateInfo</a>?</span> <span class="parameter-name">stateInfo</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/HereNowResult-class.html">HereNowResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/hereNow.html">hereNow</a></span><span class="signature">(<wbr><span class="parameter" id="hereNow-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="hereNow-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="hereNow-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="hereNow-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channelGroups</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="hereNow-param-stateInfo"><span class="type-annotation"><a href="../pubnub/StateInfo.html">StateInfo</a>?</span> <span class="parameter-name">stateInfo</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/HereNowResult-class.html">HereNowResult</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   Gets the occupancy information from a list of <code>channels</code> and/or <code>channelGroups</code>.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="listPushChannels" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/listPushChannels.html">listPushChannels</a></span><span class="signature">(<wbr><span class="parameter" id="listPushChannels-param-deviceId"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">deviceId</span>, </span><span class="parameter" id="listPushChannels-param-gateway"><span class="type-annotation"><a href="../pubnub/PushGateway.html">PushGateway</a></span> <span class="parameter-name">gateway</span>, </span><span class="parameter" id="listPushChannels-param-topic">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">topic</span>, </span><span class="parameter" id="listPushChannels-param-environment"><span class="type-annotation"><a href="../pubnub/Environment.html">Environment</a>?</span> <span class="parameter-name">environment</span>, </span><span class="parameter" id="listPushChannels-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="listPushChannels-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/ListPushChannelsResult-class.html">ListPushChannelsResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/listPushChannels.html">listPushChannels</a></span><span class="signature">(<wbr><span class="parameter" id="listPushChannels-param-deviceId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">deviceId</span>, </span><span class="parameter" id="listPushChannels-param-gateway"><span class="type-annotation"><a href="../pubnub/PushGateway.html">PushGateway</a></span> <span class="parameter-name">gateway</span>, </span><span class="parameter" id="listPushChannels-param-topic">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">topic</span>, </span><span class="parameter" id="listPushChannels-param-environment"><span class="type-annotation"><a href="../pubnub/Environment.html">Environment</a>?</span> <span class="parameter-name">environment</span>, </span><span class="parameter" id="listPushChannels-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="listPushChannels-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/ListPushChannelsResult-class.html">ListPushChannelsResult</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   It returns list of all channels to which device <code>deviceId</code> is registered to receive push notifications.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="noSuchMethod" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+  <span class="name"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
     <span class="returntype parameter">&#8594; dynamic</span>
   </span>
   
 
 </dt>
 <dd class="inherited">
-  Invoked when a non-existent method or property is accessed.
-  <div class="features">inherited</div>
+  Invoked when a nonexistent method or property is accessed.
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="parseToken" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/parseToken.html">parseToken</a></span><span class="signature">(<wbr><span class="parameter" id="parseToken-param-token"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">token</span></span>)
+  <span class="name"><a href="../pubnub/PubNub/parseToken.html">parseToken</a></span><span class="signature">(<wbr><span class="parameter" id="parseToken-param-token"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">token</span></span>)
     <span class="returntype parameter">&#8594; <a href="../pubnub/Token-class.html">Token</a></span>
   </span>
   
@@ -465,20 +473,20 @@ from a parent message (identified by <code>messageTimetoken</code>) on a <code>c
 </dt>
 <dd class="inherited">
   
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="publish" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/publish.html">publish</a></span><span class="signature">(<wbr><span class="parameter" id="publish-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span><span class="parameter" id="publish-param-message"><span class="type-annotation">dynamic</span> <span class="parameter-name">message</span>, </span><span class="parameter" id="publish-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="publish-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="publish-param-meta"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">meta</span>, </span><span class="parameter" id="publish-param-storeMessage"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">storeMessage</span>, </span><span class="parameter" id="publish-param-ttl"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">ttl</span>, </span><span class="parameter" id="publish-param-fire"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">fire</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/PublishResult-class.html">PublishResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/publish.html">publish</a></span><span class="signature">(<wbr><span class="parameter" id="publish-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span><span class="parameter" id="publish-param-message"><span class="type-annotation">dynamic</span> <span class="parameter-name">message</span>, </span><span class="parameter" id="publish-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="publish-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="publish-param-meta"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">meta</span>, </span><span class="parameter" id="publish-param-storeMessage"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">storeMessage</span>, </span><span class="parameter" id="publish-param-ttl"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">ttl</span>, </span><span class="parameter" id="publish-param-fire"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">fire</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/PublishResult-class.html">PublishResult</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   Publishes <code>message</code> to a <code>channel</code>.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -491,13 +499,13 @@ from a parent message (identified by <code>messageTimetoken</code>) on a <code>c
 </dt>
 <dd class="inherited">
   Breaks up pending connections and restarts them.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="removeDevice" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/removeDevice.html">removeDevice</a></span><span class="signature">(<wbr><span class="parameter" id="removeDevice-param-deviceId"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">deviceId</span>, </span><span class="parameter" id="removeDevice-param-gateway"><span class="type-annotation"><a href="../pubnub/PushGateway.html">PushGateway</a></span> <span class="parameter-name">gateway</span>, </span><span class="parameter" id="removeDevice-param-topic">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">topic</span>, </span><span class="parameter" id="removeDevice-param-environment"><span class="type-annotation"><a href="../pubnub/Environment.html">Environment</a>?</span> <span class="parameter-name">environment</span>, </span><span class="parameter" id="removeDevice-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="removeDevice-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/RemoveDeviceResult-class.html">RemoveDeviceResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/removeDevice.html">removeDevice</a></span><span class="signature">(<wbr><span class="parameter" id="removeDevice-param-deviceId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">deviceId</span>, </span><span class="parameter" id="removeDevice-param-gateway"><span class="type-annotation"><a href="../pubnub/PushGateway.html">PushGateway</a></span> <span class="parameter-name">gateway</span>, </span><span class="parameter" id="removeDevice-param-topic">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">topic</span>, </span><span class="parameter" id="removeDevice-param-environment"><span class="type-annotation"><a href="../pubnub/Environment.html">Environment</a>?</span> <span class="parameter-name">environment</span>, </span><span class="parameter" id="removeDevice-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="removeDevice-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/RemoveDeviceResult-class.html">RemoveDeviceResult</a></span>&gt;</span></span>
   </span>
   
 
@@ -505,13 +513,13 @@ from a parent message (identified by <code>messageTimetoken</code>) on a <code>c
 <dd class="inherited">
   It is allowing for removal of all registered channels at once,
 for a given device <code>deviceId</code>, without specifying all of the channels.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="removePushChannels" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/removePushChannels.html">removePushChannels</a></span><span class="signature">(<wbr><span class="parameter" id="removePushChannels-param-deviceId"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">deviceId</span>, </span><span class="parameter" id="removePushChannels-param-gateway"><span class="type-annotation"><a href="../pubnub/PushGateway.html">PushGateway</a></span> <span class="parameter-name">gateway</span>, </span><span class="parameter" id="removePushChannels-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span>, </span><span class="parameter" id="removePushChannels-param-topic">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">topic</span>, </span><span class="parameter" id="removePushChannels-param-environment"><span class="type-annotation"><a href="../pubnub/Environment.html">Environment</a>?</span> <span class="parameter-name">environment</span>, </span><span class="parameter" id="removePushChannels-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="removePushChannels-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/RemovePushChannelsResult-class.html">RemovePushChannelsResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/removePushChannels.html">removePushChannels</a></span><span class="signature">(<wbr><span class="parameter" id="removePushChannels-param-deviceId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">deviceId</span>, </span><span class="parameter" id="removePushChannels-param-gateway"><span class="type-annotation"><a href="../pubnub/PushGateway.html">PushGateway</a></span> <span class="parameter-name">gateway</span>, </span><span class="parameter" id="removePushChannels-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span>, </span><span class="parameter" id="removePushChannels-param-topic">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">topic</span>, </span><span class="parameter" id="removePushChannels-param-environment"><span class="type-annotation"><a href="../pubnub/Environment.html">Environment</a>?</span> <span class="parameter-name">environment</span>, </span><span class="parameter" id="removePushChannels-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="removePushChannels-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/RemovePushChannelsResult-class.html">RemovePushChannelsResult</a></span>&gt;</span></span>
   </span>
   
 
@@ -519,12 +527,12 @@ for a given device <code>deviceId</code>, without specifying all of the channels
 <dd class="inherited">
   It removes registration of device <code>deviceId</code> from <code>channels</code>
 So device <code>deviceId</code> will not get push notifications from <code>channels</code>
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="requestToken" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/requestToken.html">requestToken</a></span><span class="signature">(<wbr><span class="parameter" id="requestToken-param-ttl">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">ttl</span>, </span><span class="parameter" id="requestToken-param-meta"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">meta</span>, </span><span class="parameter" id="requestToken-param-authorizedUUID"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">authorizedUUID</span>, </span><span class="parameter" id="requestToken-param-authorizedUserId"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">authorizedUserId</span>, </span><span class="parameter" id="requestToken-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="requestToken-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>}</span>)
+  <span class="name"><a href="../pubnub/PubNub/requestToken.html">requestToken</a></span><span class="signature">(<wbr><span class="parameter" id="requestToken-param-ttl">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">ttl</span>, </span><span class="parameter" id="requestToken-param-meta"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">meta</span>, </span><span class="parameter" id="requestToken-param-authorizedUUID"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">authorizedUUID</span>, </span><span class="parameter" id="requestToken-param-authorizedUserId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">authorizedUserId</span>, </span><span class="parameter" id="requestToken-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="requestToken-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>}</span>)
     <span class="returntype parameter">&#8594; <a href="../pubnub/TokenRequest-class.html">TokenRequest</a></span>
   </span>
   
@@ -532,38 +540,38 @@ So device <code>deviceId</code> will not get push notifications from <code>chann
 </dt>
 <dd class="inherited">
   Creates a <a href="../pubnub/TokenRequest-class.html">TokenRequest</a> that can be used to obtain a <a href="../pubnub/Token-class.html">Token</a>.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="revokeToken" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/revokeToken.html">revokeToken</a></span><span class="signature">(<wbr><span class="parameter" id="revokeToken-param-token"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">token</span>, </span><span class="parameter" id="revokeToken-param-using">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="revokeToken-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/PamRevokeTokenResult-class.html">PamRevokeTokenResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/revokeToken.html">revokeToken</a></span><span class="signature">(<wbr><span class="parameter" id="revokeToken-param-token"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">token</span>, </span><span class="parameter" id="revokeToken-param-using">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="revokeToken-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/PamRevokeTokenResult-class.html">PamRevokeTokenResult</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="setState" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/setState.html">setState</a></span><span class="signature">(<wbr><span class="parameter" id="setState-param-state"><span class="type-annotation">dynamic</span> <span class="parameter-name">state</span>, </span><span class="parameter" id="setState-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="setState-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="setState-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="setState-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channelGroups</span> = <span class="default-value">const {}</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/SetUserStateResult-class.html">SetUserStateResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/setState.html">setState</a></span><span class="signature">(<wbr><span class="parameter" id="setState-param-state"><span class="type-annotation">dynamic</span> <span class="parameter-name">state</span>, </span><span class="parameter" id="setState-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="setState-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="setState-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span> = <span class="default-value">const {}</span>, </span><span class="parameter" id="setState-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channelGroups</span> = <span class="default-value">const {}</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/SetUserStateResult-class.html">SetUserStateResult</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="setToken" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/setToken.html">setToken</a></span><span class="signature">(<wbr><span class="parameter" id="setToken-param-token"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">token</span>, </span><span class="parameter" id="setToken-param-using">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="setToken-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>}</span>)
+  <span class="name"><a href="../pubnub/PubNub/setToken.html">setToken</a></span><span class="signature">(<wbr><span class="parameter" id="setToken-param-token"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">token</span>, </span><span class="parameter" id="setToken-param-using">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="setToken-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>}</span>)
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -571,25 +579,25 @@ So device <code>deviceId</code> will not get push notifications from <code>chann
 </dt>
 <dd class="inherited">
   
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="signal" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/signal.html">signal</a></span><span class="signature">(<wbr><span class="parameter" id="signal-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span><span class="parameter" id="signal-param-message"><span class="type-annotation">dynamic</span> <span class="parameter-name">message</span>, </span><span class="parameter" id="signal-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="signal-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/SignalResult-class.html">SignalResult</a></span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/signal.html">signal</a></span><span class="signature">(<wbr><span class="parameter" id="signal-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span><span class="parameter" id="signal-param-message"><span class="type-annotation">dynamic</span> <span class="parameter-name">message</span>, </span><span class="parameter" id="signal-param-keyset">{<span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="signal-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/SignalResult-class.html">SignalResult</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   Publishes signal <code>message</code> to a <code>channel</code>.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="subscribe" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/subscribe.html">subscribe</a></span><span class="signature">(<wbr><span class="parameter" id="subscribe-param-channels">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">channels</span>, </span><span class="parameter" id="subscribe-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">channelGroups</span>, </span><span class="parameter" id="subscribe-param-withPresence"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">withPresence</span> = <span class="default-value">false</span>, </span><span class="parameter" id="subscribe-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="subscribe-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="subscribe-param-timetoken"><span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a>?</span> <span class="parameter-name">timetoken</span>}</span>)
+  <span class="name"><a href="../pubnub/PubNub/subscribe.html">subscribe</a></span><span class="signature">(<wbr><span class="parameter" id="subscribe-param-channels">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">channels</span>, </span><span class="parameter" id="subscribe-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">channelGroups</span>, </span><span class="parameter" id="subscribe-param-withPresence"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">withPresence</span> = <span class="default-value">false</span>, </span><span class="parameter" id="subscribe-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="subscribe-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="subscribe-param-timetoken"><span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a>?</span> <span class="parameter-name">timetoken</span>}</span>)
     <span class="returntype parameter">&#8594; <a href="../pubnub/Subscription-class.html">Subscription</a></span>
   </span>
   
@@ -597,12 +605,12 @@ So device <code>deviceId</code> will not get push notifications from <code>chann
 </dt>
 <dd class="inherited">
   Subscribes to <code>channels</code> and <code>channelGroups</code>.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="subscription" class="callable inherited">
-  <span class="name"><a href="../pubnub/PubNub/subscription.html">subscription</a></span><span class="signature">(<wbr><span class="parameter" id="subscription-param-channels">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">channels</span>, </span><span class="parameter" id="subscription-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">channelGroups</span>, </span><span class="parameter" id="subscription-param-withPresence"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">withPresence</span> = <span class="default-value">false</span>, </span><span class="parameter" id="subscription-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="subscription-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="subscription-param-timetoken"><span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a>?</span> <span class="parameter-name">timetoken</span>}</span>)
+  <span class="name"><a href="../pubnub/PubNub/subscription.html">subscription</a></span><span class="signature">(<wbr><span class="parameter" id="subscription-param-channels">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">channels</span>, </span><span class="parameter" id="subscription-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">channelGroups</span>, </span><span class="parameter" id="subscription-param-withPresence"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">withPresence</span> = <span class="default-value">false</span>, </span><span class="parameter" id="subscription-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="subscription-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span><span class="parameter" id="subscription-param-timetoken"><span class="type-annotation"><a href="../pubnub/Timetoken-class.html">Timetoken</a>?</span> <span class="parameter-name">timetoken</span>}</span>)
     <span class="returntype parameter">&#8594; <a href="../pubnub/Subscription-class.html">Subscription</a></span>
   </span>
   
@@ -610,52 +618,52 @@ So device <code>deviceId</code> will not get push notifications from <code>chann
 </dt>
 <dd class="inherited">
   Creates an inactive subscription to <code>channels</code> and <code>channelGroups</code>. Returns <a href="../pubnub/Subscription-class.html">Subscription</a>.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="time" class="callable inherited">
   <span class="name"><a href="../pubnub/PubNub/time.html">time</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/Timetoken-class.html">Timetoken</a></span>&gt;</span></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pubnub/Timetoken-class.html">Timetoken</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   Get current timetoken value from the PubNub network.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="toString" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   A string representation of this object.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="unsubscribeAll" class="callable inherited">
   <span class="name"><a href="../pubnub/PubNub/unsubscribeAll.html">unsubscribeAll</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   Cancels all existing subscriptions.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="uuidMetadata" class="callable">
-  <span class="name"><a href="../pubnub/PubNub/uuidMetadata.html">uuidMetadata</a></span><span class="signature">(<wbr><span class="parameter" id="uuidMetadata-param-uuid">{<span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="uuidMetadata-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="uuidMetadata-param-email"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">email</span>, </span><span class="parameter" id="uuidMetadata-param-custom"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">custom</span>, </span><span class="parameter" id="uuidMetadata-param-externalId"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">externalId</span>, </span><span class="parameter" id="uuidMetadata-param-profileUrl"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">profileUrl</span>, </span><span class="parameter" id="uuidMetadata-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="uuidMetadata-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">UUIDMetadata</span>&gt;</span></span>
+  <span class="name"><a href="../pubnub/PubNub/uuidMetadata.html">uuidMetadata</a></span><span class="signature">(<wbr><span class="parameter" id="uuidMetadata-param-uuid">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">uuid</span>, </span><span class="parameter" id="uuidMetadata-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="uuidMetadata-param-email"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">email</span>, </span><span class="parameter" id="uuidMetadata-param-custom"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">custom</span>, </span><span class="parameter" id="uuidMetadata-param-externalId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">externalId</span>, </span><span class="parameter" id="uuidMetadata-param-profileUrl"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">profileUrl</span>, </span><span class="parameter" id="uuidMetadata-param-keyset"><span class="type-annotation"><a href="../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span><span class="parameter" id="uuidMetadata-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">UUIDMetadata</span>&gt;</span></span>
   </span>
   
 
@@ -675,15 +683,15 @@ So device <code>deviceId</code> will not get push notifications from <code>chann
     <h2>Operators</h2>
     <dl class="callables">
         <dt id="operator ==" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/2.18.4/dart-core/bool-class.html">bool</a></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.0.7/dart-core/bool-class.html">bool</a></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
   The equality operator.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -696,12 +704,12 @@ So device <code>deviceId</code> will not get push notifications from <code>chann
     <dl class="properties">
         <dt id="version" class="property">
   <span class="name"><a href="../pubnub/PubNub/version.html">version</a></span>
-  <span class="signature">&#8596; <a href="https://api.dart.dev/stable/2.18.4/dart-core/String-class.html">String</a></span> 
+  <span class="signature">&#8596; <a href="https://api.dart.dev/stable/3.0.7/dart-core/String-class.html">String</a></span> 
 
 </dt>
 <dd>
   Current version of this library.
-  <div class="features">read / write</div>
+  <div class="features"><span class="feature">read / write</span></div>
 
 </dd>
 
@@ -729,112 +737,112 @@ So device <code>deviceId</code> will not get push notifications from <code>chann
 
     <h5>pubnub library</h5>
     <ol>
-  <li class="section-title"><a href="../pubnub/pubnub-library.html#classes">Classes</a></li>
-  <li><a href="../pubnub/AddMessageActionResult-class.html">AddMessageActionResult</a></li>
-  <li><a href="../pubnub/AddPushChannelsResult-class.html">AddPushChannelsResult</a></li>
-  <li><a href="../pubnub/BaseMessage-class.html">BaseMessage</a></li>
-  <li><a href="../pubnub/BatchDx-class.html">BatchDx</a></li>
-  <li><a href="../pubnub/BatchHistoryResult-class.html">BatchHistoryResult</a></li>
-  <li><a href="../pubnub/BatchHistoryResultEntry-class.html">BatchHistoryResultEntry</a></li>
-  <li><a href="../pubnub/Channel-class.html">Channel</a></li>
-  <li><a href="../pubnub/ChannelGroupChangeChannelsResult-class.html">ChannelGroupChangeChannelsResult</a></li>
-  <li><a href="../pubnub/ChannelGroupDeleteResult-class.html">ChannelGroupDeleteResult</a></li>
-  <li><a href="../pubnub/ChannelGroupDx-class.html">ChannelGroupDx</a></li>
-  <li><a href="../pubnub/ChannelGroupListChannelsResult-class.html">ChannelGroupListChannelsResult</a></li>
-  <li><a href="../pubnub/ChannelHistory-class.html">ChannelHistory</a></li>
-  <li><a href="../pubnub/ChannelIdInfo-class.html">ChannelIdInfo</a></li>
-  <li><a href="../pubnub/ChannelMemberMetadata-class.html">ChannelMemberMetadata</a></li>
-  <li><a href="../pubnub/ChannelMemberMetadataInput-class.html">ChannelMemberMetadataInput</a></li>
-  <li><a href="../pubnub/ChannelMembersResult-class.html">ChannelMembersResult</a></li>
-  <li><a href="../pubnub/ChannelMetadataDetails-class.html">ChannelMetadataDetails</a></li>
-  <li><a href="../pubnub/ChannelMetadataInput-class.html">ChannelMetadataInput</a></li>
-  <li><a href="../pubnub/ChannelOccupancy-class.html">ChannelOccupancy</a></li>
-  <li><a href="../pubnub/CipherKey-class.html">CipherKey</a></li>
-  <li><a href="../pubnub/CountMessagesResult-class.html">CountMessagesResult</a></li>
-  <li><a href="../pubnub/DeleteFileResult-class.html">DeleteFileResult</a></li>
-  <li><a href="../pubnub/DeleteMessageActionResult-class.html">DeleteMessageActionResult</a></li>
-  <li><a href="../pubnub/Device-class.html">Device</a></li>
-  <li><a href="../pubnub/DownloadFileResult-class.html">DownloadFileResult</a></li>
-  <li><a href="../pubnub/Envelope-class.html">Envelope</a></li>
-  <li><a href="../pubnub/ExponentialRetryPolicy-class.html">ExponentialRetryPolicy</a></li>
-  <li><a href="../pubnub/FetchMessageActionsResult-class.html">FetchMessageActionsResult</a></li>
-  <li><a href="../pubnub/FileDetail-class.html">FileDetail</a></li>
-  <li><a href="../pubnub/FileDx-class.html">FileDx</a></li>
-  <li><a href="../pubnub/FileInfo-class.html">FileInfo</a></li>
-  <li><a href="../pubnub/FileMessage-class.html">FileMessage</a></li>
-  <li><a href="../pubnub/GetAllChannelMetadataResult-class.html">GetAllChannelMetadataResult</a></li>
-  <li><a href="../pubnub/GetAllUuidMetadataResult-class.html">GetAllUuidMetadataResult</a></li>
-  <li><a href="../pubnub/GetChannelMetadataResult-class.html">GetChannelMetadataResult</a></li>
-  <li><a href="../pubnub/GetUserStateResult-class.html">GetUserStateResult</a></li>
-  <li><a href="../pubnub/GetUuidMetadataResult-class.html">GetUuidMetadataResult</a></li>
-  <li><a href="../pubnub/HeartbeatResult-class.html">HeartbeatResult</a></li>
-  <li><a href="../pubnub/HereNowResult-class.html">HereNowResult</a></li>
-  <li><a href="../pubnub/Keyset-class.html">Keyset</a></li>
-  <li><a href="../pubnub/KeysetStore-class.html">KeysetStore</a></li>
-  <li><a href="../pubnub/LeaveResult-class.html">LeaveResult</a></li>
-  <li><a href="../pubnub/LinearRetryPolicy-class.html">LinearRetryPolicy</a></li>
-  <li><a href="../pubnub/ListFilesResult-class.html">ListFilesResult</a></li>
-  <li><a href="../pubnub/ListPushChannelsResult-class.html">ListPushChannelsResult</a></li>
-  <li><a href="../pubnub/MembershipMetadata-class.html">MembershipMetadata</a></li>
-  <li><a href="../pubnub/MembershipMetadataInput-class.html">MembershipMetadataInput</a></li>
-  <li><a href="../pubnub/MembershipsResult-class.html">MembershipsResult</a></li>
-  <li><a href="../pubnub/MessageAction-class.html">MessageAction</a></li>
-  <li><a href="../pubnub/ObjectsDx-class.html">ObjectsDx</a></li>
-  <li><a href="../pubnub/PaginatedChannelHistory-class.html">PaginatedChannelHistory</a></li>
-  <li><a href="../pubnub/PamGrantTokenResult-class.html">PamGrantTokenResult</a></li>
-  <li><a href="../pubnub/PamRevokeTokenResult-class.html">PamRevokeTokenResult</a></li>
-  <li><a href="../pubnub/PresenceEvent-class.html">PresenceEvent</a></li>
-  <li><a href="../pubnub/PublishFileMessageResult-class.html">PublishFileMessageResult</a></li>
-  <li><a href="../pubnub/PublishResult-class.html">PublishResult</a></li>
-  <li><a href="../pubnub/PubNub-class.html">PubNub</a></li>
-  <li><a href="../pubnub/RemoveChannelMetadataResult-class.html">RemoveChannelMetadataResult</a></li>
-  <li><a href="../pubnub/RemoveDeviceResult-class.html">RemoveDeviceResult</a></li>
-  <li><a href="../pubnub/RemovePushChannelsResult-class.html">RemovePushChannelsResult</a></li>
-  <li><a href="../pubnub/RemoveUuidMetadataResult-class.html">RemoveUuidMetadataResult</a></li>
-  <li><a href="../pubnub/Resource-class.html">Resource</a></li>
-  <li><a href="../pubnub/RetryPolicy-class.html">RetryPolicy</a></li>
-  <li><a href="../pubnub/SetChannelMetadataResult-class.html">SetChannelMetadataResult</a></li>
-  <li><a href="../pubnub/SetUserStateResult-class.html">SetUserStateResult</a></li>
-  <li><a href="../pubnub/SetUuidMetadataResult-class.html">SetUuidMetadataResult</a></li>
-  <li><a href="../pubnub/SignalResult-class.html">SignalResult</a></li>
-  <li><a href="../pubnub/Signals-class.html">Signals</a></li>
-  <li><a href="../pubnub/Subscription-class.html">Subscription</a></li>
-  <li><a href="../pubnub/Timetoken-class.html">Timetoken</a></li>
-  <li><a href="../pubnub/Token-class.html">Token</a></li>
-  <li><a href="../pubnub/TokenRequest-class.html">TokenRequest</a></li>
-  <li><a href="../pubnub/UserId-class.html">UserId</a></li>
-  <li><a href="../pubnub/UUID-class.html">UUID</a></li>
-  <li><a href="../pubnub/UuIdInfo-class.html">UuIdInfo</a></li>
-  <li><a href="../pubnub/UuidMetadataDetails-class.html">UuidMetadataDetails</a></li>
-  <li><a href="../pubnub/UuidMetadataInput-class.html">UuidMetadataInput</a></li>
-  <li><a href="../pubnub/WhereNowResult-class.html">WhereNowResult</a></li>
+      <li class="section-title"><a href="../pubnub/pubnub-library.html#classes">Classes</a></li>
+        <li><a href="../pubnub/AddMessageActionResult-class.html">AddMessageActionResult</a></li>
+        <li><a href="../pubnub/AddPushChannelsResult-class.html">AddPushChannelsResult</a></li>
+        <li><a href="../pubnub/BaseMessage-class.html">BaseMessage</a></li>
+        <li><a href="../pubnub/BatchDx-class.html">BatchDx</a></li>
+        <li><a href="../pubnub/BatchHistoryResult-class.html">BatchHistoryResult</a></li>
+        <li><a href="../pubnub/BatchHistoryResultEntry-class.html">BatchHistoryResultEntry</a></li>
+        <li><a href="../pubnub/Channel-class.html">Channel</a></li>
+        <li><a href="../pubnub/ChannelGroupChangeChannelsResult-class.html">ChannelGroupChangeChannelsResult</a></li>
+        <li><a href="../pubnub/ChannelGroupDeleteResult-class.html">ChannelGroupDeleteResult</a></li>
+        <li><a href="../pubnub/ChannelGroupDx-class.html">ChannelGroupDx</a></li>
+        <li><a href="../pubnub/ChannelGroupListChannelsResult-class.html">ChannelGroupListChannelsResult</a></li>
+        <li><a href="../pubnub/ChannelHistory-class.html">ChannelHistory</a></li>
+        <li><a href="../pubnub/ChannelIdInfo-class.html">ChannelIdInfo</a></li>
+        <li><a href="../pubnub/ChannelMemberMetadata-class.html">ChannelMemberMetadata</a></li>
+        <li><a href="../pubnub/ChannelMemberMetadataInput-class.html">ChannelMemberMetadataInput</a></li>
+        <li><a href="../pubnub/ChannelMembersResult-class.html">ChannelMembersResult</a></li>
+        <li><a href="../pubnub/ChannelMetadataDetails-class.html">ChannelMetadataDetails</a></li>
+        <li><a href="../pubnub/ChannelMetadataInput-class.html">ChannelMetadataInput</a></li>
+        <li><a href="../pubnub/ChannelOccupancy-class.html">ChannelOccupancy</a></li>
+        <li><a href="../pubnub/CipherKey-class.html">CipherKey</a></li>
+        <li><a href="../pubnub/CountMessagesResult-class.html">CountMessagesResult</a></li>
+        <li><a href="../pubnub/DeleteFileResult-class.html">DeleteFileResult</a></li>
+        <li><a href="../pubnub/DeleteMessageActionResult-class.html">DeleteMessageActionResult</a></li>
+        <li><a href="../pubnub/Device-class.html">Device</a></li>
+        <li><a href="../pubnub/DownloadFileResult-class.html">DownloadFileResult</a></li>
+        <li><a href="../pubnub/Envelope-class.html">Envelope</a></li>
+        <li><a href="../pubnub/ExponentialRetryPolicy-class.html">ExponentialRetryPolicy</a></li>
+        <li><a href="../pubnub/FetchMessageActionsResult-class.html">FetchMessageActionsResult</a></li>
+        <li><a href="../pubnub/FileDetail-class.html">FileDetail</a></li>
+        <li><a href="../pubnub/FileDx-class.html">FileDx</a></li>
+        <li><a href="../pubnub/FileInfo-class.html">FileInfo</a></li>
+        <li><a href="../pubnub/FileMessage-class.html">FileMessage</a></li>
+        <li><a href="../pubnub/GetAllChannelMetadataResult-class.html">GetAllChannelMetadataResult</a></li>
+        <li><a href="../pubnub/GetAllUuidMetadataResult-class.html">GetAllUuidMetadataResult</a></li>
+        <li><a href="../pubnub/GetChannelMetadataResult-class.html">GetChannelMetadataResult</a></li>
+        <li><a href="../pubnub/GetUserStateResult-class.html">GetUserStateResult</a></li>
+        <li><a href="../pubnub/GetUuidMetadataResult-class.html">GetUuidMetadataResult</a></li>
+        <li><a href="../pubnub/HeartbeatResult-class.html">HeartbeatResult</a></li>
+        <li><a href="../pubnub/HereNowResult-class.html">HereNowResult</a></li>
+        <li><a href="../pubnub/Keyset-class.html">Keyset</a></li>
+        <li><a href="../pubnub/KeysetStore-class.html">KeysetStore</a></li>
+        <li><a href="../pubnub/LeaveResult-class.html">LeaveResult</a></li>
+        <li><a href="../pubnub/LinearRetryPolicy-class.html">LinearRetryPolicy</a></li>
+        <li><a href="../pubnub/ListFilesResult-class.html">ListFilesResult</a></li>
+        <li><a href="../pubnub/ListPushChannelsResult-class.html">ListPushChannelsResult</a></li>
+        <li><a href="../pubnub/MembershipMetadata-class.html">MembershipMetadata</a></li>
+        <li><a href="../pubnub/MembershipMetadataInput-class.html">MembershipMetadataInput</a></li>
+        <li><a href="../pubnub/MembershipsResult-class.html">MembershipsResult</a></li>
+        <li><a href="../pubnub/MessageAction-class.html">MessageAction</a></li>
+        <li><a href="../pubnub/ObjectsDx-class.html">ObjectsDx</a></li>
+        <li><a href="../pubnub/PaginatedChannelHistory-class.html">PaginatedChannelHistory</a></li>
+        <li><a href="../pubnub/PamGrantTokenResult-class.html">PamGrantTokenResult</a></li>
+        <li><a href="../pubnub/PamRevokeTokenResult-class.html">PamRevokeTokenResult</a></li>
+        <li><a href="../pubnub/PresenceEvent-class.html">PresenceEvent</a></li>
+        <li><a href="../pubnub/PublishFileMessageResult-class.html">PublishFileMessageResult</a></li>
+        <li><a href="../pubnub/PublishResult-class.html">PublishResult</a></li>
+        <li><a href="../pubnub/PubNub-class.html">PubNub</a></li>
+        <li><a href="../pubnub/RemoveChannelMetadataResult-class.html">RemoveChannelMetadataResult</a></li>
+        <li><a href="../pubnub/RemoveDeviceResult-class.html">RemoveDeviceResult</a></li>
+        <li><a href="../pubnub/RemovePushChannelsResult-class.html">RemovePushChannelsResult</a></li>
+        <li><a href="../pubnub/RemoveUuidMetadataResult-class.html">RemoveUuidMetadataResult</a></li>
+        <li><a href="../pubnub/Resource-class.html">Resource</a></li>
+        <li><a href="../pubnub/RetryPolicy-class.html">RetryPolicy</a></li>
+        <li><a href="../pubnub/SetChannelMetadataResult-class.html">SetChannelMetadataResult</a></li>
+        <li><a href="../pubnub/SetUserStateResult-class.html">SetUserStateResult</a></li>
+        <li><a href="../pubnub/SetUuidMetadataResult-class.html">SetUuidMetadataResult</a></li>
+        <li><a href="../pubnub/SignalResult-class.html">SignalResult</a></li>
+        <li><a href="../pubnub/Signals-class.html">Signals</a></li>
+        <li><a href="../pubnub/Subscription-class.html">Subscription</a></li>
+        <li><a href="../pubnub/Timetoken-class.html">Timetoken</a></li>
+        <li><a href="../pubnub/Token-class.html">Token</a></li>
+        <li><a href="../pubnub/TokenRequest-class.html">TokenRequest</a></li>
+        <li><a href="../pubnub/UserId-class.html">UserId</a></li>
+        <li><a href="../pubnub/UUID-class.html">UUID</a></li>
+        <li><a href="../pubnub/UuIdInfo-class.html">UuIdInfo</a></li>
+        <li><a href="../pubnub/UuidMetadataDetails-class.html">UuidMetadataDetails</a></li>
+        <li><a href="../pubnub/UuidMetadataInput-class.html">UuidMetadataInput</a></li>
+        <li><a href="../pubnub/WhereNowResult-class.html">WhereNowResult</a></li>
 
 
 
 
 
 
-  <li class="section-title"><a href="../pubnub/pubnub-library.html#enums">Enums</a></li>
-  <li><a href="../pubnub/ChannelHistoryOrder.html">ChannelHistoryOrder</a></li>
-  <li><a href="../pubnub/Environment.html">Environment</a></li>
-  <li><a href="../pubnub/MessageType.html">MessageType</a></li>
-  <li><a href="../pubnub/PresenceAction.html">PresenceAction</a></li>
-  <li><a href="../pubnub/PushGateway.html">PushGateway</a></li>
-  <li><a href="../pubnub/ResourceType.html">ResourceType</a></li>
-  <li><a href="../pubnub/StateInfo.html">StateInfo</a></li>
+      <li class="section-title"><a href="../pubnub/pubnub-library.html#enums">Enums</a></li>
+        <li><a href="../pubnub/ChannelHistoryOrder.html">ChannelHistoryOrder</a></li>
+        <li><a href="../pubnub/Environment.html">Environment</a></li>
+        <li><a href="../pubnub/MessageType.html">MessageType</a></li>
+        <li><a href="../pubnub/PresenceAction.html">PresenceAction</a></li>
+        <li><a href="../pubnub/PushGateway.html">PushGateway</a></li>
+        <li><a href="../pubnub/ResourceType.html">ResourceType</a></li>
+        <li><a href="../pubnub/StateInfo.html">StateInfo</a></li>
 
 
-  <li class="section-title"><a href="../pubnub/pubnub-library.html#exceptions">Exceptions</a></li>
-  <li><a href="../pubnub/InvalidArgumentsException-class.html">InvalidArgumentsException</a></li>
-  <li><a href="../pubnub/InvariantException-class.html">InvariantException</a></li>
-  <li><a href="../pubnub/KeysetException-class.html">KeysetException</a></li>
-  <li><a href="../pubnub/MalformedResponseException-class.html">MalformedResponseException</a></li>
-  <li><a href="../pubnub/MaximumRetriesException-class.html">MaximumRetriesException</a></li>
-  <li><a href="../pubnub/MethodDisabledException-class.html">MethodDisabledException</a></li>
-  <li><a href="../pubnub/NotImplementedException-class.html">NotImplementedException</a></li>
-  <li><a href="../pubnub/PublishException-class.html">PublishException</a></li>
-  <li><a href="../pubnub/PubNubException-class.html">PubNubException</a></li>
-  <li><a href="../pubnub/UnknownException-class.html">UnknownException</a></li>
+      <li class="section-title"><a href="../pubnub/pubnub-library.html#exceptions">Exceptions</a></li>
+        <li><a href="../pubnub/InvalidArgumentsException-class.html">InvalidArgumentsException</a></li>
+        <li><a href="../pubnub/InvariantException-class.html">InvariantException</a></li>
+        <li><a href="../pubnub/KeysetException-class.html">KeysetException</a></li>
+        <li><a href="../pubnub/MalformedResponseException-class.html">MalformedResponseException</a></li>
+        <li><a href="../pubnub/MaximumRetriesException-class.html">MaximumRetriesException</a></li>
+        <li><a href="../pubnub/MethodDisabledException-class.html">MethodDisabledException</a></li>
+        <li><a href="../pubnub/NotImplementedException-class.html">NotImplementedException</a></li>
+        <li><a href="../pubnub/PublishException-class.html">PublishException</a></li>
+        <li><a href="../pubnub/PubNubException-class.html">PubNubException</a></li>
+        <li><a href="../pubnub/UnknownException-class.html">UnknownException</a></li>
 </ol>
 
   </div>
@@ -846,59 +854,59 @@ So device <code>deviceId</code> will not get push notifications from <code>chann
           <li><a href="../pubnub/PubNub/PubNub.html">PubNub</a></li>
 
 
-    <li class="section-title">
-      <a href="../pubnub/PubNub-class.html#instance-properties">Properties</a>
-    </li>
-    <li><a href="../pubnub/PubNub/batch.html">batch</a></li>
-    <li><a href="../pubnub/PubNub/channelGroups.html">channelGroups</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/crypto.html">crypto</a></li>
-    <li><a href="../pubnub/PubNub/files.html">files</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/keysets.html">keysets</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/networking.html">networking</a></li>
-    <li><a href="../pubnub/PubNub/objects.html">objects</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/parser.html">parser</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/signals.html">signals</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/supervisor.html">supervisor</a></li>
+        <li class="section-title">
+          <a href="../pubnub/PubNub-class.html#instance-properties">Properties</a>
+        </li>
+          <li><a href="../pubnub/PubNub/batch.html">batch</a></li>
+          <li><a href="../pubnub/PubNub/channelGroups.html">channelGroups</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/crypto.html">crypto</a></li>
+          <li><a href="../pubnub/PubNub/files.html">files</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/keysets.html">keysets</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/networking.html">networking</a></li>
+          <li><a href="../pubnub/PubNub/objects.html">objects</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/parser.html">parser</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/signals.html">signals</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/supervisor.html">supervisor</a></li>
 
-    <li class="section-title"><a href="../pubnub/PubNub-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/addMessageAction.html">addMessageAction</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/addPushChannels.html">addPushChannels</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/announceHeartbeat.html">announceHeartbeat</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/announceLeave.html">announceLeave</a></li>
-    <li><a href="../pubnub/PubNub/channel.html">channel</a></li>
-    <li><a href="../pubnub/PubNub/channelMetadata.html">channelMetadata</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/deleteMessageAction.html">deleteMessageAction</a></li>
-    <li><a href="../pubnub/PubNub/device.html">device</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/fetchMessageActions.html">fetchMessageActions</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/getState.html">getState</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/getSubscribedChannelGroupsForUUID.html">getSubscribedChannelGroupsForUUID</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/getSubscribedChannelsForUUID.html">getSubscribedChannelsForUUID</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/grant.html">grant</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/grantToken.html">grantToken</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/hereNow.html">hereNow</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/listPushChannels.html">listPushChannels</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/parseToken.html">parseToken</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/publish.html">publish</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/reconnect.html">reconnect</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/removeDevice.html">removeDevice</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/removePushChannels.html">removePushChannels</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/requestToken.html">requestToken</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/revokeToken.html">revokeToken</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/setState.html">setState</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/setToken.html">setToken</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/signal.html">signal</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/subscribe.html">subscribe</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/subscription.html">subscription</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/time.html">time</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></li>
-    <li class="inherited"><a href="../pubnub/PubNub/unsubscribeAll.html">unsubscribeAll</a></li>
-    <li><a href="../pubnub/PubNub/uuidMetadata.html">uuidMetadata</a></li>
+        <li class="section-title"><a href="../pubnub/PubNub-class.html#instance-methods">Methods</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/addMessageAction.html">addMessageAction</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/addPushChannels.html">addPushChannels</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/announceHeartbeat.html">announceHeartbeat</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/announceLeave.html">announceLeave</a></li>
+          <li><a href="../pubnub/PubNub/channel.html">channel</a></li>
+          <li><a href="../pubnub/PubNub/channelMetadata.html">channelMetadata</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/deleteMessageAction.html">deleteMessageAction</a></li>
+          <li><a href="../pubnub/PubNub/device.html">device</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/fetchMessageActions.html">fetchMessageActions</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/getState.html">getState</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/getSubscribedChannelGroupsForUUID.html">getSubscribedChannelGroupsForUUID</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/getSubscribedChannelsForUUID.html">getSubscribedChannelsForUUID</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/grant.html">grant</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/grantToken.html">grantToken</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/hereNow.html">hereNow</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/listPushChannels.html">listPushChannels</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/parseToken.html">parseToken</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/publish.html">publish</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/reconnect.html">reconnect</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/removeDevice.html">removeDevice</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/removePushChannels.html">removePushChannels</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/requestToken.html">requestToken</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/revokeToken.html">revokeToken</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/setState.html">setState</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/setToken.html">setToken</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/signal.html">signal</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/subscribe.html">subscribe</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/subscription.html">subscription</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/time.html">time</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/toString.html">toString</a></li>
+          <li class="inherited"><a href="../pubnub/PubNub/unsubscribeAll.html">unsubscribeAll</a></li>
+          <li><a href="../pubnub/PubNub/uuidMetadata.html">uuidMetadata</a></li>
 
-    <li class="section-title inherited"><a href="../pubnub/PubNub-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../pubnub/PubNub-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
         <li class="section-title"><a href="../pubnub/PubNub-class.html#static-properties">Static properties</a></li>
@@ -914,7 +922,7 @@ So device <code>deviceId</code> will not get push notifications from <code>chann
 <footer>
   <span class="no-break">
     pubnub
-      4.2.2
+      4.2.4
   </span>
 
   

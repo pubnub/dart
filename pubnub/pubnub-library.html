@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">pubnub</a></li>
     <li class="self-crumb">pubnub library</li>
@@ -35,15 +35,24 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
 
-
   <div id="dartdoc-main-content" class="main-content">
+    
       <div>
 <h1><span class="kind-library">pubnub</span> library 
-    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
  
 </h1></div>
 
@@ -61,7 +70,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
       <dl>
         <dt id="AddMessageActionResult">
   <span class="name "><a href="../pubnub/AddMessageActionResult-class.html">AddMessageActionResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -70,8 +79,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="AddPushChannelsResult">
   <span class="name "><a href="../pubnub/AddPushChannelsResult-class.html">AddPushChannelsResult</a></span> 
-    <span class="category push cp-3 linked" title="This is part of the Push Topic."><a href="../topics/Push-topic.html">Push</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category push cp-3 linked" title="This is part of the Push topic."><a href="../topics/Push-topic.html">Push</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -80,7 +89,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="BaseMessage">
   <span class="name "><a href="../pubnub/BaseMessage-class.html">BaseMessage</a></span> 
-    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features Topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
+    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
 </dt>
 <dd>
@@ -97,7 +106,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="BatchHistoryResult">
   <span class="name "><a href="../pubnub/BatchHistoryResult-class.html">BatchHistoryResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -106,7 +115,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="BatchHistoryResultEntry">
   <span class="name "><a href="../pubnub/BatchHistoryResultEntry-class.html">BatchHistoryResultEntry</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -115,7 +124,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="Channel">
   <span class="name "><a href="../pubnub/Channel-class.html">Channel</a></span> 
-    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features Topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
+    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
 </dt>
 <dd>
@@ -124,7 +133,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ChannelGroupChangeChannelsResult">
   <span class="name "><a href="../pubnub/ChannelGroupChangeChannelsResult-class.html">ChannelGroupChangeChannelsResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -133,7 +142,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ChannelGroupDeleteResult">
   <span class="name "><a href="../pubnub/ChannelGroupDeleteResult-class.html">ChannelGroupDeleteResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -150,7 +159,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ChannelGroupListChannelsResult">
   <span class="name "><a href="../pubnub/ChannelGroupListChannelsResult-class.html">ChannelGroupListChannelsResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -167,7 +176,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ChannelIdInfo">
   <span class="name "><a href="../pubnub/ChannelIdInfo-class.html">ChannelIdInfo</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
 </dt>
 <dd>
@@ -176,8 +185,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ChannelMemberMetadata">
   <span class="name "><a href="../pubnub/ChannelMemberMetadata-class.html">ChannelMemberMetadata</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -186,7 +195,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ChannelMemberMetadataInput">
   <span class="name "><a href="../pubnub/ChannelMemberMetadataInput-class.html">ChannelMemberMetadataInput</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
 </dt>
 <dd>
@@ -195,8 +204,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ChannelMembersResult">
   <span class="name "><a href="../pubnub/ChannelMembersResult-class.html">ChannelMembersResult</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -205,8 +214,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ChannelMetadataDetails">
   <span class="name "><a href="../pubnub/ChannelMetadataDetails-class.html">ChannelMetadataDetails</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -215,7 +224,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ChannelMetadataInput">
   <span class="name "><a href="../pubnub/ChannelMetadataInput-class.html">ChannelMetadataInput</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
 </dt>
 <dd>
@@ -224,7 +233,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ChannelOccupancy">
   <span class="name "><a href="../pubnub/ChannelOccupancy-class.html">ChannelOccupancy</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -241,7 +250,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="CountMessagesResult">
   <span class="name "><a href="../pubnub/CountMessagesResult-class.html">CountMessagesResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -250,8 +259,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="DeleteFileResult">
   <span class="name "><a href="../pubnub/DeleteFileResult-class.html">DeleteFileResult</a></span> 
-    <span class="category files cp-2 linked" title="This is part of the Files Topic."><a href="../topics/Files-topic.html">Files</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -260,7 +269,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="DeleteMessageActionResult">
   <span class="name "><a href="../pubnub/DeleteMessageActionResult-class.html">DeleteMessageActionResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -277,8 +286,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="DownloadFileResult">
   <span class="name "><a href="../pubnub/DownloadFileResult-class.html">DownloadFileResult</a></span> 
-    <span class="category files cp-2 linked" title="This is part of the Files Topic."><a href="../topics/Files-topic.html">Files</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -287,8 +296,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="Envelope">
   <span class="name "><a href="../pubnub/Envelope-class.html">Envelope</a></span> 
-    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features Topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -305,7 +314,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="FetchMessageActionsResult">
   <span class="name "><a href="../pubnub/FetchMessageActionsResult-class.html">FetchMessageActionsResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -314,8 +323,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="FileDetail">
   <span class="name "><a href="../pubnub/FileDetail-class.html">FileDetail</a></span> 
-    <span class="category files cp-2 linked" title="This is part of the Files Topic."><a href="../topics/Files-topic.html">Files</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -324,7 +333,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="FileDx">
   <span class="name "><a href="../pubnub/FileDx-class.html">FileDx</a></span> 
-    <span class="category files cp-2 linked" title="This is part of the Files Topic."><a href="../topics/Files-topic.html">Files</a></span>
+    <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
 
 </dt>
 <dd>
@@ -333,7 +342,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="FileInfo">
   <span class="name "><a href="../pubnub/FileInfo-class.html">FileInfo</a></span> 
-    <span class="category files cp-2 linked" title="This is part of the Files Topic."><a href="../topics/Files-topic.html">Files</a></span>
+    <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
 
 </dt>
 <dd>
@@ -342,7 +351,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="FileMessage">
   <span class="name "><a href="../pubnub/FileMessage-class.html">FileMessage</a></span> 
-    <span class="category files cp-2 linked" title="This is part of the Files Topic."><a href="../topics/Files-topic.html">Files</a></span>
+    <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
 
 </dt>
 <dd>
@@ -351,8 +360,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="GetAllChannelMetadataResult">
   <span class="name "><a href="../pubnub/GetAllChannelMetadataResult-class.html">GetAllChannelMetadataResult</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -361,8 +370,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="GetAllUuidMetadataResult">
   <span class="name "><a href="../pubnub/GetAllUuidMetadataResult-class.html">GetAllUuidMetadataResult</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -371,8 +380,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="GetChannelMetadataResult">
   <span class="name "><a href="../pubnub/GetChannelMetadataResult-class.html">GetChannelMetadataResult</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -381,7 +390,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="GetUserStateResult">
   <span class="name "><a href="../pubnub/GetUserStateResult-class.html">GetUserStateResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -390,8 +399,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="GetUuidMetadataResult">
   <span class="name "><a href="../pubnub/GetUuidMetadataResult-class.html">GetUuidMetadataResult</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -400,7 +409,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="HeartbeatResult">
   <span class="name "><a href="../pubnub/HeartbeatResult-class.html">HeartbeatResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -409,7 +418,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="HereNowResult">
   <span class="name "><a href="../pubnub/HereNowResult-class.html">HereNowResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -418,7 +427,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="Keyset">
   <span class="name "><a href="../pubnub/Keyset-class.html">Keyset</a></span> 
-    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features Topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
+    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
 </dt>
 <dd>
@@ -435,7 +444,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="LeaveResult">
   <span class="name "><a href="../pubnub/LeaveResult-class.html">LeaveResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -452,8 +461,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ListFilesResult">
   <span class="name "><a href="../pubnub/ListFilesResult-class.html">ListFilesResult</a></span> 
-    <span class="category files cp-2 linked" title="This is part of the Files Topic."><a href="../topics/Files-topic.html">Files</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -462,8 +471,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ListPushChannelsResult">
   <span class="name "><a href="../pubnub/ListPushChannelsResult-class.html">ListPushChannelsResult</a></span> 
-    <span class="category push cp-3 linked" title="This is part of the Push Topic."><a href="../topics/Push-topic.html">Push</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category push cp-3 linked" title="This is part of the Push topic."><a href="../topics/Push-topic.html">Push</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -472,8 +481,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="MembershipMetadata">
   <span class="name "><a href="../pubnub/MembershipMetadata-class.html">MembershipMetadata</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -482,7 +491,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="MembershipMetadataInput">
   <span class="name "><a href="../pubnub/MembershipMetadataInput-class.html">MembershipMetadataInput</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
 </dt>
 <dd>
@@ -491,8 +500,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="MembershipsResult">
   <span class="name "><a href="../pubnub/MembershipsResult-class.html">MembershipsResult</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -501,7 +510,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="MessageAction">
   <span class="name "><a href="../pubnub/MessageAction-class.html">MessageAction</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -510,7 +519,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ObjectsDx">
   <span class="name "><a href="../pubnub/ObjectsDx-class.html">ObjectsDx</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
 </dt>
 <dd>
@@ -535,8 +544,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="PamRevokeTokenResult">
   <span class="name "><a href="../pubnub/PamRevokeTokenResult-class.html">PamRevokeTokenResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
-    <span class="category pam-v3 cp-8" title="This is part of the PAM v3 Topic.">PAM&nbsp;v3</span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category pam-v3 cp-8" title="This is part of the PAM v3 topic.">PAM&nbsp;v3</span>
 
 </dt>
 <dd>
@@ -545,7 +554,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="PresenceEvent">
   <span class="name "><a href="../pubnub/PresenceEvent-class.html">PresenceEvent</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -554,8 +563,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="PublishFileMessageResult">
   <span class="name "><a href="../pubnub/PublishFileMessageResult-class.html">PublishFileMessageResult</a></span> 
-    <span class="category files cp-2 linked" title="This is part of the Files Topic."><a href="../topics/Files-topic.html">Files</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -564,7 +573,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="PublishResult">
   <span class="name "><a href="../pubnub/PublishResult-class.html">PublishResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -573,7 +582,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="PubNub">
   <span class="name "><a href="../pubnub/PubNub-class.html">PubNub</a></span> 
-    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features Topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
+    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
 </dt>
 <dd>
@@ -582,8 +591,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="RemoveChannelMetadataResult">
   <span class="name "><a href="../pubnub/RemoveChannelMetadataResult-class.html">RemoveChannelMetadataResult</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -592,8 +601,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="RemoveDeviceResult">
   <span class="name "><a href="../pubnub/RemoveDeviceResult-class.html">RemoveDeviceResult</a></span> 
-    <span class="category push cp-3 linked" title="This is part of the Push Topic."><a href="../topics/Push-topic.html">Push</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category push cp-3 linked" title="This is part of the Push topic."><a href="../topics/Push-topic.html">Push</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -602,8 +611,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="RemovePushChannelsResult">
   <span class="name "><a href="../pubnub/RemovePushChannelsResult-class.html">RemovePushChannelsResult</a></span> 
-    <span class="category push cp-3 linked" title="This is part of the Push Topic."><a href="../topics/Push-topic.html">Push</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category push cp-3 linked" title="This is part of the Push topic."><a href="../topics/Push-topic.html">Push</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -612,8 +621,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="RemoveUuidMetadataResult">
   <span class="name "><a href="../pubnub/RemoveUuidMetadataResult-class.html">RemoveUuidMetadataResult</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -622,7 +631,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="Resource">
   <span class="name "><a href="../pubnub/Resource-class.html">Resource</a></span> 
-    <span class="category access-manager cp-4 linked" title="This is part of the Access Manager Topic."><a href="../topics/Access Manager-topic.html">Access&nbsp;Manager</a></span>
+    <span class="category access-manager cp-4 linked" title="This is part of the Access Manager topic."><a href="../topics/Access Manager-topic.html">Access&nbsp;Manager</a></span>
 
 </dt>
 <dd>
@@ -639,8 +648,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="SetChannelMetadataResult">
   <span class="name "><a href="../pubnub/SetChannelMetadataResult-class.html">SetChannelMetadataResult</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -649,7 +658,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="SetUserStateResult">
   <span class="name "><a href="../pubnub/SetUserStateResult-class.html">SetUserStateResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -658,8 +667,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="SetUuidMetadataResult">
   <span class="name "><a href="../pubnub/SetUuidMetadataResult-class.html">SetUuidMetadataResult</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -668,7 +677,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="SignalResult">
   <span class="name "><a href="../pubnub/SignalResult-class.html">SignalResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -693,7 +702,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="Timetoken">
   <span class="name "><a href="../pubnub/Timetoken-class.html">Timetoken</a></span> 
-    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features Topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
+    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
 </dt>
 <dd>
@@ -702,7 +711,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="Token">
   <span class="name "><a href="../pubnub/Token-class.html">Token</a></span> 
-    <span class="category access-manager cp-4 linked" title="This is part of the Access Manager Topic."><a href="../topics/Access Manager-topic.html">Access&nbsp;Manager</a></span>
+    <span class="category access-manager cp-4 linked" title="This is part of the Access Manager topic."><a href="../topics/Access Manager-topic.html">Access&nbsp;Manager</a></span>
 
 </dt>
 <dd>
@@ -711,7 +720,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="TokenRequest">
   <span class="name "><a href="../pubnub/TokenRequest-class.html">TokenRequest</a></span> 
-    <span class="category access-manager cp-4 linked" title="This is part of the Access Manager Topic."><a href="../topics/Access Manager-topic.html">Access&nbsp;Manager</a></span>
+    <span class="category access-manager cp-4 linked" title="This is part of the Access Manager topic."><a href="../topics/Access Manager-topic.html">Access&nbsp;Manager</a></span>
 
 </dt>
 <dd>
@@ -720,7 +729,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="UserId">
   <span class="name "><a href="../pubnub/UserId-class.html">UserId</a></span> 
-    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features Topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
+    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
 </dt>
 <dd>
@@ -729,7 +738,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="UUID">
   <span class="name "><a href="../pubnub/UUID-class.html">UUID</a></span> 
-    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features Topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
+    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
 </dt>
 <dd>
@@ -738,7 +747,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="UuIdInfo">
   <span class="name "><a href="../pubnub/UuIdInfo-class.html">UuIdInfo</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
 </dt>
 <dd>
@@ -747,8 +756,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="UuidMetadataDetails">
   <span class="name "><a href="../pubnub/UuidMetadataDetails-class.html">UuidMetadataDetails</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -757,7 +766,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="UuidMetadataInput">
   <span class="name "><a href="../pubnub/UuidMetadataInput-class.html">UuidMetadataInput</a></span> 
-    <span class="category objects cp-1 linked" title="This is part of the Objects Topic."><a href="../topics/Objects-topic.html">Objects</a></span>
+    <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
 </dt>
 <dd>
@@ -766,7 +775,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="WhereNowResult">
   <span class="name "><a href="../pubnub/WhereNowResult-class.html">WhereNowResult</a></span> 
-    <span class="category results cp-6 linked" title="This is part of the Results Topic."><a href="../topics/Results-topic.html">Results</a></span>
+    <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
 </dt>
 <dd>
@@ -795,7 +804,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="Environment">
   <span class="name "><a href="../pubnub/Environment.html">Environment</a></span> 
-    <span class="category push cp-3 linked" title="This is part of the Push Topic."><a href="../topics/Push-topic.html">Push</a></span>
+    <span class="category push cp-3 linked" title="This is part of the Push topic."><a href="../topics/Push-topic.html">Push</a></span>
 
 </dt>
 <dd>
@@ -804,7 +813,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="MessageType">
   <span class="name "><a href="../pubnub/MessageType.html">MessageType</a></span> 
-    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features Topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
+    <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
 </dt>
 <dd>
@@ -821,7 +830,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="PushGateway">
   <span class="name "><a href="../pubnub/PushGateway.html">PushGateway</a></span> 
-    <span class="category push cp-3 linked" title="This is part of the Push Topic."><a href="../topics/Push-topic.html">Push</a></span>
+    <span class="category push cp-3 linked" title="This is part of the Push topic."><a href="../topics/Push-topic.html">Push</a></span>
 
 </dt>
 <dd>
@@ -830,7 +839,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="ResourceType">
   <span class="name "><a href="../pubnub/ResourceType.html">ResourceType</a></span> 
-    <span class="category access-manager cp-4 linked" title="This is part of the Access Manager Topic."><a href="../topics/Access Manager-topic.html">Access&nbsp;Manager</a></span>
+    <span class="category access-manager cp-4 linked" title="This is part of the Access Manager topic."><a href="../topics/Access Manager-topic.html">Access&nbsp;Manager</a></span>
 
 </dt>
 <dd>
@@ -855,7 +864,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
       <dl>
         <dt id="InvalidArgumentsException">
   <span class="name "><a href="../pubnub/InvalidArgumentsException-class.html">InvalidArgumentsException</a></span> 
-    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions Topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
+    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
 </dt>
 <dd>
@@ -864,7 +873,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
         <dt id="InvariantException">
   <span class="name "><a href="../pubnub/InvariantException-class.html">InvariantException</a></span> 
-    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions Topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
+    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
 </dt>
 <dd>
@@ -874,7 +883,7 @@ is broken.
 
         <dt id="KeysetException">
   <span class="name "><a href="../pubnub/KeysetException-class.html">KeysetException</a></span> 
-    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions Topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
+    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
 </dt>
 <dd>
@@ -883,7 +892,7 @@ is broken.
 
         <dt id="MalformedResponseException">
   <span class="name "><a href="../pubnub/MalformedResponseException-class.html">MalformedResponseException</a></span> 
-    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions Topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
+    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
 </dt>
 <dd>
@@ -892,7 +901,7 @@ is broken.
 
         <dt id="MaximumRetriesException">
   <span class="name "><a href="../pubnub/MaximumRetriesException-class.html">MaximumRetriesException</a></span> 
-    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions Topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
+    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
 </dt>
 <dd>
@@ -901,7 +910,7 @@ is broken.
 
         <dt id="MethodDisabledException">
   <span class="name "><a href="../pubnub/MethodDisabledException-class.html">MethodDisabledException</a></span> 
-    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions Topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
+    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
 </dt>
 <dd>
@@ -910,7 +919,7 @@ is broken.
 
         <dt id="NotImplementedException">
   <span class="name "><a href="../pubnub/NotImplementedException-class.html">NotImplementedException</a></span> 
-    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions Topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
+    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
 </dt>
 <dd>
@@ -919,7 +928,7 @@ is broken.
 
         <dt id="PublishException">
   <span class="name "><a href="../pubnub/PublishException-class.html">PublishException</a></span> 
-    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions Topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
+    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
 </dt>
 <dd>
@@ -928,7 +937,7 @@ is broken.
 
         <dt id="PubNubException">
   <span class="name "><a href="../pubnub/PubNubException-class.html">PubNubException</a></span> 
-    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions Topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
+    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
 </dt>
 <dd>
@@ -937,7 +946,7 @@ is broken.
 
         <dt id="UnknownException">
   <span class="name "><a href="../pubnub/UnknownException-class.html">UnknownException</a></span> 
-    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions Topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
+    <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
 </dt>
 <dd>
@@ -985,112 +994,112 @@ is broken.
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
     <h5>pubnub library</h5>
     <ol>
-  <li class="section-title"><a href="../pubnub/pubnub-library.html#classes">Classes</a></li>
-  <li><a href="../pubnub/AddMessageActionResult-class.html">AddMessageActionResult</a></li>
-  <li><a href="../pubnub/AddPushChannelsResult-class.html">AddPushChannelsResult</a></li>
-  <li><a href="../pubnub/BaseMessage-class.html">BaseMessage</a></li>
-  <li><a href="../pubnub/BatchDx-class.html">BatchDx</a></li>
-  <li><a href="../pubnub/BatchHistoryResult-class.html">BatchHistoryResult</a></li>
-  <li><a href="../pubnub/BatchHistoryResultEntry-class.html">BatchHistoryResultEntry</a></li>
-  <li><a href="../pubnub/Channel-class.html">Channel</a></li>
-  <li><a href="../pubnub/ChannelGroupChangeChannelsResult-class.html">ChannelGroupChangeChannelsResult</a></li>
-  <li><a href="../pubnub/ChannelGroupDeleteResult-class.html">ChannelGroupDeleteResult</a></li>
-  <li><a href="../pubnub/ChannelGroupDx-class.html">ChannelGroupDx</a></li>
-  <li><a href="../pubnub/ChannelGroupListChannelsResult-class.html">ChannelGroupListChannelsResult</a></li>
-  <li><a href="../pubnub/ChannelHistory-class.html">ChannelHistory</a></li>
-  <li><a href="../pubnub/ChannelIdInfo-class.html">ChannelIdInfo</a></li>
-  <li><a href="../pubnub/ChannelMemberMetadata-class.html">ChannelMemberMetadata</a></li>
-  <li><a href="../pubnub/ChannelMemberMetadataInput-class.html">ChannelMemberMetadataInput</a></li>
-  <li><a href="../pubnub/ChannelMembersResult-class.html">ChannelMembersResult</a></li>
-  <li><a href="../pubnub/ChannelMetadataDetails-class.html">ChannelMetadataDetails</a></li>
-  <li><a href="../pubnub/ChannelMetadataInput-class.html">ChannelMetadataInput</a></li>
-  <li><a href="../pubnub/ChannelOccupancy-class.html">ChannelOccupancy</a></li>
-  <li><a href="../pubnub/CipherKey-class.html">CipherKey</a></li>
-  <li><a href="../pubnub/CountMessagesResult-class.html">CountMessagesResult</a></li>
-  <li><a href="../pubnub/DeleteFileResult-class.html">DeleteFileResult</a></li>
-  <li><a href="../pubnub/DeleteMessageActionResult-class.html">DeleteMessageActionResult</a></li>
-  <li><a href="../pubnub/Device-class.html">Device</a></li>
-  <li><a href="../pubnub/DownloadFileResult-class.html">DownloadFileResult</a></li>
-  <li><a href="../pubnub/Envelope-class.html">Envelope</a></li>
-  <li><a href="../pubnub/ExponentialRetryPolicy-class.html">ExponentialRetryPolicy</a></li>
-  <li><a href="../pubnub/FetchMessageActionsResult-class.html">FetchMessageActionsResult</a></li>
-  <li><a href="../pubnub/FileDetail-class.html">FileDetail</a></li>
-  <li><a href="../pubnub/FileDx-class.html">FileDx</a></li>
-  <li><a href="../pubnub/FileInfo-class.html">FileInfo</a></li>
-  <li><a href="../pubnub/FileMessage-class.html">FileMessage</a></li>
-  <li><a href="../pubnub/GetAllChannelMetadataResult-class.html">GetAllChannelMetadataResult</a></li>
-  <li><a href="../pubnub/GetAllUuidMetadataResult-class.html">GetAllUuidMetadataResult</a></li>
-  <li><a href="../pubnub/GetChannelMetadataResult-class.html">GetChannelMetadataResult</a></li>
-  <li><a href="../pubnub/GetUserStateResult-class.html">GetUserStateResult</a></li>
-  <li><a href="../pubnub/GetUuidMetadataResult-class.html">GetUuidMetadataResult</a></li>
-  <li><a href="../pubnub/HeartbeatResult-class.html">HeartbeatResult</a></li>
-  <li><a href="../pubnub/HereNowResult-class.html">HereNowResult</a></li>
-  <li><a href="../pubnub/Keyset-class.html">Keyset</a></li>
-  <li><a href="../pubnub/KeysetStore-class.html">KeysetStore</a></li>
-  <li><a href="../pubnub/LeaveResult-class.html">LeaveResult</a></li>
-  <li><a href="../pubnub/LinearRetryPolicy-class.html">LinearRetryPolicy</a></li>
-  <li><a href="../pubnub/ListFilesResult-class.html">ListFilesResult</a></li>
-  <li><a href="../pubnub/ListPushChannelsResult-class.html">ListPushChannelsResult</a></li>
-  <li><a href="../pubnub/MembershipMetadata-class.html">MembershipMetadata</a></li>
-  <li><a href="../pubnub/MembershipMetadataInput-class.html">MembershipMetadataInput</a></li>
-  <li><a href="../pubnub/MembershipsResult-class.html">MembershipsResult</a></li>
-  <li><a href="../pubnub/MessageAction-class.html">MessageAction</a></li>
-  <li><a href="../pubnub/ObjectsDx-class.html">ObjectsDx</a></li>
-  <li><a href="../pubnub/PaginatedChannelHistory-class.html">PaginatedChannelHistory</a></li>
-  <li><a href="../pubnub/PamGrantTokenResult-class.html">PamGrantTokenResult</a></li>
-  <li><a href="../pubnub/PamRevokeTokenResult-class.html">PamRevokeTokenResult</a></li>
-  <li><a href="../pubnub/PresenceEvent-class.html">PresenceEvent</a></li>
-  <li><a href="../pubnub/PublishFileMessageResult-class.html">PublishFileMessageResult</a></li>
-  <li><a href="../pubnub/PublishResult-class.html">PublishResult</a></li>
-  <li><a href="../pubnub/PubNub-class.html">PubNub</a></li>
-  <li><a href="../pubnub/RemoveChannelMetadataResult-class.html">RemoveChannelMetadataResult</a></li>
-  <li><a href="../pubnub/RemoveDeviceResult-class.html">RemoveDeviceResult</a></li>
-  <li><a href="../pubnub/RemovePushChannelsResult-class.html">RemovePushChannelsResult</a></li>
-  <li><a href="../pubnub/RemoveUuidMetadataResult-class.html">RemoveUuidMetadataResult</a></li>
-  <li><a href="../pubnub/Resource-class.html">Resource</a></li>
-  <li><a href="../pubnub/RetryPolicy-class.html">RetryPolicy</a></li>
-  <li><a href="../pubnub/SetChannelMetadataResult-class.html">SetChannelMetadataResult</a></li>
-  <li><a href="../pubnub/SetUserStateResult-class.html">SetUserStateResult</a></li>
-  <li><a href="../pubnub/SetUuidMetadataResult-class.html">SetUuidMetadataResult</a></li>
-  <li><a href="../pubnub/SignalResult-class.html">SignalResult</a></li>
-  <li><a href="../pubnub/Signals-class.html">Signals</a></li>
-  <li><a href="../pubnub/Subscription-class.html">Subscription</a></li>
-  <li><a href="../pubnub/Timetoken-class.html">Timetoken</a></li>
-  <li><a href="../pubnub/Token-class.html">Token</a></li>
-  <li><a href="../pubnub/TokenRequest-class.html">TokenRequest</a></li>
-  <li><a href="../pubnub/UserId-class.html">UserId</a></li>
-  <li><a href="../pubnub/UUID-class.html">UUID</a></li>
-  <li><a href="../pubnub/UuIdInfo-class.html">UuIdInfo</a></li>
-  <li><a href="../pubnub/UuidMetadataDetails-class.html">UuidMetadataDetails</a></li>
-  <li><a href="../pubnub/UuidMetadataInput-class.html">UuidMetadataInput</a></li>
-  <li><a href="../pubnub/WhereNowResult-class.html">WhereNowResult</a></li>
+      <li class="section-title"><a href="../pubnub/pubnub-library.html#classes">Classes</a></li>
+        <li><a href="../pubnub/AddMessageActionResult-class.html">AddMessageActionResult</a></li>
+        <li><a href="../pubnub/AddPushChannelsResult-class.html">AddPushChannelsResult</a></li>
+        <li><a href="../pubnub/BaseMessage-class.html">BaseMessage</a></li>
+        <li><a href="../pubnub/BatchDx-class.html">BatchDx</a></li>
+        <li><a href="../pubnub/BatchHistoryResult-class.html">BatchHistoryResult</a></li>
+        <li><a href="../pubnub/BatchHistoryResultEntry-class.html">BatchHistoryResultEntry</a></li>
+        <li><a href="../pubnub/Channel-class.html">Channel</a></li>
+        <li><a href="../pubnub/ChannelGroupChangeChannelsResult-class.html">ChannelGroupChangeChannelsResult</a></li>
+        <li><a href="../pubnub/ChannelGroupDeleteResult-class.html">ChannelGroupDeleteResult</a></li>
+        <li><a href="../pubnub/ChannelGroupDx-class.html">ChannelGroupDx</a></li>
+        <li><a href="../pubnub/ChannelGroupListChannelsResult-class.html">ChannelGroupListChannelsResult</a></li>
+        <li><a href="../pubnub/ChannelHistory-class.html">ChannelHistory</a></li>
+        <li><a href="../pubnub/ChannelIdInfo-class.html">ChannelIdInfo</a></li>
+        <li><a href="../pubnub/ChannelMemberMetadata-class.html">ChannelMemberMetadata</a></li>
+        <li><a href="../pubnub/ChannelMemberMetadataInput-class.html">ChannelMemberMetadataInput</a></li>
+        <li><a href="../pubnub/ChannelMembersResult-class.html">ChannelMembersResult</a></li>
+        <li><a href="../pubnub/ChannelMetadataDetails-class.html">ChannelMetadataDetails</a></li>
+        <li><a href="../pubnub/ChannelMetadataInput-class.html">ChannelMetadataInput</a></li>
+        <li><a href="../pubnub/ChannelOccupancy-class.html">ChannelOccupancy</a></li>
+        <li><a href="../pubnub/CipherKey-class.html">CipherKey</a></li>
+        <li><a href="../pubnub/CountMessagesResult-class.html">CountMessagesResult</a></li>
+        <li><a href="../pubnub/DeleteFileResult-class.html">DeleteFileResult</a></li>
+        <li><a href="../pubnub/DeleteMessageActionResult-class.html">DeleteMessageActionResult</a></li>
+        <li><a href="../pubnub/Device-class.html">Device</a></li>
+        <li><a href="../pubnub/DownloadFileResult-class.html">DownloadFileResult</a></li>
+        <li><a href="../pubnub/Envelope-class.html">Envelope</a></li>
+        <li><a href="../pubnub/ExponentialRetryPolicy-class.html">ExponentialRetryPolicy</a></li>
+        <li><a href="../pubnub/FetchMessageActionsResult-class.html">FetchMessageActionsResult</a></li>
+        <li><a href="../pubnub/FileDetail-class.html">FileDetail</a></li>
+        <li><a href="../pubnub/FileDx-class.html">FileDx</a></li>
+        <li><a href="../pubnub/FileInfo-class.html">FileInfo</a></li>
+        <li><a href="../pubnub/FileMessage-class.html">FileMessage</a></li>
+        <li><a href="../pubnub/GetAllChannelMetadataResult-class.html">GetAllChannelMetadataResult</a></li>
+        <li><a href="../pubnub/GetAllUuidMetadataResult-class.html">GetAllUuidMetadataResult</a></li>
+        <li><a href="../pubnub/GetChannelMetadataResult-class.html">GetChannelMetadataResult</a></li>
+        <li><a href="../pubnub/GetUserStateResult-class.html">GetUserStateResult</a></li>
+        <li><a href="../pubnub/GetUuidMetadataResult-class.html">GetUuidMetadataResult</a></li>
+        <li><a href="../pubnub/HeartbeatResult-class.html">HeartbeatResult</a></li>
+        <li><a href="../pubnub/HereNowResult-class.html">HereNowResult</a></li>
+        <li><a href="../pubnub/Keyset-class.html">Keyset</a></li>
+        <li><a href="../pubnub/KeysetStore-class.html">KeysetStore</a></li>
+        <li><a href="../pubnub/LeaveResult-class.html">LeaveResult</a></li>
+        <li><a href="../pubnub/LinearRetryPolicy-class.html">LinearRetryPolicy</a></li>
+        <li><a href="../pubnub/ListFilesResult-class.html">ListFilesResult</a></li>
+        <li><a href="../pubnub/ListPushChannelsResult-class.html">ListPushChannelsResult</a></li>
+        <li><a href="../pubnub/MembershipMetadata-class.html">MembershipMetadata</a></li>
+        <li><a href="../pubnub/MembershipMetadataInput-class.html">MembershipMetadataInput</a></li>
+        <li><a href="../pubnub/MembershipsResult-class.html">MembershipsResult</a></li>
+        <li><a href="../pubnub/MessageAction-class.html">MessageAction</a></li>
+        <li><a href="../pubnub/ObjectsDx-class.html">ObjectsDx</a></li>
+        <li><a href="../pubnub/PaginatedChannelHistory-class.html">PaginatedChannelHistory</a></li>
+        <li><a href="../pubnub/PamGrantTokenResult-class.html">PamGrantTokenResult</a></li>
+        <li><a href="../pubnub/PamRevokeTokenResult-class.html">PamRevokeTokenResult</a></li>
+        <li><a href="../pubnub/PresenceEvent-class.html">PresenceEvent</a></li>
+        <li><a href="../pubnub/PublishFileMessageResult-class.html">PublishFileMessageResult</a></li>
+        <li><a href="../pubnub/PublishResult-class.html">PublishResult</a></li>
+        <li><a href="../pubnub/PubNub-class.html">PubNub</a></li>
+        <li><a href="../pubnub/RemoveChannelMetadataResult-class.html">RemoveChannelMetadataResult</a></li>
+        <li><a href="../pubnub/RemoveDeviceResult-class.html">RemoveDeviceResult</a></li>
+        <li><a href="../pubnub/RemovePushChannelsResult-class.html">RemovePushChannelsResult</a></li>
+        <li><a href="../pubnub/RemoveUuidMetadataResult-class.html">RemoveUuidMetadataResult</a></li>
+        <li><a href="../pubnub/Resource-class.html">Resource</a></li>
+        <li><a href="../pubnub/RetryPolicy-class.html">RetryPolicy</a></li>
+        <li><a href="../pubnub/SetChannelMetadataResult-class.html">SetChannelMetadataResult</a></li>
+        <li><a href="../pubnub/SetUserStateResult-class.html">SetUserStateResult</a></li>
+        <li><a href="../pubnub/SetUuidMetadataResult-class.html">SetUuidMetadataResult</a></li>
+        <li><a href="../pubnub/SignalResult-class.html">SignalResult</a></li>
+        <li><a href="../pubnub/Signals-class.html">Signals</a></li>
+        <li><a href="../pubnub/Subscription-class.html">Subscription</a></li>
+        <li><a href="../pubnub/Timetoken-class.html">Timetoken</a></li>
+        <li><a href="../pubnub/Token-class.html">Token</a></li>
+        <li><a href="../pubnub/TokenRequest-class.html">TokenRequest</a></li>
+        <li><a href="../pubnub/UserId-class.html">UserId</a></li>
+        <li><a href="../pubnub/UUID-class.html">UUID</a></li>
+        <li><a href="../pubnub/UuIdInfo-class.html">UuIdInfo</a></li>
+        <li><a href="../pubnub/UuidMetadataDetails-class.html">UuidMetadataDetails</a></li>
+        <li><a href="../pubnub/UuidMetadataInput-class.html">UuidMetadataInput</a></li>
+        <li><a href="../pubnub/WhereNowResult-class.html">WhereNowResult</a></li>
 
 
 
 
 
 
-  <li class="section-title"><a href="../pubnub/pubnub-library.html#enums">Enums</a></li>
-  <li><a href="../pubnub/ChannelHistoryOrder.html">ChannelHistoryOrder</a></li>
-  <li><a href="../pubnub/Environment.html">Environment</a></li>
-  <li><a href="../pubnub/MessageType.html">MessageType</a></li>
-  <li><a href="../pubnub/PresenceAction.html">PresenceAction</a></li>
-  <li><a href="../pubnub/PushGateway.html">PushGateway</a></li>
-  <li><a href="../pubnub/ResourceType.html">ResourceType</a></li>
-  <li><a href="../pubnub/StateInfo.html">StateInfo</a></li>
+      <li class="section-title"><a href="../pubnub/pubnub-library.html#enums">Enums</a></li>
+        <li><a href="../pubnub/ChannelHistoryOrder.html">ChannelHistoryOrder</a></li>
+        <li><a href="../pubnub/Environment.html">Environment</a></li>
+        <li><a href="../pubnub/MessageType.html">MessageType</a></li>
+        <li><a href="../pubnub/PresenceAction.html">PresenceAction</a></li>
+        <li><a href="../pubnub/PushGateway.html">PushGateway</a></li>
+        <li><a href="../pubnub/ResourceType.html">ResourceType</a></li>
+        <li><a href="../pubnub/StateInfo.html">StateInfo</a></li>
 
 
-  <li class="section-title"><a href="../pubnub/pubnub-library.html#exceptions">Exceptions</a></li>
-  <li><a href="../pubnub/InvalidArgumentsException-class.html">InvalidArgumentsException</a></li>
-  <li><a href="../pubnub/InvariantException-class.html">InvariantException</a></li>
-  <li><a href="../pubnub/KeysetException-class.html">KeysetException</a></li>
-  <li><a href="../pubnub/MalformedResponseException-class.html">MalformedResponseException</a></li>
-  <li><a href="../pubnub/MaximumRetriesException-class.html">MaximumRetriesException</a></li>
-  <li><a href="../pubnub/MethodDisabledException-class.html">MethodDisabledException</a></li>
-  <li><a href="../pubnub/NotImplementedException-class.html">NotImplementedException</a></li>
-  <li><a href="../pubnub/PublishException-class.html">PublishException</a></li>
-  <li><a href="../pubnub/PubNubException-class.html">PubNubException</a></li>
-  <li><a href="../pubnub/UnknownException-class.html">UnknownException</a></li>
+      <li class="section-title"><a href="../pubnub/pubnub-library.html#exceptions">Exceptions</a></li>
+        <li><a href="../pubnub/InvalidArgumentsException-class.html">InvalidArgumentsException</a></li>
+        <li><a href="../pubnub/InvariantException-class.html">InvariantException</a></li>
+        <li><a href="../pubnub/KeysetException-class.html">KeysetException</a></li>
+        <li><a href="../pubnub/MalformedResponseException-class.html">MalformedResponseException</a></li>
+        <li><a href="../pubnub/MaximumRetriesException-class.html">MaximumRetriesException</a></li>
+        <li><a href="../pubnub/MethodDisabledException-class.html">MethodDisabledException</a></li>
+        <li><a href="../pubnub/NotImplementedException-class.html">NotImplementedException</a></li>
+        <li><a href="../pubnub/PublishException-class.html">PublishException</a></li>
+        <li><a href="../pubnub/PubNubException-class.html">PubNubException</a></li>
+        <li><a href="../pubnub/UnknownException-class.html">UnknownException</a></li>
 </ol>
 
   </div><!--/sidebar-offcanvas-right-->
@@ -1100,7 +1109,7 @@ is broken.
 <footer>
   <span class="no-break">
     pubnub
-      4.2.2
+      4.2.4
   </span>
 
   

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="generator" content="made with love by dartdoc 6.0.0">
+  <meta name="generator" content="made with love by dartdoc 6.2.2">
   <meta name="description" content="pubnub API docs, for the Dart programming language.">
   <title>pubnub - Dart API docs</title>
 
@@ -12,7 +12,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="static-assets/github.css?v1">
   <link rel="stylesheet" href="static-assets/styles.css?v1">
@@ -22,12 +22,12 @@
 </head>
 
 
-<body data-base-href="" data-using-base-href="false">
+<body data-base-href="" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="https://www.pubnub.com/docs/sdks/dart">pubnub package</a></li>
   </ol>
@@ -35,10 +35,19 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       
@@ -53,7 +62,7 @@
 <p><code>pubnub</code> uses the standard <code>pub</code> tool for package management to distribute Dart code.</p>
 <p>To add the package to your Dart or Flutter project, add <code>pubnub</code> as a dependency in your <code>pubspec.yaml</code>.</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  pubnub: ^4.2.2
+  pubnub: ^4.2.4
 </code></pre>
 <p>After adding the dependency to <code>pubspec.yaml</code>, run the <code>dart pub get</code> command in the root directory of your project (the same that the <code>pubspec.yaml</code> is in).</p>
 <h3 id="using-git">Using Git</h3>
@@ -163,18 +172,18 @@ var myChannel = pubnub.channel('channel', using: 'keyset2');
 <ol>
 <li>
 <p>Clone the repository.</p>
-<pre class="language-bash"><code class="language-bash"> git clone https://github.com/pubnub/dart.git
+<pre class="language-bash"><code class="language-bash">git clone https://github.com/pubnub/dart.git
 </code></pre>
 </li>
 <li>
 <p>Enter the directory and install dependencies.</p>
-<pre class="language-bash"><code class="language-bash"> cd dart
- dart pub get
+<pre class="language-bash"><code class="language-bash">cd dart
+dart pub get
 </code></pre>
 </li>
 <li>
 <p>Run the <code>build_runner</code> to generate necessary source files.</p>
-<pre class="language-bash"><code class="language-bash"> dart pub run build_runner build
+<pre class="language-bash"><code class="language-bash">dart pub run build_runner build
 </code></pre>
 </li>
 </ol>
@@ -195,7 +204,7 @@ PubNub Data Streaming Network in a fast and easy manner.
           <h3>Modules</h3>
             <dt id="pubnub.crypto">
   <span class="name"><a href="pubnub.crypto/pubnub.crypto-library.html">pubnub.crypto</a></span> 
-    <span class="category modules cp-7" title="This is part of the Modules Topic.">Modules</span>
+    <span class="category modules cp-7" title="This is part of the Modules topic.">Modules</span>
 
 </dt>
 <dd>Default cryptography module used by PubNub SDK.
@@ -203,7 +212,7 @@ PubNub Data Streaming Network in a fast and easy manner.
 
             <dt id="pubnub.logging">
   <span class="name"><a href="pubnub.logging/pubnub.logging-library.html">pubnub.logging</a></span> 
-    <span class="category modules cp-7" title="This is part of the Modules Topic.">Modules</span>
+    <span class="category modules cp-7" title="This is part of the Modules topic.">Modules</span>
 
 </dt>
 <dd>Default logging module used by PubNub SDK.
@@ -211,7 +220,7 @@ PubNub Data Streaming Network in a fast and easy manner.
 
             <dt id="pubnub.networking">
   <span class="name"><a href="pubnub.networking/pubnub.networking-library.html">pubnub.networking</a></span> 
-    <span class="category modules cp-7" title="This is part of the Modules Topic.">Modules</span>
+    <span class="category modules cp-7" title="This is part of the Modules topic.">Modules</span>
 
 </dt>
 <dd>Default networking module used by PubNub SDK.
@@ -262,7 +271,7 @@ PubNub Data Streaming Network in a fast and easy manner.
 <footer>
   <span class="no-break">
     pubnub
-      4.2.2
+      4.2.4
   </span>
 
   

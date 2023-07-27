@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../../static-assets/github.css?v1">
   <link rel="stylesheet" href="../../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../../" data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">pubnub</a></li>
     <li><a href="../../pubnub.logging/pubnub.logging-library.html">pubnub.logging</a></li>
@@ -37,15 +37,23 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">shout</span> method 
-    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -55,7 +63,7 @@
 <span class="name ">shout</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="shout-param-message"><span class="type-annotation">dynamic</span> <span class="parameter-name">message</span></span></li>
 </ol>)
 
-      <div class="features">inherited</div>
+      <div class="features"><span class="feature">inherited</span></div>
 
     </section>
     
@@ -92,34 +100,34 @@
           <li><a href="../../pubnub.logging/StreamLogger/StreamLogger.root.html">root</a></li>
 
 
-    <li class="section-title">
-      <a href="../../pubnub.logging/StreamLogger-class.html#instance-properties">Properties</a>
-    </li>
-    <li><a href="../../pubnub.logging/StreamLogger/fullName.html">fullName</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li><a href="../../pubnub.logging/StreamLogger/isRoot.html">isRoot</a></li>
-    <li><a href="../../pubnub.logging/StreamLogger/logLevel.html">logLevel</a></li>
-    <li><a href="../../pubnub.logging/StreamLogger/name.html">name</a></li>
-    <li><a href="../../pubnub.logging/StreamLogger/recordStackTraces.html">recordStackTraces</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li><a href="../../pubnub.logging/StreamLogger/stream.html">stream</a></li>
+        <li class="section-title">
+          <a href="../../pubnub.logging/StreamLogger-class.html#instance-properties">Properties</a>
+        </li>
+          <li><a href="../../pubnub.logging/StreamLogger/fullName.html">fullName</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li><a href="../../pubnub.logging/StreamLogger/isRoot.html">isRoot</a></li>
+          <li><a href="../../pubnub.logging/StreamLogger/logLevel.html">logLevel</a></li>
+          <li><a href="../../pubnub.logging/StreamLogger/name.html">name</a></li>
+          <li><a href="../../pubnub.logging/StreamLogger/recordStackTraces.html">recordStackTraces</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li><a href="../../pubnub.logging/StreamLogger/stream.html">stream</a></li>
 
-    <li class="section-title"><a href="../../pubnub.logging/StreamLogger-class.html#instance-methods">Methods</a></li>
-    <li><a href="../../pubnub.logging/StreamLogger/dispose.html">dispose</a></li>
-    <li class="inherited"><a href="../../pubnub.logging/StreamLogger/fatal.html">fatal</a></li>
-    <li><a href="../../pubnub.logging/StreamLogger/get.html">get</a></li>
-    <li class="inherited"><a href="../../pubnub.logging/StreamLogger/info.html">info</a></li>
-    <li><a href="../../pubnub.logging/StreamLogger/log.html">log</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="../../pubnub.logging/StreamLogger/severe.html">severe</a></li>
-    <li class="inherited"><a href="../../pubnub.logging/StreamLogger/shout.html">shout</a></li>
-    <li class="inherited"><a href="../../pubnub.logging/StreamLogger/silly.html">silly</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/toString.html">toString</a></li>
-    <li class="inherited"><a href="../../pubnub.logging/StreamLogger/verbose.html">verbose</a></li>
-    <li class="inherited"><a href="../../pubnub.logging/StreamLogger/warning.html">warning</a></li>
+        <li class="section-title"><a href="../../pubnub.logging/StreamLogger-class.html#instance-methods">Methods</a></li>
+          <li><a href="../../pubnub.logging/StreamLogger/dispose.html">dispose</a></li>
+          <li class="inherited"><a href="../../pubnub.logging/StreamLogger/fatal.html">fatal</a></li>
+          <li><a href="../../pubnub.logging/StreamLogger/get.html">get</a></li>
+          <li class="inherited"><a href="../../pubnub.logging/StreamLogger/info.html">info</a></li>
+          <li><a href="../../pubnub.logging/StreamLogger/log.html">log</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="../../pubnub.logging/StreamLogger/severe.html">severe</a></li>
+          <li class="inherited"><a href="../../pubnub.logging/StreamLogger/shout.html">shout</a></li>
+          <li class="inherited"><a href="../../pubnub.logging/StreamLogger/silly.html">silly</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/toString.html">toString</a></li>
+          <li class="inherited"><a href="../../pubnub.logging/StreamLogger/verbose.html">verbose</a></li>
+          <li class="inherited"><a href="../../pubnub.logging/StreamLogger/warning.html">warning</a></li>
 
-    <li class="section-title inherited"><a href="../../pubnub.logging/StreamLogger-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.dart.dev/stable/2.18.4/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../../pubnub.logging/StreamLogger-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.dart.dev/stable/3.0.7/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -136,7 +144,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.2.2
+      4.2.4
   </span>
 
   
