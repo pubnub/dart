@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:pubnub/core.dart';
+import 'package:pubnub/src/crypto/aesCbcCryptor.dart';
 import 'package:pubnub/src/crypto/crypto.dart';
 
 import 'package:test/test.dart';
@@ -28,8 +31,16 @@ void main() {
       var headerData = [80, 78, 69, 68, 1, 65, 67, 82, 72, 16];
       var expectedBytes = [...headerData, ...List<int>.filled(16, 0)];
 
-      CryptorHeaderV1? header = CryptorHeader.tryParse(encryptedDataWithHeader.codeUnits);
+      var header = CryptorHeader.tryParse(encryptedDataWithHeader.codeUnits);
       expect(header!.data, equals(expectedBytes));
+    });
+
+    test('AesCbcCryptor should work as expected', () async {
+      var plainText = 'Hello there!';
+      var cryptor = AesCbcCryptor(CipherKey.fromUtf8('pubnubenigma'));
+      var encryptedData = cryptor.encrypt(plainText.codeUnits);
+      var decrypted = cryptor.decrypt(encryptedData);
+      expect(utf8.decode(decrypted), equals(plainText));
     });
   });
 }
