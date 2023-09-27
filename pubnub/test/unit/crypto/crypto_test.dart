@@ -22,5 +22,14 @@ void main() {
 
       expect(result, equals(plaintext));
     });
+
+    test('cryptoHeader tryParse/data from encrypted text', () async {
+      var encryptedDataWithHeader = 'PNEDACRH�_�ƿ';
+      var headerData = [80, 78, 69, 68, 1, 65, 67, 82, 72, 16];
+      var expectedBytes = [...headerData, ...List<int>.filled(16, 0)];
+
+      CryptorHeaderV1? header = CryptorHeader.tryParse(encryptedDataWithHeader.codeUnits);
+      expect(header!.data, equals(expectedBytes));
+    });
   });
 }
