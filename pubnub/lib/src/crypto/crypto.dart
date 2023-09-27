@@ -21,7 +21,7 @@ class CryptorHeader {
     List<int> sentinel;
     var version;
     if (encryptedData.length >= 4) {
-      sentinel = encryptedData.sublist(0,4).toList();
+      sentinel = encryptedData.sublist(0, 4).toList();
       if (utf8.decode(sentinel) != SENTINEL) return null;
     }
 
@@ -79,9 +79,9 @@ class CryptorHeaderV1 {
     header[pos] = VERSION;
     pos++;
     header.setAll(pos, _identifier.codeUnits);
-    pos+=CryptorHeader.IDENTIFIER_LENGTH;
+    pos += CryptorHeader.IDENTIFIER_LENGTH;
     var metadataLength = this.metadataLength;
-    if (metadataLength < 255){
+    if (metadataLength < 255) {
       header[pos] = metadataLength;
     } else {
       header.setAll(pos, [255, metadataLength >> 8, metadataLength & 0xff]);
