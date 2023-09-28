@@ -5,7 +5,6 @@ import 'dart:typed_data' show Uint8List;
 import 'package:pubnub/core.dart';
 
 class AesCbcCryptor implements ICryptor {
-  static const BLOCK_SIZE = 16;
   CipherKey cipherKey;
 
   AesCbcCryptor(this.cipherKey);
@@ -15,7 +14,7 @@ class AesCbcCryptor implements ICryptor {
         crypto.Encrypter(crypto.AES(_getKey(), mode: crypto.AESMode.cbc));
     return encrypter.decryptBytes(
         crypto.Encrypted(Uint8List.fromList(encryptedData.data.toList())),
-        iv: crypto.IV(Uint8List.fromList(encryptedData.metadata.toList())));
+        iv: crypto.IV(Uint8List.fromList(encryptedData.metadata!.toList())));
   }
 
   @override
@@ -31,7 +30,7 @@ class AesCbcCryptor implements ICryptor {
   String get identifier => 'ACRH';
 
   crypto.IV _getIv() {
-    return crypto.IV.fromSecureRandom(BLOCK_SIZE);
+    return crypto.IV.fromSecureRandom(16);
   }
 
   crypto.Key _getKey() {

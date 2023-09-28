@@ -90,6 +90,7 @@ class CryptorHeaderV1 {
   }
 }
 
+// TODO: Remove this Module
 /// Configuration used in cryptography.
 class CryptoConfiguration {
   /// Encryption mode used.
@@ -216,4 +217,52 @@ class CryptoModule implements ICryptoModule {
   /// @nodoc
   @override
   void register(Core core) {}
+}
+
+class NewCryptoModule {
+  final ICryptor defaultCryptor;
+  final List<ICryptor> cryptors;
+
+  NewCryptoModule(this.defaultCryptor, this.cryptors);
+
+  List<int> encrypt(List<int> data) {
+    var encrypted = defaultCryptor.encrypt(data);
+    if (encrypted.metadata == null) return encrypted.data;
+
+    var header =
+        CryptorHeader.from(defaultCryptor.identifier, encrypted.metadata!);
+    var headerData = List<int>.filled(header!.length, 0);
+    var pos = 0;
+    headerData.setAll(pos, header.data);
+    pos = header.length - encrypted.metadata!.length;
+    headerData.setAll(pos, encrypted.metadata!);
+    return [...headerData, ...encrypted.data];
+  }
+
+  List<int> decrypt(List<int> data) {
+    var header = CryptorHeader.tryParse(data);
+    var cryptor = _getCryptor(header);
+    var metadata = header!.length > 0
+        ? data.sublist(0, (header.length - header.metadataLength))
+        : null;
+    return (cryptor as ICryptor)
+        .decrypt(EncryptedData.from(data.sublist(header.length), metadata));
+  }
+
+  ICryptor? _getCryptor(CryptorHeaderV1? header) {
+    try {
+      var allCryptors = _getAllCryptor();
+      var cryptor = header == null
+          ? allCryptors.firstWhere((element) => element.identifier == '')
+          : allCryptors
+              .firstWhere((element) => element.identifier == header.identifier);
+      return cryptor;
+    } catch (e) {
+      throw CryptoException('unknown cryptor');
+    }
+  }
+
+  List<ICryptor> _getAllCryptor() {
+    return [defaultCryptor, ...cryptors];
+  }
 }

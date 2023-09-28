@@ -12,6 +12,16 @@ class CryptoException extends PubNubException {
 }
 
 /// @nodoc
+abstract class ILegacyCryptor {
+  void register(Core core);
+
+  String encrypt(CipherKey key, String input);
+  dynamic decrypt(CipherKey key, String input);
+
+  List<int> encryptFileData(CipherKey key, List<int> input);
+  List<int> decryptFileData(CipherKey key, List<int> input);
+}
+
 abstract class ICryptoModule {
   void register(Core core);
 
@@ -31,10 +41,10 @@ abstract class ICryptor {
 
 class EncryptedData {
   List<int> _data;
-  List<int> _metadata;
+  List<int>? _metadata;
 
   List<int> get data => _data;
-  List<int> get metadata => _metadata;
+  List<int>? get metadata => _metadata;
 
   EncryptedData._(this._data, this._metadata);
 
