@@ -4,6 +4,8 @@ import 'package:pubnub/src/crypto/legacyCryptor.dart';
 import 'cryptoConfiguration.dart';
 import 'cryptorHeader.dart';
 
+/// CryptoModule is responsible for encryption and decryption
+/// of PubNub messages.
 class CryptoModule implements ICryptoModule {
   final ICryptor defaultCryptor;
   List<ICryptor>? cryptors;

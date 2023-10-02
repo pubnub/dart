@@ -9,6 +9,8 @@ import 'cryptoConfiguration.dart';
 import 'encryption_mode.dart';
 import 'crypto.dart';
 
+/// Legacy cryptor exists so that SDK will be able to decrypt old contents
+/// Which encrypted in past
 class LegacyCryptor implements ICryptor {
   final CryptoConfiguration cryptoConfiguration;
   final CipherKey cipherKey;
@@ -44,7 +46,7 @@ class LegacyCryptor implements ICryptor {
   }
 }
 
-/// Default cryptography module used in PubNub SDK.
+/// Legacy CryptoModule module used in PubNub SDK when CipherKey is not provided.
 class LegacyCryptoModule implements ICryptoModule {
   final CryptoConfiguration defaultConfiguration;
 
@@ -155,18 +157,16 @@ class LegacyCryptoModule implements ICryptoModule {
 
   @override
   List<int> decrypt(List<int> input) {
-    // TODO: implement decrypt
-    throw UnimplementedError();
+    // Note: Unreachable code. Till the time legacy encryption supported.
+    return List.empty();
   }
 
   @override
   List<int> encrypt(List<int> input) {
-    // TODO: implement encrypt
-    throw UnimplementedError();
+    // Note: Unreachable code. Till the time legacy encryption supported.
+    return List.empty();
   }
 
   @override
-  void register(Core core) {
-    // TODO: implement register
-  }
+  void register(Core core) {}
 }

@@ -4,6 +4,9 @@ import 'dart:typed_data' show Uint8List;
 
 import 'package:pubnub/core.dart';
 
+/// AesCbcCryptor is new and enhanced cryptor to encrypt/decrypt
+/// PubNub messages.
+/// It's always preferred to use this cryptor instead old cryptor.
 class AesCbcCryptor implements ICryptor {
   CipherKey cipherKey;
 

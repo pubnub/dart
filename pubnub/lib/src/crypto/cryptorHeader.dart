@@ -2,6 +2,7 @@ import 'dart:convert' show utf8;
 
 import 'package:pubnub/core.dart';
 
+/// @nodoc
 class CryptorHeader {
   static const SENTINEL = 'PNED';
   static const LEGACY_IDENTIFIER = '';
@@ -49,6 +50,7 @@ class CryptorHeader {
   }
 }
 
+/// @nodoc
 class CryptorHeaderV1 {
   static const VERSION = 1;
   final String _identifier;
