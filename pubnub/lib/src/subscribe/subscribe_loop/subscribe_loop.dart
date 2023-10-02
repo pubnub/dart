@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:async/async.dart';
 
 import 'package:pubnub/core.dart';
@@ -131,8 +132,13 @@ class SubscribeLoop {
               !object['c'].endsWith('-pnpres')) {
             try {
               _logger.info('Decrypting message...');
-              object['d'] = await core.parser.decode(
-                  core.crypto.decrypt(state.keyset.cipherKey!, object['d']));
+              object['d'] =
+                  state.keyset.cipherKey == core.keysets.defaultKeyset.cipherKey
+                      ? await core.parser.decode(utf8.decode(core.crypto
+                          .decrypt(base64.decode(object['d'] as String))))
+                      : await core.parser.decode(utf8.decode(core.crypto
+                          .decryptWithKey(state.keyset.cipherKey!,
+                              base64.decode(object['d']).toList())));
             } catch (e) {
               throw PubNubException(
                   'Can not decrypt the message payload. Please check keyset configuration.');

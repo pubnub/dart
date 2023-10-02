@@ -1,3 +1,5 @@
+import 'package:pubnub/src/crypto/legacyCryptor.dart';
+
 import '../core.dart';
 
 import 'networking/networking.dart';
@@ -75,7 +77,9 @@ class PubNub extends Core
             defaultKeyset: defaultKeyset,
             networking: networking ?? NetworkingModule(),
             parser: parser ?? ParserModule(),
-            crypto: crypto ?? CryptoModule()) {
+            crypto: crypto ??( defaultKeyset?.cipherKey != null
+                ? CryptoModule.legacyCryptoModule(defaultKeyset!.cipherKey!)
+                : LegacyCryptoModule())) {
     batch = BatchDx(this);
     channelGroups = ChannelGroupDx(this);
     objects = ObjectsDx(this);

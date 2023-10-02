@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:pubnub/core.dart';
 
 import '../_utils/utils.dart';
@@ -49,8 +51,12 @@ mixin PublishDx on Core {
     var payload = await super.parser.encode(message);
 
     if (keyset.cipherKey != null) {
-      payload =
-          await super.parser.encode(crypto.encrypt(keyset.cipherKey!, payload));
+      payload = keyset.cipherKey == keysets.defaultKeyset.cipherKey
+          ? await super
+              .parser
+              .encode(base64.encode(crypto.encrypt(utf8.encode(payload))))
+          : await super.parser.encode(base64.encode(
+              crypto.encryptWithKey(keyset.cipherKey!, payload.codeUnits)));
     }
 
     var params = PublishParams(keyset, channel, payload,

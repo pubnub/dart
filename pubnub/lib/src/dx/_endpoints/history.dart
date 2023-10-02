@@ -1,7 +1,8 @@
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
-typedef decryptFunction = List<int> Function(CipherKey key, String data);
+typedef decryptWithKey = List<int> Function(CipherKey key, String data);
+typedef decrypt = List<int> Function(List<int> data);
 
 class FetchHistoryParams extends Parameters {
   Keyset keyset;
@@ -160,7 +161,9 @@ class BatchHistoryResultEntry {
     return BatchHistoryResultEntry._(
         cipherKey == null
             ? object['message']
-            : decryptFunction!(cipherKey, object['message']),
+            : decryptFunction is decryptWithKey
+                ? decryptFunction(cipherKey, object['message'])
+                : decryptFunction!((object['message'] as String).codeUnits),
         Timetoken(BigInt.parse('${object['timetoken']}')),
         object['uuid'],
         MessageTypeExtension.fromInt(object['message_type']),

@@ -1,7 +1,8 @@
 import 'package:pubnub/core.dart';
 import 'package:pubnub/pubnub.dart';
 
-typedef decryptFunction = List<int> Function(CipherKey key, List<int> data);
+typedef decryptFileDataFunctionType = List<int> Function(
+    CipherKey key, List<int> data);
 
 class GenerateFileUploadUrlParams extends Parameters {
   Keyset keyset;
@@ -151,8 +152,9 @@ class DownloadFileResult extends Result {
   factory DownloadFileResult.fromJson(dynamic object,
       {CipherKey? cipherKey, Function? decryptFunction}) {
     if (cipherKey != null) {
-      return DownloadFileResult._(
-          decryptFunction!(cipherKey, object.byteList as List<int>));
+      return DownloadFileResult._(decryptFunction is decryptFileDataFunctionType
+          ? decryptFunction(cipherKey, object.byteList as List<int>)
+          : decryptFunction!(object as List<int>));
     }
     return DownloadFileResult._(object.byteList);
   }

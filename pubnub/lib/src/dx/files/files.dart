@@ -73,7 +73,10 @@ class FileDx {
             GenerateFileUploadUrlResult.fromJson(object));
 
     if (keyset.cipherKey != null || cipherKey != null) {
-      file = _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey!, file);
+      file = (keyset.cipherKey != null ||
+              !(keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey))
+          ? _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey!, file)
+          : _core.crypto.encrypt(file);
     }
 
     var fileInfo = FileInfo(
@@ -157,8 +160,12 @@ class FileDx {
 
     var messagePayload = await _core.parser.encode(message);
     if (cipherKey != null || keyset.cipherKey != null) {
-      messagePayload = await _core.parser.encode(
-          _core.crypto.encrypt(cipherKey ?? keyset.cipherKey!, messagePayload));
+      messagePayload = (cipherKey != null ||
+              !(keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey))
+          ? await _core.parser.encode(_core.crypto.encryptWithKey(
+              cipherKey ?? keyset.cipherKey!, messagePayload.codeUnits))
+          : await _core.parser
+              .encode(_core.crypto.encrypt(messagePayload.codeUnits));
     }
     if (meta != null) meta = await _core.parser.encode(meta);
     return defaultFlow(
@@ -190,7 +197,11 @@ class FileDx {
         deserialize: false,
         serialize: (object, [_]) => DownloadFileResult.fromJson(object,
             cipherKey: cipherKey ?? keyset!.cipherKey,
-            decryptFunction: _core.crypto.decryptFileData));
+            decryptFunction: cipherKey != null ||
+                    !(keyset?.cipherKey ==
+                        _core.keysets.defaultKeyset.cipherKey)
+                ? _core.crypto.decryptFileData
+                : _core.crypto.decrypt));
   }
 
   /// Lists all files in a [channel].

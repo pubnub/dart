@@ -25,18 +25,25 @@ abstract class ILegacyCryptor {
 abstract class ICryptoModule {
   void register(Core core);
 
-  String encrypt(CipherKey key, String input);
-  dynamic decrypt(CipherKey key, String input);
+  List<int> encrypt(List<int> input);
+  List<int> decrypt( List<int> input);
 
   List<int> encryptFileData(CipherKey key, List<int> input);
   List<int> decryptFileData(CipherKey key, List<int> input);
+
+  List<int> encryptWithKey(CipherKey key, List<int> input);
+  List<int> decryptWithKey(CipherKey key, List<int> input);
 }
 
 /// @nodoc
 abstract class ICryptor {
   String get identifier;
+
   EncryptedData encrypt(List<int> input);
   List<int> decrypt(EncryptedData input);
+
+  EncryptedData encryptFileData(List<int> input);
+  List<int> decryptFileData(EncryptedData input);
 }
 
 class EncryptedData {

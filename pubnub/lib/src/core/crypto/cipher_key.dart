@@ -21,4 +21,15 @@ class CipherKey {
   factory CipherKey.fromList(List<int> key) {
     return CipherKey._(key);
   }
+
+  @override
+  bool operator ==(dynamic other) {
+    if (other == null) {
+      return false;
+    }
+    if (runtimeType == other.runtimeType) {
+      return utf8.decode(data) == utf8.decode(other!.data);
+    }
+    return false;
+  }
 }

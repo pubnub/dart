@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/default.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
@@ -104,10 +106,14 @@ class ChannelHistory {
       _cursor = result.endTimetoken;
       _messages.addAll(await Future.wait(result.messages.map((message) async {
         if (_keyset.cipherKey != null) {
-          message['message'] = await _core.parser.decode(_core.crypto
-              .decrypt(_keyset.cipherKey!, message['message'] as String));
+          message['message'] = _keyset.cipherKey ==
+                  _core.keysets.defaultKeyset.cipherKey
+              ? await _core.parser.decode(utf8.decode(_core.crypto
+                  .decrypt(base64.decode(message['message'] as String))))
+              : await _core.parser.decode(utf8.decode(_core.crypto
+                  .encryptWithKey(_keyset.cipherKey!,
+                      base64.decode(message['message'] as String).toList())));
         }
-        print(message);
         return BaseMessage(
           publishedAt: Timetoken(BigInt.from(message['timetoken'])),
           content: message['message'],
@@ -203,8 +209,13 @@ class PaginatedChannelHistory {
 
     _messages.addAll(await Future.wait(result.messages.map((message) async {
       if (_keyset.cipherKey != null) {
-        message['message'] = await _core.parser.decode(_core.crypto
-            .decrypt(_keyset.cipherKey!, message['message'] as String));
+        message['message'] = _keyset.cipherKey ==
+                _core.keysets.defaultKeyset.cipherKey
+            ? await _core.parser.decode(utf8.decode(_core.crypto
+                .decrypt(base64.decode(message['message'] as String))))
+            : await _core.parser.decode(utf8.decode(_core.crypto.encryptWithKey(
+                _keyset.cipherKey!,
+                base64.decode(message['message'] as String).toList())));
       }
       return BaseMessage(
         originalMessage: message,

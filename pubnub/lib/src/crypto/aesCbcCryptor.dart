@@ -36,4 +36,14 @@ class AesCbcCryptor implements ICryptor {
   crypto.Key _getKey() {
     return crypto.Key.fromBase16(sha256.convert(cipherKey.data).toString());
   }
+
+  @override
+  List<int> decryptFileData(EncryptedData input) {
+    return decrypt(input);
+  }
+
+  @override
+  EncryptedData encryptFileData(List<int> input) {
+    return encrypt(input);
+  }
 }
