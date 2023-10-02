@@ -37,7 +37,7 @@ class Keyset {
     this.publishKey,
     this.secretKey,
     this.authKey,
-    this.cipherKey,
+    @Deprecated('Use `cipherKey` at CryptoModule') this.cipherKey,
   })  : assert((uuid == null) ^ (userId == null)),
         uuid = userId != null ? UUID(userId.value) : uuid!;
 }
