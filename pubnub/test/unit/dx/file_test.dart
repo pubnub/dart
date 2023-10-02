@@ -16,10 +16,11 @@ void main() {
       pubnub = PubNub(
         defaultKeyset: keyset,
         networking: FakeNetworkingModule(),
-        crypto: CryptoModule(
-          defaultConfiguration:
-              CryptoConfiguration(useRandomInitializationVector: false),
-        ),
+        // crypto: CryptoModule.legacyCryptoModule(CipherKey.fromUtf8('secret')),
+        // CryptoModule(
+        //   defaultConfiguration:
+        //       CryptoConfiguration(useRandomInitializationVector: false),)
+              
       );
     });
 

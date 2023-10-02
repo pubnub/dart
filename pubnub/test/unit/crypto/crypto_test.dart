@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/crypto/aesCbcCryptor.dart';
 import 'package:pubnub/src/crypto/crypto.dart';
+import 'package:pubnub/src/crypto/cryptorHeader.dart';
 
 import 'package:test/test.dart';
 
@@ -13,17 +14,17 @@ void main() {
   group('Crypto [PubNubCryptoModule]', () {
     setUp(() {
       key = CipherKey.fromUtf8('thecustomsecretkey');
-      crypto = CryptoModule();
+      crypto = CryptoModule.legacyCryptoModule(CipherKey.fromUtf8(''));
     });
 
     test('should work in two ways', () async {
       var plaintext = 'hello world';
 
-      var ciphertext = crypto.encrypt(key, plaintext);
+      var ciphertext = crypto.encryptWithKey(key, plaintext.codeUnits);
 
-      var result = crypto.decrypt(key, ciphertext);
+      var result = crypto.decryptWithKey(key, ciphertext);
 
-      expect(result, equals(plaintext));
+      expect(utf8.decode(result), equals(plaintext));
     });
 
     test('cryptoHeader tryParse/data from encrypted text', () async {
