@@ -20,7 +20,6 @@ void main() {
         // CryptoModule(
         //   defaultConfiguration:
         //       CryptoConfiguration(useRandomInitializationVector: false),)
-              
       );
     });
 

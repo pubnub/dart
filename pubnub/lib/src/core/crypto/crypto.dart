@@ -26,7 +26,7 @@ abstract class ICryptoModule {
   void register(Core core);
 
   List<int> encrypt(List<int> input);
-  List<int> decrypt( List<int> input);
+  List<int> decrypt(List<int> input);
 
   List<int> encryptFileData(CipherKey key, List<int> input);
   List<int> decryptFileData(CipherKey key, List<int> input);

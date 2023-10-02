@@ -77,9 +77,10 @@ class PubNub extends Core
             defaultKeyset: defaultKeyset,
             networking: networking ?? NetworkingModule(),
             parser: parser ?? ParserModule(),
-            crypto: crypto ??( defaultKeyset?.cipherKey != null
-                ? CryptoModule.legacyCryptoModule(defaultKeyset!.cipherKey!)
-                : LegacyCryptoModule())) {
+            crypto: crypto ??
+                (defaultKeyset?.cipherKey != null
+                    ? CryptoModule.legacyCryptoModule(defaultKeyset!.cipherKey!)
+                    : LegacyCryptoModule())) {
     batch = BatchDx(this);
     channelGroups = ChannelGroupDx(this);
     objects = ObjectsDx(this);
