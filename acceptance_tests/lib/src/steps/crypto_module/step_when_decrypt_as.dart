@@ -47,6 +47,11 @@ class StepWhenDecryptFileAs
           defaultCryptor: defaultCryptor, cryptors: [additionalCryptor]);
     }
     var fileData = File(getCryptoFilePath(file)).readAsBytesSync().toList();
-    world.scenarioContext['decryptedContent'] = cryptoModule.decrypt(fileData);
+    try {
+      world.scenarioContext['decryptedContent'] =
+          cryptoModule.decrypt(fileData);
+    } catch (e) {
+      world.latestException = e;
+    }
   }
 }

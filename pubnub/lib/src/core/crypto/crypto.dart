@@ -48,10 +48,10 @@ abstract class ICryptor {
 
 class EncryptedData {
   List<int> _data;
-  List<int>? _metadata;
+  List<int> _metadata;
 
   List<int> get data => _data;
-  List<int>? get metadata => _metadata;
+  List<int> get metadata => _metadata;
 
   EncryptedData._(this._data, this._metadata);
 

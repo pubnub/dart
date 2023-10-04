@@ -24,8 +24,12 @@ class StepWhenEncrypt extends When2WithWorld<String, String, PubNubWorld> {
                   world.scenarioContext['useRandomIntializationVector']));
       var cryptoModule = CryptoModule(defaultCryptor: cryptor);
       world.scenarioContext['cryptoModule'] = cryptoModule;
-      var encryptedData = cryptoModule.encrypt(fileData);
-      world.scenarioContext['encryptedData'] = encryptedData;
+      try {
+        var encryptedData = cryptoModule.encrypt(fileData);
+        world.scenarioContext['encryptedData'] = encryptedData;
+      } catch (e) {
+        world.latestException = e;
+      }
     }
   }
 }

@@ -25,16 +25,20 @@ class CryptorHeader {
     if (encryptedData.length >= 5) {
       version = encryptedData[4];
     } else {
-      throw CryptoException('decryption error');
+      throw CryptoException('decryption error: invalid or no header version.');
     }
-    if (version > MAX_VERSION) throw CryptoException('unknown cryptor');
+    if (version > MAX_VERSION) {
+      throw CryptoException(
+          'unknown cryptor error: header version is higher than supported versions.');
+    }
 
     var identifier;
     var pos = 5 + IDENTIFIER_LENGTH;
     if (encryptedData.length >= pos) {
       identifier = encryptedData.sublist(5, pos).toList();
     } else {
-      throw CryptoException('decryption error');
+      throw CryptoException(
+          'decryption error: invalid or No identifier found.');
     }
     var metadataLength;
     if (encryptedData.length > pos + 1) {

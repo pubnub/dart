@@ -29,28 +29,29 @@ class CryptoModule implements ICryptoModule {
         cryptors: <ICryptor>[AesCbcCryptor(cipherKey)]);
   }
 
-  factory CryptoModule.aescbcCryptoModule(CipherKey cipherKey,
+  factory CryptoModule.aesCbcCryptoModule(CipherKey cipherKey,
       {defaultCryptoConfiguration = const CryptoConfiguration()}) {
     return CryptoModule(
         defaultCryptor: AesCbcCryptor(cipherKey),
         cryptors: <ICryptor>[
           LegacyCryptor(cipherKey,
-              cryptoConfiguration: defaultCryptoConfiguration)
+              cryptoConfiguration: defaultCryptoConfiguration),
         ]);
   }
 
   @override
   List<int> encrypt(List<int> data) {
+    _emptyContentValidation(data);
     var encrypted = defaultCryptor.encrypt(data);
-    if (encrypted.metadata == null) return encrypted.data;
+    if (encrypted.metadata.isEmpty) return encrypted.data;
 
     var header =
-        CryptorHeader.from(defaultCryptor.identifier, encrypted.metadata!);
+        CryptorHeader.from(defaultCryptor.identifier, encrypted.metadata);
     var headerData = List<int>.filled(header!.length, 0);
     var pos = 0;
     headerData.setAll(pos, header.data);
-    pos = header.length - encrypted.metadata!.length;
-    headerData.setAll(pos, encrypted.metadata!);
+    pos = header.length - encrypted.metadata.length;
+    headerData.setAll(pos, encrypted.metadata);
     return [...headerData, ...encrypted.data];
   }
 
@@ -61,26 +62,30 @@ class CryptoModule implements ICryptoModule {
     var headerLength = header != null ? header.length : 0;
     var metadata = headerLength > 0
         ? data.sublist((headerLength - header!.metadataLength), headerLength)
-        : null;
+        : List<int>.empty();
     return cryptor!
         .decrypt(EncryptedData.from(data.sublist(headerLength), metadata));
   }
 
   ICryptor? _getCryptor(CryptorHeaderV1? header) {
     try {
-      var allCryptors = _getAllCryptor();
-      var cryptor = header == null
-          ? allCryptors.firstWhere((element) => element.identifier == '')
-          : allCryptors
-              .firstWhere((element) => element.identifier == header.identifier);
-      return cryptor;
+      return _getAllCryptors().firstWhere(
+        (element) => element.identifier == (header?.identifier ?? ''),
+      );
     } catch (e) {
-      throw CryptoException('unknown cryptor');
+      throw CryptoException(
+          'unknown cryptor error: none of the registered cryptor can decrypt.');
     }
   }
 
-  List<ICryptor> _getAllCryptor() {
+  List<ICryptor> _getAllCryptors() {
     return [defaultCryptor, ...cryptors ?? []];
+  }
+
+  void _emptyContentValidation(List<int> content) {
+    if (content.isEmpty) {
+      throw CryptoException('encryption error: empty content');
+    }
   }
 
   @override
@@ -95,11 +100,13 @@ class CryptoModule implements ICryptoModule {
 
   @override
   List<int> encryptFileData(CipherKey key, List<int> input) {
+    _emptyContentValidation(input);
     return legacyCryptoModule.encryptFileData(key, input);
   }
 
   @override
   List<int> encryptWithKey(CipherKey key, List<int> input) {
+    _emptyContentValidation(input);
     return legacyCryptoModule.encryptWithKey(key, input);
   }
 

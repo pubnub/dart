@@ -14,7 +14,7 @@ class StepThenOutcome extends Then1WithWorld<String, PubNubWorld> {
       this.expect(world.latestException, isNull);
     } else {
       var outcome = world.latestException;
-      this.expect(expected, contains((outcome as CryptoException).message));
+      this.expect((outcome as CryptoException).message, contains(expected));
     }
   }
 }

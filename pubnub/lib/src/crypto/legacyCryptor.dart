@@ -24,12 +24,16 @@ class LegacyCryptor implements ICryptor {
 
   @override
   List<int> decrypt(EncryptedData input) {
+    if (input.data.length <= 16) {
+      throw CryptoException('decryption error: empty content');
+    }
     return cryptor.decryptWithKey(cipherKey, input.data);
   }
 
   @override
   EncryptedData encrypt(List<int> input) {
-    return EncryptedData.from(cryptor.encryptWithKey(cipherKey, input), null);
+    return EncryptedData.from(
+        cryptor.encryptWithKey(cipherKey, input), List<int>.empty());
   }
 
   @override
@@ -37,12 +41,16 @@ class LegacyCryptor implements ICryptor {
 
   @override
   List<int> decryptFileData(EncryptedData input) {
+    if (input.data.length <= 16) {
+      throw CryptoException('decryption error: empty content');
+    }
     return cryptor.decryptFileData(cipherKey, input.data);
   }
 
   @override
   EncryptedData encryptFileData(List<int> input) {
-    return EncryptedData.from(cryptor.encryptFileData(cipherKey, input), null);
+    return EncryptedData.from(
+        cryptor.encryptFileData(cipherKey, input), List<int>.empty());
   }
 }
 
@@ -72,7 +80,9 @@ class LegacyCryptoModule implements ICryptoModule {
   List<int> decryptWithKey(CipherKey key, List<int> input,
       {CryptoConfiguration? configuration}) {
     var config = configuration ?? defaultConfiguration;
-    if (Uint8List.fromList(input.sublist(16)).isEmpty) return [];
+    if (Uint8List.fromList(input.sublist(16)).isEmpty) {
+      throw CryptoException('decryption error: empty content');
+    }
     var encrypter = crypto.Encrypter(
         crypto.AES(_getKey(key, config), mode: config.encryptionMode.value()));
     try {
