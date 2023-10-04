@@ -44,7 +44,6 @@ class CryptoModule implements ICryptoModule {
     _emptyContentValidation(data);
     var encrypted = defaultCryptor.encrypt(data);
     if (encrypted.metadata.isEmpty) return encrypted.data;
-
     var header =
         CryptorHeader.from(defaultCryptor.identifier, encrypted.metadata);
     var headerData = List<int>.filled(header!.length, 0);

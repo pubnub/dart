@@ -11,17 +11,6 @@ class CryptoException extends PubNubException {
   CryptoException(String message) : super(message);
 }
 
-/// @nodoc
-abstract class ILegacyCryptor {
-  void register(Core core);
-
-  String encrypt(CipherKey key, String input);
-  dynamic decrypt(CipherKey key, String input);
-
-  List<int> encryptFileData(CipherKey key, List<int> input);
-  List<int> decryptFileData(CipherKey key, List<int> input);
-}
-
 abstract class ICryptoModule {
   void register(Core core);
 
