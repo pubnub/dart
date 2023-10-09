@@ -291,6 +291,9 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   List<int> encryptFile(List<int> bytes,
       {CipherKey? cipherKey, Keyset? keyset, String? using}) {
+    if (cipherKey != null) {
+      return _core.crypto.encryptFileData(cipherKey, bytes);
+    }
     keyset ??= _core.keysets[using];
     return keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey
         ? _core.crypto.encrypt(bytes)
@@ -306,6 +309,9 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   List<int> decryptFile(List<int> bytes,
       {CipherKey? cipherKey, Keyset? keyset, String? using}) {
+    if (cipherKey != null) {
+      return _core.crypto.decryptFileData(cipherKey, bytes);
+    }
     keyset ??= _core.keysets[using];
     return keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey
         ? _core.crypto.decrypt(bytes)
