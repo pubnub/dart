@@ -292,8 +292,9 @@ class FileDx {
   List<int> encryptFile(List<int> bytes,
       {CipherKey? cipherKey, Keyset? keyset, String? using}) {
     keyset ??= _core.keysets[using];
-    return _core.crypto
-        .encryptFileData((cipherKey ?? keyset.cipherKey)!, bytes);
+    return keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey
+        ? _core.crypto.encrypt(bytes)
+        : _core.crypto.encryptFileData(keyset.cipherKey!, bytes);
   }
 
   /// Decrypts file content in bytes format.
@@ -306,7 +307,8 @@ class FileDx {
   List<int> decryptFile(List<int> bytes,
       {CipherKey? cipherKey, Keyset? keyset, String? using}) {
     keyset ??= _core.keysets[using];
-    return _core.crypto
-        .decryptFileData((cipherKey ?? keyset.cipherKey)!, bytes);
+    return keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey
+        ? _core.crypto.decrypt(bytes)
+        : _core.crypto.decryptFileData(keyset.cipherKey!, bytes);
   }
 }
