@@ -151,10 +151,11 @@ class DownloadFileResult extends Result {
   /// @nodoc
   factory DownloadFileResult.fromJson(dynamic object,
       {CipherKey? cipherKey, Function? decryptFunction}) {
-    if (cipherKey != null) {
+    if (cipherKey != null ||
+        !(decryptFunction is decryptFileDataFunctionType)) {
       return DownloadFileResult._(decryptFunction is decryptFileDataFunctionType
-          ? decryptFunction(cipherKey, object.byteList as List<int>)
-          : decryptFunction!(object as List<int>));
+          ? decryptFunction(cipherKey!, object.byteList as List<int>)
+          : decryptFunction!(object.byteList as List<int>));
     }
     return DownloadFileResult._(object.byteList);
   }

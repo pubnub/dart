@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/files.dart';
 
+import '../../../crypto.dart';
 import 'schema.dart';
 import 'extensions/keyset.dart';
 
@@ -72,8 +75,10 @@ class FileDx {
         serialize: (object, [_]) =>
             GenerateFileUploadUrlResult.fromJson(object));
 
-    if (keyset.cipherKey != null || cipherKey != null) {
-      file = (keyset.cipherKey != null ||
+    if (keyset.cipherKey != null ||
+        cipherKey != null ||
+        _core.crypto is CryptoModule) {
+      file = (cipherKey != null ||
               !(keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey))
           ? _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey!, file)
           : _core.crypto.encrypt(file);
@@ -159,13 +164,15 @@ class FileDx {
     Ensure(keyset.publishKey).isNotNull('publish key');
 
     var messagePayload = await _core.parser.encode(message);
-    if (cipherKey != null || keyset.cipherKey != null) {
+    if (cipherKey != null ||
+        keyset.cipherKey != null ||
+        _core.crypto is CryptoModule) {
       messagePayload = (cipherKey != null ||
               !(keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey))
-          ? await _core.parser.encode(_core.crypto.encryptWithKey(
-              cipherKey ?? keyset.cipherKey!, messagePayload.codeUnits))
-          : await _core.parser
-              .encode(_core.crypto.encrypt(messagePayload.codeUnits));
+          ? await _core.parser.encode(base64.encode(_core.crypto.encryptWithKey(
+              cipherKey ?? keyset.cipherKey!, utf8.encode(messagePayload))))
+          : await _core.parser.encode(
+              base64.encode(_core.crypto.encrypt(utf8.encode(messagePayload))));
     }
     if (meta != null) meta = await _core.parser.encode(meta);
     return defaultFlow(
@@ -199,7 +206,8 @@ class FileDx {
             cipherKey: cipherKey ?? keyset!.cipherKey,
             decryptFunction: cipherKey != null ||
                     !(keyset?.cipherKey ==
-                        _core.keysets.defaultKeyset.cipherKey)
+                        _core.keysets.defaultKeyset.cipherKey) ||
+                    !(_core.crypto is CryptoModule)
                 ? _core.crypto.decryptFileData
                 : _core.crypto.decrypt));
   }

@@ -5,6 +5,7 @@ import 'package:pubnub/src/default.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/history.dart';
 
+import '../../../crypto.dart';
 import 'channel.dart';
 
 /// Order of messages based on timetoken.
@@ -105,13 +106,13 @@ class ChannelHistory {
 
       _cursor = result.endTimetoken;
       _messages.addAll(await Future.wait(result.messages.map((message) async {
-        if (_keyset.cipherKey != null) {
+        if (_keyset.cipherKey != null || _core.crypto is CryptoModule) {
           message['message'] = _keyset.cipherKey ==
                   _core.keysets.defaultKeyset.cipherKey
-              ? await _core.parser.decode(utf8.decode(_core.crypto
-                  .decrypt(base64.decode(message['message'] as String))))
+              ? await _core.parser.decode(utf8.decode(_core.crypto.decrypt(
+                  base64.decode(message['message'] as String).toList())))
               : await _core.parser.decode(utf8.decode(_core.crypto
-                  .encryptWithKey(_keyset.cipherKey!,
+                  .decryptWithKey(_keyset.cipherKey!,
                       base64.decode(message['message'] as String).toList())));
         }
         return BaseMessage(
@@ -208,7 +209,7 @@ class PaginatedChannelHistory {
     }
 
     _messages.addAll(await Future.wait(result.messages.map((message) async {
-      if (_keyset.cipherKey != null) {
+      if (_keyset.cipherKey != null || _core.crypto is CryptoModule) {
         message['message'] = _keyset.cipherKey ==
                 _core.keysets.defaultKeyset.cipherKey
             ? await _core.parser.decode(utf8.decode(_core.crypto

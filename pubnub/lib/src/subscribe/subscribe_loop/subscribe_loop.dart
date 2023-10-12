@@ -5,6 +5,7 @@ import 'package:async/async.dart';
 import 'package:pubnub/core.dart';
 import 'subscribe_loop_state.dart';
 import 'subscribe_fiber.dart';
+import '../../../crypto.dart';
 import '../envelope.dart';
 import '../_endpoints/subscribe.dart';
 
@@ -127,21 +128,21 @@ class SubscribeLoop {
             'Result: timetoken ${result.timetoken}, new messages: ${result.messages.length}');
 
         yield* Stream.fromIterable(result.messages).asyncMap((object) async {
-          if (state.keyset.cipherKey != null &&
+          if ((state.keyset.cipherKey != null || core.crypto is CryptoModule) &&
               (object['e'] == null || object['e'] == 4 || object['e'] == 0) &&
               !object['c'].endsWith('-pnpres')) {
             try {
               _logger.info('Decrypting message...');
-              object['d'] =
-                  state.keyset.cipherKey == core.keysets.defaultKeyset.cipherKey
-                      ? await core.parser.decode(utf8.decode(core.crypto
-                          .decrypt(base64.decode(object['d'] as String))))
-                      : await core.parser.decode(utf8.decode(core.crypto
-                          .decryptWithKey(state.keyset.cipherKey!,
-                              base64.decode(object['d']).toList())));
+              object['d'] = state.keyset.cipherKey ==
+                      core.keysets.defaultKeyset.cipherKey
+                  ? await core.parser.decode(utf8.decode(core.crypto
+                      .decrypt(base64.decode(object['d'] as String).toList())))
+                  : await core.parser.decode(utf8.decode(core.crypto
+                      .decryptWithKey(state.keyset.cipherKey!,
+                          base64.decode(object['d'] as String).toList())));
             } catch (e) {
               throw PubNubException(
-                  'Can not decrypt the message payload. Please check keyset configuration.');
+                  'Can not decrypt the message payload. Please check keyset or crypto configuration');
             }
           }
           return Envelope.fromJson(object);

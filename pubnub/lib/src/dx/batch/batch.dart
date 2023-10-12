@@ -1,8 +1,8 @@
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/default.dart';
-
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/history.dart';
+import '../../../crypto.dart';
 
 export 'package:pubnub/src/dx/_endpoints/history.dart'
     show BatchHistoryResult, BatchHistoryResultEntry, CountMessagesResult;
@@ -56,15 +56,17 @@ class BatchDx {
         includeUUID: includeUUID);
 
     return defaultFlow<BatchHistoryParams, BatchHistoryResult>(
-        keyset: keyset,
-        core: _core,
-        params: params,
-        serialize: (object, [_]) => BatchHistoryResult.fromJson(object,
-            cipherKey: keyset?.cipherKey,
-            decryptFunction:
-                keyset?.cipherKey == _core.keysets.defaultKeyset.cipherKey
-                    ? _core.crypto.decrypt
-                    : _core.crypto.decryptWithKey));
+      keyset: keyset,
+      core: _core,
+      params: params,
+      serialize: (object, [_]) => BatchHistoryResult.fromJson(object,
+          cipherKey: keyset?.cipherKey,
+          decryptFunction:
+              (keyset?.cipherKey == _core.keysets.defaultKeyset.cipherKey &&
+                      _core.crypto is CryptoModule)
+                  ? _core.crypto.decrypt
+                  : _core.crypto.decryptWithKey),
+    );
   }
 
   /// Get multiple channels' message count using one call.
