@@ -49,8 +49,12 @@
 </header>
 <main>
 
-  <div id="dartdoc-main-content" class="main-content">
-    
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar=""
+      data-below-sidebar="pubnub.crypto&#47;pubnub.crypto-library-sidebar.html">
+      
       <div>
 <h1><span class="kind-library">pubnub.crypto</span> library 
  
@@ -68,6 +72,16 @@
       <h2>Classes</h2>
 
       <dl>
+        <dt id="AesCbcCryptor">
+  <span class="name "><a href="../pubnub.crypto/AesCbcCryptor-class.html">AesCbcCryptor</a></span> 
+
+</dt>
+<dd>
+  AesCbcCryptor is new and enhanced cryptor to encrypt/decrypt
+PubNub messages.
+It's always preferred to use this cryptor instead old cryptor.
+</dd>
+
         <dt id="CryptoConfiguration">
   <span class="name "><a href="../pubnub.crypto/CryptoConfiguration-class.html">CryptoConfiguration</a></span> 
 
@@ -81,7 +95,17 @@
 
 </dt>
 <dd>
-  Default cryptography module used in PubNub SDK.
+  CryptoModule is responsible for encryption and decryption
+of PubNub messages.
+</dd>
+
+        <dt id="LegacyCryptor">
+  <span class="name "><a href="../pubnub.crypto/LegacyCryptor-class.html">LegacyCryptor</a></span> 
+
+</dt>
+<dd>
+  Legacy cryptor exists so that SDK will be able to decrypt old contents
+Which encrypted in past
 </dd>
 
       </dl>
@@ -112,15 +136,16 @@
   </div> <!-- /.main-content -->
 
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-    <header id="header-search-sidebar" class="hidden-l">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../index.html">pubnub</a></li>
-  <li class="self-crumb">pubnub.crypto library</li>
+    <li><a href="../index.html">pubnub</a></li>
+    <li class="self-crumb">pubnub.crypto library</li>
 </ol>
 
 
@@ -146,22 +171,6 @@
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
     <h5>pubnub.crypto library</h5>
-    <ol>
-      <li class="section-title"><a href="../pubnub.crypto/pubnub.crypto-library.html#classes">Classes</a></li>
-        <li><a href="../pubnub.crypto/CryptoConfiguration-class.html">CryptoConfiguration</a></li>
-        <li><a href="../pubnub.crypto/CryptoModule-class.html">CryptoModule</a></li>
-
-
-
-
-
-
-      <li class="section-title"><a href="../pubnub.crypto/pubnub.crypto-library.html#enums">Enums</a></li>
-        <li><a href="../pubnub.crypto/EncryptionMode.html">EncryptionMode</a></li>
-
-
-</ol>
-
   </div><!--/sidebar-offcanvas-right-->
 
 </main>
@@ -169,7 +178,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.2.4
+      4.3.0
   </span>
 
   
