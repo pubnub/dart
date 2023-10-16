@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/files.dart';
 
+import '../../../crypto.dart';
 import 'schema.dart';
 import 'extensions/keyset.dart';
 
@@ -72,8 +75,13 @@ class FileDx {
         serialize: (object, [_]) =>
             GenerateFileUploadUrlResult.fromJson(object));
 
-    if (keyset.cipherKey != null || cipherKey != null) {
-      file = _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey!, file);
+    if (keyset.cipherKey != null ||
+        cipherKey != null ||
+        _core.crypto is CryptoModule) {
+      file = (cipherKey != null ||
+              !(keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey))
+          ? _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey!, file)
+          : _core.crypto.encrypt(file);
     }
 
     var fileInfo = FileInfo(
@@ -156,9 +164,15 @@ class FileDx {
     Ensure(keyset.publishKey).isNotNull('publish key');
 
     var messagePayload = await _core.parser.encode(message);
-    if (cipherKey != null || keyset.cipherKey != null) {
-      messagePayload = await _core.parser.encode(
-          _core.crypto.encrypt(cipherKey ?? keyset.cipherKey!, messagePayload));
+    if (cipherKey != null ||
+        keyset.cipherKey != null ||
+        _core.crypto is CryptoModule) {
+      messagePayload = (cipherKey != null ||
+              !(keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey))
+          ? await _core.parser.encode(base64.encode(_core.crypto.encryptWithKey(
+              cipherKey ?? keyset.cipherKey!, utf8.encode(messagePayload))))
+          : await _core.parser.encode(
+              base64.encode(_core.crypto.encrypt(utf8.encode(messagePayload))));
     }
     if (meta != null) meta = await _core.parser.encode(meta);
     return defaultFlow(
@@ -190,7 +204,12 @@ class FileDx {
         deserialize: false,
         serialize: (object, [_]) => DownloadFileResult.fromJson(object,
             cipherKey: cipherKey ?? keyset!.cipherKey,
-            decryptFunction: _core.crypto.decryptFileData));
+            decryptFunction: cipherKey != null ||
+                    !(keyset?.cipherKey ==
+                        _core.keysets.defaultKeyset.cipherKey) ||
+                    !(_core.crypto is CryptoModule)
+                ? _core.crypto.decryptFileData
+                : _core.crypto.decrypt));
   }
 
   /// Lists all files in a [channel].
@@ -280,9 +299,13 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   List<int> encryptFile(List<int> bytes,
       {CipherKey? cipherKey, Keyset? keyset, String? using}) {
+    if (cipherKey != null) {
+      return _core.crypto.encryptFileData(cipherKey, bytes);
+    }
     keyset ??= _core.keysets[using];
-    return _core.crypto
-        .encryptFileData((cipherKey ?? keyset.cipherKey)!, bytes);
+    return keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey
+        ? _core.crypto.encrypt(bytes)
+        : _core.crypto.encryptFileData(keyset.cipherKey!, bytes);
   }
 
   /// Decrypts file content in bytes format.
@@ -294,8 +317,12 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   List<int> decryptFile(List<int> bytes,
       {CipherKey? cipherKey, Keyset? keyset, String? using}) {
+    if (cipherKey != null) {
+      return _core.crypto.decryptFileData(cipherKey, bytes);
+    }
     keyset ??= _core.keysets[using];
-    return _core.crypto
-        .decryptFileData((cipherKey ?? keyset.cipherKey)!, bytes);
+    return keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey
+        ? _core.crypto.decrypt(bytes)
+        : _core.crypto.decryptFileData(keyset.cipherKey!, bytes);
   }
 }

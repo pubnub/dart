@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:pubnub/crypto.dart';
 import 'package:test/test.dart';
 
 import 'package:pubnub/pubnub.dart';
@@ -10,16 +9,12 @@ part 'fixtures/files.dart';
 void main() {
   late PubNub pubnub;
   var keyset =
-      Keyset(subscribeKey: 'test', publishKey: 'test', uuid: UUID('test'));
+      Keyset(subscribeKey: 'test', publishKey: 'test', userId: UserId('test'));
   group('DX [file]', () {
     setUp(() {
       pubnub = PubNub(
         defaultKeyset: keyset,
         networking: FakeNetworkingModule(),
-        crypto: CryptoModule(
-          defaultConfiguration:
-              CryptoConfiguration(useRandomInitializationVector: false),
-        ),
       );
     });
 

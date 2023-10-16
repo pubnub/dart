@@ -28,6 +28,8 @@ export 'src/core/exceptions.dart'
 export 'src/core/policies/retry_policy.dart'
     show RetryPolicy, LinearRetryPolicy, ExponentialRetryPolicy;
 export 'src/core/crypto/crypto.dart' show CipherKey;
+export 'src/crypto/crypto.dart' show CryptoModule;
+export 'src/crypto/cryptoConfiguration.dart' show CryptoConfiguration;
 
 // DX
 export 'src/dx/_utils/utils.dart' show InvariantException;

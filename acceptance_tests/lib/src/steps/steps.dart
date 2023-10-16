@@ -1,6 +1,7 @@
 import 'package:gherkin/gherkin.dart';
 
 import '../world.dart';
+import 'crypto_module/crypto_module_steps.dart';
 import 'step_given_demo_keyset.dart';
 import 'pam_v3/pamv3_steps.dart' show pamv3Steps;
 import 'step_given_channel.dart';
@@ -23,6 +24,7 @@ import 'steps_files.dart';
 import 'steps_push.dart';
 
 final List<StepDefinitionGeneric<PubNubWorld>> steps = [
+  ...cryptoSteps,
   ...pamv3Steps,
   StepGivenChannel(),
   StepGivenDemoKeyset(),

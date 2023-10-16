@@ -1,5 +1,12 @@
 ---
 changelog:
+  - date: 2023-10-16
+    version: v4.3.0
+    changes:
+      - type: feature
+        text: "Add crypto module that allows configure SDK to encrypt and decrypt messages."
+      - type: bug
+        text: "Improved security of crypto implementation by adding enhanced AES-CBC cryptor."
   - date: 2023-07-27
     version: v4.2.4
     changes:
@@ -425,7 +432,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "4.2.4"
+version: "4.3.0"
 sdks:
   -
     full-name: PubNub Dart SDK
