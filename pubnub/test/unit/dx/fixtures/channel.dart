@@ -50,3 +50,6 @@ final _historyMessagesFetchResponse = '''[
   0,
   0
 ]''';
+
+final _unEncryptedMessageErrorMessage =
+    'Can not decrypt the message payload. Please check keyset or crypto configuration';

@@ -7,9 +7,15 @@ part './fixtures/channel.dart';
 
 void main() {
   PubNub? pubnub;
+  PubNub? pubnubWithCrypto;
   group('DX [channel]', () {
     setUp(() {
       pubnub = PubNub(
+          defaultKeyset: Keyset(
+              subscribeKey: 'test', publishKey: 'test', uuid: UUID('test')),
+          networking: FakeNetworkingModule());
+      pubnubWithCrypto = PubNub(
+          crypto: CryptoModule.aesCbcCryptoModule(CipherKey.fromUtf8('enigma')),
           defaultKeyset: Keyset(
               subscribeKey: 'test', publishKey: 'test', uuid: UUID('test')),
           networking: FakeNetworkingModule());
@@ -107,6 +113,22 @@ void main() {
           await history.fetch();
 
           expect(history.messages.length, equals(1));
+        });
+
+        test('#fetch with crypto configured', () async {
+          channel = pubnubWithCrypto!.channel('test');
+          var history = channel.messages();
+          when(
+            method: 'GET',
+            path:
+                'v2/history/sub-key/test/channel/test?count=100&reverse=true&include_token=true&uuid=test&pnsdk=PubNub-Dart%2F${PubNub.version}',
+          ).then(status: 200, body: _historyMessagesFetchResponse);
+
+          await history.fetch();
+
+          expect(history.messages.length, equals(1));
+          expect(history.messages[0].error,
+              equals(_unEncryptedMessageErrorMessage));
         });
       });
 

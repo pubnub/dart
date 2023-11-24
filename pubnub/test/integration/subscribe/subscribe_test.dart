@@ -90,6 +90,33 @@ void main() {
       await subscriber.expectMessage(channel, message);
     });
 
+    test('with crypto configuration and plain message', () async {
+      var channel = 'test-${DateTime.now().millisecondsSinceEpoch}';
+      var message = 'hello pubnub!';
+      pubnub = PubNub(
+        defaultKeyset: Keyset(
+            subscribeKey: SUBSCRIBE_KEY,
+            publishKey: PUBLISH_KEY,
+            userId: UserId('dart-test')),
+      );
+      var pubnubWithCrypto = PubNub(
+        crypto:
+            CryptoModule.aesCbcCryptoModule(CipherKey.fromUtf8('cipherKey')),
+        defaultKeyset: Keyset(
+          subscribeKey: SUBSCRIBE_KEY,
+          publishKey: PUBLISH_KEY,
+          userId: UserId('dart-test'),
+        ),
+      );
+      subscriber = Subscriber.init(pubnubWithCrypto, SUBSCRIBE_KEY);
+      subscriber.subscribe(channel);
+      await Future.delayed(Duration(seconds: 2));
+      await pubnub.publish(channel, message);
+
+      await subscriber.expectMessage(channel, message,
+          'Can not decrypt the message payload. Please check keyset or crypto configuration.');
+    });
+
     tearDown(() async {
       await subscriber.cleanup();
       await pubnub.unsubscribeAll();

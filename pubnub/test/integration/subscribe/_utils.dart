@@ -36,19 +36,20 @@ class Subscriber {
     return subscription?.cancel();
   }
 
-  Future<void> expectMessage(String channel, String message) {
+  Future<void> expectMessage(String channel, String message, [String? error]) {
     var actual = queue?.next;
 
-    return expectLater(
-        actual, completion(SubscriptionMessageMatcher(channel, message)));
+    return expectLater(actual,
+        completion(SubscriptionMessageMatcher(channel, message, error)));
   }
 }
 
 class SubscriptionMessageMatcher extends Matcher {
   final String expectedMessage;
   final String channel;
+  String? error;
 
-  SubscriptionMessageMatcher(this.channel, this.expectedMessage);
+  SubscriptionMessageMatcher(this.channel, this.expectedMessage, this.error);
 
   @override
   Description describe(Description description) =>
@@ -64,5 +65,14 @@ class SubscriptionMessageMatcher extends Matcher {
 
   @override
   bool matches(item, Map matchState) =>
-      item.channel == channel && item.payload == expectedMessage;
+      item.channel == channel &&
+      item.payload == expectedMessage &&
+      errorMatch(item);
+
+  bool errorMatch(envelope) {
+    if (!(error?.isEmpty ?? true)) {
+      return error == (envelope as Envelope).error;
+    }
+    return true;
+  }
 }
