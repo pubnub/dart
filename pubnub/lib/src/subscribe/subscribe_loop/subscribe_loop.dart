@@ -140,9 +140,12 @@ class SubscribeLoop {
                   : await core.parser.decode(utf8.decode(core.crypto
                       .decryptWithKey(state.keyset.cipherKey!,
                           base64.decode(object['d'] as String).toList())));
+            } on CryptoException catch (e) {
+              object['error'] =
+                  'Can not decrypt the message payload. Please check keyset or crypto configuration.\n ${e.message}';
             } catch (e) {
-              throw PubNubException(
-                  'Can not decrypt the message payload. Please check keyset or crypto configuration');
+              object['error'] =
+                  'Can not decrypt the message payload. Please check keyset or crypto configuration.';
             }
           }
           return Envelope.fromJson(object);
