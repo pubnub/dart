@@ -127,8 +127,7 @@ void main() {
           await history.fetch();
 
           expect(history.messages.length, equals(1));
-          expect(history.messages[0].error,
-              equals(_unEncryptedMessageErrorMessage));
+          expect(history.messages[0].error, isException);
         });
       });
 

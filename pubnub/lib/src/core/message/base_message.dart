@@ -16,7 +16,7 @@ class BaseMessage {
 
   /// If message decryption failed then [error]
   /// field contains error message
-  final String? error;
+  final PubNubException? error;
 
   /// Alias for `publishedAt`.
   @deprecated

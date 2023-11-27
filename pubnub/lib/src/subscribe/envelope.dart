@@ -19,7 +19,7 @@ class Envelope extends BaseMessage {
   final dynamic userMeta;
 
   @override
-  String? error;
+  PubNubException? error;
 
   dynamic get payload => content;
 

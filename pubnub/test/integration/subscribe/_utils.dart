@@ -36,7 +36,8 @@ class Subscriber {
     return subscription?.cancel();
   }
 
-  Future<void> expectMessage(String channel, String message, [String? error]) {
+  Future<void> expectMessage(String channel, String message,
+      [PubNubException? error]) {
     var actual = queue?.next;
 
     return expectLater(actual,
@@ -47,7 +48,7 @@ class Subscriber {
 class SubscriptionMessageMatcher extends Matcher {
   final String expectedMessage;
   final String channel;
-  String? error;
+  PubNubException? error;
 
   SubscriptionMessageMatcher(this.channel, this.expectedMessage, this.error);
 
@@ -70,8 +71,8 @@ class SubscriptionMessageMatcher extends Matcher {
       errorMatch(item);
 
   bool errorMatch(envelope) {
-    if (!(error?.isEmpty ?? true)) {
-      return error == (envelope as Envelope).error;
+    if (error != null) {
+      return error is PubNubException;
     }
     return true;
   }

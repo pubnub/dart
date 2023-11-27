@@ -113,8 +113,11 @@ void main() {
       await Future.delayed(Duration(seconds: 2));
       await pubnub.publish(channel, message);
 
-      await subscriber.expectMessage(channel, message,
-          'Can not decrypt the message payload. Please check keyset or crypto configuration.');
+      await subscriber.expectMessage(
+          channel,
+          message,
+          PubNubException(
+              'Can not decrypt the message payload. Please check keyset or crypto configuration.'));
     });
 
     tearDown(() async {

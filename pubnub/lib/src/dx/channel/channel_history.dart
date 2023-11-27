@@ -106,9 +106,12 @@ class ChannelHistory {
 
       _cursor = result.endTimetoken;
       _messages.addAll(await Future.wait(result.messages.map((message) async {
-        String? errorMessage;
+        PubNubException? error;
         if (_keyset.cipherKey != null || _core.crypto is CryptoModule) {
           try {
+            if (!(message['message'] is String)) {
+              throw FormatException('not a base64 string.');
+            }
             message['message'] = _keyset.cipherKey ==
                     _core.keysets.defaultKeyset.cipherKey
                 ? await _core.parser.decode(utf8.decode(_core.crypto.decrypt(
@@ -116,19 +119,18 @@ class ChannelHistory {
                 : await _core.parser.decode(utf8.decode(_core.crypto
                     .decryptWithKey(_keyset.cipherKey!,
                         base64.decode(message['message'] as String).toList())));
-          } on CryptoException catch (e) {
-            errorMessage =
-                'Can not decrypt the message payload. Please check keyset or crypto configuration \n ${e.message}';
-          } catch (e) {
-            errorMessage =
-                'Can not decrypt the message payload. Please check keyset or crypto configuration';
+          } on PubNubException catch (e) {
+            error = e;
+          } on FormatException catch (e) {
+            error = PubNubException(
+                'Can not decrypt the message payload. Please check keyset or crypto configuration. ${e.message}');
           }
         }
         return BaseMessage(
             publishedAt: Timetoken(BigInt.from(message['timetoken'])),
             content: message['message'],
             originalMessage: message,
-            error: errorMessage);
+            error: error);
       })));
     } while (_cursor.value != BigInt.from(0));
   }
@@ -218,9 +220,12 @@ class PaginatedChannelHistory {
     }
 
     _messages.addAll(await Future.wait(result.messages.map((message) async {
-      String? errorMessage;
+      PubNubException? error;
       if (_keyset.cipherKey != null || _core.crypto is CryptoModule) {
         try {
+          if (!(message['message'] is String)) {
+            throw FormatException('not a base64 string.');
+          }
           message['message'] = _keyset.cipherKey ==
                   _core.keysets.defaultKeyset.cipherKey
               ? await _core.parser.decode(utf8.decode(_core.crypto
@@ -228,19 +233,18 @@ class PaginatedChannelHistory {
               : await _core.parser.decode(utf8.decode(_core.crypto
                   .encryptWithKey(_keyset.cipherKey!,
                       base64.decode(message['message'] as String).toList())));
-        } on CryptoException catch (e) {
-          errorMessage =
-              'Can not decrypt the message payload. Please check keyset or crypto configuration.\n ${e.message}';
-        } catch (e) {
-          errorMessage =
-              'Can not decrypt the message payload. Please check keyset or crypto configuration';
+        } on PubNubException catch (e) {
+          error = e;
+        } on FormatException catch (e) {
+          error = PubNubException(
+              'Can not decrypt the message payload. Please check keyset or crypto configuration. ${e.message}');
         }
       }
       return BaseMessage(
           originalMessage: message,
           publishedAt: Timetoken(BigInt.from(message['timetoken'])),
           content: message['message'],
-          error: errorMessage);
+          error: error);
     })));
 
     return result;
