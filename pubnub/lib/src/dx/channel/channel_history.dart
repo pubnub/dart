@@ -119,7 +119,7 @@ class ChannelHistory {
                 : await _core.parser.decode(utf8.decode(_core.crypto
                     .decryptWithKey(_keyset.cipherKey!,
                         base64.decode(message['message'] as String).toList())));
-          } on PubNubException catch (e) {
+          } on CryptoException catch (e) {
             error = e;
           } on FormatException catch (e) {
             error = PubNubException(
@@ -233,7 +233,7 @@ class PaginatedChannelHistory {
               : await _core.parser.decode(utf8.decode(_core.crypto
                   .encryptWithKey(_keyset.cipherKey!,
                       base64.decode(message['message'] as String).toList())));
-        } on PubNubException catch (e) {
+        } on CryptoException catch (e) {
           error = e;
         } on FormatException catch (e) {
           error = PubNubException(
