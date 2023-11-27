@@ -15,7 +15,7 @@ class BaseMessage {
   final dynamic originalMessage;
 
   /// If message decryption failed then [error]
-  /// field contains error message
+  /// field contains PubNubExcpeption
   final PubNubException? error;
 
   /// Alias for `publishedAt`.
