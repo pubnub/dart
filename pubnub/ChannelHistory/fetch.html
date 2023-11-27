@@ -63,7 +63,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/3.1.3/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.2.1/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
 <span class="name ">fetch</span>(<wbr>)
 
       
@@ -102,20 +102,31 @@
 
     _cursor = result.endTimetoken;
     _messages.addAll(await Future.wait(result.messages.map((message) async {
+      PubNubException? error;
       if (_keyset.cipherKey != null || _core.crypto is CryptoModule) {
-        message[&#39;message&#39;] = _keyset.cipherKey ==
-                _core.keysets.defaultKeyset.cipherKey
-            ? await _core.parser.decode(utf8.decode(_core.crypto.decrypt(
-                base64.decode(message[&#39;message&#39;] as String).toList())))
-            : await _core.parser.decode(utf8.decode(_core.crypto
-                .decryptWithKey(_keyset.cipherKey!,
-                    base64.decode(message[&#39;message&#39;] as String).toList())));
+        try {
+          if (!(message[&#39;message&#39;] is String)) {
+            throw FormatException(&#39;not a base64 string.&#39;);
+          }
+          message[&#39;message&#39;] = _keyset.cipherKey ==
+                  _core.keysets.defaultKeyset.cipherKey
+              ? await _core.parser.decode(utf8.decode(_core.crypto.decrypt(
+                  base64.decode(message[&#39;message&#39;] as String).toList())))
+              : await _core.parser.decode(utf8.decode(_core.crypto
+                  .decryptWithKey(_keyset.cipherKey!,
+                      base64.decode(message[&#39;message&#39;] as String).toList())));
+        } on CryptoException catch (e) {
+          error = e;
+        } on FormatException catch (e) {
+          error = PubNubException(
+              &#39;Can not decrypt the message payload. Please check keyset or crypto configuration. ${e.message}&#39;);
+        }
       }
       return BaseMessage(
-        publishedAt: Timetoken(BigInt.from(message[&#39;timetoken&#39;])),
-        content: message[&#39;message&#39;],
-        originalMessage: message,
-      );
+          publishedAt: Timetoken(BigInt.from(message[&#39;timetoken&#39;])),
+          content: message[&#39;message&#39;],
+          originalMessage: message,
+          error: error);
     })));
   } while (_cursor.value != BigInt.from(0));
 }</code></pre>
@@ -141,6 +152,7 @@
 
 
     <h5>ChannelHistory class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
@@ -151,7 +163,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.3.0
+      4.3.1
   </span>
 
   
