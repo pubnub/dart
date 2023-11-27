@@ -14,6 +14,10 @@ class BaseMessage {
   /// Original JSON message received from the server.
   final dynamic originalMessage;
 
+  /// If message decryption failed then [error]
+  /// field contains PubNubExcpeption
+  final PubNubException? error;
+
   /// Alias for `publishedAt`.
   @deprecated
   Timetoken get timetoken => publishedAt;
@@ -26,5 +30,6 @@ class BaseMessage {
     required this.publishedAt,
     required this.content,
     required this.originalMessage,
+    this.error,
   });
 }

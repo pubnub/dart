@@ -154,25 +154,48 @@ class BatchHistoryResultEntry {
   /// Otherwise, it will be `null`.
   Map<String, dynamic>? meta;
 
+  /// This field will contain PubNubException if message decryption is failed
+  /// for given `message`.
+  PubNubException? error;
+
   BatchHistoryResultEntry._(this.message, this.timetoken, this.uuid,
-      this.messageType, this.actions, this.meta);
+      this.messageType, this.actions, this.meta, this.error);
 
   /// @nodoc
   factory BatchHistoryResultEntry.fromJson(Map<String, dynamic> object,
       {CipherKey? cipherKey, Function? decryptFunction}) {
+    var message;
+    PubNubException? error;
+    if (cipherKey == null && decryptFunction is decryptWithKey) {
+      message = object['message'];
+    } else {
+      try {
+        if (!(object['message'] is String)) {
+          throw FormatException('not a base64 string.');
+        }
+        message = decryptFunction is decryptWithKey
+            ? json.decode(utf8.decode(decryptFunction(cipherKey!,
+                base64.decode(object['message'] as String).toList())))
+            : json.decode(utf8.decode(decryptFunction!(
+                base64.decode(object['message'] as String).toList())));
+      } on CryptoException catch (e) {
+        message = object['message'];
+        error = e;
+      } on FormatException catch (e) {
+        message = object['message'];
+        error = PubNubException(
+            'Can not decrypt the message payload. Please check keyset or crypto configuration. ${e.message}');
+      }
+    }
+
     return BatchHistoryResultEntry._(
-        (cipherKey == null && decryptFunction is decryptWithKey)
-            ? object['message']
-            : (decryptFunction is decryptWithKey
-                ? json.decode(utf8.decode(decryptFunction(cipherKey!,
-                    base64.decode(object['message'] as String).toList())))
-                : json.decode(utf8.decode(decryptFunction!(
-                    base64.decode(object['message'] as String).toList())))),
+        message,
         Timetoken(BigInt.parse('${object['timetoken']}')),
         object['uuid'],
         MessageTypeExtension.fromInt(object['message_type']),
         object['actions'],
-        object['meta'] == '' ? null : object['meta']);
+        object['meta'] == '' ? null : object['meta'],
+        error);
   }
 }
 

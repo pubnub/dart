@@ -1,3 +1,9 @@
+## v4.3.1
+November 27 2023
+
+#### Fixed
+- Handle unencrypted message while getting messages with cryptoModule configured.
+
 ## v4.3.0
 October 16 2023
 

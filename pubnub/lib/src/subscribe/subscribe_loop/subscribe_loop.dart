@@ -133,6 +133,9 @@ class SubscribeLoop {
               !object['c'].endsWith('-pnpres')) {
             try {
               _logger.info('Decrypting message...');
+              if (!(object['d'] is String)) {
+                throw FormatException('not a base64 String');
+              }
               object['d'] = state.keyset.cipherKey ==
                       core.keysets.defaultKeyset.cipherKey
                   ? await core.parser.decode(utf8.decode(core.crypto
@@ -140,9 +143,11 @@ class SubscribeLoop {
                   : await core.parser.decode(utf8.decode(core.crypto
                       .decryptWithKey(state.keyset.cipherKey!,
                           base64.decode(object['d'] as String).toList())));
-            } catch (e) {
-              throw PubNubException(
-                  'Can not decrypt the message payload. Please check keyset or crypto configuration');
+            } on PubNubException catch (e) {
+              object['error'] = e;
+            } on FormatException catch (e) {
+              object['error'] = PubNubException(
+                  'Can not decrypt the message payload. Please check keyset or crypto configuration. ${e.message}');
             }
           }
           return Envelope.fromJson(object);

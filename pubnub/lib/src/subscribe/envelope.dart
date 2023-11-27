@@ -18,6 +18,9 @@ class Envelope extends BaseMessage {
 
   final dynamic userMeta;
 
+  @override
+  PubNubException? error;
+
   dynamic get payload => content;
 
   Envelope._(
@@ -33,12 +36,13 @@ class Envelope extends BaseMessage {
       required this.originalTimetoken,
       required this.originalRegion,
       required this.region,
-      required this.userMeta})
+      required this.userMeta,
+      this.error})
       : super(
-          content: content,
-          originalMessage: originalMessage,
-          publishedAt: publishedAt,
-        );
+            content: content,
+            originalMessage: originalMessage,
+            publishedAt: publishedAt,
+            error: error);
 
   /// @nodoc
   factory Envelope.fromJson(dynamic object) {
@@ -58,6 +62,7 @@ class Envelope extends BaseMessage {
       publishedAt: Timetoken(BigInt.parse('${object['p']['t']}')),
       region: object['p']['r'],
       userMeta: object['u'],
+      error: object['error'],
     );
   }
 }

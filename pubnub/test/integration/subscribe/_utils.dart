@@ -36,19 +36,21 @@ class Subscriber {
     return subscription?.cancel();
   }
 
-  Future<void> expectMessage(String channel, String message) {
+  Future<void> expectMessage(String channel, String message,
+      [PubNubException? error]) {
     var actual = queue?.next;
 
-    return expectLater(
-        actual, completion(SubscriptionMessageMatcher(channel, message)));
+    return expectLater(actual,
+        completion(SubscriptionMessageMatcher(channel, message, error)));
   }
 }
 
 class SubscriptionMessageMatcher extends Matcher {
   final String expectedMessage;
   final String channel;
+  PubNubException? error;
 
-  SubscriptionMessageMatcher(this.channel, this.expectedMessage);
+  SubscriptionMessageMatcher(this.channel, this.expectedMessage, this.error);
 
   @override
   Description describe(Description description) =>
@@ -64,5 +66,14 @@ class SubscriptionMessageMatcher extends Matcher {
 
   @override
   bool matches(item, Map matchState) =>
-      item.channel == channel && item.payload == expectedMessage;
+      item.channel == channel &&
+      item.payload == expectedMessage &&
+      errorMatch(item);
+
+  bool errorMatch(envelope) {
+    if (error != null) {
+      return error is PubNubException;
+    }
+    return true;
+  }
 }
