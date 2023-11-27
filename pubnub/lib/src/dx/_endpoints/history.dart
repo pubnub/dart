@@ -154,9 +154,9 @@ class BatchHistoryResultEntry {
   /// Otherwise, it will be `null`.
   Map<String, dynamic>? meta;
 
-  /// Error message. this will contain information if message decryption is failed
+  /// This field will contain PubNubException if message decryption is failed
   /// for given `message`.
-  String? error;
+  PubNubException? error;
 
   BatchHistoryResultEntry._(this.message, this.timetoken, this.uuid,
       this.messageType, this.actions, this.meta, this.error);
@@ -165,11 +165,14 @@ class BatchHistoryResultEntry {
   factory BatchHistoryResultEntry.fromJson(Map<String, dynamic> object,
       {CipherKey? cipherKey, Function? decryptFunction}) {
     var message;
-    String? errorMessage;
+    PubNubException? error;
     if (cipherKey == null && decryptFunction is decryptWithKey) {
       message = object['message'];
     } else {
       try {
+        if (!(object['message'] is String)) {
+          throw FormatException('not a base64 string.');
+        }
         message = decryptFunction is decryptWithKey
             ? json.decode(utf8.decode(decryptFunction(cipherKey!,
                 base64.decode(object['message'] as String).toList())))
@@ -177,12 +180,11 @@ class BatchHistoryResultEntry {
                 base64.decode(object['message'] as String).toList())));
       } on CryptoException catch (e) {
         message = object['message'];
-        errorMessage =
-            'Can not decrypt the message payload. Please check keyset or crypto configuration \n ${e.message}';
-      } catch (e) {
+        error = e;
+      } on FormatException catch (e) {
         message = object['message'];
-        errorMessage =
-            'Can not decrypt the message payload. Please check keyset or crypto configuration';
+        error = PubNubException(
+            'Can not decrypt the message payload. Please check keyset or crypto configuration. ${e.message}');
       }
     }
 
@@ -193,7 +195,7 @@ class BatchHistoryResultEntry {
         MessageTypeExtension.fromInt(object['message_type']),
         object['actions'],
         object['meta'] == '' ? null : object['meta'],
-        errorMessage);
+        error);
   }
 }
 
