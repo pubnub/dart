@@ -8,7 +8,7 @@ import '_fake_net.dart';
 import '_utils.dart';
 
 void main() {
-  PubNub pubnub;
+  late PubNub pubnub;
 
   setUp(() {
     pubnub = PubNub(
@@ -37,7 +37,7 @@ void main() {
       path:
           '/v2/presence/sub_key/demo/channel/,/leave?uuid=pubnub_flutter_test',
       method: 'GET',
-    ).then(status: 200, body: '{}');
+    ).then(status: 200, body: '{ "action": "leave" }');
 
     when(
       path:
@@ -49,7 +49,7 @@ void main() {
       path:
           '/v2/presence/sub_key/demo/channel/,/leave?uuid=pubnub_flutter_test',
       method: 'GET',
-    ).then(status: 200, body: '{}');
+    ).then(status: 200, body: '{ "action": "leave" }');
 
     await buildWidget(
       PresenceWidget(

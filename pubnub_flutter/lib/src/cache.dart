@@ -1,7 +1,7 @@
 import 'dart:async';
 
 abstract class Cache {
-  T get<T>(String key);
+  T? get<T>(String key);
 
   void set<T>(String key, T value);
 
@@ -14,7 +14,7 @@ class SimpleCache extends Cache {
   final _storage = <String, dynamic>{};
 
   @override
-  T get<T>(String key) {
+  T? get<T>(String key) {
     return _storage[key];
   }
 

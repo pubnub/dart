@@ -17,10 +17,10 @@ class StoredValue<T> extends StatefulWidget {
   final String channel;
 
   /// [Keyset] instance that will be used by this widget.
-  final Keyset keyset;
+  final Keyset? keyset;
 
   /// Name of a named keyset that will be used by this widget.
-  final String using;
+  final String? using;
 
   /// Disable history fetching. Defaults to false.
   final bool disableHistory;
@@ -31,8 +31,8 @@ class StoredValue<T> extends StatefulWidget {
   final bool disableCache;
 
   StoredValue(
-      {@required this.channel,
-      @required this.builder,
+      {required this.channel,
+      required this.builder,
       this.keyset,
       this.using,
       this.disableCache = false,
@@ -44,9 +44,9 @@ class StoredValue<T> extends StatefulWidget {
 
 class _StoredValueState<T> extends State<StoredValue<T>>
     with SubscriptionMemory, DidInitState {
-  PubNubProvider provider;
-  Keyset keyset;
-  Stream<T> stream;
+  late PubNubProvider provider;
+  late Keyset keyset;
+  late Stream<T> stream;
 
   bool get cacheEnabled => provider.cacheEnabled && !widget.disableCache;
   String get cacheKey =>
@@ -63,17 +63,18 @@ class _StoredValueState<T> extends State<StoredValue<T>>
     ));
 
     stream = StreamGroup.mergeBroadcast([
-      if (!widget.disableHistory) _fetchLatest().asStream(),
+      if (!widget.disableHistory)
+        _fetchLatest().asStream().expand((element) => element),
       subscription.messages.map((envelope) => envelope.payload)
     ]);
 
     if (cacheEnabled) {
-      remember(provider.cache.follow(cacheKey, stream));
+      remember(provider.cache!.follow(cacheKey, stream));
     }
   }
 
   @override
-  void didUpdateWidget(covariant StoredValue oldWidget) {
+  void didUpdateWidget(covariant StoredValue<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     forget();
@@ -81,16 +82,16 @@ class _StoredValueState<T> extends State<StoredValue<T>>
     didInitState();
   }
 
-  Future<T> _fetchLatest() async {
+  Future<List<T>> _fetchLatest() async {
     var result = await provider.instance
         .channel(widget.channel, keyset: keyset)
         .history(chunkSize: 1)
         .more();
 
     if (result.messages.isEmpty) {
-      return null;
+      return [];
     } else {
-      return result.messages[0]['message'];
+      return [result.messages[0]['message']];
     }
   }
 
@@ -110,7 +111,7 @@ class _StoredValueState<T> extends State<StoredValue<T>>
   Widget build(BuildContext context) {
     return StreamBuilder<T>(
       stream: stream,
-      initialData: cacheEnabled ? provider.cache.get(cacheKey) : null,
+      initialData: cacheEnabled ? provider.cache!.get(cacheKey) : null,
       builder: (context, snapshot) => widget.builder(context, snapshot, update),
     );
   }

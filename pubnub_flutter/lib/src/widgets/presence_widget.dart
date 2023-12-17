@@ -27,13 +27,13 @@ import '../utils/did_init_mixin.dart';
 /// ```
 class PresenceWidget extends StatefulWidget {
   /// Optional child widget for convinience.
-  final Widget child;
+  final Widget? child;
 
   /// [Keyset] instance that will be used by this widget.
-  final Keyset keyset;
+  final Keyset? keyset;
 
   /// Name of a named keyset that will be used by this widget.
-  final String using;
+  final String? using;
 
   /// Whether heartbeats should be sent or not.
   final bool online;
@@ -45,10 +45,10 @@ class PresenceWidget extends StatefulWidget {
   final int heartbeatInterval;
 
   /// Optional set of channels to override heartbeat channels.
-  final Set<String> channels;
+  final Set<String>? channels;
 
   /// Optional set of channel groups to override heartbeat channel groups.
-  final Set<String> channelGroups;
+  final Set<String>? channelGroups;
 
   PresenceWidget({
     this.child,
@@ -66,8 +66,8 @@ class PresenceWidget extends StatefulWidget {
 }
 
 class PresenceWidgetState extends State<PresenceWidget> with DidInitState {
-  Timer timer;
-  PubNub _pubnub;
+  Timer? timer;
+  late PubNub _pubnub;
 
   @override
   void dispose() {
@@ -101,7 +101,7 @@ class PresenceWidgetState extends State<PresenceWidget> with DidInitState {
 
   void _cancelTimer() {
     if (timer != null) {
-      timer.cancel();
+      timer?.cancel();
       timer = null;
     }
   }
