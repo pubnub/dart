@@ -44,6 +44,25 @@ void main() {
             computeV2Signature(keyset, requestType, path, queryParams, body);
         expect(response, equals(expectedSign));
       });
+      test('computeV2Signature should return valid signature when special characters included', () {
+        PubNub.version = '1.0.0';
+        Core.version = '1.0.0';
+        Time.mock(DateTime.fromMillisecondsSinceEpoch(1234567890000));
+        var keyset = Keyset(
+            subscribeKey: 'test',
+            publishKey: 'test',
+            secretKey: 'test',
+            userId: UserId('test'));
+        var requestType = RequestType.post;
+        var queryParams = {'b': 'second', 'c': 'third', 'a': 'first'};
+        var path = ['test', 'UE5FROJRyR0JX/51v9ktWH4ybF{}()*&^%@#a\$WReE3@#\$'];
+        var body = 'test';
+        var expectedSign = 'v2.d-_yEq5ZA_T8GseWOKTWr8XS4suakWKTnESmfxMLw-E';
+
+        var response =
+            computeV2Signature(keyset, requestType, path, queryParams, body);
+        expect(response, equals(expectedSign));
+      });
     });
   });
 }
