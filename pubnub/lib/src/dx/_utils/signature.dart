@@ -57,17 +57,4 @@ ${'$body' == 'null' ? '' : '$body'}''';
 }
 
 String encodePathSegament(String pathSegment) =>
-    Uri.encodeComponent(pathSegment).replaceAllMapped(
-        RegExp('%3D|%2B|%3A|%2A|%2C|%40|%24|%26|%28|%29'),
-        (match) => {
-              '%3D': '=',
-              '%2B': '+',
-              '%3A': ':',
-              '%2A': '*',
-              '%2C': ',',
-              '%40': '@',
-              '%24': '\$',
-              '%26': '&',
-              '%28': '(',
-              '%29': ')',
-            }[match.group(0)]!);
+    Uri.encodeFull(pathSegment).replaceAll('/', '%2F').replaceAll('#', '%23');
