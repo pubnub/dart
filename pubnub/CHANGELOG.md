@@ -1,3 +1,9 @@
+## v4.3.2
+January 22 2024
+
+#### Fixed
+- Fixes issue of getting signature mismatch exception while publishing encrypted data.
+
 ## v4.3.1
 November 27 2023
 
