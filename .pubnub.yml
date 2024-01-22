@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2024-01-22
+    version: v4.3.2
+    changes:
+      - type: bug
+        text: "Fixes issue of getting signature mismatch exception while publishing encrypted data."
   - date: 2023-11-27
     version: v4.3.1
     changes:
@@ -437,7 +442,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "4.3.1"
+version: "4.3.2"
 sdks:
   -
     full-name: PubNub Dart SDK

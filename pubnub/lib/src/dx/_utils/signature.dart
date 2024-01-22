@@ -38,7 +38,7 @@ String computeV2Signature(
 
   var encodedPathSegments = <String>[];
   pathSegments.forEach(
-      (component) => encodedPathSegments.add(Uri.encodeFull(component)));
+      (component) => encodedPathSegments.add(encodePathSegament(component)));
 
   var plaintext = '''${type.method.toUpperCase()}
 ${keyset.publishKey}
@@ -55,3 +55,6 @@ ${'$body' == 'null' ? '' : '$body'}''';
       .replaceAll(RegExp(r'\/'), '_')
       .replaceAll(RegExp(r'\=*$'), '');
 }
+
+String encodePathSegament(String pathSegment) =>
+    Uri.encodeFull(pathSegment).replaceAll('/', '%2F').replaceAll('#', '%23');
