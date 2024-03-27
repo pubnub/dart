@@ -23,12 +23,12 @@ class CipherKey {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (other == null) {
       return false;
     }
     if (runtimeType == other.runtimeType) {
-      return utf8.decode(data) == utf8.decode(other!.data);
+      return utf8.decode(data) == utf8.decode((other as CipherKey).data);
     }
     return false;
   }
