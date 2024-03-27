@@ -11,7 +11,7 @@ class UserId {
   String toString() => '$value';
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (other is UserId) {
       return value == other.value;
     }
