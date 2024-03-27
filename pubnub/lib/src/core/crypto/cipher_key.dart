@@ -24,9 +24,6 @@ class CipherKey {
 
   @override
   bool operator ==(Object other) {
-    if (other == null) {
-      return false;
-    }
     if (runtimeType == other.runtimeType) {
       return utf8.decode(data) == utf8.decode((other as CipherKey).data);
     }
