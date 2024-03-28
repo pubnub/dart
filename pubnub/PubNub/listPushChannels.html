@@ -29,7 +29,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">pubnub</a></li>
-    <li><a href="../../pubnub/pubnub-library.html">pubnub</a></li>
+    <li><a href="../../pubnub/pubnub-library.html">pubnub.dart</a></li>
     <li><a href="../../pubnub/PubNub-class.html">PubNub</a></li>
     <li class="self-crumb">listPushChannels method</li>
   </ol>
@@ -63,13 +63,15 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.dart.dev/stable/3.2.5/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/ListPushChannelsResult-class.html">ListPushChannelsResult</a></span>&gt;</span></span>
-<span class="name ">listPushChannels</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="listPushChannels-param-deviceId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.5/dart-core/String-class.html">String</a></span> <span class="parameter-name">deviceId</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.3.3/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../pubnub/ListPushChannelsResult-class.html">ListPushChannelsResult</a></span>&gt;</span></span>
+<span class="name ">listPushChannels</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="listPushChannels-param-deviceId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.3/dart-core/String-class.html">String</a></span> <span class="parameter-name">deviceId</span>, </span></li>
 <li><span class="parameter" id="listPushChannels-param-gateway"><span class="type-annotation"><a href="../../pubnub/PushGateway.html">PushGateway</a></span> <span class="parameter-name">gateway</span>, </span></li>
-<li><span class="parameter" id="listPushChannels-param-topic">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.5/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">topic</span>, </span></li>
+<li><span class="parameter" id="listPushChannels-param-topic">{<span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.3/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">topic</span>, </span></li>
 <li><span class="parameter" id="listPushChannels-param-environment"><span class="type-annotation"><a href="../../pubnub/Environment.html">Environment</a>?</span> <span class="parameter-name">environment</span>, </span></li>
+<li><span class="parameter" id="listPushChannels-param-start"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.3/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">start</span>, </span></li>
+<li><span class="parameter" id="listPushChannels-param-count"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.3/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">count</span>, </span></li>
 <li><span class="parameter" id="listPushChannels-param-keyset"><span class="type-annotation"><a href="../../pubnub/Keyset-class.html">Keyset</a>?</span> <span class="parameter-name">keyset</span>, </span></li>
-<li><span class="parameter" id="listPushChannels-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.5/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span></li>
+<li><span class="parameter" id="listPushChannels-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.3/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>}</span></li>
 </ol>)
 
       <div class="features"><span class="feature">inherited</span></div>
@@ -87,7 +89,9 @@
 </ul>
 <p>If <code>gateway</code> is <a href="../../pubnub/PushGateway.html">PushGateway.apns2</a> then <code>topic</code> is mandatory to provide.
 <code>topic</code> is bundle id of the mobile application.
-<code>environment</code> denoting the environment of the mobile application for <a href="../../pubnub/PushGateway.html">PushGateway.apns2</a>, it can be either:</p>
+<code>environment</code> denoting the environment of the mobile application for <a href="../../pubnub/PushGateway.html">PushGateway.apns2</a>, it can be either:
+<code>start</code> Starting channel for pagination. Use the last channel from the previous page request.
+<code>count</code> Number of channels to return for pagination. Max of 1000 tokens at a time. Defaults to 500.</p>
 <ul>
 <li><a href="../../pubnub/Environment.html">Environment.development</a> (which is the default value).</li>
 <li><a href="../../pubnub/Environment.html">Environment.production</a>.</li>
@@ -102,6 +106,8 @@
     String deviceId, PushGateway gateway,
     {String? topic,
     Environment? environment,
+    String? start,
+    int? count,
     Keyset? keyset,
     String? using}) async {
   keyset ??= keysets[using];
@@ -109,8 +115,15 @@
   Ensure(deviceId).isNotEmpty(&#39;deviceId&#39;);
   if (gateway == PushGateway.apns2) Ensure(topic).isNotNull(&#39;topic&#39;);
 
-  var params = ListPushChannelsParams(keyset, deviceId, gateway,
-      topic: topic, environment: environment);
+  var params = ListPushChannelsParams(
+    keyset,
+    deviceId,
+    gateway,
+    topic: topic,
+    environment: environment,
+    start: start,
+    count: count,
+  );
   return defaultFlow&lt;ListPushChannelsParams, ListPushChannelsResult&gt;(
       keyset: keyset,
       core: this,
@@ -150,7 +163,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.3.2
+      4.3.3
   </span>
 
   

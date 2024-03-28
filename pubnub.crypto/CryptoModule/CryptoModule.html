@@ -29,7 +29,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">pubnub</a></li>
-    <li><a href="../../pubnub.crypto/pubnub.crypto-library.html">pubnub.crypto</a></li>
+    <li><a href="../../pubnub.crypto/pubnub.crypto-library.html">crypto.dart</a></li>
     <li><a href="../../pubnub.crypto/CryptoModule-class.html">CryptoModule</a></li>
     <li class="self-crumb">CryptoModule constructor</li>
   </ol>
@@ -63,7 +63,7 @@
     <section class="multi-line-signature">
       
       <span class="name ">CryptoModule</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-defaultCryptor">{<span>required</span> <span class="type-annotation">ICryptor</span> <span class="parameter-name">defaultCryptor</span>, </span></li>
-<li><span class="parameter" id="-param-cryptors"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.2.5/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">ICryptor</span>&gt;</span>?</span> <span class="parameter-name">cryptors</span>, </span></li>
+<li><span class="parameter" id="-param-cryptors"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.3/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">ICryptor</span>&gt;</span>?</span> <span class="parameter-name">cryptors</span>, </span></li>
 <li><span class="parameter" id="-param-defaultConfiguration"><span class="type-annotation"><a href="../../pubnub.crypto/CryptoConfiguration-class.html">CryptoConfiguration</a></span> <span class="parameter-name">defaultConfiguration</span> = <span class="default-value">const CryptoConfiguration()</span>}</span></li>
 </ol>)
     </section>
@@ -74,7 +74,13 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">CryptoModule</code></pre>
+  <pre class="language-dart"><code class="language-dart">CryptoModule(
+    {required this.defaultCryptor,
+    this.cryptors,
+    this.defaultConfiguration = const CryptoConfiguration()}) {
+  legacyCryptoModule =
+      LegacyCryptoModule(defaultConfiguration: defaultConfiguration);
+}</code></pre>
 </section>
 
 
@@ -108,7 +114,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.3.2
+      4.3.3
   </span>
 
   

@@ -29,7 +29,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">pubnub</a></li>
-    <li><a href="../../pubnub.crypto/pubnub.crypto-library.html">pubnub.crypto</a></li>
+    <li><a href="../../pubnub.crypto/pubnub.crypto-library.html">crypto.dart</a></li>
     <li><a href="../../pubnub.crypto/LegacyCryptor-class.html">LegacyCryptor</a></li>
     <li class="self-crumb">LegacyCryptor constructor</li>
   </ol>
@@ -73,7 +73,10 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">LegacyCryptor</code></pre>
+  <pre class="language-dart"><code class="language-dart">LegacyCryptor(this.cipherKey,
+    {this.cryptoConfiguration = const CryptoConfiguration()}) {
+  cryptor = LegacyCryptoModule(defaultConfiguration: cryptoConfiguration);
+}</code></pre>
 </section>
 
 
@@ -107,7 +110,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.3.2
+      4.3.3
   </span>
 
   
