@@ -189,6 +189,37 @@ void main() {
               #environment: null
             }));
       });
+
+      test('listPushChannels delegate supported arguments', () async {
+        fakePubnub.returnWhen(
+          #listPushChannels,
+          Future.value(ListPushChannelsResult.fromJson(['ch1', 'ch2', 'ch3'])),
+        );
+
+        await fakePubnub.listPushChannels(
+          'A332C23D',
+          PushGateway.mpns,
+          start: 'ch2',
+          count: 10,
+        );
+
+        var invocation = fakePubnub.invocations[0];
+
+        expect(invocation.isMethod, equals(true));
+        expect(invocation.memberName, equals(#listPushChannels));
+        expect(invocation.positionalArguments,
+            equals(['A332C23D', PushGateway.mpns]));
+        expect(
+            invocation.namedArguments,
+            equals({
+              #keyset: null,
+              #using: null,
+              #topic: null,
+              #environment: null,
+              #start: 'ch2',
+              #count: 10,
+            }));
+      });
     });
   });
 }

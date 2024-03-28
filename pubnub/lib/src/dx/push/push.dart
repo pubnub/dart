@@ -19,12 +19,16 @@ mixin PushNotificationDx on Core {
   /// If [gateway] is [PushGateway.apns2] then [topic] is mandatory to provide.
   /// [topic] is bundle id of the mobile application.
   /// [environment] denoting the environment of the mobile application for [PushGateway.apns2], it can be either:
+  /// [start] Starting channel for pagination. Use the last channel from the previous page request.
+  /// [count] Number of channels to return for pagination. Max of 1000 tokens at a time. Defaults to 500.
   /// * [Environment.development] (which is the default value).
   /// * [Environment.production].
   Future<ListPushChannelsResult> listPushChannels(
       String deviceId, PushGateway gateway,
       {String? topic,
       Environment? environment,
+      String? start,
+      int? count,
       Keyset? keyset,
       String? using}) async {
     keyset ??= keysets[using];
@@ -32,8 +36,15 @@ mixin PushNotificationDx on Core {
     Ensure(deviceId).isNotEmpty('deviceId');
     if (gateway == PushGateway.apns2) Ensure(topic).isNotNull('topic');
 
-    var params = ListPushChannelsParams(keyset, deviceId, gateway,
-        topic: topic, environment: environment);
+    var params = ListPushChannelsParams(
+      keyset,
+      deviceId,
+      gateway,
+      topic: topic,
+      environment: environment,
+      start: start,
+      count: count,
+    );
     return defaultFlow<ListPushChannelsParams, ListPushChannelsResult>(
         keyset: keyset,
         core: this,

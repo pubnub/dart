@@ -56,9 +56,18 @@ class ListPushChannelsParams extends Parameters {
   PushGateway pushGateway;
   Environment? environment;
   String? topic;
+  String? start;
+  int? count;
 
-  ListPushChannelsParams(this.keyset, this.deviceId, this.pushGateway,
-      {this.topic, this.environment});
+  ListPushChannelsParams(
+    this.keyset,
+    this.deviceId,
+    this.pushGateway, {
+    this.topic,
+    this.environment,
+    this.start,
+    this.count,
+  });
 
   @override
   Request toRequest() {
@@ -74,7 +83,9 @@ class ListPushChannelsParams extends Parameters {
     var queryParameters = {
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
       'uuid': '${keyset.uuid}',
-      'type': pushGateway.value()
+      'type': pushGateway.value(),
+      if (start != null && start!.isNotEmpty) 'start': start!,
+      if (count != null) 'count': '$count'
     };
     if (pushGateway == PushGateway.apns2) {
       queryParameters['environment'] =

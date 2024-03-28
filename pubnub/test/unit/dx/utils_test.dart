@@ -44,7 +44,9 @@ void main() {
             computeV2Signature(keyset, requestType, path, queryParams, body);
         expect(response, equals(expectedSign));
       });
-      test('computeV2Signature should return valid signature when special characters included', () {
+      test(
+          'computeV2Signature should return valid signature when special characters included',
+          () {
         PubNub.version = '1.0.0';
         Core.version = '1.0.0';
         Time.mock(DateTime.fromMillisecondsSinceEpoch(1234567890000));
