@@ -36,8 +36,15 @@ mixin PushNotificationDx on Core {
     Ensure(deviceId).isNotEmpty('deviceId');
     if (gateway == PushGateway.apns2) Ensure(topic).isNotNull('topic');
 
-    var params = ListPushChannelsParams(keyset, deviceId, gateway,
-        topic: topic, environment: environment, start: start, count: count);
+    var params = ListPushChannelsParams(
+      keyset,
+      deviceId,
+      gateway,
+      topic: topic,
+      environment: environment,
+      start: start,
+      count: count,
+    );
     return defaultFlow<ListPushChannelsParams, ListPushChannelsResult>(
         keyset: keyset,
         core: this,

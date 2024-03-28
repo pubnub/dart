@@ -59,8 +59,15 @@ class ListPushChannelsParams extends Parameters {
   String? start;
   int? count;
 
-  ListPushChannelsParams(this.keyset, this.deviceId, this.pushGateway,
-      {this.topic, this.environment, this.start, this.count});
+  ListPushChannelsParams(
+    this.keyset,
+    this.deviceId,
+    this.pushGateway, {
+    this.topic,
+    this.environment,
+    this.start,
+    this.count,
+  });
 
   @override
   Request toRequest() {

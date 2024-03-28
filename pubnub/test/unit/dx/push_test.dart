@@ -192,12 +192,16 @@ void main() {
 
       test('listPushChannels delegate supported arguments', () async {
         fakePubnub.returnWhen(
-            #listPushChannels,
-            Future.value(
-                ListPushChannelsResult.fromJson(['ch1', 'ch2', 'ch3'])));
+          #listPushChannels,
+          Future.value(ListPushChannelsResult.fromJson(['ch1', 'ch2', 'ch3'])),
+        );
 
-        await fakePubnub.listPushChannels('A332C23D', PushGateway.mpns,
-            start: 'ch2', count: 10);
+        await fakePubnub.listPushChannels(
+          'A332C23D',
+          PushGateway.mpns,
+          start: 'ch2',
+          count: 10,
+        );
 
         var invocation = fakePubnub.invocations[0];
 
@@ -213,7 +217,7 @@ void main() {
               #topic: null,
               #environment: null,
               #start: 'ch2',
-              #count: 10
+              #count: 10,
             }));
       });
     });
