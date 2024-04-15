@@ -122,7 +122,7 @@ class PresenceEvent {
 
   PresenceEvent.fromEnvelope(this.envelope)
       : action = PresenceActionExtension.fromString(
-            envelope.payload['action'] as String),
+            envelope.payload['action'] as String?),
         uuid = envelope.payload['uuid'] != null
             ? UUID(envelope.payload['uuid'])
             : null,
