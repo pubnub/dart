@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2024-04-15
+    version: v4.3.4
+    changes:
+      - type: bug
+        text: "Fixes issue of parsing invalid presence data (which are not from pubnub server) in subscription."
   - date: 2024-03-28
     version: v4.3.3
     changes:
@@ -447,7 +452,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "4.3.3"
+version: "4.3.4"
 sdks:
   -
     full-name: PubNub Dart SDK
