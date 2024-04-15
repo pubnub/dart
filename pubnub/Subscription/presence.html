@@ -83,9 +83,10 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Stream&lt;PresenceEvent&gt; get presence =&gt; _envelopesController.stream
     .where((envelope) =&gt;
-        presenceChannels.contains(envelope.channel) ||
-        presenceChannels.contains(envelope.subscriptionPattern) ||
-        presenceChannelGroups.contains(envelope.subscriptionPattern))
+        envelope.userMeta != null &amp;&amp;
+        (presenceChannels.contains(envelope.channel) ||
+            presenceChannels.contains(envelope.subscriptionPattern) ||
+            presenceChannelGroups.contains(envelope.subscriptionPattern)))
     .map&lt;PresenceEvent&gt;((envelope) =&gt; PresenceEvent.fromEnvelope(envelope));</code></pre>
 </section>
 
@@ -122,7 +123,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      4.3.3
+      4.3.4
   </span>
 
   
