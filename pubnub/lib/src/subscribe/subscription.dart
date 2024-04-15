@@ -62,7 +62,7 @@ class Subscription {
   /// Will only emit when [withPresence] is true.
   Stream<PresenceEvent> get presence => _envelopesController.stream
       .where((envelope) =>
-          PresenceEvent.isValidPresenceEvent(envelope) &&
+          envelope.userMeta != null &&
           (presenceChannels.contains(envelope.channel) ||
               presenceChannels.contains(envelope.subscriptionPattern) ||
               presenceChannelGroups.contains(envelope.subscriptionPattern)))

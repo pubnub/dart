@@ -120,23 +120,6 @@ class PresenceEvent {
       .map((uuid) => UUID(uuid))
       .toList();
 
-  static bool isValidPresenceEvent(Envelope envelope) {
-    final payload = envelope.payload;
-    if (payload is! Map) return false;
-
-    final action = payload['action'];
-    final occupancy = payload['occupancy'];
-
-    if (action is! String ||
-        PresenceActionExtension.fromString(action) == PresenceAction.unknown) {
-      return false;
-    }
-    if (occupancy is! int) {
-      return false;
-    }
-    return true;
-  }
-
   PresenceEvent.fromEnvelope(this.envelope)
       : action = PresenceActionExtension.fromString(
             envelope.payload['action'] as String),
