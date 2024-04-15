@@ -1,3 +1,9 @@
+## v4.3.4
+April 15 2024
+
+#### Fixed
+- Fixes issue of parsing invalid presence data (which are not from pubnub server) in subscription.
+
 ## v4.3.3
 March 28 2024
 

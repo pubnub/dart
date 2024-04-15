@@ -14,7 +14,7 @@ To add the package to your Dart or Flutter project, add `pubnub` as a dependency
 
 ```yaml
 dependencies:
-  pubnub: ^4.3.3
+  pubnub: ^4.3.4
 ```
 
 After adding the dependency to `pubspec.yaml`, run the `dart pub get` command in the root directory of your project (the same that the `pubspec.yaml` is in).
