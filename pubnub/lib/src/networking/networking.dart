@@ -12,7 +12,7 @@ class NetworkingModule extends INetworkingModule {
   /// Retry policy.
   ///
   /// If retry policy is null, then retries are not attempted.
-  final RetryPolicy? retryPolicy;
+  RetryPolicy? retryPolicy = RetryPolicy.exponential();
 
   /// Origin used for all requests.
   ///
