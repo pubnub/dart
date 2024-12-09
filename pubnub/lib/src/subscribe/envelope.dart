@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:pubnub/core.dart';
 
 /// Represents a message received from a subscription.

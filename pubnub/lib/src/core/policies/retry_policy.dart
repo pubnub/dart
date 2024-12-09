@@ -41,7 +41,7 @@ class LinearRetryPolicy extends RetryPolicy {
   @override
   Duration getDelay(Fiber fiber) {
     return Duration(
-            milliseconds: min(
+        milliseconds: min(
             maximumDelay, (fiber.tries * backoff) + Random().nextInt(1000)));
   }
 }

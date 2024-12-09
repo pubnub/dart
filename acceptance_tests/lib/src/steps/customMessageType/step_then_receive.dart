@@ -1,5 +1,4 @@
 import 'package:gherkin/gherkin.dart';
-import 'package:test/expect.dart';
 
 import '../../world.dart';
 
@@ -10,6 +9,6 @@ class StepThenIReceiveMessagesInSubscriptionResponse
 
   @override
   Future<void> executeStep(int count) async {
-    this.expect(world.messages.length, 2);
+    expect(world.messages.length, 2);
   }
 }
