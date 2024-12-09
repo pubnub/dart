@@ -42,7 +42,8 @@ mixin PublishDx on Core {
       Map<String, dynamic>? meta,
       bool? storeMessage,
       int? ttl,
-      bool? fire}) async {
+      bool? fire,
+      String? customMessageType}) async {
     Ensure(channel).isNotEmpty('channel name');
     Ensure(message).isNotNull('message');
 
@@ -61,7 +62,9 @@ mixin PublishDx on Core {
     }
 
     var params = PublishParams(keyset, channel, payload,
-        storeMessage: storeMessage, ttl: ttl);
+        storeMessage: storeMessage,
+        ttl: ttl,
+        customMessageType: customMessageType);
 
     if (meta != null) {
       params.meta = await super.parser.encode(meta);

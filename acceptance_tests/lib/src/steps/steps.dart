@@ -1,3 +1,4 @@
+import 'package:acceptance_tests/src/steps/customMessageType/customMessageType_steps.dart';
 import 'package:gherkin/gherkin.dart';
 
 import '../world.dart';
@@ -26,6 +27,7 @@ import 'steps_push.dart';
 final List<StepDefinitionGeneric<PubNubWorld>> steps = [
   ...cryptoSteps,
   ...pamv3Steps,
+  ...customMessageTypeSteps,
   StepGivenChannel(),
   StepGivenDemoKeyset(),
   StepWhenIAddAMessageAction(),

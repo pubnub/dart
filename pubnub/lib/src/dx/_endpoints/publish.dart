@@ -9,9 +9,13 @@ class PublishParams extends Parameters {
   bool? storeMessage;
   int? ttl;
   bool? noReplication;
+  String? customMessageType;
 
   PublishParams(this.keyset, this.channel, this.message,
-      {this.storeMessage, this.ttl, this.noReplication});
+      {this.storeMessage,
+      this.ttl,
+      this.noReplication,
+      this.customMessageType});
 
   @override
   Request toRequest() {
@@ -33,6 +37,7 @@ class PublishParams extends Parameters {
       if (meta != null) 'meta': meta,
       if (noReplication != null && noReplication == true) 'norep': 'true',
       if (keyset.authKey != null) 'auth': keyset.authKey,
+      if (customMessageType != null) 'custom_message_type': customMessageType,
       'uuid': keyset.uuid.value,
       if (ttl != null) 'ttl': ttl.toString()
     };

@@ -60,6 +60,7 @@ class FileDx {
       dynamic fileMessage,
       bool? storeFileMessage,
       int? fileMessageTtl,
+      String? customMessageType,
       dynamic fileMessageMeta,
       Keyset? keyset,
       String? using}) async {
@@ -115,6 +116,7 @@ class FileDx {
             storeMessage: storeFileMessage,
             meta: fileMessageMeta,
             cipherKey: cipherKey,
+            customMessageType: customMessageType,
             keyset: keyset,
             using: using);
       } catch (e) {
@@ -158,6 +160,7 @@ class FileDx {
       int? ttl,
       dynamic meta,
       CipherKey? cipherKey,
+      String? customMessageType,
       Keyset? keyset,
       String? using}) async {
     keyset ??= _core.keysets[using];
@@ -179,7 +182,10 @@ class FileDx {
         keyset: keyset,
         core: _core,
         params: PublishFileMessageParams(keyset, channel, messagePayload,
-            storeMessage: storeMessage, ttl: ttl, meta: meta),
+            storeMessage: storeMessage,
+            ttl: ttl,
+            meta: meta,
+            customMessageType: customMessageType),
         serialize: (object, [_]) => PublishFileMessageResult.fromJson(object));
   }
 
