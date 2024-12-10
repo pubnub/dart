@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2024-12-10
+    version: v5.0.0
+    changes:
+      - type: feature
+        text: "BREAKING CHANGES: support for customMessageType in subscription, history, publish, signal and files features."
   - date: 2024-04-15
     version: v4.3.4
     changes:
@@ -452,7 +457,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "4.3.4"
+version: "5.0.0"
 sdks:
   -
     full-name: PubNub Dart SDK
