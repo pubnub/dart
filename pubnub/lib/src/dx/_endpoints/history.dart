@@ -158,8 +158,19 @@ class BatchHistoryResultEntry {
   /// for given `message`.
   PubNubException? error;
 
-  BatchHistoryResultEntry._(this.message, this.timetoken, this.uuid,
-      this.messageType, this.actions, this.meta, this.error);
+  /// If message has customMessageType, this will contain it.
+  /// Otherwise, it will be `null`.
+  String? customMessageType;
+
+  BatchHistoryResultEntry._(
+      this.message,
+      this.timetoken,
+      this.uuid,
+      this.messageType,
+      this.actions,
+      this.meta,
+      this.error,
+      this.customMessageType);
 
   /// @nodoc
   factory BatchHistoryResultEntry.fromJson(Map<String, dynamic> object,
@@ -195,7 +206,8 @@ class BatchHistoryResultEntry {
         MessageTypeExtension.fromInt(object['message_type']),
         object['actions'],
         object['meta'] == '' ? null : object['meta'],
-        error);
+        error,
+        object['custom_message_type']);
   }
 }
 

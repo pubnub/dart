@@ -5,8 +5,10 @@ class SignalParams extends Parameters {
   Keyset keyset;
   String channel;
   String payload;
+  String? customMessageType;
 
-  SignalParams(this.keyset, this.channel, this.payload);
+  SignalParams(this.keyset, this.channel, this.payload,
+      {this.customMessageType});
 
   @override
   Request toRequest() {
@@ -21,6 +23,7 @@ class SignalParams extends Parameters {
     ];
 
     var queryParameters = {
+      if (customMessageType != null) 'custom_message_type': customMessageType,
       if (keyset.authKey != null) 'auth': keyset.authKey,
       'uuid': keyset.uuid.value,
     };

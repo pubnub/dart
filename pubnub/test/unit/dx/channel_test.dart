@@ -58,7 +58,8 @@ void main() {
               #storeMessage: null,
               #ttl: 60,
               #meta: null,
-              #fire: null
+              #fire: null,
+              #customMessageType: null
             }));
       });
     });

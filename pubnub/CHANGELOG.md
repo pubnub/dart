@@ -1,3 +1,9 @@
+## v5.0.0
+December 10 2024
+
+#### Added
+- BREAKING CHANGES: support for customMessageType in subscription, history, publish, signal and files features.
+
 ## v4.3.4
 April 15 2024
 

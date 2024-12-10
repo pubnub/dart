@@ -8,12 +8,13 @@ export '../_endpoints/signal.dart';
 mixin SignalDx on Core {
   /// Publishes signal [message] to a [channel].
   Future<SignalResult> signal(String channel, dynamic message,
-      {Keyset? keyset, String? using}) async {
+      {String? customMessageType, Keyset? keyset, String? using}) async {
     keyset ??= keysets[using];
     Ensure(keyset.publishKey).isNotNull('publishKey');
 
     var payload = await super.parser.encode(message);
-    var params = SignalParams(keyset, channel, payload);
+    var params = SignalParams(keyset, channel, payload,
+        customMessageType: customMessageType);
 
     return defaultFlow(
         keyset: keyset,

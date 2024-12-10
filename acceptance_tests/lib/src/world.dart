@@ -43,6 +43,7 @@ class PubNubWorld extends World {
       ),
       networking: NetworkingModule(origin: 'localhost:8090', ssl: false),
     );
+    pubnub.keysets.defaultKeyset.fileMessagePublishRetryLimit = 0;
   }
 
   Future<void> cleanup() async {

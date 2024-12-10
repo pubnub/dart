@@ -41,13 +41,18 @@ class Channel {
   /// If set to `0`, message won't expire.
   /// If unset, expiration will fall back to default.
   Future<PublishResult> publish(dynamic message,
-      {bool? storeMessage, int? ttl, dynamic meta, bool? fire}) {
+      {bool? storeMessage,
+      int? ttl,
+      dynamic meta,
+      bool? fire,
+      String? customMessageType}) {
     return _core.publish(name, message,
         storeMessage: storeMessage,
         ttl: ttl,
         keyset: _keyset,
         meta: meta,
-        fire: fire);
+        fire: fire,
+        customMessageType: customMessageType);
   }
 
   /// Returns [PaginatedChannelHistory]. Most useful in infinite list type scenario.
