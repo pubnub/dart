@@ -88,6 +88,7 @@ class BatchHistoryParams extends Parameters {
   bool? includeMessageActions;
   bool? includeUUID;
   bool? includeMessageType;
+  bool? includeCustomMessageType;
 
   BatchHistoryParams(this.keyset, this.channels,
       {this.max,
@@ -97,6 +98,7 @@ class BatchHistoryParams extends Parameters {
       this.includeMeta,
       this.includeMessageActions,
       this.includeMessageType,
+      this.includeCustomMessageType,
       this.includeUUID})
       : assert(channels.isNotEmpty);
 
@@ -119,6 +121,8 @@ class BatchHistoryParams extends Parameters {
       if (includeMeta != null) 'include_meta': '$includeMeta',
       if (includeMessageType != null)
         'include_message_type': '$includeMessageType',
+      if (includeCustomMessageType != null)
+        'include_custom_message_type': '$includeCustomMessageType',
       if (includeUUID != null) 'include_uuid': '$includeUUID',
       if (keyset.authKey != null) 'auth': '${keyset.authKey}',
       'uuid': '${keyset.uuid}'

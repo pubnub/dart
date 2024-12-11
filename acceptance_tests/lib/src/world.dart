@@ -25,6 +25,7 @@ class PubNubWorld extends World {
   Subscription? currentSubscription;
 
   List<Envelope> messages = [];
+  List<BatchHistoryResultEntry> historyMessages = [];
   Completer<Envelope> firstMessageCompleter = Completer();
   Future<Envelope> get firstMessage => firstMessageCompleter.future;
 
