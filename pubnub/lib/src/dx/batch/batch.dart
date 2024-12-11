@@ -29,6 +29,7 @@ class BatchDx {
       bool? includeMeta,
       bool includeMessageActions = false,
       bool includeMessageType = true,
+      bool includeCustomMessageType = false,
       bool includeUUID = true}) async {
     keyset ??= _core.keysets[using];
 
@@ -53,6 +54,7 @@ class BatchDx {
         includeMeta: includeMeta,
         includeMessageActions: includeMessageActions,
         includeMessageType: includeMessageType,
+        includeCustomMessageType: includeCustomMessageType,
         includeUUID: includeUUID);
 
     return defaultFlow<BatchHistoryParams, BatchHistoryResult>(
