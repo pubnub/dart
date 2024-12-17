@@ -29,6 +29,12 @@ class ObjectsDx {
   /// To include `custom` property fields in response, set [includeCustomFields] to `true`
   /// Omit this parameter if you don't want to retrieve additional metadata.
   ///
+  /// To omit `status` field from metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from metadata, set [includeType] to `false`
+  /// Default is `true`.
+  /// 
   /// You can limit number of returned user object using [limit] parameter
   /// Default is 100, which is also the maximum value.
   ///
@@ -90,6 +96,12 @@ class ObjectsDx {
   /// To include `custom` property fields in response, set [includeCustomFields] to `true`
   /// Omit this parameter if you don't want to retrieve additional metadata.
   ///
+  /// To omit `status` field from metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
   /// `uuid` is Unique identifier of an end-user. It may contain up to 92 UTF-8 byte sequences.
   /// Prohibited characters are ,, /, \, *, :, channel, non-printable ASCII control characters, and Unicode zero.
   /// * If `uuid` not provided then it picks `uuid` from `keyset` or PubNub instance's `uuid`
@@ -134,6 +146,12 @@ class ObjectsDx {
   ///
   /// To include `custom` property fields in response, set [includeCustomFields] to `true`
   /// Omit this parameter if you don't want to retrieve additional metadata.
+  ///
+  /// To omit `status` field from metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from metadata, set [includeType] to `false`
+  /// Default is `true`.
   ///
   /// `uuid` is Unique identifier of an end-user. It may contain up to 92 UTF-8 byte sequences.
   /// Prohibited characters are ,, /, \, *, :, channel, non-printable ASCII control characters, and Unicode zero.
@@ -209,6 +227,12 @@ class ObjectsDx {
   /// To omit `totalCount` field from paginated list, set [includeCount] to `false`
   /// Default is `true`.
   ///
+  /// To omit `status` field from metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
   /// [filter] is Expression used to filter the results.
   /// Only objects whose properties satisfy the given expression are returned.
   ///
@@ -263,6 +287,12 @@ class ObjectsDx {
   /// To include `custom` property fields in response, set [includeCustomFields] to `true`
   /// Omit this parameter if you don't want to retrieve additional metadata.
   ///
+  /// To omit `status` field from metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
   /// `channelId` is Channel identifier. Must not be empty, and may contain up to 92 UTF-8 byte sequences.
   /// Prohibited characters are ,, /, \, *, :, channel, non-printable ASCII control characters, and Unicode zero.
   Future<GetChannelMetadataResult> getChannelMetadata(
@@ -305,6 +335,12 @@ class ObjectsDx {
   /// * Invalid property names are silently ignored and will not cause a request to fail.
   /// * If you set the "custom" property, you must completely replace it; partial updates are not supported.
   /// * The custom object can only contain scalar values.
+  ///
+  /// To omit `status` field from metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from metadata, set [includeType] to `false`
+  /// Default is `true`.
   ///
   /// To include `custom` property fields in response, set [includeCustomFields] to `true`
   /// Omit this parameter if you don't want to retrieve additional metadata.
@@ -384,6 +420,18 @@ class ObjectsDx {
   ///
   /// Provide [start] and [end] for Previously-returned cursor bookmark for
   /// fetching the next/previous page.
+  ///
+  /// To omit `status` field from membership metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from membership metadata, set [includeType] to `false`
+  /// Default is `true`.
+  /// 
+  /// To get `status` field of channel metadata, set [includeChannelStatus] to `true`
+  /// Default is `false`.
+  /// 
+  /// To omit `type` field of channel metadata, set [includeChannelType] to `true`
+  /// Default is `false`.
   ///
   /// To omit `totalCount` field from paginated list, set [includeCount] to `false`
   /// Default is `true`.
@@ -470,6 +518,18 @@ class ObjectsDx {
   /// To include `custom` property fields of membership in response, set [includeCustomFields] to `true`
   /// To include `channel` metadata fields of uuid's membership in response, set [includeChannelFields] to `true`
   /// To include `custom` fields of membership's channelmetadata, set [includeChannelCustomFields] to `true`
+  ///
+  /// To omit `status` field from membership metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from membership metadata, set [includeType] to `false`
+  /// Default is `true`.
+  /// 
+  /// To get `status` field of channel metadata, set [includeChannelStatus] to `true`
+  /// Default is `false`.
+  /// 
+  /// To omit `type` field of channel metadata, set [includeChannelType] to `true`
+  /// Default is `false`.
   ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
@@ -574,6 +634,18 @@ class ObjectsDx {
   /// To include `channel` metadata fields of uuid's membership in response, set [includeChannelFields] to `true`
   /// To include `custom` fields of membership's channel metadata, set [includeChannelCustomFields] to `true`
   ///
+  /// To omit `status` field from membership metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from membership metadata, set [includeType] to `false`
+  /// Default is `true`.
+  /// 
+  /// To get `status` field of channel metadata, set [includeChannelStatus] to `true`
+  /// Default is `false`.
+  /// 
+  /// To omit `type` field of channel metadata, set [includeChannelType] to `true`
+  /// Default is `false`.
+  ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
   ///
@@ -664,6 +736,18 @@ class ObjectsDx {
   /// To include `custom` property fields of membership in response, set [includeCustomFields] to `true`
   /// To include `channel` metadata fields of uuid's membership in response, set [includeChannelFields] to `true`
   /// To include `custom` fields of membership's channel metadata, set [includeChannelCustomFields] to `true`
+  ///
+  /// To omit `status` field from membership metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from membership metadata, set [includeType] to `false`
+  /// Default is `true`.
+  /// 
+  /// To get `status` field of channel metadata, set [includeChannelStatus] to `true`
+  /// Default is `false`.
+  /// 
+  /// To omit `type` field of channel metadata, set [includeChannelType] to `true`
+  /// Default is `false`.
   ///
   /// * If `uuid` not provided then it picks `uuid` from given `keyset` or PubNub instance's `uuid`
   /// * If no `uuid` is set in PubNub instance default keyset, `keyset` does not hold uuid
@@ -759,6 +843,18 @@ class ObjectsDx {
   /// To include `uuid` metadata fields of channel's memebrs in response, set [includeUUIDFields] to `true`
   /// To include `custom` fields of channel member's uuidMetadata, set [includeUUIDCustomFields] to `true`
   ///
+  /// To omit `status` field from member metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from member metadata, set [includeType] to `false`
+  /// Default is `true`.
+  /// 
+  /// To get `status` field of UUID metadata, set [includeUUIDStatus] to `true`
+  /// Default is `false`.
+  /// 
+  /// To omit `type` field of UUID metadata, set [includeUUIDType] to `true`
+  /// Default is `false`.
+  ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
   ///
@@ -843,6 +939,18 @@ class ObjectsDx {
   /// To include `custom` property fields of member in response, set [includeCustomFields] to `true`
   /// To include `uuid` metadata fields of channel's memebrs in response, set [includeUUIDFields] to `true`
   /// To include `custom` fields of channel member's uuidMetadata, set [includeUUIDCustomFields] to `true`
+  ///
+  /// To omit `status` field from member metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from member metadata, set [includeType] to `false`
+  /// Default is `true`.
+  /// 
+  /// To get `status` field of UUID metadata, set [includeUUIDStatus] to `true`
+  /// Default is `false`.
+  /// 
+  /// To omit `type` field of UUID metadata, set [includeUUIDType] to `true`
+  /// Default is `false`.
   ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
@@ -939,6 +1047,18 @@ class ObjectsDx {
   /// To include `uuid` metadata fields of channel's memebrs in response, set [includeUUIDFields] to `true`
   /// To include `custom` fields of channel member's uuidMetadata, set [includeUUIDCustomFields] to `true`
   ///
+  /// To omit `status` field from member metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from member metadata, set [includeType] to `false`
+  /// Default is `true`.
+  /// 
+  /// To get `status` field of UUID metadata, set [includeUUIDStatus] to `true`
+  /// Default is `false`.
+  /// 
+  /// To omit `type` field of UUID metadata, set [includeUUIDType] to `true`
+  /// Default is `false`.
+  ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
   ///
@@ -1028,6 +1148,18 @@ class ObjectsDx {
   /// To include `custom` property fields of member in response, set [includeCustomFields] to `true`
   /// To include `uuid` metadata fields of channel's memebrs in response, set [includeUUIDFields] to `true`
   /// To include `custom` fields of channel member's uuidMetadata, set [includeUUIDCustomFields] to `true`
+  ///
+  /// To omit `status` field from member metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  /// 
+  /// To omit `type` field from member metadata, set [includeType] to `false`
+  /// Default is `true`.
+  /// 
+  /// To get `status` field of UUID metadata, set [includeUUIDStatus] to `true`
+  /// Default is `false`.
+  /// 
+  /// To omit `type` field of UUID metadata, set [includeUUIDType] to `true`
+  /// Default is `false`.
   ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
