@@ -23,8 +23,6 @@ extension EnvironmentExtension on Environment {
         return 'development';
       case Environment.production:
         return 'production';
-      default:
-        throw Exception('Invalid Gateway Type');
     }
   }
 }
@@ -43,8 +41,6 @@ extension PushGatewayExtension on PushGateway {
         return 'apns';
       case PushGateway.apns2:
         return 'apns2';
-      default:
-        throw Exception('Invalid Gateway Type');
     }
   }
 }

@@ -18,13 +18,13 @@ class UUIDMetadata {
   ///
   /// To omit `status` field from membership metadata, set [includeStatus] to `false`
   /// Default is `true`.
-  /// 
+  ///
   /// To omit `type` field from membership metadata, set [includeType] to `false`
   /// Default is `true`.
-  /// 
+  ///
   /// To get `status` field of channel metadata, set [includeChannelStatus] to `true`
   /// Default is `false`.
-  /// 
+  ///
   /// To omit `type` field of channel metadata, set [includeChannelType] to `true`
   /// Default is `false`.
   ///
@@ -83,13 +83,13 @@ class UUIDMetadata {
   ///
   /// To omit `status` field from membership metadata, set [includeStatus] to `false`
   /// Default is `true`.
-  /// 
+  ///
   /// To omit `type` field from membership metadata, set [includeType] to `false`
   /// Default is `true`.
-  /// 
+  ///
   /// To get `status` field of channel metadata, set [includeChannelStatus] to `true`
   /// Default is `false`.
-  /// 
+  ///
   /// To omit `type` field of channel metadata, set [includeChannelType] to `true`
   /// Default is `false`.
   ///

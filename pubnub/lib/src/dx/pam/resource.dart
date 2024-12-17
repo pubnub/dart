@@ -17,8 +17,6 @@ extension ResourceTypeExtension on ResourceType {
         return 'channels';
       case ResourceType.channelGroup:
         return 'groups';
-      default:
-        throw Exception('invalid state');
     }
   }
 }

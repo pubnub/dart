@@ -19,8 +19,6 @@ extension ChannelHistoryOrderExtension on ChannelHistoryOrder {
         return descending;
       case ChannelHistoryOrder.ascending:
         return ascending;
-      default:
-        throw Exception('Unreachable state');
     }
   }
 }
