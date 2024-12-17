@@ -40,6 +40,10 @@ class UUIDMetadata {
           bool? includeChannelFields,
           bool? includeChannelCustomFields,
           bool? includeCount,
+          bool includeChannelStatus = false,
+          bool includeChannelType = false,
+          bool includeStatus = true,
+          bool includeType = true,
           String? filter,
           Set<String>? sort}) =>
       _objects.setMemberships(membershipMetadata,
@@ -52,6 +56,10 @@ class UUIDMetadata {
           includeChannelFields: includeChannelFields,
           includeChannelCustomFields: includeChannelCustomFields,
           includeCount: includeCount,
+          includeChannelStatus: includeChannelStatus,
+          includeChannelType: includeChannelType,
+          includeStatus: includeStatus,
+          includeType: includeType,
           filter: filter,
           sort: sort);
 
@@ -84,6 +92,10 @@ class UUIDMetadata {
           bool? includeChannelFields,
           bool? includeChannelCustomFields,
           bool? includeCount,
+          bool includeChannelStatus = false,
+          bool includeChannelType = false,
+          bool includeStatus = true,
+          bool includeType = true,
           String? filter,
           Set<String>? sort}) =>
       _objects.getMemberships(
@@ -95,6 +107,10 @@ class UUIDMetadata {
           includeChannelFields: includeChannelFields,
           includeChannelCustomFields: includeChannelCustomFields,
           includeCount: includeCount,
+          includeChannelStatus: includeChannelStatus,
+          includeChannelType: includeChannelType,
+          includeStatus: includeStatus,
+          includeType: includeType,
           filter: filter,
           sort: sort,
           keyset: _keyset);

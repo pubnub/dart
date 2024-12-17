@@ -41,6 +41,10 @@ class ChannelMetadata {
           bool? includeUUIDFields,
           bool? includeUUIDCustomFields,
           bool? includeCount,
+          bool includeUUIDStatus = false,
+          bool includeUUIDType = false,
+          bool includeStatus = true,
+          bool includeType = true,
           String? filter,
           Set<String>? sort}) =>
       _objects.setChannelMembers(_id, channelMembersMetadata,
@@ -50,6 +54,10 @@ class ChannelMetadata {
           includeCustomFields: includeCustomFields,
           includeUUIDFields: includeUUIDFields,
           includeUUIDCustomFields: includeUUIDCustomFields,
+          includeUUIDStatus: includeUUIDStatus,
+          includeUUIDType: includeUUIDType,
+          includeStatus: includeStatus,
+          includeType: includeType,
           includeCount: includeCount,
           filter: filter,
           sort: sort);
@@ -84,6 +92,10 @@ class ChannelMetadata {
           bool? includeUUIDFields,
           bool? includeUUIDCustomFields,
           bool? includeCount,
+          bool includeUUIDStatus = false,
+          bool includeUUIDType = false,
+          bool includeStatus = true,
+          bool includeType = true,
           String? filter,
           Set<String>? sort}) =>
       _objects.removeChannelMembers(_id, uuids,
@@ -94,6 +106,10 @@ class ChannelMetadata {
           includeCustomFields: includeCustomFields,
           includeUUIDFields: includeUUIDFields,
           includeUUIDCustomFields: includeUUIDCustomFields,
+          includeUUIDStatus: includeUUIDStatus,
+          includeUUIDType: includeUUIDType,
+          includeStatus: includeStatus,
+          includeType: includeType,
           includeCount: includeCount,
           filter: filter,
           sort: sort);
