@@ -11,20 +11,16 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
   <link rel="icon" href="../static-assets/favicon.png?v1">
-
   
 </head>
 
-
 <body data-base-href="../" data-using-base-href="false" class="light-theme">
-
 <div id="overlay-under-drawer"></div>
-
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
@@ -36,26 +32,25 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button">
+  <div class="toggle" id="theme-button" title="Toggle brightness">
     <label for="theme">
       <input type="checkbox" id="theme" value="light-theme">
       <span id="dark-theme-button" class="material-symbols-outlined">
-        brightness_4
+        dark_mode
       </span>
       <span id="light-theme-button" class="material-symbols-outlined">
-        brightness_5
+        light_mode
       </span>
     </label>
   </div>
 </header>
 <main>
-
-  <div
-      id="dartdoc-main-content"
-      class="main-content"
-      data-above-sidebar="pubnub.crypto&#47;pubnub.crypto-library-sidebar.html"
-      data-below-sidebar="pubnub.crypto&#47;AesCbcCryptor-class-sidebar.html">
-      <div>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="pubnub.crypto&#47;pubnub.crypto-library-sidebar.html"
+    data-below-sidebar="pubnub.crypto&#47;AesCbcCryptor-class-sidebar.html">
+    <div>
 <h1><span class="kind-class">AesCbcCryptor</span> class 
  
 </h1></div>
@@ -72,7 +67,6 @@ It's always preferred to use this cryptor instead old cryptor.</p>
     
   <section class="summary offset-anchor" id="constructors">
     <h2>Constructors</h2>
-
     <dl class="constructor-summary-list">
         <dt id="AesCbcCryptor" class="callable">
           <span class="name"><a href="../pubnub.crypto/AesCbcCryptor/AesCbcCryptor.html">AesCbcCryptor</a></span><span class="signature">(<span class="parameter" id="-param-cipherKey"><span class="type-annotation"><a href="../pubnub/CipherKey-class.html">CipherKey</a></span> <span class="parameter-name">cipherKey</span></span>)</span>
@@ -82,14 +76,16 @@ It's always preferred to use this cryptor instead old cryptor.</p>
         </dd>
     </dl>
   </section>
-
-    <section class="summary offset-anchor" id="instance-properties">
-      <h2>Properties</h2>
-
-      <dl class="properties">
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-properties">
+    <h2>Properties</h2>
+    <dl class="properties">
         <dt id="cipherKey" class="property">
   <span class="name"><a href="../pubnub.crypto/AesCbcCryptor/cipherKey.html">cipherKey</a></span>
-  <span class="signature">&#8596; <a href="../pubnub/CipherKey-class.html">CipherKey</a></span> 
+  <span class="signature">&#8596; <a href="../pubnub/CipherKey-class.html">CipherKey</a></span>
+  
 
 </dt>
 <dd>
@@ -99,8 +95,9 @@ It's always preferred to use this cryptor instead old cryptor.</p>
 </dd>
 
         <dt id="hashCode" class="property inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.3.3/dart-core/Object/hashCode.html">hashCode</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.3.3/dart-core/int-class.html">int</a></span> 
+  <span class="name"><a href="https://api.dart.dev/stable/3.6.0/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.6.0/dart-core/int-class.html">int</a></span>
+  
 
 </dt>
 <dd class="inherited">
@@ -111,7 +108,8 @@ It's always preferred to use this cryptor instead old cryptor.</p>
 
         <dt id="identifier" class="property">
   <span class="name"><a href="../pubnub.crypto/AesCbcCryptor/identifier.html">identifier</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.3.3/dart-core/String-class.html">String</a></span> 
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.6.0/dart-core/String-class.html">String</a></span>
+  
 
 </dt>
 <dd>
@@ -121,8 +119,9 @@ It's always preferred to use this cryptor instead old cryptor.</p>
 </dd>
 
         <dt id="runtimeType" class="property inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.3.3/dart-core/Object/runtimeType.html">runtimeType</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.3.3/dart-core/Type-class.html">Type</a></span> 
+  <span class="name"><a href="https://api.dart.dev/stable/3.6.0/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.6.0/dart-core/Type-class.html">Type</a></span>
+  
 
 </dt>
 <dd class="inherited">
@@ -131,8 +130,8 @@ It's always preferred to use this cryptor instead old cryptor.</p>
 
 </dd>
 
-      </dl>
-    </section>
+    </dl>
+  </section>
 
     
   <section
@@ -142,7 +141,7 @@ It's always preferred to use this cryptor instead old cryptor.</p>
     <dl class="callables">
         <dt id="decrypt" class="callable">
   <span class="name"><a href="../pubnub.crypto/AesCbcCryptor/decrypt.html">decrypt</a></span><span class="signature">(<wbr><span class="parameter" id="decrypt-param-encryptedData"><span class="type-annotation">EncryptedData</span> <span class="parameter-name">encryptedData</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.3/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.3/dart-core/int-class.html">int</a></span>&gt;</span></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.6.0/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.6.0/dart-core/int-class.html">int</a></span>&gt;</span></span>
   </span>
   
 
@@ -155,7 +154,7 @@ It's always preferred to use this cryptor instead old cryptor.</p>
 
         <dt id="decryptFileData" class="callable">
   <span class="name"><a href="../pubnub.crypto/AesCbcCryptor/decryptFileData.html">decryptFileData</a></span><span class="signature">(<wbr><span class="parameter" id="decryptFileData-param-input"><span class="type-annotation">EncryptedData</span> <span class="parameter-name">input</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.3/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.3/dart-core/int-class.html">int</a></span>&gt;</span></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.6.0/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.6.0/dart-core/int-class.html">int</a></span>&gt;</span></span>
   </span>
   
 
@@ -167,7 +166,7 @@ It's always preferred to use this cryptor instead old cryptor.</p>
 </dd>
 
         <dt id="encrypt" class="callable">
-  <span class="name"><a href="../pubnub.crypto/AesCbcCryptor/encrypt.html">encrypt</a></span><span class="signature">(<wbr><span class="parameter" id="encrypt-param-input"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.3/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.3/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">input</span></span>)
+  <span class="name"><a href="../pubnub.crypto/AesCbcCryptor/encrypt.html">encrypt</a></span><span class="signature">(<wbr><span class="parameter" id="encrypt-param-input"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.6.0/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.6.0/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">input</span></span>)
     <span class="returntype parameter">&#8594; EncryptedData</span>
   </span>
   
@@ -180,7 +179,7 @@ It's always preferred to use this cryptor instead old cryptor.</p>
 </dd>
 
         <dt id="encryptFileData" class="callable">
-  <span class="name"><a href="../pubnub.crypto/AesCbcCryptor/encryptFileData.html">encryptFileData</a></span><span class="signature">(<wbr><span class="parameter" id="encryptFileData-param-input"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.3/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.3.3/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">input</span></span>)
+  <span class="name"><a href="../pubnub.crypto/AesCbcCryptor/encryptFileData.html">encryptFileData</a></span><span class="signature">(<wbr><span class="parameter" id="encryptFileData-param-input"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.6.0/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.6.0/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">input</span></span>)
     <span class="returntype parameter">&#8594; EncryptedData</span>
   </span>
   
@@ -193,7 +192,7 @@ It's always preferred to use this cryptor instead old cryptor.</p>
 </dd>
 
         <dt id="noSuchMethod" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.3.3/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.3/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+  <span class="name"><a href="https://api.dart.dev/stable/3.6.0/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.6.0/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
     <span class="returntype parameter">&#8594; dynamic</span>
   </span>
   
@@ -206,8 +205,8 @@ It's always preferred to use this cryptor instead old cryptor.</p>
 </dd>
 
         <dt id="toString" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.3.3/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.3/dart-core/String-class.html">String</a></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.6.0/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.6.0/dart-core/String-class.html">String</a></span>
   </span>
   
 
@@ -227,8 +226,8 @@ It's always preferred to use this cryptor instead old cryptor.</p>
     <h2>Operators</h2>
     <dl class="callables">
         <dt id="operator ==" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.3.3/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.3.3/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.3.3/dart-core/bool-class.html">bool</a></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.6.0/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.6.0/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.6.0/dart-core/bool-class.html">bool</a></span>
   </span>
   
 
@@ -245,9 +244,7 @@ It's always preferred to use this cryptor instead old cryptor.</p>
     
     
 
-
   </div> <!-- /.main-content -->
-
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
     <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
@@ -255,40 +252,30 @@ It's always preferred to use this cryptor instead old cryptor.</p>
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
 </header>
-
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">pubnub</a></li>
     <li><a href="../pubnub.crypto/pubnub.crypto-library.html">pubnub.crypto</a></li>
     <li class="self-crumb">AesCbcCryptor class</li>
 </ol>
 
-
     <h5>pubnub.crypto library</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div>
-
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
-
 </main>
-
 <footer>
   <span class="no-break">
     pubnub
-      4.3.4
+      5.1.0
   </span>
-
   
 </footer>
-
 
 
 <script src="../static-assets/highlight.pack.js?v1"></script>
 <script src="../static-assets/docs.dart.js"></script>
 
-
-
 </body>
-
 </html>
 

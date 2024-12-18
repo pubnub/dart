@@ -11,20 +11,16 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
   <link rel="icon" href="../static-assets/favicon.png?v1">
-
   
 </head>
 
-
 <body data-base-href="../" data-using-base-href="false" class="light-theme">
-
 <div id="overlay-under-drawer"></div>
-
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
@@ -35,36 +31,35 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button">
+  <div class="toggle" id="theme-button" title="Toggle brightness">
     <label for="theme">
       <input type="checkbox" id="theme" value="light-theme">
       <span id="dark-theme-button" class="material-symbols-outlined">
-        brightness_4
+        dark_mode
       </span>
       <span id="light-theme-button" class="material-symbols-outlined">
-        brightness_5
+        light_mode
       </span>
     </label>
   </div>
 </header>
 <main>
-
-  <div
-      id="dartdoc-main-content"
-      class="main-content"
-      data-above-sidebar=""
-      data-below-sidebar="pubnub&#47;pubnub-library-sidebar.html">
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar=""
+    data-below-sidebar="pubnub&#47;pubnub-library-sidebar.html">
+  
+    <div>
       
-      <div>
-        
 
-        <h1>
-          <span class="kind-library">pubnub</span>
-          library 
+      <h1>
+        <span class="kind-library">pubnub</span>
+        library 
  
 
-        </h1>
-      </div>
+      </h1>
+    </div>
 
     
 <section class="desc markdown">
@@ -76,9 +71,8 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 
     <section class="summary offset-anchor" id="classes">
       <h2>Classes</h2>
-
       <dl>
-        <dt id="AddMessageActionResult">
+          <dt id="AddMessageActionResult">
   <span class="name "><a href="../pubnub/AddMessageActionResult-class.html">AddMessageActionResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -87,7 +81,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Result of add message actions endpoint call.
 </dd>
 
-        <dt id="AddPushChannelsResult">
+          <dt id="AddPushChannelsResult">
   <span class="name "><a href="../pubnub/AddPushChannelsResult-class.html">AddPushChannelsResult</a></span> 
     <span class="category push cp-3 linked" title="This is part of the Push topic."><a href="../topics/Push-topic.html">Push</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -97,7 +91,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Result of add push channels endpoint call.
 </dd>
 
-        <dt id="BaseMessage">
+          <dt id="BaseMessage">
   <span class="name "><a href="../pubnub/BaseMessage-class.html">BaseMessage</a></span> 
     <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
@@ -106,7 +100,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Represents a base message.
 </dd>
 
-        <dt id="BatchDx">
+          <dt id="BatchDx">
   <span class="name "><a href="../pubnub/BatchDx-class.html">BatchDx</a></span> 
 
 </dt>
@@ -114,7 +108,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Groups common <strong>batch</strong> features together.
 </dd>
 
-        <dt id="BatchHistoryResult">
+          <dt id="BatchHistoryResult">
   <span class="name "><a href="../pubnub/BatchHistoryResult-class.html">BatchHistoryResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -123,7 +117,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Result of batch history endpoint call.
 </dd>
 
-        <dt id="BatchHistoryResultEntry">
+          <dt id="BatchHistoryResultEntry">
   <span class="name "><a href="../pubnub/BatchHistoryResultEntry-class.html">BatchHistoryResultEntry</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -132,7 +126,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Message from batch history endpoint.
 </dd>
 
-        <dt id="Channel">
+          <dt id="Channel">
   <span class="name "><a href="../pubnub/Channel-class.html">Channel</a></span> 
     <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
@@ -141,7 +135,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Represents a single channel.
 </dd>
 
-        <dt id="ChannelGroupChangeChannelsResult">
+          <dt id="ChannelGroupChangeChannelsResult">
   <span class="name "><a href="../pubnub/ChannelGroupChangeChannelsResult-class.html">ChannelGroupChangeChannelsResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -150,7 +144,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Result of add or remove channels of channel group endpoint call.
 </dd>
 
-        <dt id="ChannelGroupDeleteResult">
+          <dt id="ChannelGroupDeleteResult">
   <span class="name "><a href="../pubnub/ChannelGroupDeleteResult-class.html">ChannelGroupDeleteResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -159,7 +153,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Result of remove channel group endpoint call.
 </dd>
 
-        <dt id="ChannelGroupDx">
+          <dt id="ChannelGroupDx">
   <span class="name "><a href="../pubnub/ChannelGroupDx-class.html">ChannelGroupDx</a></span> 
 
 </dt>
@@ -167,7 +161,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Groups <strong>channel group</strong> methods together.
 </dd>
 
-        <dt id="ChannelGroupListChannelsResult">
+          <dt id="ChannelGroupListChannelsResult">
   <span class="name "><a href="../pubnub/ChannelGroupListChannelsResult-class.html">ChannelGroupListChannelsResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -176,7 +170,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Result of list channel groups channels endpoint call.
 </dd>
 
-        <dt id="ChannelHistory">
+          <dt id="ChannelHistory">
   <span class="name "><a href="../pubnub/ChannelHistory-class.html">ChannelHistory</a></span> 
 
 </dt>
@@ -184,7 +178,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Represents history of messages in a channel that can be counted, fetched or removed.
 </dd>
 
-        <dt id="ChannelIdInfo">
+          <dt id="ChannelIdInfo">
   <span class="name "><a href="../pubnub/ChannelIdInfo-class.html">ChannelIdInfo</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
@@ -193,7 +187,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Represents channel id input.
 </dd>
 
-        <dt id="ChannelMemberMetadata">
+          <dt id="ChannelMemberMetadata">
   <span class="name "><a href="../pubnub/ChannelMemberMetadata-class.html">ChannelMemberMetadata</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -203,7 +197,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Represents channel member metadata.
 </dd>
 
-        <dt id="ChannelMemberMetadataInput">
+          <dt id="ChannelMemberMetadataInput">
   <span class="name "><a href="../pubnub/ChannelMemberMetadataInput-class.html">ChannelMemberMetadataInput</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
@@ -212,7 +206,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Represents channel member metadata operations input.
 </dd>
 
-        <dt id="ChannelMembersResult">
+          <dt id="ChannelMembersResult">
   <span class="name "><a href="../pubnub/ChannelMembersResult-class.html">ChannelMembersResult</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -222,7 +216,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Result of channel members endpoint calls.
 </dd>
 
-        <dt id="ChannelMetadataDetails">
+          <dt id="ChannelMetadataDetails">
   <span class="name "><a href="../pubnub/ChannelMetadataDetails-class.html">ChannelMetadataDetails</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -232,7 +226,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Represents channel metadata.
 </dd>
 
-        <dt id="ChannelMetadataInput">
+          <dt id="ChannelMetadataInput">
   <span class="name "><a href="../pubnub/ChannelMetadataInput-class.html">ChannelMetadataInput</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
@@ -241,7 +235,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Represents channel metadata operations input.
 </dd>
 
-        <dt id="ChannelOccupancy">
+          <dt id="ChannelOccupancy">
   <span class="name "><a href="../pubnub/ChannelOccupancy-class.html">ChannelOccupancy</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -250,7 +244,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Represents current channel participants.
 </dd>
 
-        <dt id="CipherKey">
+          <dt id="CipherKey">
   <span class="name "><a href="../pubnub/CipherKey-class.html">CipherKey</a></span> 
 
 </dt>
@@ -258,7 +252,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   
 </dd>
 
-        <dt id="CountMessagesResult">
+          <dt id="CountMessagesResult">
   <span class="name "><a href="../pubnub/CountMessagesResult-class.html">CountMessagesResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -267,7 +261,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Result of count messages endpoint call.
 </dd>
 
-        <dt id="CryptoConfiguration">
+          <dt id="CryptoConfiguration">
   <span class="name "><a href="../pubnub.crypto/CryptoConfiguration-class.html">CryptoConfiguration</a></span> 
 
 </dt>
@@ -275,7 +269,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
   Configuration used in cryptography.
 </dd>
 
-        <dt id="CryptoModule">
+          <dt id="CryptoModule">
   <span class="name "><a href="../pubnub.crypto/CryptoModule-class.html">CryptoModule</a></span> 
 
 </dt>
@@ -284,7 +278,7 @@ PubNub Data Streaming Network in a fast and easy manner.</p>
 of PubNub messages.
 </dd>
 
-        <dt id="DeleteFileResult">
+          <dt id="DeleteFileResult">
   <span class="name "><a href="../pubnub/DeleteFileResult-class.html">DeleteFileResult</a></span> 
     <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -294,7 +288,7 @@ of PubNub messages.
   Result of delete file endpoint call.
 </dd>
 
-        <dt id="DeleteMessageActionResult">
+          <dt id="DeleteMessageActionResult">
   <span class="name "><a href="../pubnub/DeleteMessageActionResult-class.html">DeleteMessageActionResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -303,7 +297,7 @@ of PubNub messages.
   Result of delete message actions endpoint call.
 </dd>
 
-        <dt id="Device">
+          <dt id="Device">
   <span class="name "><a href="../pubnub/Device-class.html">Device</a></span> 
 
 </dt>
@@ -311,7 +305,7 @@ of PubNub messages.
   Represents a device used in push endpoints.
 </dd>
 
-        <dt id="DownloadFileResult">
+          <dt id="DownloadFileResult">
   <span class="name "><a href="../pubnub/DownloadFileResult-class.html">DownloadFileResult</a></span> 
     <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -321,7 +315,7 @@ of PubNub messages.
   Result of download file endpoint call.
 </dd>
 
-        <dt id="Envelope">
+          <dt id="Envelope">
   <span class="name "><a href="../pubnub/Envelope-class.html">Envelope</a></span> 
     <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -331,7 +325,7 @@ of PubNub messages.
   Represents a message received from a subscription.
 </dd>
 
-        <dt id="ExponentialRetryPolicy">
+          <dt id="ExponentialRetryPolicy">
   <span class="name "><a href="../pubnub/ExponentialRetryPolicy-class.html">ExponentialRetryPolicy</a></span> 
 
 </dt>
@@ -339,7 +333,7 @@ of PubNub messages.
   Exponential retry policy.
 </dd>
 
-        <dt id="FetchMessageActionsResult">
+          <dt id="FetchMessageActionsResult">
   <span class="name "><a href="../pubnub/FetchMessageActionsResult-class.html">FetchMessageActionsResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -348,7 +342,7 @@ of PubNub messages.
   Result of fetch message actions endpoint call.
 </dd>
 
-        <dt id="FileDetail">
+          <dt id="FileDetail">
   <span class="name "><a href="../pubnub/FileDetail-class.html">FileDetail</a></span> 
     <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -358,7 +352,7 @@ of PubNub messages.
   Represents a file uploaded to PubNub.
 </dd>
 
-        <dt id="FileDx">
+          <dt id="FileDx">
   <span class="name "><a href="../pubnub/FileDx-class.html">FileDx</a></span> 
     <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
 
@@ -367,7 +361,7 @@ of PubNub messages.
   Groups <strong>file</strong> methods together.
 </dd>
 
-        <dt id="FileInfo">
+          <dt id="FileInfo">
   <span class="name "><a href="../pubnub/FileInfo-class.html">FileInfo</a></span> 
     <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
 
@@ -376,7 +370,7 @@ of PubNub messages.
   Represents file information.
 </dd>
 
-        <dt id="FileMessage">
+          <dt id="FileMessage">
   <span class="name "><a href="../pubnub/FileMessage-class.html">FileMessage</a></span> 
     <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
 
@@ -385,7 +379,7 @@ of PubNub messages.
   Represents message with attached file.
 </dd>
 
-        <dt id="GetAllChannelMetadataResult">
+          <dt id="GetAllChannelMetadataResult">
   <span class="name "><a href="../pubnub/GetAllChannelMetadataResult-class.html">GetAllChannelMetadataResult</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -395,7 +389,7 @@ of PubNub messages.
   Result of get all channels metadata endpoint call.
 </dd>
 
-        <dt id="GetAllUuidMetadataResult">
+          <dt id="GetAllUuidMetadataResult">
   <span class="name "><a href="../pubnub/GetAllUuidMetadataResult-class.html">GetAllUuidMetadataResult</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -405,7 +399,7 @@ of PubNub messages.
   Result of get all UUID metadata endpoint call.
 </dd>
 
-        <dt id="GetChannelMetadataResult">
+          <dt id="GetChannelMetadataResult">
   <span class="name "><a href="../pubnub/GetChannelMetadataResult-class.html">GetChannelMetadataResult</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -415,7 +409,7 @@ of PubNub messages.
   Result of get channels metadata endpoint call.
 </dd>
 
-        <dt id="GetUserStateResult">
+          <dt id="GetUserStateResult">
   <span class="name "><a href="../pubnub/GetUserStateResult-class.html">GetUserStateResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -424,7 +418,7 @@ of PubNub messages.
   Result of get user state endpoint call.
 </dd>
 
-        <dt id="GetUuidMetadataResult">
+          <dt id="GetUuidMetadataResult">
   <span class="name "><a href="../pubnub/GetUuidMetadataResult-class.html">GetUuidMetadataResult</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -434,7 +428,7 @@ of PubNub messages.
   Result of get UUID metadata endpoint call.
 </dd>
 
-        <dt id="HeartbeatResult">
+          <dt id="HeartbeatResult">
   <span class="name "><a href="../pubnub/HeartbeatResult-class.html">HeartbeatResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -443,7 +437,7 @@ of PubNub messages.
   Result of heartbeat endpoint call.
 </dd>
 
-        <dt id="HereNowResult">
+          <dt id="HereNowResult">
   <span class="name "><a href="../pubnub/HereNowResult-class.html">HereNowResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -452,7 +446,7 @@ of PubNub messages.
   Result of here now endpoint call.
 </dd>
 
-        <dt id="Keyset">
+          <dt id="Keyset">
   <span class="name "><a href="../pubnub/Keyset-class.html">Keyset</a></span> 
     <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
@@ -461,7 +455,7 @@ of PubNub messages.
   Represents a configuration for a given subscribe key.
 </dd>
 
-        <dt id="KeysetStore">
+          <dt id="KeysetStore">
   <span class="name "><a href="../pubnub/KeysetStore-class.html">KeysetStore</a></span> 
 
 </dt>
@@ -469,7 +463,7 @@ of PubNub messages.
   Represents a collection of <a href="../pubnub/Keyset-class.html">Keyset</a>.
 </dd>
 
-        <dt id="LeaveResult">
+          <dt id="LeaveResult">
   <span class="name "><a href="../pubnub/LeaveResult-class.html">LeaveResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -478,7 +472,7 @@ of PubNub messages.
   Result of leave endpoint call.
 </dd>
 
-        <dt id="LinearRetryPolicy">
+          <dt id="LinearRetryPolicy">
   <span class="name "><a href="../pubnub/LinearRetryPolicy-class.html">LinearRetryPolicy</a></span> 
 
 </dt>
@@ -486,7 +480,7 @@ of PubNub messages.
   Linear retry policy.
 </dd>
 
-        <dt id="ListFilesResult">
+          <dt id="ListFilesResult">
   <span class="name "><a href="../pubnub/ListFilesResult-class.html">ListFilesResult</a></span> 
     <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -496,7 +490,7 @@ of PubNub messages.
   Result of list files endpoint call.
 </dd>
 
-        <dt id="ListPushChannelsResult">
+          <dt id="ListPushChannelsResult">
   <span class="name "><a href="../pubnub/ListPushChannelsResult-class.html">ListPushChannelsResult</a></span> 
     <span class="category push cp-3 linked" title="This is part of the Push topic."><a href="../topics/Push-topic.html">Push</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -506,7 +500,7 @@ of PubNub messages.
   Result of list push channels endpoint call.
 </dd>
 
-        <dt id="MembershipMetadata">
+          <dt id="MembershipMetadata">
   <span class="name "><a href="../pubnub/MembershipMetadata-class.html">MembershipMetadata</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -516,7 +510,7 @@ of PubNub messages.
   Represents membership metadata.
 </dd>
 
-        <dt id="MembershipMetadataInput">
+          <dt id="MembershipMetadataInput">
   <span class="name "><a href="../pubnub/MembershipMetadataInput-class.html">MembershipMetadataInput</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
@@ -525,7 +519,7 @@ of PubNub messages.
   Represents membership metadata operations input.
 </dd>
 
-        <dt id="MembershipsResult">
+          <dt id="MembershipsResult">
   <span class="name "><a href="../pubnub/MembershipsResult-class.html">MembershipsResult</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -535,7 +529,7 @@ of PubNub messages.
   Result of memberships endpoint calls.
 </dd>
 
-        <dt id="MessageAction">
+          <dt id="MessageAction">
   <span class="name "><a href="../pubnub/MessageAction-class.html">MessageAction</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -544,7 +538,7 @@ of PubNub messages.
   Represents a message action.
 </dd>
 
-        <dt id="ObjectsDx">
+          <dt id="ObjectsDx">
   <span class="name "><a href="../pubnub/ObjectsDx-class.html">ObjectsDx</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
@@ -553,7 +547,7 @@ of PubNub messages.
   Groups <strong>objects</strong> methods together.
 </dd>
 
-        <dt id="PaginatedChannelHistory">
+          <dt id="PaginatedChannelHistory">
   <span class="name "><a href="../pubnub/PaginatedChannelHistory-class.html">PaginatedChannelHistory</a></span> 
 
 </dt>
@@ -561,7 +555,7 @@ of PubNub messages.
   Represents readonly history of messages in a channel.
 </dd>
 
-        <dt id="PamGrantTokenResult">
+          <dt id="PamGrantTokenResult">
   <span class="name "><a href="../pubnub/PamGrantTokenResult-class.html">PamGrantTokenResult</a></span> 
 
 </dt>
@@ -569,7 +563,7 @@ of PubNub messages.
   
 </dd>
 
-        <dt id="PamRevokeTokenResult">
+          <dt id="PamRevokeTokenResult">
   <span class="name "><a href="../pubnub/PamRevokeTokenResult-class.html">PamRevokeTokenResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
     <span class="category pam-v3 cp-8" title="This is part of the PAM v3 topic.">PAM&nbsp;v3</span>
@@ -579,7 +573,7 @@ of PubNub messages.
   Result of Revoke Token endpoint call.
 </dd>
 
-        <dt id="PresenceEvent">
+          <dt id="PresenceEvent">
   <span class="name "><a href="../pubnub/PresenceEvent-class.html">PresenceEvent</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -588,7 +582,7 @@ of PubNub messages.
   Represents an event in presence.
 </dd>
 
-        <dt id="PublishFileMessageResult">
+          <dt id="PublishFileMessageResult">
   <span class="name "><a href="../pubnub/PublishFileMessageResult-class.html">PublishFileMessageResult</a></span> 
     <span class="category files cp-2 linked" title="This is part of the Files topic."><a href="../topics/Files-topic.html">Files</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -598,7 +592,7 @@ of PubNub messages.
   Result of publish file message endpoint call.
 </dd>
 
-        <dt id="PublishResult">
+          <dt id="PublishResult">
   <span class="name "><a href="../pubnub/PublishResult-class.html">PublishResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -607,7 +601,7 @@ of PubNub messages.
   Result of publish endpoint call.
 </dd>
 
-        <dt id="PubNub">
+          <dt id="PubNub">
   <span class="name "><a href="../pubnub/PubNub-class.html">PubNub</a></span> 
     <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
@@ -616,7 +610,7 @@ of PubNub messages.
   PubNub library.
 </dd>
 
-        <dt id="RemoveChannelMetadataResult">
+          <dt id="RemoveChannelMetadataResult">
   <span class="name "><a href="../pubnub/RemoveChannelMetadataResult-class.html">RemoveChannelMetadataResult</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -626,7 +620,7 @@ of PubNub messages.
   Result of remove channels metadata endpoint call.
 </dd>
 
-        <dt id="RemoveDeviceResult">
+          <dt id="RemoveDeviceResult">
   <span class="name "><a href="../pubnub/RemoveDeviceResult-class.html">RemoveDeviceResult</a></span> 
     <span class="category push cp-3 linked" title="This is part of the Push topic."><a href="../topics/Push-topic.html">Push</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -636,7 +630,7 @@ of PubNub messages.
   Result of remove device endpoint call.
 </dd>
 
-        <dt id="RemovePushChannelsResult">
+          <dt id="RemovePushChannelsResult">
   <span class="name "><a href="../pubnub/RemovePushChannelsResult-class.html">RemovePushChannelsResult</a></span> 
     <span class="category push cp-3 linked" title="This is part of the Push topic."><a href="../topics/Push-topic.html">Push</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -646,7 +640,7 @@ of PubNub messages.
   Result of remove push channels endpoint call.
 </dd>
 
-        <dt id="RemoveUuidMetadataResult">
+          <dt id="RemoveUuidMetadataResult">
   <span class="name "><a href="../pubnub/RemoveUuidMetadataResult-class.html">RemoveUuidMetadataResult</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -656,7 +650,7 @@ of PubNub messages.
   Result of remove UUID metadata endpoint call.
 </dd>
 
-        <dt id="Resource">
+          <dt id="Resource">
   <span class="name "><a href="../pubnub/Resource-class.html">Resource</a></span> 
     <span class="category access-manager cp-4 linked" title="This is part of the Access Manager topic."><a href="../topics/Access Manager-topic.html">Access&nbsp;Manager</a></span>
 
@@ -665,7 +659,7 @@ of PubNub messages.
   Represents a resource in PAM.
 </dd>
 
-        <dt id="RetryPolicy">
+          <dt id="RetryPolicy">
   <span class="name "><a href="../pubnub/RetryPolicy-class.html">RetryPolicy</a></span> 
 
 </dt>
@@ -673,7 +667,7 @@ of PubNub messages.
   Retry policy represents a policy used when retrying a network operation.
 </dd>
 
-        <dt id="SetChannelMetadataResult">
+          <dt id="SetChannelMetadataResult">
   <span class="name "><a href="../pubnub/SetChannelMetadataResult-class.html">SetChannelMetadataResult</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -683,7 +677,7 @@ of PubNub messages.
   Result of set channels metadata endpoint call.
 </dd>
 
-        <dt id="SetUserStateResult">
+          <dt id="SetUserStateResult">
   <span class="name "><a href="../pubnub/SetUserStateResult-class.html">SetUserStateResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -692,7 +686,7 @@ of PubNub messages.
   Result of set user state endpoint call.
 </dd>
 
-        <dt id="SetUuidMetadataResult">
+          <dt id="SetUuidMetadataResult">
   <span class="name "><a href="../pubnub/SetUuidMetadataResult-class.html">SetUuidMetadataResult</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -702,7 +696,7 @@ of PubNub messages.
   Result of set UUID metadata endpoint call.
 </dd>
 
-        <dt id="SignalResult">
+          <dt id="SignalResult">
   <span class="name "><a href="../pubnub/SignalResult-class.html">SignalResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -711,7 +705,7 @@ of PubNub messages.
   Result of signal endpoint call.
 </dd>
 
-        <dt id="Signals">
+          <dt id="Signals">
   <span class="name "><a href="../pubnub/Signals-class.html">Signals</a></span> 
 
 </dt>
@@ -719,7 +713,7 @@ of PubNub messages.
   
 </dd>
 
-        <dt id="Subscription">
+          <dt id="Subscription">
   <span class="name "><a href="../pubnub/Subscription-class.html">Subscription</a></span> 
 
 </dt>
@@ -727,7 +721,7 @@ of PubNub messages.
   Represents a subscription to a set of channels and channel groups.
 </dd>
 
-        <dt id="Timetoken">
+          <dt id="Timetoken">
   <span class="name "><a href="../pubnub/Timetoken-class.html">Timetoken</a></span> 
     <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
@@ -736,7 +730,7 @@ of PubNub messages.
   Represents a timetoken value returned and required by most PubNub APIs.
 </dd>
 
-        <dt id="Token">
+          <dt id="Token">
   <span class="name "><a href="../pubnub/Token-class.html">Token</a></span> 
     <span class="category access-manager cp-4 linked" title="This is part of the Access Manager topic."><a href="../topics/Access Manager-topic.html">Access&nbsp;Manager</a></span>
 
@@ -745,7 +739,7 @@ of PubNub messages.
   Token returned by the PAM.
 </dd>
 
-        <dt id="TokenRequest">
+          <dt id="TokenRequest">
   <span class="name "><a href="../pubnub/TokenRequest-class.html">TokenRequest</a></span> 
     <span class="category access-manager cp-4 linked" title="This is part of the Access Manager topic."><a href="../topics/Access Manager-topic.html">Access&nbsp;Manager</a></span>
 
@@ -754,7 +748,7 @@ of PubNub messages.
   Represents a token request.
 </dd>
 
-        <dt id="UserId">
+          <dt id="UserId">
   <span class="name "><a href="../pubnub/UserId-class.html">UserId</a></span> 
     <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
@@ -763,7 +757,7 @@ of PubNub messages.
   Represents an UserID.
 </dd>
 
-        <dt id="UUID">
+          <dt id="UUID">
   <span class="name "><a href="../pubnub/UUID-class.html">UUID</a></span> 
     <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
@@ -772,7 +766,7 @@ of PubNub messages.
   Represents an UUID.
 </dd>
 
-        <dt id="UuIdInfo">
+          <dt id="UuIdInfo">
   <span class="name "><a href="../pubnub/UuIdInfo-class.html">UuIdInfo</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
@@ -781,7 +775,7 @@ of PubNub messages.
   Represents UUID input.
 </dd>
 
-        <dt id="UuidMetadataDetails">
+          <dt id="UuidMetadataDetails">
   <span class="name "><a href="../pubnub/UuidMetadataDetails-class.html">UuidMetadataDetails</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
@@ -791,7 +785,7 @@ of PubNub messages.
   Represents UUID metadata.
 </dd>
 
-        <dt id="UuidMetadataInput">
+          <dt id="UuidMetadataInput">
   <span class="name "><a href="../pubnub/UuidMetadataInput-class.html">UuidMetadataInput</a></span> 
     <span class="category objects cp-1 linked" title="This is part of the Objects topic."><a href="../topics/Objects-topic.html">Objects</a></span>
 
@@ -800,7 +794,7 @@ of PubNub messages.
   Represents UUID metadata operations input.
 </dd>
 
-        <dt id="WhereNowResult">
+          <dt id="WhereNowResult">
   <span class="name "><a href="../pubnub/WhereNowResult-class.html">WhereNowResult</a></span> 
     <span class="category results cp-6 linked" title="This is part of the Results topic."><a href="../topics/Results-topic.html">Results</a></span>
 
@@ -812,17 +806,10 @@ of PubNub messages.
       </dl>
     </section>
 
-
-
-
-
-
-
     <section class="summary offset-anchor" id="enums">
       <h2>Enums</h2>
-
       <dl>
-        <dt id="ChannelHistoryOrder">
+          <dt id="ChannelHistoryOrder">
   <span class="name "><a href="../pubnub/ChannelHistoryOrder.html">ChannelHistoryOrder</a></span> 
 
 </dt>
@@ -830,7 +817,7 @@ of PubNub messages.
   Order of messages based on timetoken.
 </dd>
 
-        <dt id="Environment">
+          <dt id="Environment">
   <span class="name "><a href="../pubnub/Environment.html">Environment</a></span> 
     <span class="category push cp-3 linked" title="This is part of the Push topic."><a href="../topics/Push-topic.html">Push</a></span>
 
@@ -839,7 +826,7 @@ of PubNub messages.
   Environment type.
 </dd>
 
-        <dt id="MessageType">
+          <dt id="MessageType">
   <span class="name "><a href="../pubnub/MessageType.html">MessageType</a></span> 
     <span class="category basic-features cp-0 linked" title="This is part of the Basic Features topic."><a href="../topics/Basic Features-topic.html">Basic&nbsp;Features</a></span>
 
@@ -848,7 +835,7 @@ of PubNub messages.
   Represents the type of a message.
 </dd>
 
-        <dt id="PresenceAction">
+          <dt id="PresenceAction">
   <span class="name "><a href="../pubnub/PresenceAction.html">PresenceAction</a></span> 
 
 </dt>
@@ -856,7 +843,7 @@ of PubNub messages.
   Represents a presence action.
 </dd>
 
-        <dt id="PushGateway">
+          <dt id="PushGateway">
   <span class="name "><a href="../pubnub/PushGateway.html">PushGateway</a></span> 
     <span class="category push cp-3 linked" title="This is part of the Push topic."><a href="../topics/Push-topic.html">Push</a></span>
 
@@ -865,7 +852,7 @@ of PubNub messages.
   Push gateway type.
 </dd>
 
-        <dt id="ResourceType">
+          <dt id="ResourceType">
   <span class="name "><a href="../pubnub/ResourceType.html">ResourceType</a></span> 
     <span class="category access-manager cp-4 linked" title="This is part of the Access Manager topic."><a href="../topics/Access Manager-topic.html">Access&nbsp;Manager</a></span>
 
@@ -874,7 +861,7 @@ of PubNub messages.
   Represents a resource type.
 </dd>
 
-        <dt id="StateInfo">
+          <dt id="StateInfo">
   <span class="name "><a href="../pubnub/StateInfo.html">StateInfo</a></span> 
 
 </dt>
@@ -886,11 +873,16 @@ of PubNub messages.
     </section>
 
 
+
+
+
+
+
+
     <section class="summary offset-anchor" id="exceptions">
       <h2>Exceptions / Errors</h2>
-
       <dl>
-        <dt id="InvalidArgumentsException">
+          <dt id="InvalidArgumentsException">
   <span class="name "><a href="../pubnub/InvalidArgumentsException-class.html">InvalidArgumentsException</a></span> 
     <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
@@ -899,7 +891,7 @@ of PubNub messages.
   An exception thrown when some argument is invalid.
 </dd>
 
-        <dt id="InvariantException">
+          <dt id="InvariantException">
   <span class="name "><a href="../pubnub/InvariantException-class.html">InvariantException</a></span> 
     <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
@@ -909,7 +901,7 @@ of PubNub messages.
 is broken.
 </dd>
 
-        <dt id="KeysetException">
+          <dt id="KeysetException">
   <span class="name "><a href="../pubnub/KeysetException-class.html">KeysetException</a></span> 
     <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
@@ -918,7 +910,7 @@ is broken.
   An exception that happens during keyset creation or resolution.
 </dd>
 
-        <dt id="MalformedResponseException">
+          <dt id="MalformedResponseException">
   <span class="name "><a href="../pubnub/MalformedResponseException-class.html">MalformedResponseException</a></span> 
     <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
@@ -927,7 +919,7 @@ is broken.
   An exception thrown when the API has returned an unexpected response.
 </dd>
 
-        <dt id="MaximumRetriesException">
+          <dt id="MaximumRetriesException">
   <span class="name "><a href="../pubnub/MaximumRetriesException-class.html">MaximumRetriesException</a></span> 
     <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
@@ -936,7 +928,7 @@ is broken.
   An exception thrown when maximum amount of retries has been reached.
 </dd>
 
-        <dt id="MethodDisabledException">
+          <dt id="MethodDisabledException">
   <span class="name "><a href="../pubnub/MethodDisabledException-class.html">MethodDisabledException</a></span> 
     <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
@@ -945,7 +937,7 @@ is broken.
   An exception thrown when a disabled API has been requested.
 </dd>
 
-        <dt id="NotImplementedException">
+          <dt id="NotImplementedException">
   <span class="name "><a href="../pubnub/NotImplementedException-class.html">NotImplementedException</a></span> 
     <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
@@ -954,7 +946,7 @@ is broken.
   An exception thrown when a method is not yet implemented.
 </dd>
 
-        <dt id="PublishException">
+          <dt id="PublishException">
   <span class="name "><a href="../pubnub/PublishException-class.html">PublishException</a></span> 
     <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
@@ -963,7 +955,7 @@ is broken.
   An exception thrown when publish fails.
 </dd>
 
-        <dt id="PubNubException">
+          <dt id="PubNubException">
   <span class="name "><a href="../pubnub/PubNubException-class.html">PubNubException</a></span> 
     <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
@@ -972,7 +964,7 @@ is broken.
   An exception thrown by the PubNub SDK.
 </dd>
 
-        <dt id="UnknownException">
+          <dt id="UnknownException">
   <span class="name "><a href="../pubnub/UnknownException-class.html">UnknownException</a></span> 
     <span class="category exceptions cp-5 linked" title="This is part of the Exceptions topic."><a href="../topics/Exceptions-topic.html">Exceptions</a></span>
 
@@ -983,9 +975,7 @@ is broken.
 
       </dl>
     </section>
-
   </div> <!-- /.main-content -->
-
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
     <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
@@ -993,12 +983,10 @@ is broken.
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
 </header>
-
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">pubnub</a></li>
     <li class="self-crumb">pubnub.dart</li>
 </ol>
-
 
     <h5><span class="package-name">pubnub</span> <span class="package-kind">package</span></h5>
     <ol>
@@ -1019,30 +1007,22 @@ is broken.
 </ol>
 
   </div>
-
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
     <h5>pubnub library</h5>
   </div><!--/sidebar-offcanvas-right-->
-
 </main>
-
 <footer>
   <span class="no-break">
     pubnub
-      4.3.4
+      5.1.0
   </span>
-
   
 </footer>
-
 
 
 <script src="../static-assets/highlight.pack.js?v1"></script>
 <script src="../static-assets/docs.dart.js"></script>
 
-
-
 </body>
-
 </html>
 
