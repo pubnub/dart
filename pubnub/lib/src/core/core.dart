@@ -21,7 +21,7 @@ class Core {
   /// Internal module responsible for supervising.
   SupervisorModule supervisor = SupervisorModule();
 
-  static String version = '5.0.0';
+  static String version = '5.1.0';
 
   Core(
       {Keyset? defaultKeyset,

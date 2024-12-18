@@ -1,3 +1,9 @@
+## v5.1.0
+December 18 2024
+
+#### Added
+- Added support for `status` and `type` fields in AppContext APIs.
+
 ## v5.0.0
 December 10 2024
 
