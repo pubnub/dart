@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2024-12-18
+    version: v5.1.0
+    changes:
+      - type: feature
+        text: "Added support for `status` and `type` fields in AppContext APIs."
   - date: 2024-12-10
     version: v5.0.0
     changes:
@@ -461,7 +466,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "5.0.0"
+version: "5.1.0"
 sdks:
   -
     full-name: PubNub Dart SDK

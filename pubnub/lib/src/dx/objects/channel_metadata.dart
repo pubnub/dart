@@ -17,6 +17,18 @@ class ChannelMetadata {
   /// To include `uuid` metadata fields of channel's memebrs in response, set [includeUUIDFields] to `true`
   /// To include `custom` fields of channel member's uuidMetadata, set [includeUUIDCustomFields] to `true`
   ///
+  /// To omit `status` field from member metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from member metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
+  /// To get `status` field of UUID metadata, set [includeUUIDStatus] to `true`
+  /// Default is `false`.
+  ///
+  /// To omit `type` field of UUID metadata, set [includeUUIDType] to `true`
+  /// Default is `false`.
+  ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
   ///
@@ -41,6 +53,10 @@ class ChannelMetadata {
           bool? includeUUIDFields,
           bool? includeUUIDCustomFields,
           bool? includeCount,
+          bool includeUUIDStatus = false,
+          bool includeUUIDType = false,
+          bool includeStatus = true,
+          bool includeType = true,
           String? filter,
           Set<String>? sort}) =>
       _objects.setChannelMembers(_id, channelMembersMetadata,
@@ -50,6 +66,10 @@ class ChannelMetadata {
           includeCustomFields: includeCustomFields,
           includeUUIDFields: includeUUIDFields,
           includeUUIDCustomFields: includeUUIDCustomFields,
+          includeUUIDStatus: includeUUIDStatus,
+          includeUUIDType: includeUUIDType,
+          includeStatus: includeStatus,
+          includeType: includeType,
           includeCount: includeCount,
           filter: filter,
           sort: sort);
@@ -60,6 +80,18 @@ class ChannelMetadata {
   /// To include `custom` property fields of member in response, set [includeCustomFields] to `true`
   /// To include `uuid` metadata fields of channel's memebrs in response, set [includeUUIDFields] to `true`
   /// To include `custom` fields of channel member's uuidMetadata, set [includeUUIDCustomFields] to `true`
+  ///
+  /// To omit `status` field from member metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from member metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
+  /// To get `status` field of UUID metadata, set [includeUUIDStatus] to `true`
+  /// Default is `false`.
+  ///
+  /// To omit `type` field of UUID metadata, set [includeUUIDType] to `true`
+  /// Default is `false`.
   ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
@@ -84,6 +116,10 @@ class ChannelMetadata {
           bool? includeUUIDFields,
           bool? includeUUIDCustomFields,
           bool? includeCount,
+          bool includeUUIDStatus = false,
+          bool includeUUIDType = false,
+          bool includeStatus = true,
+          bool includeType = true,
           String? filter,
           Set<String>? sort}) =>
       _objects.removeChannelMembers(_id, uuids,
@@ -94,6 +130,10 @@ class ChannelMetadata {
           includeCustomFields: includeCustomFields,
           includeUUIDFields: includeUUIDFields,
           includeUUIDCustomFields: includeUUIDCustomFields,
+          includeUUIDStatus: includeUUIDStatus,
+          includeUUIDType: includeUUIDType,
+          includeStatus: includeStatus,
+          includeType: includeType,
           includeCount: includeCount,
           filter: filter,
           sort: sort);

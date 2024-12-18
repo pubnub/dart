@@ -11,8 +11,6 @@ extension EncryptionModeExtension on EncryptionMode {
         return AESMode.cbc;
       case EncryptionMode.ECB:
         return AESMode.ecb;
-      default:
-        throw Exception('Unreachable state');
     }
   }
 }

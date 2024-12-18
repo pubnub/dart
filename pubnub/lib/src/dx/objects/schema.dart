@@ -7,9 +7,17 @@ class UuidMetadataInput {
   dynamic custom;
   String? externalId;
   String? profileUrl;
+  String? status;
+  String? type;
 
   UuidMetadataInput(
-      {this.name, this.email, this.externalId, this.profileUrl, this.custom});
+      {this.name,
+      this.email,
+      this.externalId,
+      this.profileUrl,
+      this.custom,
+      this.status,
+      this.type});
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'name': name,
@@ -17,6 +25,8 @@ class UuidMetadataInput {
         'custom': custom,
         'externalId': externalId,
         'profileUrl': profileUrl,
+        'status': status,
+        'type': type,
       };
 }
 
@@ -27,13 +37,18 @@ class ChannelMetadataInput {
   String? name;
   String? description;
   dynamic custom;
+  String? status;
+  String? type;
 
-  ChannelMetadataInput({this.name, this.description, this.custom});
+  ChannelMetadataInput(
+      {this.name, this.description, this.custom, this.status, this.type});
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'name': name,
         'description': description,
         'custom': custom,
+        'status': status,
+        'type': type,
       };
 }
 
@@ -43,12 +58,16 @@ class ChannelMetadataInput {
 class ChannelMemberMetadataInput {
   String uuid;
   Map<String, dynamic>? custom;
+  String? status;
+  String? type;
 
-  ChannelMemberMetadataInput(this.uuid, {this.custom});
+  ChannelMemberMetadataInput(this.uuid, {this.custom, this.status, this.type});
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'uuid': {'id': uuid},
         'custom': custom,
+        'status': status,
+        'type': type,
       };
 }
 
@@ -58,12 +77,17 @@ class ChannelMemberMetadataInput {
 class MembershipMetadataInput {
   String channelId;
   Map<String, dynamic>? custom;
+  String? status;
+  String? type;
 
-  MembershipMetadataInput(this.channelId, {this.custom});
+  MembershipMetadataInput(this.channelId,
+      {this.custom, this.status, this.type});
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'channel': {'id': channelId},
         'custom': custom,
+        'status': status,
+        'type': type,
       };
 }
 

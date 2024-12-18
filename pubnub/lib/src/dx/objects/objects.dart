@@ -29,6 +29,12 @@ class ObjectsDx {
   /// To include `custom` property fields in response, set [includeCustomFields] to `true`
   /// Omit this parameter if you don't want to retrieve additional metadata.
   ///
+  /// To omit `status` field from metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
   /// You can limit number of returned user object using [limit] parameter
   /// Default is 100, which is also the maximum value.
   ///
@@ -50,6 +56,8 @@ class ObjectsDx {
       String? start,
       String? end,
       bool includeCount = true,
+      bool includeStatus = true,
+      bool includeType = true,
       String? filter,
       Set<String>? sort,
       Keyset? keyset,
@@ -59,6 +67,12 @@ class ObjectsDx {
     var include = <String>{};
     if (includeCustomFields != null && includeCustomFields) {
       include.add('custom');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params = GetAllUuidMetadataParams(keyset,
@@ -82,21 +96,36 @@ class ObjectsDx {
   /// To include `custom` property fields in response, set [includeCustomFields] to `true`
   /// Omit this parameter if you don't want to retrieve additional metadata.
   ///
+  /// To omit `status` field from metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
   /// `uuid` is Unique identifier of an end-user. It may contain up to 92 UTF-8 byte sequences.
   /// Prohibited characters are ,, /, \, *, :, channel, non-printable ASCII control characters, and Unicode zero.
   /// * If `uuid` not provided then it picks `uuid` from `keyset` or PubNub instance's `uuid`
   /// * If no `uuid` is set in PubNub instance default keyset, `keyset` does not hold uuid
   /// and `uuid`not provided in argument then it throws InvariantException
-  Future<GetUuidMetadataResult> getUUIDMetadata(
-      {String? uuid,
-      Keyset? keyset,
-      String? using,
-      bool? includeCustomFields}) async {
+  Future<GetUuidMetadataResult> getUUIDMetadata({
+    String? uuid,
+    Keyset? keyset,
+    String? using,
+    bool? includeCustomFields,
+    bool includeStatus = true,
+    bool includeType = true,
+  }) async {
     keyset ??= _core.keysets[using];
 
     var include = <String>{};
     if (includeCustomFields != null && includeCustomFields) {
       include.add('custom');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params = GetUuidMetadataParams(keyset, uuid: uuid, include: include);
@@ -118,6 +147,12 @@ class ObjectsDx {
   /// To include `custom` property fields in response, set [includeCustomFields] to `true`
   /// Omit this parameter if you don't want to retrieve additional metadata.
   ///
+  /// To omit `status` field from metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
   /// `uuid` is Unique identifier of an end-user. It may contain up to 92 UTF-8 byte sequences.
   /// Prohibited characters are ,, /, \, *, :, channel, non-printable ASCII control characters, and Unicode zero.
   /// * If `uuid` parameter is provied then it sets metadata for given uuid.
@@ -128,6 +163,8 @@ class ObjectsDx {
       UuidMetadataInput uuidMetadataInput,
       {String? uuid,
       bool? includeCustomFields,
+      bool includeStatus = true,
+      bool includeType = true,
       Keyset? keyset,
       String? using}) async {
     keyset ??= _core.keysets[using];
@@ -136,6 +173,12 @@ class ObjectsDx {
     var include = <String>{};
     if (includeCustomFields != null && includeCustomFields) {
       include.add('custom');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var payload = await _core.parser.encode(uuidMetadataInput);
@@ -184,6 +227,12 @@ class ObjectsDx {
   /// To omit `totalCount` field from paginated list, set [includeCount] to `false`
   /// Default is `true`.
   ///
+  /// To omit `status` field from metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
   /// [filter] is Expression used to filter the results.
   /// Only objects whose properties satisfy the given expression are returned.
   ///
@@ -196,6 +245,8 @@ class ObjectsDx {
       String? end,
       bool? includeCustomFields,
       bool? includeCount = true,
+      bool includeStatus = true,
+      bool includeType = true,
       String? filter,
       Set<String>? sort,
       Keyset? keyset,
@@ -205,6 +256,12 @@ class ObjectsDx {
     var include = <String>{};
     if (includeCustomFields != null && includeCustomFields) {
       include.add('custom');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params = GetAllChannelMetadataParams(keyset,
@@ -230,16 +287,34 @@ class ObjectsDx {
   /// To include `custom` property fields in response, set [includeCustomFields] to `true`
   /// Omit this parameter if you don't want to retrieve additional metadata.
   ///
+  /// To omit `status` field from metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
   /// `channelId` is Channel identifier. Must not be empty, and may contain up to 92 UTF-8 byte sequences.
   /// Prohibited characters are ,, /, \, *, :, channel, non-printable ASCII control characters, and Unicode zero.
-  Future<GetChannelMetadataResult> getChannelMetadata(String channelId,
-      {Keyset? keyset, String? using, bool? includeCustomFields}) async {
+  Future<GetChannelMetadataResult> getChannelMetadata(
+    String channelId, {
+    Keyset? keyset,
+    String? using,
+    bool? includeCustomFields,
+    bool includeStatus = true,
+    bool includeType = true,
+  }) async {
     keyset ??= _core.keysets[using];
     Ensure(channelId).isNotEmpty('channelIds');
 
     var include = <String>{};
     if (includeCustomFields != null && includeCustomFields) {
       include.add('custom');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params = GetChannelMetadataParams(keyset, channelId, include: include);
@@ -261,11 +336,21 @@ class ObjectsDx {
   /// * If you set the "custom" property, you must completely replace it; partial updates are not supported.
   /// * The custom object can only contain scalar values.
   ///
+  /// To omit `status` field from metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
   /// To include `custom` property fields in response, set [includeCustomFields] to `true`
   /// Omit this parameter if you don't want to retrieve additional metadata.
   Future<SetChannelMetadataResult> setChannelMetadata(
       String channelId, ChannelMetadataInput channelMetadataInput,
-      {bool? includeCustomFields, Keyset? keyset, String? using}) async {
+      {bool? includeCustomFields,
+      bool includeStatus = true,
+      bool includeType = true,
+      Keyset? keyset,
+      String? using}) async {
     keyset ??= _core.keysets[using];
 
     Ensure(channelId).isNotNull('channelId');
@@ -276,6 +361,12 @@ class ObjectsDx {
     var include = <String>{};
     if (includeCustomFields != null && includeCustomFields) {
       include.add('custom');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params =
@@ -330,6 +421,18 @@ class ObjectsDx {
   /// Provide [start] and [end] for Previously-returned cursor bookmark for
   /// fetching the next/previous page.
   ///
+  /// To omit `status` field from membership metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from membership metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
+  /// To get `status` field of channel metadata, set [includeChannelStatus] to `true`
+  /// Default is `false`.
+  ///
+  /// To omit `type` field of channel metadata, set [includeChannelType] to `true`
+  /// Default is `false`.
+  ///
   /// To omit `totalCount` field from paginated list, set [includeCount] to `false`
   /// Default is `true`.
   ///
@@ -344,6 +447,10 @@ class ObjectsDx {
       bool? includeCustomFields,
       bool? includeChannelFields,
       bool? includeChannelCustomFields,
+      bool includeChannelStatus = false,
+      bool includeChannelType = false,
+      bool includeStatus = true,
+      bool includeType = true,
       bool? includeCount = true,
       String? filter,
       Set<String>? sort,
@@ -360,6 +467,18 @@ class ObjectsDx {
     }
     if (includeChannelCustomFields != null && includeChannelCustomFields) {
       include.add('channel.custom');
+    }
+    if (includeChannelStatus) {
+      include.add('channel.status');
+    }
+    if (includeChannelType) {
+      include.add('channel.type');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params = GetMembershipsMetadataParams(keyset,
@@ -400,6 +519,18 @@ class ObjectsDx {
   /// To include `channel` metadata fields of uuid's membership in response, set [includeChannelFields] to `true`
   /// To include `custom` fields of membership's channelmetadata, set [includeChannelCustomFields] to `true`
   ///
+  /// To omit `status` field from membership metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from membership metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
+  /// To get `status` field of channel metadata, set [includeChannelStatus] to `true`
+  /// Default is `false`.
+  ///
+  /// To omit `type` field of channel metadata, set [includeChannelType] to `true`
+  /// Default is `false`.
+  ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
   ///
@@ -425,6 +556,10 @@ class ObjectsDx {
       bool? includeChannelFields,
       bool? includeChannelCustomFields,
       bool? includeCount = true,
+      bool includeChannelStatus = false,
+      bool includeChannelType = false,
+      bool includeStatus = true,
+      bool includeType = true,
       String? filter,
       Set<String>? sort,
       Keyset? keyset,
@@ -448,6 +583,18 @@ class ObjectsDx {
     }
     if (includeChannelCustomFields != null && includeChannelCustomFields) {
       include.add('channel.custom');
+    }
+    if (includeChannelStatus) {
+      include.add('channel.status');
+    }
+    if (includeChannelType) {
+      include.add('channel.type');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params = ManageMembershipsParams(keyset, payload,
@@ -487,6 +634,18 @@ class ObjectsDx {
   /// To include `channel` metadata fields of uuid's membership in response, set [includeChannelFields] to `true`
   /// To include `custom` fields of membership's channel metadata, set [includeChannelCustomFields] to `true`
   ///
+  /// To omit `status` field from membership metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from membership metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
+  /// To get `status` field of channel metadata, set [includeChannelStatus] to `true`
+  /// Default is `false`.
+  ///
+  /// To omit `type` field of channel metadata, set [includeChannelType] to `true`
+  /// Default is `false`.
+  ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
   ///
@@ -512,6 +671,10 @@ class ObjectsDx {
       bool? includeChannelFields,
       bool? includeChannelCustomFields,
       bool? includeCount = true,
+      bool includeChannelStatus = false,
+      bool includeChannelType = false,
+      bool includeStatus = true,
+      bool includeType = true,
       String? filter,
       Set<String>? sort,
       Keyset? keyset,
@@ -532,6 +695,18 @@ class ObjectsDx {
     }
     if (includeChannelCustomFields != null && includeChannelCustomFields) {
       include.add('channel.custom');
+    }
+    if (includeChannelStatus) {
+      include.add('channel.status');
+    }
+    if (includeChannelType) {
+      include.add('channel.type');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params = ManageMembershipsParams(keyset, payload,
@@ -562,6 +737,18 @@ class ObjectsDx {
   /// To include `channel` metadata fields of uuid's membership in response, set [includeChannelFields] to `true`
   /// To include `custom` fields of membership's channel metadata, set [includeChannelCustomFields] to `true`
   ///
+  /// To omit `status` field from membership metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from membership metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
+  /// To get `status` field of channel metadata, set [includeChannelStatus] to `true`
+  /// Default is `false`.
+  ///
+  /// To omit `type` field of channel metadata, set [includeChannelType] to `true`
+  /// Default is `false`.
+  ///
   /// * If `uuid` not provided then it picks `uuid` from given `keyset` or PubNub instance's `uuid`
   /// * If no `uuid` is set in PubNub instance default keyset, `keyset` does not hold uuid
   ///   and `uuid`not provided in argument then it throws InvariantException
@@ -590,6 +777,10 @@ class ObjectsDx {
       bool? includeChannelFields,
       bool? includeChannelCustomFields,
       bool? includeCount = true,
+      bool includeChannelStatus = false,
+      bool includeChannelType = false,
+      bool includeStatus = true,
+      bool includeType = true,
       String? filter,
       Set<String>? sort,
       Keyset? keyset,
@@ -613,6 +804,18 @@ class ObjectsDx {
     }
     if (includeChannelCustomFields != null && includeChannelCustomFields) {
       include.add('channel.custom');
+    }
+    if (includeChannelStatus) {
+      include.add('channel.status');
+    }
+    if (includeChannelType) {
+      include.add('channel.type');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params = ManageMembershipsParams(keyset, payload,
@@ -640,6 +843,18 @@ class ObjectsDx {
   /// To include `uuid` metadata fields of channel's memebrs in response, set [includeUUIDFields] to `true`
   /// To include `custom` fields of channel member's uuidMetadata, set [includeUUIDCustomFields] to `true`
   ///
+  /// To omit `status` field from member metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from member metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
+  /// To get `status` field of UUID metadata, set [includeUUIDStatus] to `true`
+  /// Default is `false`.
+  ///
+  /// To omit `type` field of UUID metadata, set [includeUUIDType] to `true`
+  /// Default is `false`.
+  ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
   ///
@@ -663,6 +878,10 @@ class ObjectsDx {
       bool? includeUUIDFields,
       bool? includeUUIDCustomFields,
       bool? includeCount = true,
+      bool includeUUIDStatus = false,
+      bool includeUUIDType = false,
+      bool includeStatus = true,
+      bool includeType = true,
       String? filter,
       Set<String>? sort,
       Keyset? keyset,
@@ -680,6 +899,18 @@ class ObjectsDx {
     }
     if (includeUUIDCustomFields != null && includeUUIDCustomFields) {
       include.add('uuid.custom');
+    }
+    if (includeUUIDStatus) {
+      include.add('uuid.status');
+    }
+    if (includeUUIDType) {
+      include.add('uuid.type');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params = GetChannelMembersParams(keyset, channelId,
@@ -709,6 +940,18 @@ class ObjectsDx {
   /// To include `uuid` metadata fields of channel's memebrs in response, set [includeUUIDFields] to `true`
   /// To include `custom` fields of channel member's uuidMetadata, set [includeUUIDCustomFields] to `true`
   ///
+  /// To omit `status` field from member metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from member metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
+  /// To get `status` field of UUID metadata, set [includeUUIDStatus] to `true`
+  /// Default is `false`.
+  ///
+  /// To omit `type` field of UUID metadata, set [includeUUIDType] to `true`
+  /// Default is `false`.
+  ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
   ///
@@ -735,6 +978,10 @@ class ObjectsDx {
       bool? includeUUIDFields,
       bool? includeUUIDCustomFields,
       bool? includeCount = true,
+      bool includeUUIDStatus = false,
+      bool includeUUIDType = false,
+      bool includeStatus = true,
+      bool includeType = true,
       String? filter,
       Set<String>? sort,
       Keyset? keyset,
@@ -760,6 +1007,18 @@ class ObjectsDx {
     }
     if (includeUUIDCustomFields != null && includeUUIDCustomFields) {
       include.add('uuid.custom');
+    }
+    if (includeUUIDStatus) {
+      include.add('uuid.status');
+    }
+    if (includeUUIDType) {
+      include.add('uuid.type');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params = ManageChannelMembersParams(keyset, channelId, membersMetadata,
@@ -788,6 +1047,18 @@ class ObjectsDx {
   /// To include `uuid` metadata fields of channel's memebrs in response, set [includeUUIDFields] to `true`
   /// To include `custom` fields of channel member's uuidMetadata, set [includeUUIDCustomFields] to `true`
   ///
+  /// To omit `status` field from member metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from member metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
+  /// To get `status` field of UUID metadata, set [includeUUIDStatus] to `true`
+  /// Default is `false`.
+  ///
+  /// To omit `type` field of UUID metadata, set [includeUUIDType] to `true`
+  /// Default is `false`.
+  ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
   ///
@@ -812,6 +1083,10 @@ class ObjectsDx {
       bool? includeUUIDFields,
       bool? includeUUIDCustomFields,
       bool? includeCount = true,
+      bool includeUUIDStatus = false,
+      bool includeUUIDType = false,
+      bool includeStatus = true,
+      bool includeType = true,
       String? filter,
       Set<String>? sort,
       Keyset? keyset,
@@ -834,6 +1109,18 @@ class ObjectsDx {
     }
     if (includeUUIDCustomFields != null && includeUUIDCustomFields) {
       include.add('uuid.custom');
+    }
+    if (includeUUIDStatus) {
+      include.add('uuid.status');
+    }
+    if (includeUUIDType) {
+      include.add('uuid.type');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params = ManageChannelMembersParams(keyset, channelId, membersMetadata,
@@ -862,6 +1149,18 @@ class ObjectsDx {
   /// To include `uuid` metadata fields of channel's memebrs in response, set [includeUUIDFields] to `true`
   /// To include `custom` fields of channel member's uuidMetadata, set [includeUUIDCustomFields] to `true`
   ///
+  /// To omit `status` field from member metadata, set [includeStatus] to `false`
+  /// Default is `true`.
+  ///
+  /// To omit `type` field from member metadata, set [includeType] to `false`
+  /// Default is `true`.
+  ///
+  /// To get `status` field of UUID metadata, set [includeUUIDStatus] to `true`
+  /// Default is `false`.
+  ///
+  /// To omit `type` field of UUID metadata, set [includeUUIDType] to `true`
+  /// Default is `false`.
+  ///
   /// Use [limit] to specify Number of objects to return in response.
   /// Default is 100, which is also the maximum value.
   ///
@@ -886,6 +1185,10 @@ class ObjectsDx {
       bool? includeUUIDFields,
       bool? includeUUIDCustomFields,
       bool? includeCount = true,
+      bool includeUUIDStatus = false,
+      bool includeUUIDType = false,
+      bool includeStatus = true,
+      bool includeType = true,
       String? filter,
       Set<String>? sort,
       Keyset? keyset,
@@ -910,6 +1213,18 @@ class ObjectsDx {
     }
     if (includeUUIDCustomFields != null && includeUUIDCustomFields) {
       include.add('uuid.custom');
+    }
+    if (includeUUIDStatus) {
+      include.add('uuid.status');
+    }
+    if (includeUUIDType) {
+      include.add('uuid.type');
+    }
+    if (includeStatus) {
+      include.add('status');
+    }
+    if (includeType) {
+      include.add('type');
     }
 
     var params = ManageChannelMembersParams(keyset, channelId, membersMetadata,
