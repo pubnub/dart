@@ -1,3 +1,9 @@
+## v5.1.1
+January 20 2025
+
+#### Fixed
+- Fixes issue of getting error for setUUIDMetadata call without `custom` field.
+
 ## v5.1.0
 December 18 2024
 
