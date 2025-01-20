@@ -57,7 +57,7 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.6.0/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.6.0/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.6.1/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.6.1/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span>
 <span class="name ">toJson</span>(<wbr>)
 
       
@@ -70,11 +70,11 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Map&lt;String, dynamic&gt; toJson() =&gt; &lt;String, dynamic&gt;{
-      &#39;name&#39;: name,
-      &#39;description&#39;: description,
-      &#39;custom&#39;: custom,
-      &#39;status&#39;: status,
-      &#39;type&#39;: type,
+      if (name != null) &#39;name&#39;: name,
+      if (description != null) &#39;description&#39;: description,
+      if (custom != null) &#39;custom&#39;: custom,
+      if (status != null) &#39;status&#39;: status,
+      if (type != null) &#39;type&#39;: type,
     };</code></pre>
 </section>
 
@@ -103,7 +103,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      5.1.0
+      5.1.1
   </span>
   
 </footer>
