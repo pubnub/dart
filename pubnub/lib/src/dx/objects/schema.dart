@@ -20,13 +20,13 @@ class UuidMetadataInput {
       this.type});
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'name': name,
-        'email': email,
-        'custom': custom,
-        'externalId': externalId,
-        'profileUrl': profileUrl,
-        'status': status,
-        'type': type,
+        if (name != null) 'name': name,
+        if (email != null) 'email': email,
+        if (custom != null) 'custom': custom,
+        if (externalId != null) 'externalId': externalId,
+        if (profileUrl != null) 'profileUrl': profileUrl,
+        if (status != null) 'status': status,
+        if (type != null) 'type': type,
       };
 }
 
@@ -44,11 +44,11 @@ class ChannelMetadataInput {
       {this.name, this.description, this.custom, this.status, this.type});
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'name': name,
-        'description': description,
-        'custom': custom,
-        'status': status,
-        'type': type,
+        if (name != null) 'name': name,
+        if (description != null) 'description': description,
+        if (custom != null) 'custom': custom,
+        if (status != null) 'status': status,
+        if (type != null) 'type': type,
       };
 }
 
@@ -65,9 +65,9 @@ class ChannelMemberMetadataInput {
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'uuid': {'id': uuid},
-        'custom': custom,
-        'status': status,
-        'type': type,
+        if (custom != null) 'custom': custom,
+        if (status != null) 'status': status,
+        if (type != null) 'type': type,
       };
 }
 
@@ -85,9 +85,9 @@ class MembershipMetadataInput {
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'channel': {'id': channelId},
-        'custom': custom,
-        'status': status,
-        'type': type,
+        if (custom != null) 'custom': custom,
+        if (status != null) 'status': status,
+        if (type != null) 'type': type,
       };
 }
 
