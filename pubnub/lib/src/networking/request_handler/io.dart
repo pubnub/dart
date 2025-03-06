@@ -72,6 +72,9 @@ class RequestHandler extends IRequestHandler {
       } else {
         if (data.body != null) {
           headers['Content-Type'] = 'application/json';
+          if (data.headers != null && data.headers!.isNotEmpty) {
+            data.headers!.forEach((k, v) => headers[k] = v);
+          }
           body = utf8.encode(data.body.toString());
         }
       }
