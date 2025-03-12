@@ -1,3 +1,9 @@
+## v5.2.0
+March 12 2025
+
+#### Added
+- Added Support of `eTag` for AppContext `setUUIDMetadata` and `setChannelMetadata` APIs.
+
 ## v5.1.1
 January 20 2025
 
