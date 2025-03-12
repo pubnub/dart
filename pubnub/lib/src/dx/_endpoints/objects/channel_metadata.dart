@@ -148,9 +148,10 @@ class SetChannelMetadataParams extends Parameters {
   Set<String>? include;
 
   String channelMetadata;
+  String? ifMatchesEtag;
 
   SetChannelMetadataParams(this.keyset, this.channelId, this.channelMetadata,
-      {this.include});
+      {this.include, this.ifMatchesEtag});
 
   @override
   Request toRequest() {
@@ -172,7 +173,9 @@ class SetChannelMetadataParams extends Parameters {
             pathSegments: pathSegments,
             queryParameters:
                 queryParameters.isNotEmpty ? queryParameters : null),
-        body: channelMetadata);
+        body: channelMetadata,
+        headers:
+            ifMatchesEtag != null ? {'If-Match': ifMatchesEtag ?? ''} : {});
   }
 }
 

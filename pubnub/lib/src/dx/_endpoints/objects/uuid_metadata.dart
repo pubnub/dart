@@ -154,9 +154,10 @@ class SetUuidMetadataParams extends Parameters {
   String? uuid;
   Set<String>? include;
   String uuidMetadata;
+  String? ifMatchesEtag;
 
   SetUuidMetadataParams(this.keyset, this.uuidMetadata,
-      {this.include, this.uuid});
+      {this.include, this.uuid, this.ifMatchesEtag});
   @override
   Request toRequest() {
     var pathSegments = [
@@ -172,7 +173,9 @@ class SetUuidMetadataParams extends Parameters {
     };
     return Request.patch(
         uri: Uri(pathSegments: pathSegments, queryParameters: queryParameters),
-        body: uuidMetadata);
+        body: uuidMetadata,
+        headers:
+            ifMatchesEtag != null ? {'If-Match': ifMatchesEtag ?? ''} : {});
   }
 }
 

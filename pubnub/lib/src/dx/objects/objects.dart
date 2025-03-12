@@ -159,12 +159,18 @@ class ObjectsDx {
   /// * In case of null `uuid` it sets metadata for PubNub instance's `uuid`
   /// * If no `uuid` is set in PubNub instance default keyset, `keyset` does not hold uuid
   /// and `uuid` not provided in method argument then it throws InvariantException
+  ///
+  /// You can provide [ifMatchesEtag] value to prevent concurrent modification of the same User object
+  /// this allows clients to (optionally) request that their updates only be performed if the object hasn't been modified since it was read.
+  /// If the request is sent with an old eTag value that doesn't match the User object's current eTag value, the request will fail with a 412 (Precondition failed) error.
+  ///
   Future<SetUuidMetadataResult> setUUIDMetadata(
       UuidMetadataInput uuidMetadataInput,
       {String? uuid,
       bool? includeCustomFields,
       bool includeStatus = true,
       bool includeType = true,
+      String? ifMatchesEtag,
       Keyset? keyset,
       String? using}) async {
     keyset ??= _core.keysets[using];
@@ -182,8 +188,8 @@ class ObjectsDx {
     }
 
     var payload = await _core.parser.encode(uuidMetadataInput);
-    var params =
-        SetUuidMetadataParams(keyset, payload, uuid: uuid, include: include);
+    var params = SetUuidMetadataParams(keyset, payload,
+        uuid: uuid, include: include, ifMatchesEtag: ifMatchesEtag);
 
     return defaultFlow<SetUuidMetadataParams, SetUuidMetadataResult>(
         keyset: keyset,
@@ -344,11 +350,17 @@ class ObjectsDx {
   ///
   /// To include `custom` property fields in response, set [includeCustomFields] to `true`
   /// Omit this parameter if you don't want to retrieve additional metadata.
+  ///
+  /// You can provide [ifMatchesEtag] value to prevent concurrent modification of the same channel object
+  /// this allows clients to (optionally) request that their updates only be performed if the object hasn't been modified since it was read.
+  /// If the request is sent with an old eTag value that doesn't match the Channel object's current eTag value, the request will fail with a 412 (Precondition failed) error.
+  ///
   Future<SetChannelMetadataResult> setChannelMetadata(
       String channelId, ChannelMetadataInput channelMetadataInput,
       {bool? includeCustomFields,
       bool includeStatus = true,
       bool includeType = true,
+      String? ifMatchesEtag,
       Keyset? keyset,
       String? using}) async {
     keyset ??= _core.keysets[using];
@@ -369,8 +381,8 @@ class ObjectsDx {
       include.add('type');
     }
 
-    var params =
-        SetChannelMetadataParams(keyset, channelId, payload, include: include);
+    var params = SetChannelMetadataParams(keyset, channelId, payload,
+        include: include, ifMatchesEtag: ifMatchesEtag);
 
     return defaultFlow<SetChannelMetadataParams, SetChannelMetadataResult>(
         keyset: keyset,

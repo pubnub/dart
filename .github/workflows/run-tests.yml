@@ -95,7 +95,7 @@ jobs:
           export FEATURES_PATH=../sdk-specifications/features
           dart pub run acceptance_tests
       - name: Expose acceptance tests reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: acceptance-test-reports
           path: acceptance_tests/report.xml
