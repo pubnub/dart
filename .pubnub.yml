@@ -481,11 +481,11 @@ sdks:
   -
     full-name: PubNub Dart SDK
     short-name: Dart
+    tier: 2
     artifacts:
       -
         artifact-type: package
         language: Dart
-        tier: 2
         tags:
           - Mobile
           - Web
@@ -824,7 +824,6 @@ sdks:
       -
         artifact-type: api-client
         language: Dart
-        tier: 2
         tags:
           - Mobile
           - Web
