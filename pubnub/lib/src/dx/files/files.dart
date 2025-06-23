@@ -64,6 +64,10 @@ class FileDx {
       dynamic fileMessageMeta,
       Keyset? keyset,
       String? using}) async {
+    // Validate input parameters to prevent path traversal attacks
+    FileValidation.validateChannelName(channel);
+    FileValidation.validateFileName(fileName);
+    
     keyset ??= _core.keysets[using];
 
     var requestPayload = await _core.parser.encode({'name': fileName});
@@ -163,6 +167,9 @@ class FileDx {
       String? customMessageType,
       Keyset? keyset,
       String? using}) async {
+    // Validate input parameters to prevent path traversal attacks
+    FileValidation.validateChannelName(channel);
+    
     keyset ??= _core.keysets[using];
     Ensure(keyset.publishKey).isNotNull('publish key');
 
@@ -200,6 +207,11 @@ class FileDx {
   Future<DownloadFileResult> downloadFile(
       String channel, String fileId, String fileName,
       {CipherKey? cipherKey, Keyset? keyset, String? using}) async {
+    // Validate input parameters to prevent path traversal attacks
+    FileValidation.validateChannelName(channel);
+    FileValidation.validateFileId(fileId);
+    FileValidation.validateFileName(fileName);
+    
     keyset ??= _core.keysets[using];
 
     return defaultFlow<DownloadFileParams, DownloadFileResult>(
@@ -229,6 +241,9 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   Future<ListFilesResult> listFiles(String channel,
       {int? limit, String? next, Keyset? keyset, String? using}) async {
+    // Validate input parameters to prevent path traversal attacks
+    FileValidation.validateChannelName(channel);
+    
     keyset ??= _core.keysets[using];
 
     return defaultFlow<ListFilesParams, ListFilesResult>(
@@ -246,6 +261,11 @@ class FileDx {
   Future<DeleteFileResult> deleteFile(
       String channel, String fileId, String fileName,
       {Keyset? keyset, String? using}) async {
+    // Validate input parameters to prevent path traversal attacks
+    FileValidation.validateChannelName(channel);
+    FileValidation.validateFileId(fileId);
+    FileValidation.validateFileName(fileName);
+    
     keyset ??= _core.keysets[using];
     return defaultFlow<DeleteFileParams, DeleteFileResult>(
         keyset: keyset,
@@ -265,6 +285,11 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   Uri getFileUrl(String channel, String fileId, String fileName,
       {Keyset? keyset, String? using}) {
+    // Validate input parameters to prevent path traversal attacks
+    FileValidation.validateChannelName(channel);
+    FileValidation.validateFileId(fileId);
+    FileValidation.validateFileName(fileName);
+    
     keyset ??= _core.keysets[using];
     var pathSegments = [
       'v1',
