@@ -67,7 +67,7 @@ class FileDx {
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
     FileValidation.validateFileName(fileName);
-    
+
     keyset ??= _core.keysets[using];
 
     var requestPayload = await _core.parser.encode({'name': fileName});
@@ -169,7 +169,7 @@ class FileDx {
       String? using}) async {
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
-    
+
     keyset ??= _core.keysets[using];
     Ensure(keyset.publishKey).isNotNull('publish key');
 
@@ -211,7 +211,7 @@ class FileDx {
     FileValidation.validateChannelName(channel);
     FileValidation.validateFileId(fileId);
     FileValidation.validateFileName(fileName);
-    
+
     keyset ??= _core.keysets[using];
 
     return defaultFlow<DownloadFileParams, DownloadFileResult>(
@@ -243,7 +243,7 @@ class FileDx {
       {int? limit, String? next, Keyset? keyset, String? using}) async {
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
-    
+
     keyset ??= _core.keysets[using];
 
     return defaultFlow<ListFilesParams, ListFilesResult>(
@@ -265,7 +265,7 @@ class FileDx {
     FileValidation.validateChannelName(channel);
     FileValidation.validateFileId(fileId);
     FileValidation.validateFileName(fileName);
-    
+
     keyset ??= _core.keysets[using];
     return defaultFlow<DeleteFileParams, DeleteFileResult>(
         keyset: keyset,
@@ -289,7 +289,7 @@ class FileDx {
     FileValidation.validateChannelName(channel);
     FileValidation.validateFileId(fileId);
     FileValidation.validateFileName(fileName);
-    
+
     keyset ??= _core.keysets[using];
     var pathSegments = [
       'v1',

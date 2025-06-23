@@ -71,11 +71,11 @@ void main() {
     test('setChannelMetadata failed with invalid custom fields', () async {
       expect(
           () => ChannelMetadataInput(
-              name: 'channel name',
-              description: 'channel description',
-              custom: {
-                'string-key': [1, 2, 3],
-              }),
+                  name: 'channel name',
+                  description: 'channel description',
+                  custom: {
+                    'string-key': [1, 2, 3],
+                  }),
           throwsA(TypeMatcher<ArgumentError>()));
     });
 
@@ -86,23 +86,19 @@ void main() {
             '/v2/objects/test/channels/test/uuids?pnsdk=PubNub-Dart%2F${PubNub.version}&include=status%2Ctype&count=true&uuid=test',
         body: _setChannelMemberMetadataBody,
       ).then(status: 200, body: _setChannelMemberMetadataResponse);
-    var channelMemberMetadataInput =
-        ChannelMemberMetadataInput('test', custom: {
-      'role': 'admin'
-    });
-    var setChannelMemberMetadataResponse = await pubnub?.objects
-        .setChannelMembers('test', [channelMemberMetadataInput]);
-      expect(setChannelMemberMetadataResponse?.metadataList?.first.uuid.id, equals('test'));
+      var channelMemberMetadataInput =
+          ChannelMemberMetadataInput('test', custom: {'role': 'admin'});
+      var setChannelMemberMetadataResponse = await pubnub?.objects
+          .setChannelMembers('test', [channelMemberMetadataInput]);
+      expect(setChannelMemberMetadataResponse?.metadataList?.first.uuid.id,
+          equals('test'));
     });
 
-    test('setChannelMemberMetadata failed with invalid custom fields', () async {
+    test('setChannelMemberMetadata failed with invalid custom fields',
+        () async {
       expect(
-          () => ChannelMemberMetadataInput(
-              'test',
-              custom: {
-                'role': {
-                  'nested-key': 'nested-value'
-                }
+          () => ChannelMemberMetadataInput('test', custom: {
+                'role': {'nested-key': 'nested-value'}
               }),
           throwsA(TypeMatcher<ArgumentError>()));
     });
@@ -114,18 +110,22 @@ void main() {
             '/v2/objects/test/uuids/test/channels?pnsdk=PubNub-Dart%2F${PubNub.version}&include=channel%2Cstatus%2Ctype&count=true&uuid=test',
         body: _setChannelMembershipMetadataBody,
       ).then(status: 200, body: _setChannelMembershipMetadataResponse);
-  var membershipMetadata = [
-    MembershipMetadataInput('test', custom: {'starred': 'false'})
-  ];
+      var membershipMetadata = [
+        MembershipMetadataInput('test', custom: {'starred': 'false'})
+      ];
 
-var membershipMetadataResponse = await pubnub?.objects
-      .setMemberships(membershipMetadata, includeChannelFields: true);
-      expect(membershipMetadataResponse?.metadataList?.first.channel.id, equals('test'));
+      var membershipMetadataResponse = await pubnub?.objects
+          .setMemberships(membershipMetadata, includeChannelFields: true);
+      expect(membershipMetadataResponse?.metadataList?.first.channel.id,
+          equals('test'));
     });
 
-    test('setChannelMembershipMetadata failed with invalid custom fields', () async {
+    test('setChannelMembershipMetadata failed with invalid custom fields',
+        () async {
       expect(
-          () => MembershipMetadataInput('test', custom: {'starred': {'hello': 'world'}}),
+          () => MembershipMetadataInput('test', custom: {
+                'starred': {'hello': 'world'}
+              }),
           throwsA(TypeMatcher<ArgumentError>()));
     });
   });

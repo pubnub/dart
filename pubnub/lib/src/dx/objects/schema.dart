@@ -2,13 +2,10 @@
 /// Throws [ArgumentError] if any value is not scalar.
 void _validateCustomFields(Map<String, Object?>? custom) {
   if (custom == null) return;
-  
+
   for (var entry in custom.entries) {
     final value = entry.value;
-    if (value != null && 
-        value is! String && 
-        value is! num && 
-        value is! bool) {
+    if (value != null && value is! String && value is! num && value is! bool) {
       throw ArgumentError(
           'Custom field "${entry.key}" must have a scalar value (String, num, bool, or null). '
           'Arrays and objects are not supported. '
@@ -36,9 +33,9 @@ class UuidMetadataInput {
       this.profileUrl,
       this.custom,
       this.status,
-      this.type}){
-        _validateCustomFields(custom);
-      }
+      this.type}) {
+    _validateCustomFields(custom);
+  }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         if (name != null) 'name': name,
@@ -62,9 +59,9 @@ class ChannelMetadataInput {
   String? type;
 
   ChannelMetadataInput(
-      {this.name, this.description, this.custom, this.status, this.type}){
-        _validateCustomFields(custom);
-      }
+      {this.name, this.description, this.custom, this.status, this.type}) {
+    _validateCustomFields(custom);
+  }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         if (name != null) 'name': name,
@@ -84,7 +81,7 @@ class ChannelMemberMetadataInput {
   String? status;
   String? type;
 
-  ChannelMemberMetadataInput(this.uuid, {this.custom, this.status, this.type}){
+  ChannelMemberMetadataInput(this.uuid, {this.custom, this.status, this.type}) {
     _validateCustomFields(custom);
   }
 
@@ -106,9 +103,9 @@ class MembershipMetadataInput {
   String? type;
 
   MembershipMetadataInput(this.channelId,
-      {this.custom, this.status, this.type}){
-        _validateCustomFields(custom);
-      }
+      {this.custom, this.status, this.type}) {
+    _validateCustomFields(custom);
+  }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'channel': {'id': channelId},
