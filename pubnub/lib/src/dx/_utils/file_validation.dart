@@ -209,14 +209,6 @@ class FileValidation {
   }
 }
 
-/// Extension to add custom message constructor to InvalidArgumentsException
-extension InvalidArgumentsExceptionExtension on InvalidArgumentsException {
-  /// Creates an InvalidArgumentsException with a custom message
-  static InvalidArgumentsException _withMessage(String message) {
-    return InvalidArgumentsException._custom(message);
-  }
-}
-
 /// Custom InvalidArgumentsException with specific message
 class InvalidArgumentsException extends PubNubException {
   static final String _defaultMessage =
@@ -228,6 +220,4 @@ class InvalidArgumentsException extends PubNubException {
   - other invalid request data.''';
 
   InvalidArgumentsException() : super(_defaultMessage);
-
-  InvalidArgumentsException._custom(String message) : super(message);
 }
