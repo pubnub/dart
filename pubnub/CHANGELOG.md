@@ -1,3 +1,10 @@
+## v5.2.1
+June 25 2025
+
+#### Fixed
+- Update and validation for `custom` field data type of app context apis to prevent accepting non scalar value.
+- Added validation for channel and file names to prevent potential various path traversal techniques.
+
 ## v5.2.0
 March 12 2025
 

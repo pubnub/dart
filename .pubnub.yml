@@ -1,5 +1,12 @@
 ---
 changelog:
+  - date: 2025-06-25
+    version: v5.2.1
+    changes:
+      - type: bug
+        text: "Update and validation for `custom` field data type of app context apis to prevent accepting non scalar value."
+      - type: bug
+        text: "Added validation for channel and file names to prevent potential various path traversal techniques."
   - date: 2025-03-12
     version: v5.2.0
     changes:
@@ -476,7 +483,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "5.2.0"
+version: "5.2.1"
 sdks:
   -
     full-name: PubNub Dart SDK
