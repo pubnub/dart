@@ -1,10 +1,26 @@
+/// Validates that all values in a map are scalar values.
+/// Throws [ArgumentError] if any value is not scalar.
+void _validateCustomFields(Map<String, Object?>? custom) {
+  if (custom == null) return;
+
+  for (var entry in custom.entries) {
+    final value = entry.value;
+    if (value != null && value is! String && value is! num && value is! bool) {
+      throw ArgumentError(
+          'Custom field "${entry.key}" must have a scalar value (String, num, bool, or null). '
+          'Arrays and objects are not supported. '
+          'Got: ${value.runtimeType}');
+    }
+  }
+}
+
 /// Represents UUID metadata operations input.
 ///
 /// {@category Objects}
 class UuidMetadataInput {
   String? name;
   String? email;
-  dynamic custom;
+  Map<String, Object?>? custom;
   String? externalId;
   String? profileUrl;
   String? status;
@@ -17,7 +33,9 @@ class UuidMetadataInput {
       this.profileUrl,
       this.custom,
       this.status,
-      this.type});
+      this.type}) {
+    _validateCustomFields(custom);
+  }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         if (name != null) 'name': name,
@@ -36,12 +54,14 @@ class UuidMetadataInput {
 class ChannelMetadataInput {
   String? name;
   String? description;
-  dynamic custom;
+  Map<String, Object?>? custom;
   String? status;
   String? type;
 
   ChannelMetadataInput(
-      {this.name, this.description, this.custom, this.status, this.type});
+      {this.name, this.description, this.custom, this.status, this.type}) {
+    _validateCustomFields(custom);
+  }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         if (name != null) 'name': name,
@@ -57,11 +77,13 @@ class ChannelMetadataInput {
 /// {@category Objects}
 class ChannelMemberMetadataInput {
   String uuid;
-  Map<String, dynamic>? custom;
+  Map<String, Object?>? custom;
   String? status;
   String? type;
 
-  ChannelMemberMetadataInput(this.uuid, {this.custom, this.status, this.type});
+  ChannelMemberMetadataInput(this.uuid, {this.custom, this.status, this.type}) {
+    _validateCustomFields(custom);
+  }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'uuid': {'id': uuid},
@@ -76,12 +98,14 @@ class ChannelMemberMetadataInput {
 /// {@category Objects}
 class MembershipMetadataInput {
   String channelId;
-  Map<String, dynamic>? custom;
+  Map<String, Object?>? custom;
   String? status;
   String? type;
 
   MembershipMetadataInput(this.channelId,
-      {this.custom, this.status, this.type});
+      {this.custom, this.status, this.type}) {
+    _validateCustomFields(custom);
+  }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'channel': {'id': channelId},

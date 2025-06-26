@@ -32,7 +32,8 @@ export 'src/crypto/crypto.dart' show CryptoModule;
 export 'src/crypto/cryptoConfiguration.dart' show CryptoConfiguration;
 
 // DX
-export 'src/dx/_utils/utils.dart' show InvariantException;
+export 'src/dx/_utils/utils.dart'
+    show InvariantException, FileValidationException;
 export 'src/dx/batch/batch.dart'
     show
         BatchDx,

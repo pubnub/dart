@@ -1,6 +1,7 @@
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:xml/xml.dart';
+import 'package:pubnub/src/core/exceptions.dart' as core_exceptions;
 
 PubNubException getExceptionFromAny(dynamic error) {
   if (error is DefaultResult) {
@@ -26,7 +27,7 @@ PubNubException getExceptionFromAny(dynamic error) {
 
 PubNubException getExceptionFromDefaultResult(DefaultResult result) {
   if (result.status == 400 && result.message == 'Invalid Arguments') {
-    return InvalidArgumentsException();
+    return core_exceptions.InvalidArgumentsException();
   }
 
   if (result.status == 403 &&
