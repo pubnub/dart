@@ -5,6 +5,21 @@ on:
     branches: [master]
     types: [closed]
 
+permissions:
+  actions: write
+  attestations: write
+  checks: write
+  contents: write
+  deployments: write
+  discussions: write
+  issues: write
+  id-token: write
+  packages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
+
 jobs:
   check-release:
     name: Check release required
@@ -46,16 +61,11 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           path: .github/.release/actions
       - name: Install Dart SDK
-        uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+        uses: dart-lang/setup-dart@v1
       - name: Publish to Pub
         uses: ./.github/.release/actions/actions/services/pub
         with:
           token: ${{ secrets.GH_TOKEN }}
-          pub-token-endpoint: ${{ secrets.DART_TOKEN_ENDPOINT }}
-          pub-access-token: ${{ secrets.DART_ACCESS_TOKEN }}
-          pub-refresh-token: ${{ secrets.DART_REFRESH_TOKEN }}
-          pub-id-token: ${{ secrets.DART_ID_TOKEN }}
-          pub-token-expiration: ${{ secrets.DART_TOKEN_EXPIRATION }}
       - name: Create Release
         uses: ./.github/.release/actions/actions/services/github-release
         with:
