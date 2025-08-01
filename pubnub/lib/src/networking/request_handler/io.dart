@@ -29,7 +29,7 @@ class RequestHandler extends IRequestHandler {
   void cancel([reason]) {
     if (!isDone) {
       _logger
-          .fine('Request has been cancelled (reason: ${reason.runtimeType}).');
+          .fine('($_id) Request has been cancelled (reason: ${reason.runtimeType}).');
 
       _cancel.complete(RequestCancelException(reason));
 
