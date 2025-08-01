@@ -115,7 +115,7 @@ class StreamLogger extends ILogger {
   final bool _recordStackTraces;
 
   StreamLogger._(this.name, this._parent,
-      {bool recordStackTraces = false, int logLevel = 10000})
+      {bool recordStackTraces = false, int? logLevel})
       : _recordStackTraces = recordStackTraces,
         _logLevel = logLevel;
 

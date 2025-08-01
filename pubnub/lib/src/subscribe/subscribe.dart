@@ -3,6 +3,8 @@ import 'package:pubnub/core.dart';
 import 'manager.dart';
 import 'subscription.dart';
 
+final _logger = injectLogger('pubnub.dx.subscribe');
+
 mixin SubscribeDx on Core {
   final Map<Keyset, Manager> _managers = {};
 
@@ -60,7 +62,18 @@ mixin SubscribeDx on Core {
       Keyset? keyset,
       String? using,
       Timetoken? timetoken}) {
+    _logger.info('Subscribe API call');
     keyset ??= keysets[using];
+
+    _logger.fine(LogEvent(
+        message: 'Subscribe API call with parameters:',
+        details: {
+          'channels': channels,
+          'channelGroups': channelGroups,
+          'withPresence': withPresence,
+          'timetoken': timetoken,
+        },
+        detailsType: LogEventDetailsType.apiParametersInfo));
 
     var manager = _getOrCreateManager(keyset);
 
@@ -100,6 +113,7 @@ mixin SubscribeDx on Core {
 
   /// Cancels all existing subscriptions.
   Future<void> unsubscribeAll() async {
+    _logger.info('Unsubscribing all subscriptions.');
     for (var manager in _managers.values) {
       await manager.unsubscribeAll();
     }

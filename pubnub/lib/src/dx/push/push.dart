@@ -6,6 +6,8 @@ import '../_endpoints/push.dart';
 
 export '../_endpoints/push.dart';
 
+final _logger = injectLogger('pubnub.dx.push');
+
 // Managing device registrations for Push Notification Service
 mixin PushNotificationDx on Core {
   /// It returns list of all channels to which device [deviceId] is registered to receive push notifications.
@@ -31,6 +33,7 @@ mixin PushNotificationDx on Core {
       int? count,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('List push channels API call');
     keyset ??= keysets[using];
 
     Ensure(deviceId).isNotEmpty('deviceId');
@@ -45,6 +48,12 @@ mixin PushNotificationDx on Core {
       start: start,
       count: count,
     );
+
+    _logger.fine(LogEvent(
+        message: 'List push channels API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     return defaultFlow<ListPushChannelsParams, ListPushChannelsResult>(
         keyset: keyset,
         core: this,
@@ -73,6 +82,7 @@ mixin PushNotificationDx on Core {
       Environment? environment,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('Add push channels API call');
     keyset ??= keysets[using];
 
     Ensure(deviceId).isNotEmpty('deviceId');
@@ -80,6 +90,12 @@ mixin PushNotificationDx on Core {
 
     var params = AddPushChannelsParams(keyset, deviceId, gateway, channels,
         topic: topic, environment: environment);
+
+    _logger.fine(LogEvent(
+        message: 'Add push channels API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     return defaultFlow<AddPushChannelsParams, AddPushChannelsResult>(
         keyset: keyset,
         core: this,
@@ -108,6 +124,7 @@ mixin PushNotificationDx on Core {
       Environment? environment,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('Remove push channels API call');
     keyset ??= keysets[using];
 
     Ensure(deviceId).isNotEmpty('deviceId');
@@ -142,6 +159,7 @@ mixin PushNotificationDx on Core {
       Environment? environment,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('Remove device API call');
     keyset ??= keysets[using];
 
     Ensure(deviceId).isNotEmpty('deviceId');

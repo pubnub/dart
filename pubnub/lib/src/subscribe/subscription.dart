@@ -5,7 +5,7 @@ import 'package:pubnub/core.dart';
 import 'manager.dart';
 import 'envelope.dart';
 
-final _logger = injectLogger('pubnub.subscription.subscription');
+final _logger = injectLogger('pubnub.subscription');
 
 /// Represents a subscription to a set of channels and channel groups.
 ///

@@ -53,7 +53,7 @@ class Fiber<T> {
         return _completer.completeError(exception, stackTrace);
       }
 
-      __logger.silly('Possible reason found: $diagnostic');
+      __logger.fine('Network issue possible reason found: $diagnostic');
 
       var resolutions = _core.supervisor.runStrategies(this, diagnostic);
 

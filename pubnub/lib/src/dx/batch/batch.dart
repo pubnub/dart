@@ -7,6 +7,8 @@ import '../../../crypto.dart';
 export 'package:pubnub/src/dx/_endpoints/history.dart'
     show BatchHistoryResult, BatchHistoryResultEntry, CountMessagesResult;
 
+final _logger = injectLogger('pubnub.dx.batch');
+
 /// Groups common **batch** features together.
 ///
 /// Available as [PubNub.batch].
@@ -31,6 +33,7 @@ class BatchDx {
       bool includeMessageType = true,
       bool includeCustomMessageType = false,
       bool includeUUID = true}) async {
+    _logger.info('Fetch messages API call');
     keyset ??= _core.keysets[using];
 
     var SINGLE_CHANNEL_MAX = 100;
@@ -57,6 +60,11 @@ class BatchDx {
         includeCustomMessageType: includeCustomMessageType,
         includeUUID: includeUUID);
 
+    _logger.fine(LogEvent(
+        message: 'Batch fetch messages API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     return defaultFlow<BatchHistoryParams, BatchHistoryResult>(
       keyset: keyset,
       core: _core,
@@ -79,6 +87,7 @@ class BatchDx {
   ///   Additionally, if a value in the map is null, it will use a timetoken from a named parameter [timetoken].
   Future<CountMessagesResult> countMessages(dynamic channels,
       {Keyset? keyset, String? using, Timetoken? timetoken}) {
+    _logger.info('Count messages API call');
     keyset ??= _core.keysets[using];
 
     var params = CountMessagesParams(keyset);
@@ -96,6 +105,11 @@ class BatchDx {
       Ensure.fail('invalid-type', 'channels',
           ['Set<String>', 'Map<String, Timetoken>']);
     }
+
+    _logger.fine(LogEvent(
+        message: 'Batch count messages API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
 
     return defaultFlow(
         keyset: keyset,

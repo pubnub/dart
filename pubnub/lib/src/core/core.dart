@@ -23,6 +23,9 @@ class Core {
 
   static String version = '5.2.1';
 
+  static String instanceId =
+      '${(DateTime.now().millisecondsSinceEpoch % 100000)}'.padLeft(5);
+
   Core(
       {Keyset? defaultKeyset,
       required this.networking,

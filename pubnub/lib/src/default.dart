@@ -1,6 +1,8 @@
 import 'package:pubnub/src/crypto/legacyCryptor.dart';
 
+import 'dart:async';
 import '../core.dart';
+import '../logging.dart';
 
 import 'networking/networking.dart';
 import 'parser/parser.dart';
@@ -68,12 +70,20 @@ class PubNub extends Core
   /// Current version of this library.
   static String version = Core.version;
 
-  PubNub(
-      {Keyset? defaultKeyset,
-      INetworkingModule? networking,
-      IParserModule? parser,
-      ICryptoModule? crypto})
-      : super(
+  // Static field for global logging support
+  static StreamLogger? _globalLogger;
+  static StreamSubscription? _globalLogSubscription;
+
+  PubNub({
+    Keyset? defaultKeyset,
+    INetworkingModule? networking,
+    IParserModule? parser,
+    ICryptoModule? crypto,
+    int? logLevel,
+    String? loggerName,
+    bool logToConsole = true,
+    String? logFormat,
+  }) : super(
             defaultKeyset: defaultKeyset,
             networking: networking ?? NetworkingModule(),
             parser: parser ?? ParserModule(),
@@ -81,10 +91,70 @@ class PubNub extends Core
                 (defaultKeyset?.cipherKey != null
                     ? CryptoModule.legacyCryptoModule(defaultKeyset!.cipherKey!)
                     : LegacyCryptoModule())) {
+    // Set up global logging if logLevel is provided
+    if (logLevel != null) {
+      _setupGlobalLogging(logLevel, loggerName ?? 'PubNub-${Core.instanceId}',
+          logToConsole, logFormat);
+    }
+
     batch = BatchDx(this);
     channelGroups = ChannelGroupDx(this);
     objects = ObjectsDx(this);
     files = FileDx(this);
+    _logPubNubInstanceInformation();
+  }
+
+  /// Set up global logging that will be available throughout the entire SDK
+  static void _setupGlobalLogging(
+    int logLevel,
+    String loggerName,
+    bool logToConsole,
+    String? logFormat,
+  ) {
+    // Clean up any existing logger
+    _globalLogSubscription?.cancel();
+    _globalLogger?.dispose();
+
+    // Create new global logger
+    _globalLogger = StreamLogger.root(loggerName, logLevel: logLevel);
+
+    // Set up console printing if requested
+    if (logToConsole) {
+      logFormat ??= r'$time ${level.name} $scope: $message';
+      _globalLogSubscription = _globalLogger!.stream.listen(
+        LogRecord.createPrinter(logFormat),
+      );
+    }
+
+    globalLoggerRegistry['pubnub-${Core.instanceId}'] = _globalLogger!;
+  }
+
+  /// Change the global log level dynamically
+  static void setLogLevel(int level) {
+    _globalLogger?.logLevel = level;
+  }
+
+  /// Get the global logger for advanced usage
+  static StreamLogger? get globalLogger => _globalLogger;
+
+  /// Dispose of global logging resources
+  static Future<void> disposeGlobalLogging() async {
+    await _globalLogSubscription?.cancel();
+    await _globalLogger?.dispose();
+    _globalLogSubscription = null;
+    _globalLogger = null;
+
+    // Remove from global registry
+    globalLoggerRegistry.remove('pubnub');
+  }
+
+  void _logPubNubInstanceInformation() {
+    if (_globalLogger != null) {
+      _globalLogger!.fine(LogEvent(
+          message: 'PubNub instance initialized with configuration:',
+          details: this,
+          detailsType: LogEventDetailsType.pubNubInstanceInfo));
+    }
   }
 
   /// Returns a representation of a channel.

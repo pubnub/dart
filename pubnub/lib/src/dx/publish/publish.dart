@@ -44,6 +44,7 @@ mixin PublishDx on Core {
       int? ttl,
       bool? fire,
       String? customMessageType}) async {
+    _logger.info('Publish API call');
     Ensure(channel).isNotEmpty('channel name');
     Ensure(message).isNotNull('message');
 
@@ -75,7 +76,10 @@ mixin PublishDx on Core {
       params.noReplication = true;
     }
 
-    _logger.verbose('Publishing a message to a channel $channel');
+    _logger.fine(LogEvent(
+        message: 'Publish with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
 
     return await defaultFlow<PublishParams, PublishResult>(
         keyset: keyset,

@@ -11,6 +11,8 @@ export '../_endpoints/objects/channel_metadata.dart';
 export '../_endpoints/objects/membership_metadata.dart';
 export 'schema.dart';
 
+final _logger = injectLogger('pubnub.dx.objects');
+
 /// Groups **objects** methods together.
 ///
 /// Available as [PubNub.objects].
@@ -62,6 +64,7 @@ class ObjectsDx {
       Set<String>? sort,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('Get all UUID metadata API call');
     keyset ??= _core.keysets[using];
 
     var include = <String>{};
@@ -83,6 +86,11 @@ class ObjectsDx {
         includeCount: includeCount,
         filter: filter,
         sort: sort);
+    _logger.fine(LogEvent(
+      message: 'getAllUUIDMetadata API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<GetAllUuidMetadataParams, GetAllUuidMetadataResult>(
         keyset: keyset,
@@ -115,6 +123,7 @@ class ObjectsDx {
     bool includeStatus = true,
     bool includeType = true,
   }) async {
+    _logger.info('Get UUID metadata API call');
     keyset ??= _core.keysets[using];
 
     var include = <String>{};
@@ -129,6 +138,11 @@ class ObjectsDx {
     }
 
     var params = GetUuidMetadataParams(keyset, uuid: uuid, include: include);
+    _logger.fine(LogEvent(
+      message: 'getUUIDMetadata API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
     return defaultFlow<GetUuidMetadataParams, GetUuidMetadataResult>(
         keyset: keyset,
         core: _core,
@@ -173,6 +187,7 @@ class ObjectsDx {
       String? ifMatchesEtag,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('Set UUID metadata API call');
     keyset ??= _core.keysets[using];
     Ensure(uuidMetadataInput).isNotNull('uuid metadata input');
 
@@ -190,6 +205,11 @@ class ObjectsDx {
     var payload = await _core.parser.encode(uuidMetadataInput);
     var params = SetUuidMetadataParams(keyset, payload,
         uuid: uuid, include: include, ifMatchesEtag: ifMatchesEtag);
+    _logger.fine(LogEvent(
+      message: 'setUUIDMetadata API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<SetUuidMetadataParams, SetUuidMetadataResult>(
         keyset: keyset,
@@ -205,9 +225,15 @@ class ObjectsDx {
   /// and `uuid` not provided in argument then it throws InvariantException
   Future<RemoveUuidMetadataResult> removeUUIDMetadata(
       {String? uuid, Keyset? keyset, String? using}) async {
+    _logger.info('Remove UUID metadata API call');
     keyset ??= _core.keysets[using];
 
     var params = RemoveUuidMetadataParams(keyset, uuid: uuid);
+    _logger.fine(LogEvent(
+      message: 'removeUUIDMetadata API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<RemoveUuidMetadataParams, RemoveUuidMetadataResult>(
         keyset: keyset,
@@ -257,6 +283,7 @@ class ObjectsDx {
       Set<String>? sort,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('Get all channel metadata API call');
     keyset ??= _core.keysets[using];
 
     var include = <String>{};
@@ -278,6 +305,11 @@ class ObjectsDx {
         includeCount: includeCount,
         filter: filter,
         sort: sort);
+    _logger.fine(LogEvent(
+      message: 'getAllChannelMetadata API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<GetAllChannelMetadataParams,
             GetAllChannelMetadataResult>(
@@ -324,6 +356,11 @@ class ObjectsDx {
     }
 
     var params = GetChannelMetadataParams(keyset, channelId, include: include);
+    _logger.fine(LogEvent(
+      message: 'getChannelMetadata API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<GetChannelMetadataParams, GetChannelMetadataResult>(
         keyset: keyset,
@@ -383,6 +420,11 @@ class ObjectsDx {
 
     var params = SetChannelMetadataParams(keyset, channelId, payload,
         include: include, ifMatchesEtag: ifMatchesEtag);
+    _logger.fine(LogEvent(
+      message: 'setChannelMetadata API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<SetChannelMetadataParams, SetChannelMetadataResult>(
         keyset: keyset,
@@ -400,6 +442,11 @@ class ObjectsDx {
 
     Ensure(channelId).isNotEmpty('channelId');
     var params = RemoveChannelMetadataParams(keyset, channelId);
+    _logger.fine(LogEvent(
+      message: 'removeChannelMetadata API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<RemoveChannelMetadataParams,
             RemoveChannelMetadataResult>(
@@ -502,6 +549,11 @@ class ObjectsDx {
         includeCount: includeCount,
         filter: filter,
         sort: sort);
+    _logger.fine(LogEvent(
+      message: 'getMemberships API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<GetMembershipsMetadataParams, MembershipsResult>(
         keyset: keyset,
@@ -618,6 +670,11 @@ class ObjectsDx {
         includeCount: includeCount,
         filter: filter,
         sort: sort);
+    _logger.fine(LogEvent(
+      message: 'manageMemberships API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
         keyset: keyset,
@@ -730,6 +787,11 @@ class ObjectsDx {
         includeCount: includeCount,
         filter: filter,
         sort: sort);
+    _logger.fine(LogEvent(
+      message: 'setMemberships API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
         keyset: keyset,
@@ -839,6 +901,11 @@ class ObjectsDx {
         includeCount: includeCount,
         filter: filter,
         sort: sort);
+    _logger.fine(LogEvent(
+      message: 'removeMemberships API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<ManageMembershipsParams, MembershipsResult>(
         keyset: keyset,
@@ -933,6 +1000,11 @@ class ObjectsDx {
         includeCount: includeCount,
         filter: filter,
         sort: sort);
+    _logger.fine(LogEvent(
+      message: 'getChannelMembers API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<GetChannelMembersParams, ChannelMembersResult>(
         keyset: keyset,
@@ -1041,6 +1113,11 @@ class ObjectsDx {
         includeCount: includeCount,
         filter: filter,
         sort: sort);
+    _logger.fine(LogEvent(
+      message: 'manageChannelMembers API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<ManageChannelMembersParams, ChannelMembersResult>(
         keyset: keyset,
@@ -1143,6 +1220,11 @@ class ObjectsDx {
         includeCount: includeCount,
         filter: filter,
         sort: sort);
+    _logger.fine(LogEvent(
+      message: 'setChannelMembers API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<ManageChannelMembersParams, ChannelMembersResult>(
         keyset: keyset,
@@ -1247,6 +1329,11 @@ class ObjectsDx {
         includeCount: includeCount,
         filter: filter,
         sort: sort);
+    _logger.fine(LogEvent(
+      message: 'removeChannelMembers API call with parameters:',
+      details: params,
+      detailsType: LogEventDetailsType.apiParametersInfo,
+    ));
 
     return defaultFlow<ManageChannelMembersParams, ChannelMembersResult>(
         keyset: keyset,

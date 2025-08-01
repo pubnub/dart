@@ -7,6 +7,8 @@ import 'subscribe_loop/subscribe_loop.dart';
 import 'subscription.dart';
 import 'envelope.dart';
 
+final _logger = injectLogger('pubnub.dx.subscribe.manager');
+
 /// @nodoc
 class Manager {
   final Keyset keyset;
@@ -62,6 +64,7 @@ class Manager {
   }
 
   void removeSubscription(Subscription subscription) {
+    _logger.info('Removing subscription: ${subscription.channels}');
     subscriptions.remove(subscription);
 
     _updateLoop(skipCancel: true);

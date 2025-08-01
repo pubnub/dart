@@ -129,3 +129,7 @@ export 'src/subscribe/subscription.dart' show Subscription;
 export 'src/subscribe/extensions/keyset.dart' show SubscribeKeysetExtension;
 export 'src/subscribe/envelope.dart'
     show Envelope, PresenceEvent, PresenceAction;
+
+// Logging
+export 'src/logging/logging.dart' show LogRecord, StreamLogger;
+export 'src/core/logging/logging.dart' show Level, ILogger, LogEvent;
