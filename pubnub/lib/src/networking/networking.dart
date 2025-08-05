@@ -22,7 +22,10 @@ class NetworkingModule extends INetworkingModule {
   /// Whether `https` or `http` should be used.
   final bool ssl;
 
-  NetworkingModule({this.retryPolicy, this.origin, this.ssl = true});
+  NetworkingModule({RetryPolicy? retryPolicy, this.origin, bool? ssl})
+      : ssl = ssl ?? true {
+    this.retryPolicy = retryPolicy ?? RetryPolicy.exponential();
+  }
 
   @override
   Uri getOrigin() {
@@ -51,5 +54,10 @@ class NetworkingModule extends INetworkingModule {
     core.supervisor.registerDiagnostic(getNetworkDiagnostic);
     core.supervisor
         .registerStrategy(NetworkingStrategy(retryPolicy: retryPolicy));
+  }
+
+  @override
+  String toString() {
+    return 'NetworkingModule(origin: $origin, ssl: $ssl, retryPolicy: ${retryPolicy?.toString() ?? 'none'})';
   }
 }

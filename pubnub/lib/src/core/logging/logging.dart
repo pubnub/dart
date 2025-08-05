@@ -3,8 +3,8 @@ import 'dart:mirrors';
 
 import 'package:pubnub/pubnub.dart';
 import '../../networking/response/response.dart';
-import '../net/request_type.dart';
 import '../core.dart';
+import '../net/net.dart';
 
 final _pubnubLoggerModuleKey = #pubnub.logging;
 
@@ -238,12 +238,9 @@ class LogEvent {
 
         // Log module information
         messageString += '\n\tModules:';
-        messageString +=
-            '\n\t  Networking: ${pubnub.networking.runtimeType.toString().split('.').last}';
-        messageString +=
-            '\n\t  Parser: ${pubnub.parser.runtimeType.toString().split('.').last}';
-        messageString +=
-            '\n\t  Crypto: ${pubnub.crypto.runtimeType.toString().split('.').last}';
+        messageString += '\n\t  Networking: ${pubnub.networking}';
+        messageString += '\n\t  Parser: ${pubnub.parser}';
+        messageString += '\n\t  Crypto: ${pubnub.crypto}';
 
         // Log keyset information
         messageString += '\n\tKeysets:';
@@ -276,19 +273,7 @@ class LogEvent {
             var keyset = allKeysets[i];
             var name = keysetNames[i];
             messageString += '\n\t  $name:';
-            messageString += '\n\t    Subscribe Key: ${keyset.subscribeKey}';
-            messageString +=
-                '\n\t    Publish Key: ${keyset.publishKey ?? 'not provided'}';
-            messageString +=
-                '\n\t    Secret Key: ${keyset.secretKey != null ? 'provided' : 'not provided'}';
-            messageString += '\n\t    User ID: ${keyset.userId}';
-            messageString +=
-                '\n\t    Auth Key: ${keyset.authKey != null ? 'provided' : 'not provided'}';
-            messageString +=
-                '\n\t    Cipher Key: ${keyset.cipherKey != null ? 'provided' : 'not provided'}';
-            if (keyset.settings.isNotEmpty) {
-              messageString += '\n\t    Settings: ${keyset.settings}';
-            }
+            messageString += keyset.toString();
             if (i == 0 && keysetNames[i] == 'default') {
               messageString += '\n\t    (Default)';
             }
@@ -308,51 +293,16 @@ class LogEvent {
         messageString +=
             '\n\t${detailsMap.entries.map((entry) => '${entry.key}: ${entry.value}').join('\n\t')}';
       } else if (detailsType == LogEventDetailsType.networkRequestInfo) {
-        var requestMap = details as Map<String, dynamic>;
-
-        for (var entry in requestMap.entries) {
-          switch (entry.key) {
-            case 'type':
-              var requestType = entry.value as RequestType;
-              messageString += '\n\tMethod: ${requestType.method}';
-              break;
-            case 'uri':
-              messageString += '\n\tURL: ${entry.value}';
-              break;
-            case 'headers':
-              var headers = entry.value as Map<String, dynamic>;
-              if (headers.isNotEmpty) {
-                messageString += '\n\tHeaders:';
-                for (var headerEntry in headers.entries) {
-                  messageString +=
-                      '\n\t  ${headerEntry.key}: ${headerEntry.value}';
-                }
-              }
-              break;
-            case 'body':
-              if (entry.value != null) {
-                if (entry.value is List<int>) {
-                  var length = entry.value.length;
-                  messageString +=
-                      '\n\tBody:binary content with length $length';
-                } else {
-                  messageString += '\n\tBody: ${entry.value}';
-                }
-              }
-              break;
-          }
-        }
+        messageString += (details as Request).toString();
       } else if (detailsType == LogEventDetailsType.networkResponseInfo) {
-        var responseMap = details as Map<String, dynamic>;
-        messageString += '\n\tURL: ${responseMap['request'].uri}';
-        messageString +=
-            '\n\tStatus Code: ${responseMap['response'].statusCode}';
-        var response = responseMap['response'] as Response;
-        if (response.headers.containsKey('server')) {
-          messageString +=
-              '\n\tBody: binary content length ${response.byteList.length}';
-        } else {
-          messageString += '\n\tBody: ${response.text}';
+        if (details is Response) {
+          messageString += details.toString();
+        } else if (details is Map) {
+          var detailsMap = details as Map<String, dynamic>;
+          var request = detailsMap['request'] as Request;
+          var response = detailsMap['response'] as Response;
+          messageString += '\n\tURL: ${request.uri}';
+          messageString += response.toString();
         }
       }
     } catch (e) {

@@ -76,8 +76,6 @@ class RequestHandler extends IRequestHandler {
         }
       }
 
-      // _logger.info('($_id) Starting request to "$uri"...');
-
       if (isCancelled) {
         throw await cancelReason;
       }
@@ -86,12 +84,7 @@ class RequestHandler extends IRequestHandler {
           Uri.parse('${uri.replace(query: uri.query.replaceAll('+', '%20'))}'));
       _logger.fine(LogEvent(
           message: 'Sending HTTP Request',
-          details: {
-            'type': data.type,
-            'uri': uri,
-            'headers': headers,
-            'body': body
-          },
+          details: data,
           detailsType: LogEventDetailsType.networkRequestInfo));
       _abortRequest = (reason) {
         request.abort(reason);
@@ -127,7 +120,7 @@ class RequestHandler extends IRequestHandler {
       var response = Response(byteList, clientResponse);
       _logger.fine(LogEvent(
           message: 'Received HTTP response:',
-          details: {'request': request, 'response': response},
+          details: {'request': data, 'response': response},
           detailsType: LogEventDetailsType.networkResponseInfo));
       _response = response;
 

@@ -112,4 +112,10 @@ class CryptoModule implements ICryptoModule {
   /// @nodoc
   @override
   void register(Core core) {}
+
+  @override
+  String toString() {
+    var cryptorList = _getAllCryptors().map((c) => c.toString()).join(', ');
+    return 'CryptoModule(default: ${defaultCryptor.toString()}, available: [$cryptorList])';
+  }
 }

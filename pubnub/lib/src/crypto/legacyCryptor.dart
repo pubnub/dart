@@ -52,6 +52,11 @@ class LegacyCryptor implements ICryptor {
     return EncryptedData.from(
         cryptor.encryptFileData(cipherKey, input), List<int>.empty());
   }
+
+  @override
+  String toString() {
+    return 'LegacyCryptor';
+  }
 }
 
 /// Legacy CryptoModule module used in PubNub SDK when CipherKey is not provided.
@@ -179,4 +184,9 @@ class LegacyCryptoModule implements ICryptoModule {
 
   @override
   void register(Core core) {}
+
+  @override
+  String toString() {
+    return 'LegacyCryptoModule';
+  }
 }

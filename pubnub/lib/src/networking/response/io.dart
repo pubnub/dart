@@ -28,4 +28,17 @@ class Response extends IResponse {
 
   @override
   String get text => utf8.decode(_bytes);
+
+  @override
+  String toString() {
+    var parts = [
+      'Status Code: $statusCode',
+    ];
+    if (headers.containsKey('server')) {
+      parts.add('Body: binary content length ${byteList.length}');
+    } else {
+      parts.add('Body: $text');
+    }
+    return '\n\t${parts.join('\n\t')}';
+  }
 }

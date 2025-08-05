@@ -56,4 +56,9 @@ class AesCbcCryptor implements ICryptor {
   EncryptedData encryptFileData(List<int> input) {
     return encrypt(input);
   }
+
+  @override
+  String toString() {
+    return 'AesCbcCryptor';
+  }
 }

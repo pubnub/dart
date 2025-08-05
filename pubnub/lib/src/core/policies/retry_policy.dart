@@ -44,6 +44,11 @@ class LinearRetryPolicy extends RetryPolicy {
         milliseconds: min(
             maximumDelay, (fiber.tries * backoff) + Random().nextInt(1000)));
   }
+
+  @override
+  String toString() {
+    return 'linear (backoff: $backoff, max: $maximumDelay)';
+  }
 }
 
 /// Exponential retry policy.
@@ -62,5 +67,10 @@ class ExponentialRetryPolicy extends RetryPolicy {
     return Duration(
         milliseconds: min(maximumDelay,
             pow(2, fiber.tries - 1).toInt() * 1000 + Random().nextInt(1000)));
+  }
+
+  @override
+  String toString() {
+    return 'exponential (max: $maximumDelay)';
   }
 }

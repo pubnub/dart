@@ -74,4 +74,9 @@ class ParserModule implements IParserModule {
 
   @override
   void register(Core core) {}
+
+  @override
+  String toString() {
+    return 'ParserModule(availableParsers: ${_parserMap.keys.join(', ')})';
+  }
 }
