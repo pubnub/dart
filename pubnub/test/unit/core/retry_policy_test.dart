@@ -1,7 +1,5 @@
 import 'package:test/test.dart';
 import 'package:pubnub/pubnub.dart';
-import 'package:pubnub/networking.dart';
-import 'package:pubnub/logging.dart';
 
 void main() {
   group('Retry Policy', () {
