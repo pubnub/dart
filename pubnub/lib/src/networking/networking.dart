@@ -58,6 +58,7 @@ class NetworkingModule extends INetworkingModule {
 
   @override
   String toString() {
-    return 'NetworkingModule(origin: $origin, ssl: $ssl, retryPolicy: ${retryPolicy?.toString() ?? 'none'})';
+    var policyString = retryPolicy?.toString() ?? 'none';
+    return 'NetworkingModule(origin: $origin, ssl: $ssl, retryPolicy: $policyString)';
   }
 }

@@ -3,6 +3,9 @@ import 'package:test/test.dart';
 import 'package:pubnub/core.dart';
 import 'package:pubnub/pubnub.dart';
 
+// A utility function to ensure all pending microtasks are processed
+Future<void> pumpEventQueue() => Future.delayed(Duration.zero);
+
 class FakeLogger extends ILogger {
   List<String> messages = [];
 
@@ -48,10 +51,11 @@ void main() {
         List<LogRecord> capturedLogs = [];
 
         // Create PubNub instance with logging enabled at info level
+        // Using demo keys to avoid authentication errors
         var pubnub = PubNub(
           defaultKeyset: Keyset(
-              subscribeKey: 'test-sub-key',
-              publishKey: 'test-pub-key',
+              subscribeKey: 'demo',
+              publishKey: 'demo',
               uuid: UUID('test-uuid')),
           logLevel: Level.info, // Enable logging at info level
           loggerName: 'test-pubnub',
@@ -72,10 +76,11 @@ void main() {
         try {
           await pubnub.signal('test-channel', {'message': 'test'});
         } catch (e) {
-          // We expect this to fail due to fake keys, but we're interested in the logs
+          // Signal might still fail for other reasons, but won't cause auth errors
         }
 
-        // Allow some time for logs to be captured
+        // Wait for all async operations to complete
+        await pumpEventQueue();
         await Future.delayed(Duration(milliseconds: 100));
 
         // Verify that info level logs were captured
@@ -96,6 +101,7 @@ void main() {
 
         // Clean up
         await subscription.cancel();
+        await pumpEventQueue();
         await PubNub.disposeGlobalLogging();
       });
 
@@ -104,10 +110,11 @@ void main() {
         List<LogRecord> capturedLogs = [];
 
         // Create PubNub instance with logging enabled at warning level
+        // Using demo keys to avoid authentication errors
         var pubnub = PubNub(
           defaultKeyset: Keyset(
-              subscribeKey: 'test-sub-key',
-              publishKey: 'test-pub-key',
+              subscribeKey: 'demo',
+              publishKey: 'demo',
               uuid: UUID('test-uuid')),
           logLevel: Level.warning, // Enable logging at warning level only
           logToConsole: false,
@@ -123,10 +130,11 @@ void main() {
         try {
           await pubnub.signal('test-channel', {'message': 'test'});
         } catch (e) {
-          // Expected to fail
+          // Signal might still fail for other reasons, but won't cause auth errors
         }
 
-        // Allow some time for logs to be captured
+        // Wait for all async operations to complete
+        await pumpEventQueue();
         await Future.delayed(Duration(milliseconds: 100));
 
         // Verify that info level logs were NOT captured (since we set level to warning)
@@ -138,6 +146,7 @@ void main() {
 
         // Clean up
         await subscription.cancel();
+        await pumpEventQueue();
         await PubNub.disposeGlobalLogging();
       });
 
@@ -146,10 +155,11 @@ void main() {
         List<LogRecord> capturedLogs = [];
 
         // Create PubNub instance with logging enabled at warning level
+        // Using demo keys to avoid authentication errors
         var pubnub = PubNub(
           defaultKeyset: Keyset(
-              subscribeKey: 'test-sub-key',
-              publishKey: 'test-pub-key',
+              subscribeKey: 'demo',
+              publishKey: 'demo',
               uuid: UUID('test-uuid')),
           logLevel: Level.warning, // Start with warning level
           logToConsole: false,
@@ -166,7 +176,8 @@ void main() {
           await pubnub.signal('test-channel', {'message': 'test1'});
         } catch (e) {}
 
-        await Future.delayed(Duration(milliseconds: 50));
+        await pumpEventQueue();
+        await Future.delayed(Duration(milliseconds: 100));
 
         var infoLogsBeforeChange =
             capturedLogs.where((log) => log.level == Level.info).length;
@@ -182,7 +193,8 @@ void main() {
           await pubnub.signal('test-channel', {'message': 'test2'});
         } catch (e) {}
 
-        await Future.delayed(Duration(milliseconds: 50));
+        await pumpEventQueue();
+        await Future.delayed(Duration(milliseconds: 100));
 
         var infoLogsAfterChange =
             capturedLogs.where((log) => log.level == Level.info).length;
@@ -191,6 +203,7 @@ void main() {
 
         // Clean up
         await subscription.cancel();
+        await pumpEventQueue();
         await PubNub.disposeGlobalLogging();
       });
     });

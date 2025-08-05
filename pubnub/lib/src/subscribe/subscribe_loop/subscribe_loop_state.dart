@@ -68,6 +68,18 @@ class SubscribeLoopState {
 
   @override
   String toString() {
-    return '${isActive ? 1 : 0}${isErrored ? 1 : 0}$region $timetoken $customTimetoken $channels $channelGroups';
+    var parts = <String>[];
+    parts.add('active: $isActive');
+    parts.add('errored: $isErrored');
+    parts.add('timetoken: ${timetoken.value}');
+    if (region != null) parts.add('region: $region');
+    if (customTimetoken != null) {
+      parts.add('customTimetoken: ${customTimetoken?.value}');
+    }
+    if (channels.isNotEmpty) parts.add('channels: ${channels.join(", ")}');
+    if (channelGroups.isNotEmpty) {
+      parts.add('channelGroups: ${channelGroups.join(", ")}');
+    }
+    return 'SubscribeLoopState(${parts.join(", ")})';
   }
 }

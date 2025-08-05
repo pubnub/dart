@@ -21,6 +21,9 @@ abstract class RetryPolicy {
   /// Exponential retry policy. Useful for production.
   factory RetryPolicy.exponential({int? maxRetries, int? maximumDelay}) =
       ExponentialRetryPolicy;
+
+  /// No retry policy. Disables retries completely.
+  factory RetryPolicy.none() = NoneRetryPolicy;
 }
 
 /// Linear retry policy.
@@ -72,5 +75,23 @@ class ExponentialRetryPolicy extends RetryPolicy {
   @override
   String toString() {
     return 'exponential (max: $maximumDelay)';
+  }
+}
+
+/// No retry policy.
+///
+/// Disables all retry attempts.
+class NoneRetryPolicy extends RetryPolicy {
+  const NoneRetryPolicy() : super(0);
+
+  @override
+  Duration getDelay(Fiber fiber) {
+    // This should never be called as retries are disabled
+    return Duration.zero;
+  }
+
+  @override
+  String toString() {
+    return 'none';
   }
 }
