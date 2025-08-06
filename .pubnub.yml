@@ -1,5 +1,12 @@
 ---
 changelog:
+  - date: 2025-08-06
+    version: v6.0.0
+    changes:
+      - type: feature
+        text: "BREAKING CHANGES: Added support for `RetryPolicy.none()` to disable retry for subscription."
+      - type: improvement
+        text: "Enhanced logging using standardized logging practices."
   - date: 2025-06-25
     version: v5.2.1
     changes:
@@ -483,7 +490,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "5.2.1"
+version: "6.0.0"
 sdks:
   -
     full-name: PubNub Dart SDK
