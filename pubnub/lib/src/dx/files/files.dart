@@ -20,6 +20,8 @@ export '../_endpoints/files.dart'
         ListFilesResult,
         FileDetail;
 
+final _logger = injectLogger('pubnub.dx.files');
+
 /// Groups **file** methods together.
 ///
 /// Available as [PubNub.files].
@@ -64,6 +66,7 @@ class FileDx {
       dynamic fileMessageMeta,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('Send file API call');
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
     FileValidation.validateFileName(fileName);
@@ -103,6 +106,21 @@ class FileDx {
 
     var params = FileUploadParams(
         uploadDetails.uploadUri, {...uploadDetails.formFields, 'file': file});
+
+    _logger.fine(LogEvent(
+        message: 'Send file API call with parameters:',
+        details: {
+          'channel': channel,
+          'fileName': fileName,
+          'fileSize': file.length,
+          'cipherKey': cipherKey != null ? 'provided' : 'not provided',
+          'fileMessage': fileMessage,
+          'storeFileMessage': storeFileMessage,
+          'fileMessageTtl': fileMessageTtl,
+          'customMessageType': customMessageType,
+          'fileMessageMeta': fileMessageMeta,
+        },
+        detailsType: LogEventDetailsType.apiParametersInfo));
 
     await defaultFlow<FileUploadParams, FileUploadResult>(
         keyset: keyset,
@@ -167,6 +185,7 @@ class FileDx {
       String? customMessageType,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('Publish file message API call');
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
 
@@ -185,14 +204,22 @@ class FileDx {
               base64.encode(_core.crypto.encrypt(utf8.encode(messagePayload))));
     }
     if (meta != null) meta = await _core.parser.encode(meta);
+
+    var params = PublishFileMessageParams(keyset, channel, messagePayload,
+        storeMessage: storeMessage,
+        ttl: ttl,
+        meta: meta,
+        customMessageType: customMessageType);
+
+    _logger.fine(LogEvent(
+        message: 'Publish file message API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     return defaultFlow(
         keyset: keyset,
         core: _core,
-        params: PublishFileMessageParams(keyset, channel, messagePayload,
-            storeMessage: storeMessage,
-            ttl: ttl,
-            meta: meta,
-            customMessageType: customMessageType),
+        params: params,
         serialize: (object, [_]) => PublishFileMessageResult.fromJson(object));
   }
 
@@ -207,6 +234,7 @@ class FileDx {
   Future<DownloadFileResult> downloadFile(
       String channel, String fileId, String fileName,
       {CipherKey? cipherKey, Keyset? keyset, String? using}) async {
+    _logger.info('Download file API call');
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
     FileValidation.validateFileId(fileId);
@@ -214,11 +242,23 @@ class FileDx {
 
     keyset ??= _core.keysets[using];
 
+    var params = DownloadFileParams(
+        getFileUrl(channel, fileId, fileName).replace(scheme: '', host: ''));
+
+    _logger.fine(LogEvent(
+        message: 'Download file API call with parameters:',
+        details: {
+          'channel': channel,
+          'fileId': fileId,
+          'fileName': fileName,
+          'cipherKey': cipherKey != null ? 'provided' : 'not provided',
+        },
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     return defaultFlow<DownloadFileParams, DownloadFileResult>(
         keyset: keyset,
         core: _core,
-        params: DownloadFileParams(getFileUrl(channel, fileId, fileName)
-            .replace(scheme: '', host: '')),
+        params: params,
         deserialize: false,
         serialize: (object, [_]) => DownloadFileResult.fromJson(object,
             cipherKey: cipherKey ?? keyset!.cipherKey,
@@ -241,15 +281,23 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   Future<ListFilesResult> listFiles(String channel,
       {int? limit, String? next, Keyset? keyset, String? using}) async {
+    _logger.info('List files API call');
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
 
     keyset ??= _core.keysets[using];
 
+    var params = ListFilesParams(keyset, channel, limit: limit, next: next);
+
+    _logger.fine(LogEvent(
+        message: 'List files API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     return defaultFlow<ListFilesParams, ListFilesResult>(
         keyset: keyset,
         core: _core,
-        params: ListFilesParams(keyset, channel, limit: limit, next: next),
+        params: params,
         serialize: (object, [_]) => ListFilesResult.fromJson(object));
   }
 
@@ -261,16 +309,25 @@ class FileDx {
   Future<DeleteFileResult> deleteFile(
       String channel, String fileId, String fileName,
       {Keyset? keyset, String? using}) async {
+    _logger.info('Delete file API call');
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
     FileValidation.validateFileId(fileId);
     FileValidation.validateFileName(fileName);
 
     keyset ??= _core.keysets[using];
+
+    var params = DeleteFileParams(keyset, channel, fileId, fileName);
+
+    _logger.fine(LogEvent(
+        message: 'Delete file API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     return defaultFlow<DeleteFileParams, DeleteFileResult>(
         keyset: keyset,
         core: _core,
-        params: DeleteFileParams(keyset, channel, fileId, fileName),
+        params: params,
         serialize: (object, [_]) => DeleteFileResult.fromJson(object));
   }
 

@@ -1,5 +1,6 @@
 import 'package:pubnub/src/crypto/legacyCryptor.dart';
 
+import 'dart:async';
 import '../core.dart';
 
 import 'networking/networking.dart';
@@ -18,6 +19,7 @@ import 'dx/pam/pam.dart';
 import 'dx/push/push.dart';
 import 'dx/presence/presence.dart';
 import 'dx/files/files.dart';
+import 'dx/logging_configuration.dart';
 import 'dx/objects/objects_types.dart';
 import 'dx/objects/objects.dart';
 import 'dx/supervisor/supervisor.dart';
@@ -51,7 +53,8 @@ class PubNub extends Core
         PushNotificationDx,
         PamDx,
         PresenceDx,
-        SupervisorDx {
+        SupervisorDx,
+        PubNubLogging {
   /// Contains methods that allow running batch operations on channels,
   /// channel groups and other features.
   late final BatchDx batch;
@@ -68,12 +71,13 @@ class PubNub extends Core
   /// Current version of this library.
   static String version = Core.version;
 
-  PubNub(
-      {Keyset? defaultKeyset,
-      INetworkingModule? networking,
-      IParserModule? parser,
-      ICryptoModule? crypto})
-      : super(
+  PubNub({
+    Keyset? defaultKeyset,
+    INetworkingModule? networking,
+    IParserModule? parser,
+    ICryptoModule? crypto,
+    LoggingConfiguration? logging,
+  }) : super(
             defaultKeyset: defaultKeyset,
             networking: networking ?? NetworkingModule(),
             parser: parser ?? ParserModule(),
@@ -81,10 +85,23 @@ class PubNub extends Core
                 (defaultKeyset?.cipherKey != null
                     ? CryptoModule.legacyCryptoModule(defaultKeyset!.cipherKey!)
                     : LegacyCryptoModule())) {
+    // Initialize instance-level logging
+    initializeLogging(logging, Core.instanceId);
+
     batch = BatchDx(this);
     channelGroups = ChannelGroupDx(this);
     objects = ObjectsDx(this);
     files = FileDx(this);
+    _logPubNubInstanceInformation();
+  }
+
+  void _logPubNubInstanceInformation() {
+    if (logger != null) {
+      logger!.fine(LogEvent(
+          message: 'PubNub instance initialized with configuration:',
+          details: this,
+          detailsType: LogEventDetailsType.pubNubInstanceInfo));
+    }
   }
 
   /// Returns a representation of a channel.
@@ -146,5 +163,14 @@ class PubNub extends Core
   Device device(String deviceId, {Keyset? keyset, String? using}) {
     keyset ??= keysets[using];
     return Device(this, keyset, deviceId);
+  }
+
+  /// Dispose of this PubNub instance and clean up resources.
+  ///
+  /// This will clean up logging resources and any other allocated resources.
+  /// After calling this method, the instance should not be used anymore.
+  Future<void> dispose() async {
+    await cleanupLogging();
+    // Additional cleanup can be added here in the future
   }
 }

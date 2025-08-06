@@ -11,6 +11,8 @@ export '../_endpoints/message_action.dart'
         DeleteMessageActionResult,
         MoreAction;
 
+final _logger = injectLogger('pubnub.dx.message_action');
+
 mixin MessageActionDx on Core {
   /// Returns all message actions of a given [channel].
   ///
@@ -30,15 +32,23 @@ mixin MessageActionDx on Core {
       int? limit = 100,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('Fetch message actions API call');
     keyset ??= keysets[using];
 
     Ensure(channel).isNotEmpty('channel');
 
+    var params = FetchMessageActionsParams(keyset, channel,
+        start: from, end: to, limit: limit);
+
+    _logger.fine(LogEvent(
+        message: 'Fetch message actions API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     return defaultFlow(
         keyset: keyset,
         core: this,
-        params: FetchMessageActionsParams(keyset, channel,
-            start: from, end: to, limit: limit),
+        params: params,
         serialize: (object, [_]) => FetchMessageActionsResult.fromJson(object));
   }
 
@@ -61,6 +71,7 @@ mixin MessageActionDx on Core {
       required Timetoken timetoken,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('Add message action API call');
     keyset ??= keysets[using];
 
     Ensure(type).isNotEmpty('message action type');
@@ -72,6 +83,11 @@ mixin MessageActionDx on Core {
 
     var params = AddMessageActionParams(
         keyset, channel, timetoken, addMessageActionBody);
+
+    _logger.fine(LogEvent(
+        message: 'Add message action API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
 
     return defaultFlow<AddMessageActionParams, AddMessageActionResult>(
         keyset: keyset,
@@ -94,12 +110,18 @@ mixin MessageActionDx on Core {
       required Timetoken actionTimetoken,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('Delete message action API call');
     keyset ??= keysets[using];
 
     Ensure(channel).isNotEmpty('channel');
 
     var params = DeleteMessageActionParams(
         keyset, channel, messageTimetoken, actionTimetoken);
+
+    _logger.fine(LogEvent(
+        message: 'Delete message action API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
 
     return defaultFlow<DeleteMessageActionParams, DeleteMessageActionResult>(
         keyset: keyset,

@@ -40,4 +40,20 @@ class Keyset {
     @Deprecated('Use `cipherKey` at CryptoModule') this.cipherKey,
   })  : assert((uuid == null) ^ (userId == null)),
         uuid = userId != null ? UUID(userId.value) : uuid!;
+
+  @override
+  String toString() {
+    var parts = [
+      'Subscribe Key: $subscribeKey',
+      'Publish Key: ${publishKey ?? 'not provided'}',
+      'Secret Key: ${secretKey != null ? 'provided' : 'not provided'}',
+      'User ID: $userId',
+      'Auth Key: ${authKey != null ? 'provided' : 'not provided'}',
+      'Cipher Key: ${cipherKey != null ? 'provided' : 'not provided'}'
+    ];
+    if (settings.isNotEmpty) {
+      parts.add('Settings: $settings');
+    }
+    return '\n\t    ${parts.join('\n\t    ')}';
+  }
 }

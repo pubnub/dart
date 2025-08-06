@@ -28,7 +28,7 @@ class RequestHandler extends IRequestHandler {
   @override
   void cancel([reason]) {
     if (!isDone) {
-      _logger.info(
+      _logger.fine(
           '($_id) Request has been cancelled (reason: ${reason.runtimeType}).');
 
       _cancel.complete(RequestCancelException(reason));
@@ -49,8 +49,6 @@ class RequestHandler extends IRequestHandler {
   @override
   Future<IResponse> response(Request data) async {
     try {
-      _logger.info('($_id) Preparing request.');
-
       var headers = {...(data.headers ?? {})};
       var uri = prepareUri(_module.getOrigin(), data.uri ?? Uri());
       List<int>? body;
@@ -65,7 +63,6 @@ class RequestHandler extends IRequestHandler {
             formData.add(entry.key, entry.value);
           }
         }
-
         headers['Content-Type'] = formData.contentType;
         headers['Content-Length'] = formData.contentLength.toString();
         body = formData.body;
@@ -79,15 +76,16 @@ class RequestHandler extends IRequestHandler {
         }
       }
 
-      _logger.info('($_id) Starting request to "$uri"...');
-
       if (isCancelled) {
         throw await cancelReason;
       }
 
       var request = await client.openUrl(data.type.method,
           Uri.parse('${uri.replace(query: uri.query.replaceAll('+', '%20'))}'));
-
+      _logger.fine(LogEvent(
+          message: 'Sending HTTP Request',
+          details: data,
+          detailsType: LogEventDetailsType.networkRequestInfo));
       _abortRequest = (reason) {
         request.abort(reason);
       };
@@ -120,14 +118,16 @@ class RequestHandler extends IRequestHandler {
           await clientResponse.fold<List<int>>(<int>[], (a, b) => [...a, ...b]);
 
       var response = Response(byteList, clientResponse);
+      _logger.fine(LogEvent(
+          message: 'Received HTTP response:',
+          details: {'request': data, 'response': response},
+          detailsType: LogEventDetailsType.networkResponseInfo));
       _response = response;
 
       if (response.statusCode < 200 || response.statusCode > 299) {
         throw RequestFailureException(response,
             statusCode: response.statusCode);
       }
-
-      _logger.info('($_id) Request succeed!');
 
       return response;
     } on RequestCancelException {
@@ -137,7 +137,7 @@ class RequestHandler extends IRequestHandler {
     } on RequestTimeoutException {
       rethrow;
     } catch (e) {
-      _logger.fatal('($_id) Request failed (${e.runtimeType}) ($e)');
+      _logger.fine('Request failed (${e.runtimeType}) ($e)');
       throw RequestOtherException(e);
     } finally {
       if (!_isReleased) {
@@ -145,7 +145,7 @@ class RequestHandler extends IRequestHandler {
         _resource.release();
         client.close(force: true);
         _sendTimeoutTimer?.cancel();
-        _logger.info('($_id) Resource released...');
+        _logger.fine('Networking resource released.');
       }
     }
   }

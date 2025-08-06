@@ -1,4 +1,10 @@
 import 'dart:async';
+import 'dart:mirrors';
+
+import 'package:pubnub/pubnub.dart';
+import '../../networking/response/response.dart';
+import '../core.dart';
+import '../net/net.dart';
 
 final _pubnubLoggerModuleKey = #pubnub.logging;
 
@@ -47,6 +53,9 @@ class LazyLogger implements ILogger {
   void shout(message) => logger.shout(message);
 
   @override
+  void fine(message) => logger.fine(message);
+
+  @override
   void silly(message) => logger.silly(message);
 
   @override
@@ -62,9 +71,40 @@ class LazyLogger implements ILogger {
 ///
 /// If there is no provider, returned logger will be a [DummyLogger].
 LazyLogger injectLogger(String id) {
-  return LazyLogger(
-      id, () => Zone.current[_pubnubLoggerModuleKey] ?? DummyLogger());
+  return LazyLogger(id, () {
+    // First check the current Zone for a logger (existing behavior)
+    var zoneLogger = Zone.current[_pubnubLoggerModuleKey];
+    if (zoneLogger != null) {
+      return zoneLogger;
+    }
+
+    // If no Zone logger, check for global PubNub logger (NEW)
+    var globalLogger = _getGlobalPubNubLogger();
+    if (globalLogger != null) {
+      return globalLogger;
+    }
+
+    // Fallback to dummy logger
+    return DummyLogger();
+  });
 }
+
+/// Get the global PubNub logger if available
+ILogger? _getGlobalPubNubLogger() {
+  try {
+    for (var entry in globalLoggerRegistry.entries) {
+      if (entry.key.startsWith('pubnub-')) {
+        return entry.value;
+      }
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
+/// Global registry for loggers that can be accessed across the SDK
+final Map<String, ILogger> globalLoggerRegistry = {};
 
 abstract class ILogger {
   ILogger get(String id);
@@ -75,6 +115,7 @@ abstract class ILogger {
   void severe(dynamic message) => log(Level.severe, message);
   void warning(dynamic message) => log(Level.warning, message);
   void info(dynamic message) => log(Level.info, message);
+  void fine(dynamic message) => log(Level.fine, message);
   void verbose(dynamic message) => log(Level.verbose, message);
   void silly(dynamic message) => log(Level.silly, message);
 }
@@ -102,6 +143,9 @@ abstract class Level {
   /// Intended for informational messages.
   static final int info = 160;
 
+  /// Intended for the fine mode.
+  static final int fine = 500;
+
   /// Intended for the verbose mode.
   static final int verbose = 320;
 
@@ -119,6 +163,7 @@ abstract class Level {
     80: 'warning',
     160: 'info',
     320: 'verbose',
+    500: 'fine',
     640: 'silly',
     10000: 'all'
   };
@@ -128,5 +173,141 @@ abstract class Level {
         .map((entry) => MapEntry((entry.key - level).abs(), entry.value))
         .reduce((current, next) => current.key > next.key ? next : current)
         .value;
+  }
+}
+
+Map<String, dynamic> extractObjectProperties(Object obj,
+    {List<String> skipProperties = const ['keyset']}) {
+  final result = <String, dynamic>{};
+
+  try {
+    final mirror = reflect(obj);
+    final declarations = mirror.type.declarations;
+
+    for (var declaration in declarations.values) {
+      if (declaration is VariableMirror && !declaration.isStatic) {
+        final name = MirrorSystem.getName(declaration.simpleName);
+
+        if (skipProperties.contains(name)) {
+          continue;
+        }
+
+        try {
+          final value = mirror.getField(declaration.simpleName).reflectee;
+          result[name] = value;
+        } catch (e) {
+          result[name] = '<inaccessible>';
+        }
+      }
+    }
+  } catch (e) {
+    // Fallback: try to convert to string representation
+    result['toString'] = obj.toString();
+  }
+
+  return result;
+}
+
+/// Enum for different types of log event details
+enum LogEventDetailsType {
+  pubNubInstanceInfo,
+  apiParametersInfo,
+  networkRequestInfo,
+  networkResponseInfo,
+}
+
+/// Enhanced LogEvent that can handle both Map and Object details
+class LogEvent {
+  final String? message;
+  final Object? details;
+  final LogEventDetailsType? detailsType;
+
+  LogEvent({this.message, this.details, this.detailsType});
+
+  @override
+  String toString() {
+    var messageString = message ?? '';
+    try {
+      if (detailsType == LogEventDetailsType.pubNubInstanceInfo) {
+        var pubnub = details as PubNub;
+        var keysets = pubnub.keysets;
+
+        messageString += '\n\tPubNub Instance Information:';
+        messageString += '\n\tInstance ID: ${Core.instanceId}';
+        messageString += '\n\tVersion: ${Core.version}';
+
+        // Log module information
+        messageString += '\n\tModules:';
+        messageString += '\n\t  Networking: ${pubnub.networking}';
+        messageString += '\n\t  Parser: ${pubnub.parser}';
+        messageString += '\n\t  Crypto: ${pubnub.crypto}';
+
+        // Log keyset information
+        messageString += '\n\tKeysets:';
+        var allKeysets = keysets.keysets;
+        if (allKeysets.isEmpty) {
+          messageString += '\n\t  No keysets configured';
+        } else {
+          // Get all keyset names by trying to access them
+          var keysetNames = <String>[];
+          try {
+            // Try to get the default keyset name by checking which one is the default
+            var defaultKeyset = keysets.defaultKeyset;
+            for (var keyset in allKeysets) {
+              // Find the name by comparing with default
+              if (keyset == defaultKeyset) {
+                keysetNames.add('default');
+              } else {
+                // For non-default keysets, we'll use a generic name
+                keysetNames.add('keyset_${keysetNames.length + 1}');
+              }
+            }
+          } catch (e) {
+            // If no default keyset, just number them
+            for (var i = 0; i < allKeysets.length; i++) {
+              keysetNames.add('keyset_${i + 1}');
+            }
+          }
+
+          for (var i = 0; i < allKeysets.length; i++) {
+            var keyset = allKeysets[i];
+            var name = keysetNames[i];
+            messageString += '\n\t  $name:';
+            messageString += keyset.toString();
+            if (i == 0 && keysetNames[i] == 'default') {
+              messageString += '\n\t    (Default)';
+            }
+          }
+        }
+      } else if (detailsType == LogEventDetailsType.apiParametersInfo) {
+        // Handle both Map and Object types
+        Map<String, dynamic> detailsMap;
+        if (details is Map) {
+          detailsMap = details as Map<String, dynamic>;
+        } else if (details != null) {
+          // Extract properties from any object
+          detailsMap = extractObjectProperties(details!);
+        } else {
+          detailsMap = {};
+        }
+        messageString +=
+            '\n\t${detailsMap.entries.map((entry) => '${entry.key}: ${entry.value}').join('\n\t')}';
+      } else if (detailsType == LogEventDetailsType.networkRequestInfo) {
+        messageString += (details as Request).toString();
+      } else if (detailsType == LogEventDetailsType.networkResponseInfo) {
+        if (details is Response) {
+          messageString += details.toString();
+        } else if (details is Map) {
+          var detailsMap = details as Map<String, dynamic>;
+          var request = detailsMap['request'] as Request;
+          var response = detailsMap['response'] as Response;
+          messageString += '\n\tURL: ${request.uri}';
+          messageString += response.toString();
+        }
+      }
+    } catch (e) {
+      messageString += '\n logging error: $e';
+    }
+    return messageString;
   }
 }

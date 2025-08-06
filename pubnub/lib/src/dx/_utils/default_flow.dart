@@ -12,8 +12,12 @@ Future<R> defaultFlow<P extends Parameters, R>({
   required Serialize<R> serialize,
   Keyset? keyset,
 }) async {
+  // Get the request to determine its type
+  var request = params.toRequest();
+
   var fiber = Fiber(
     core,
+    requestType: request.type, // Pass the request type to Fiber
     action: () => _defaultFlow<P, R>(
       core: core,
       params: params,

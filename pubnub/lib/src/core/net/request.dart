@@ -18,6 +18,24 @@ class Request {
 
   @override
   String toString() {
-    return 'Request { [$type] $uri }';
+    var parts = [
+      'Method: ${type.method}',
+      'URL: $uri',
+    ];
+    if (headers != null && headers!.isNotEmpty) {
+      parts.add('Headers:');
+      headers!.forEach((key, value) {
+        parts.add('  $key: $value');
+      });
+    }
+    if (body != null) {
+      if (body is List<int>) {
+        parts.add(
+            'Body: binary content with length ${(body as List<int>).length}');
+      } else {
+        parts.add('Body: $body');
+      }
+    }
+    return '\n\t${parts.join('\n\t')}';
   }
 }

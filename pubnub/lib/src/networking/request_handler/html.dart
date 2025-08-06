@@ -114,7 +114,10 @@ class RequestHandler extends IRequestHandler {
         }
       }
 
-      _logger.info('($_id) Starting request to "$uri"...');
+      _logger.fine(LogEvent(
+          message: 'Sending HTTP Request',
+          details: data,
+          detailsType: LogEventDetailsType.networkRequestInfo));
 
       if (body != null) {
         request.send(Uint8List.fromList(body));
@@ -134,6 +137,10 @@ class RequestHandler extends IRequestHandler {
       var byteList = (request.response as ByteBuffer).asUint8List();
 
       var response = Response(byteList, request);
+      _logger.fine(LogEvent(
+          message: 'Received HTTP response:',
+          details: response,
+          detailsType: LogEventDetailsType.networkResponseInfo));
       _response = response;
 
       if (response.statusCode < 200 || response.statusCode > 299) {

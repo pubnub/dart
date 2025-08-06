@@ -4,4 +4,12 @@
 library pubnub.logging;
 
 export 'src/logging/logging.dart' show LogRecord, StreamLogger;
-export 'src/core/logging/logging.dart' show Level, provideLogger, injectLogger;
+export 'src/core/logging/logging.dart'
+    show
+        Level,
+        provideLogger,
+        injectLogger,
+        ILogger,
+        LogEvent,
+        LogEventDetailsType,
+        globalLoggerRegistry;

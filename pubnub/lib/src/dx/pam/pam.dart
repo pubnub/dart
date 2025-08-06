@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_endpoints/pam.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
@@ -47,6 +45,7 @@ mixin PamDx on Core {
       bool? join,
       Keyset? keyset,
       String? using}) async {
+    _logger.info('Grant API call');
     keyset ??= keysets[using];
     Ensure(keyset.secretKey).isNotNull('secretKey');
 
@@ -68,6 +67,11 @@ mixin PamDx on Core {
         update: update,
         join: join);
 
+    _logger.fine(LogEvent(
+        message: 'PAM grant API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     var result = await defaultFlow<PamGrantParams, PamGrantResult>(
         keyset: keyset,
         core: this,
@@ -83,7 +87,7 @@ mixin PamDx on Core {
 
   /// Creates a [TokenRequest] that can be used to obtain a [Token].
   TokenRequest requestToken(
-      {@required int? ttl,
+      {required int? ttl,
       Map<String, dynamic>? meta,
       String? authorizedUUID,
       String? authorizedUserId,
@@ -100,6 +104,7 @@ mixin PamDx on Core {
   }
 
   Future<Token> grantToken(TokenRequest tokenRequest) {
+    _logger.info('Grant token API call');
     return tokenRequest.send();
   }
 
@@ -114,6 +119,7 @@ mixin PamDx on Core {
 
   Future<PamRevokeTokenResult> revokeToken(String token,
       {String? using, Keyset? keyset}) async {
+    _logger.info('Revoke token API call');
     keyset ??= keysets[using];
 
     Ensure(keyset.secretKey).isNotNull('secretKey');

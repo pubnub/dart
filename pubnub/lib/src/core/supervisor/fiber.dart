@@ -3,6 +3,7 @@ import 'package:pedantic/pedantic.dart';
 
 import '../logging/logging.dart';
 import '../core.dart';
+import '../net/request_type.dart';
 import 'event.dart';
 import 'resolution.dart';
 
@@ -17,7 +18,11 @@ class Fiber<T> {
   final Core _core;
   final _FiberAction<T> action;
 
-  final bool isSubscribe = false;
+  // Store the request type to determine if this is a subscribe request
+  final RequestType? _requestType;
+
+  // Make isSubscribe dynamic based on the request type
+  bool get isSubscribe => _requestType == RequestType.subscribe;
 
   final _completer = Completer<T>();
   Future<T> get future => _completer.future;
@@ -25,7 +30,9 @@ class Fiber<T> {
   int tries = 0;
 
   late final ILogger __logger;
-  Fiber(this._core, {required this.action}) : id = _id++ {
+  Fiber(this._core, {required this.action, RequestType? requestType})
+      : id = _id++,
+        _requestType = requestType {
     __logger = _logger.get('$id');
   }
 
@@ -53,7 +60,7 @@ class Fiber<T> {
         return _completer.completeError(exception, stackTrace);
       }
 
-      __logger.silly('Possible reason found: $diagnostic');
+      __logger.fine('Network issue possible reason found: $diagnostic');
 
       var resolutions = _core.supervisor.runStrategies(this, diagnostic);
 

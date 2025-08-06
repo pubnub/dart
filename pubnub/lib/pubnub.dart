@@ -26,7 +26,11 @@ export 'src/core/exceptions.dart'
         PublishException,
         UnknownException;
 export 'src/core/policies/retry_policy.dart'
-    show RetryPolicy, LinearRetryPolicy, ExponentialRetryPolicy;
+    show
+        RetryPolicy,
+        LinearRetryPolicy,
+        ExponentialRetryPolicy,
+        NoneRetryPolicy;
 export 'src/core/crypto/crypto.dart' show CipherKey;
 export 'src/crypto/crypto.dart' show CryptoModule;
 export 'src/crypto/cryptoConfiguration.dart' show CryptoConfiguration;
@@ -129,3 +133,15 @@ export 'src/subscribe/subscription.dart' show Subscription;
 export 'src/subscribe/extensions/keyset.dart' show SubscribeKeysetExtension;
 export 'src/subscribe/envelope.dart'
     show Envelope, PresenceEvent, PresenceAction;
+
+// Logging
+export 'src/logging/logging.dart' show LogRecord, StreamLogger;
+export 'src/core/logging/logging.dart'
+    show Level, ILogger, LogEvent, provideLogger;
+
+// Networking
+export 'src/networking/networking.dart' show NetworkingModule;
+
+// Configuration
+export 'src/dx/logging_configuration.dart'
+    show LoggingConfiguration, PubNubLogging;

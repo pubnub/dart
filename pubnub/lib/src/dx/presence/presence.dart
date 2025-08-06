@@ -5,6 +5,8 @@ import '../_endpoints/presence.dart';
 
 export '../_endpoints/presence.dart';
 
+final _logger = injectLogger('pubnub.dx.presence');
+
 mixin PresenceDx on Core {
   /// Gets the occupancy information from a list of [channels] and/or [channelGroups].
   ///
@@ -17,12 +19,18 @@ mixin PresenceDx on Core {
       Set<String> channels = const {},
       Set<String> channelGroups = const {},
       StateInfo? stateInfo}) async {
+    _logger.info('Here now API call');
     keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
 
     var params = HereNowParams(keyset,
         channels: channels, channelGroups: channelGroups, stateInfo: stateInfo);
+
+    _logger.fine(LogEvent(
+        message: 'Here now API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
 
     return defaultFlow<HereNowParams, HereNowResult>(
         keyset: keyset,
@@ -39,15 +47,23 @@ mixin PresenceDx on Core {
     Set<String> channels = const {},
     Set<String> channelGroups = const {},
   }) {
+    _logger.info('Announce leave API call');
     keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
 
+    var params =
+        LeaveParams(keyset, channels: channels, channelGroups: channelGroups);
+
+    _logger.fine(LogEvent(
+        message: 'Announce leave API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     return defaultFlow<LeaveParams, LeaveResult>(
         keyset: keyset,
         core: this,
-        params: LeaveParams(keyset,
-            channels: channels, channelGroups: channelGroups),
+        params: params,
         serialize: (object, [_]) => LeaveResult.fromJson(object));
   }
 
@@ -58,17 +74,23 @@ mixin PresenceDx on Core {
       Set<String> channels = const {},
       Set<String> channelGroups = const {},
       int? heartbeat}) {
+    _logger.info('Announce heartbeat API call');
     keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
 
+    var params = HeartbeatParams(keyset,
+        channels: channels, channelGroups: channelGroups, heartbeat: heartbeat);
+
+    _logger.fine(LogEvent(
+        message: 'Announce heartbeat API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     return defaultFlow<HeartbeatParams, HeartbeatResult>(
         keyset: keyset,
         core: this,
-        params: HeartbeatParams(keyset,
-            channels: channels,
-            channelGroups: channelGroups,
-            heartbeat: heartbeat),
+        params: params,
         serialize: (object, [_]) => HeartbeatResult.fromJson(object));
   }
 
@@ -77,15 +99,23 @@ mixin PresenceDx on Core {
       String? using,
       Set<String> channels = const {},
       Set<String> channelGroups = const {}}) async {
+    _logger.info('Get state API call');
     keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
 
+    var params = GetUserStateParams(keyset,
+        channels: channels, channelGroups: channelGroups);
+
+    _logger.fine(LogEvent(
+        message: 'Get user state API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     return defaultFlow<GetUserStateParams, GetUserStateResult>(
         keyset: keyset,
         core: this,
-        params: GetUserStateParams(keyset,
-            channels: channels, channelGroups: channelGroups),
+        params: params,
         serialize: (object, [_]) => GetUserStateResult.fromJson(object));
   }
 
@@ -94,17 +124,25 @@ mixin PresenceDx on Core {
       String? using,
       Set<String> channels = const {},
       Set<String> channelGroups = const {}}) async {
+    _logger.info('Set state API call');
     keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
 
     var payload = await parser.encode(state);
 
+    var params = SetUserStateParams(keyset, payload,
+        channels: channels, channelGroups: channelGroups);
+
+    _logger.fine(LogEvent(
+        message: 'Set user state API call with parameters:',
+        details: params,
+        detailsType: LogEventDetailsType.apiParametersInfo));
+
     return defaultFlow<SetUserStateParams, SetUserStateResult>(
         keyset: keyset,
         core: this,
-        params: SetUserStateParams(keyset, payload,
-            channels: channels, channelGroups: channelGroups),
+        params: params,
         serialize: (object, [_]) => SetUserStateResult.fromJson(object));
   }
 }

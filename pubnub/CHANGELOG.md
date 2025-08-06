@@ -1,3 +1,12 @@
+## v6.0.0
+August 06 2025
+
+#### Added
+- BREAKING CHANGES: Added support for `RetryPolicy.none()` to disable retry for subscription.
+
+#### Modified
+- Enhanced logging using standardized logging practices.
+
 ## v5.2.1
 June 25 2025
 
