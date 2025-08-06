@@ -2,7 +2,6 @@ import 'package:pubnub/src/crypto/legacyCryptor.dart';
 
 import 'dart:async';
 import '../core.dart';
-import '../logging.dart';
 
 import 'networking/networking.dart';
 import 'parser/parser.dart';
@@ -20,6 +19,7 @@ import 'dx/pam/pam.dart';
 import 'dx/push/push.dart';
 import 'dx/presence/presence.dart';
 import 'dx/files/files.dart';
+import 'dx/logging_configuration.dart';
 import 'dx/objects/objects_types.dart';
 import 'dx/objects/objects.dart';
 import 'dx/supervisor/supervisor.dart';
@@ -53,7 +53,8 @@ class PubNub extends Core
         PushNotificationDx,
         PamDx,
         PresenceDx,
-        SupervisorDx {
+        SupervisorDx,
+        PubNubLogging {
   /// Contains methods that allow running batch operations on channels,
   /// channel groups and other features.
   late final BatchDx batch;
@@ -70,19 +71,12 @@ class PubNub extends Core
   /// Current version of this library.
   static String version = Core.version;
 
-  // Static field for global logging support
-  static StreamLogger? _globalLogger;
-  static StreamSubscription? _globalLogSubscription;
-
   PubNub({
     Keyset? defaultKeyset,
     INetworkingModule? networking,
     IParserModule? parser,
     ICryptoModule? crypto,
-    int? logLevel,
-    String? loggerName,
-    bool logToConsole = true,
-    String? logFormat,
+    LoggingConfiguration? logging,
   }) : super(
             defaultKeyset: defaultKeyset,
             networking: networking ?? NetworkingModule(),
@@ -91,11 +85,8 @@ class PubNub extends Core
                 (defaultKeyset?.cipherKey != null
                     ? CryptoModule.legacyCryptoModule(defaultKeyset!.cipherKey!)
                     : LegacyCryptoModule())) {
-    // Set up global logging if logLevel is provided
-    if (logLevel != null) {
-      _setupGlobalLogging(logLevel, loggerName ?? 'PubNub-${Core.instanceId}',
-          logToConsole, logFormat);
-    }
+    // Initialize instance-level logging
+    initializeLogging(logging, Core.instanceId);
 
     batch = BatchDx(this);
     channelGroups = ChannelGroupDx(this);
@@ -104,53 +95,9 @@ class PubNub extends Core
     _logPubNubInstanceInformation();
   }
 
-  /// Set up global logging that will be available throughout the entire SDK
-  static void _setupGlobalLogging(
-    int logLevel,
-    String loggerName,
-    bool logToConsole,
-    String? logFormat,
-  ) {
-    // Clean up any existing logger
-    _globalLogSubscription?.cancel();
-    _globalLogger?.dispose();
-
-    // Create new global logger
-    _globalLogger = StreamLogger.root(loggerName, logLevel: logLevel);
-
-    // Set up console printing if requested
-    if (logToConsole) {
-      logFormat ??= r'$time ${level.name} $scope: $message';
-      _globalLogSubscription = _globalLogger!.stream.listen(
-        LogRecord.createPrinter(logFormat),
-      );
-    }
-
-    globalLoggerRegistry['pubnub-${Core.instanceId}'] = _globalLogger!;
-  }
-
-  /// Change the global log level dynamically
-  static void setLogLevel(int level) {
-    _globalLogger?.logLevel = level;
-  }
-
-  /// Get the global logger for advanced usage
-  static StreamLogger? get globalLogger => _globalLogger;
-
-  /// Dispose of global logging resources
-  static Future<void> disposeGlobalLogging() async {
-    await _globalLogSubscription?.cancel();
-    await _globalLogger?.dispose();
-    _globalLogSubscription = null;
-    _globalLogger = null;
-
-    // Remove from global registry
-    globalLoggerRegistry.remove('pubnub');
-  }
-
   void _logPubNubInstanceInformation() {
-    if (_globalLogger != null) {
-      _globalLogger!.fine(LogEvent(
+    if (logger != null) {
+      logger!.fine(LogEvent(
           message: 'PubNub instance initialized with configuration:',
           details: this,
           detailsType: LogEventDetailsType.pubNubInstanceInfo));
@@ -216,5 +163,14 @@ class PubNub extends Core
   Device device(String deviceId, {Keyset? keyset, String? using}) {
     keyset ??= keysets[using];
     return Device(this, keyset, deviceId);
+  }
+
+  /// Dispose of this PubNub instance and clean up resources.
+  ///
+  /// This will clean up logging resources and any other allocated resources.
+  /// After calling this method, the instance should not be used anymore.
+  Future<void> dispose() async {
+    await cleanupLogging();
+    // Additional cleanup can be added here in the future
   }
 }

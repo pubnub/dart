@@ -141,3 +141,7 @@ export 'src/core/logging/logging.dart'
 
 // Networking
 export 'src/networking/networking.dart' show NetworkingModule;
+
+// Configuration
+export 'src/dx/logging_configuration.dart'
+    show LoggingConfiguration, PubNubLogging;

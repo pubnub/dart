@@ -45,7 +45,7 @@ void main() {
     });
 
     group('[PubNub constructor logging]', () {
-      test('should enable logging when logLevel is provided in constructor',
+      test('should enable logging when LoggingConfiguration is provided',
           () async {
         // Create a list to capture log messages
         List<LogRecord> capturedLogs = [];
@@ -57,17 +57,19 @@ void main() {
               subscribeKey: 'demo',
               publishKey: 'demo',
               uuid: UUID('test-uuid')),
-          logLevel: Level.info, // Enable logging at info level
-          loggerName: 'test-pubnub',
-          logToConsole: false, // Disable console output for testing
+          logging: LoggingConfiguration(
+            logLevel: Level.info, // Enable logging at info level
+            loggerName: 'test-pubnub',
+            logToConsole: false, // Disable console output for testing
+          ),
         );
 
-        // Get the global logger and listen to it
-        var globalLogger = PubNub.globalLogger;
-        expect(globalLogger, isNotNull);
+        // Get the instance logger and listen to it
+        var logger = pubnub.logger;
+        expect(logger, isNotNull);
 
         // Listen to log messages
-        var subscription = globalLogger!.stream.listen((record) {
+        var subscription = logger!.stream.listen((record) {
           capturedLogs.add(record);
         });
 
@@ -97,12 +99,12 @@ void main() {
             reason: 'Should have logged "Signal API call"');
 
         // Verify logger name is set correctly
-        expect(globalLogger.name, equals('test-pubnub'));
+        expect(logger.name, equals('test-pubnub'));
 
         // Clean up
         await subscription.cancel();
         await pumpEventQueue();
-        await PubNub.disposeGlobalLogging();
+        await pubnub.dispose();
       });
 
       test('should respect different log levels', () async {
@@ -116,13 +118,15 @@ void main() {
               subscribeKey: 'demo',
               publishKey: 'demo',
               uuid: UUID('test-uuid')),
-          logLevel: Level.warning, // Enable logging at warning level only
-          logToConsole: false,
+          logging: LoggingConfiguration(
+            logLevel: Level.warning, // Enable logging at warning level only
+            logToConsole: false,
+          ),
         );
 
-        // Get the global logger and listen to it
-        var globalLogger = PubNub.globalLogger;
-        var subscription = globalLogger!.stream.listen((record) {
+        // Get the instance logger and listen to it
+        var logger = pubnub.logger;
+        var subscription = logger!.stream.listen((record) {
           capturedLogs.add(record);
         });
 
@@ -147,7 +151,7 @@ void main() {
         // Clean up
         await subscription.cancel();
         await pumpEventQueue();
-        await PubNub.disposeGlobalLogging();
+        await pubnub.dispose();
       });
 
       test('should dynamically change log level', () async {
@@ -161,13 +165,15 @@ void main() {
               subscribeKey: 'demo',
               publishKey: 'demo',
               uuid: UUID('test-uuid')),
-          logLevel: Level.warning, // Start with warning level
-          logToConsole: false,
+          logging: LoggingConfiguration(
+            logLevel: Level.warning, // Start with warning level
+            logToConsole: false,
+          ),
         );
 
-        // Get the global logger and listen to it
-        var globalLogger = PubNub.globalLogger;
-        var subscription = globalLogger!.stream.listen((record) {
+        // Get the instance logger and listen to it
+        var logger = pubnub.logger;
+        var subscription = logger!.stream.listen((record) {
           capturedLogs.add(record);
         });
 
@@ -185,7 +191,7 @@ void main() {
             reason: 'Should not log info messages at warning level');
 
         // Change log level to info
-        PubNub.setLogLevel(Level.info);
+        pubnub.setLogLevel(Level.info);
         capturedLogs.clear();
 
         // Second operation - should now log info messages
@@ -204,7 +210,7 @@ void main() {
         // Clean up
         await subscription.cancel();
         await pumpEventQueue();
-        await PubNub.disposeGlobalLogging();
+        await pubnub.dispose();
       });
     });
   });
