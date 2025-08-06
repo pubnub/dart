@@ -4,7 +4,9 @@ changelog:
     version: v6.0.0
     changes:
       - type: feature
-        text: "BREAKING CHANGES: Added support for `RetryPolicy.none()` to disable retry for subscription."
+        text: "Added support for `RetryPolicy.none()` to disable retry for subscription."
+      - type: feature
+        text: "BREAKING CHANGES: The default retry policy has been changed from applying to all operations to now applying only to the subscription feature."
       - type: improvement
         text: "Enhanced logging using standardized logging practices."
   - date: 2025-06-25
