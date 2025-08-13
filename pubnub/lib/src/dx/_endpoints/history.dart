@@ -26,6 +26,18 @@ class FetchHistoryParams extends Parameters {
       this.includeToken})
       : assert(channel.isNotEmpty);
 
+  Map<String, dynamic> toJson() {
+    return {
+      'channel': channel,
+      'count': count,
+      'reverse': reverse,
+      'start': start?.value.toString(),
+      'end': end?.value.toString(),
+      'includeToken': includeToken,
+      'includeMeta': includeMeta,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -101,6 +113,21 @@ class BatchHistoryParams extends Parameters {
       this.includeCustomMessageType,
       this.includeUUID})
       : assert(channels.isNotEmpty);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'channels': channels.toList(),
+      'max': max,
+      'reverse': reverse,
+      'start': start?.value.toString(),
+      'end': end?.value.toString(),
+      'includeMeta': includeMeta,
+      'includeMessageActions': includeMessageActions,
+      'includeUUID': includeUUID,
+      'includeMessageType': includeMessageType,
+      'includeCustomMessageType': includeCustomMessageType,
+    };
+  }
 
   @override
   Request toRequest() {
@@ -269,6 +296,15 @@ class CountMessagesParams extends Parameters {
   CountMessagesParams(this.keyset,
       {this.channelsTimetoken, this.timetoken, this.channels});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'channelsTimetoken':
+          channelsTimetoken?.map((k, v) => MapEntry(k, v.value.toString())),
+      'timetoken': timetoken?.value.toString(),
+      'channels': channels?.toList(),
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -322,6 +358,14 @@ class DeleteMessagesParams extends Parameters {
   Timetoken? end;
 
   DeleteMessagesParams(this.keyset, this.channel, {this.start, this.end});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'channel': channel,
+      'start': start?.value.toString(),
+      'end': end?.value.toString(),
+    };
+  }
 
   @override
   Request toRequest() {

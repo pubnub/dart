@@ -10,6 +10,14 @@ class SignalParams extends Parameters {
   SignalParams(this.keyset, this.channel, this.payload,
       {this.customMessageType});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'channel': channel,
+      'payload': payload,
+      'customMessageType': customMessageType,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = <String>[

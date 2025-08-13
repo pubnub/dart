@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:mirrors';
 
 import 'package:pubnub/pubnub.dart';
 import '../../networking/response/response.dart';
@@ -176,36 +175,22 @@ abstract class Level {
   }
 }
 
-Map<String, dynamic> extractObjectProperties(Object obj,
-    {List<String> skipProperties = const ['keyset']}) {
-  final result = <String, dynamic>{};
+Map<String, dynamic> _parametersToJson(Object? obj) {
+  if (obj == null) return {};
+  if (obj is Map<String, dynamic>) return obj;
 
   try {
-    final mirror = reflect(obj);
-    final declarations = mirror.type.declarations;
-
-    for (var declaration in declarations.values) {
-      if (declaration is VariableMirror && !declaration.isStatic) {
-        final name = MirrorSystem.getName(declaration.simpleName);
-
-        if (skipProperties.contains(name)) {
-          continue;
-        }
-
-        try {
-          final value = mirror.getField(declaration.simpleName).reflectee;
-          result[name] = value;
-        } catch (e) {
-          result[name] = '<inaccessible>';
-        }
-      }
+    final dynamic dynamicObject = obj;
+    final dynamic maybeMap = dynamicObject.toJson();
+    if (maybeMap is Map<String, dynamic>) {
+      return maybeMap;
     }
-  } catch (e) {
-    // Fallback: try to convert to string representation
-    result['toString'] = obj.toString();
+  } catch (_) {
+    // ignore and fallback
   }
 
-  return result;
+  // string value as fallback
+  return {'value': obj.toString()};
 }
 
 /// Enum for different types of log event details
@@ -280,16 +265,7 @@ class LogEvent {
           }
         }
       } else if (detailsType == LogEventDetailsType.apiParametersInfo) {
-        // Handle both Map and Object types
-        Map<String, dynamic> detailsMap;
-        if (details is Map) {
-          detailsMap = details as Map<String, dynamic>;
-        } else if (details != null) {
-          // Extract properties from any object
-          detailsMap = extractObjectProperties(details!);
-        } else {
-          detailsMap = {};
-        }
+        final detailsMap = _parametersToJson(details);
         messageString +=
             '\n\t${detailsMap.entries.map((entry) => '${entry.key}: ${entry.value}').join('\n\t')}';
       } else if (detailsType == LogEventDetailsType.networkRequestInfo) {

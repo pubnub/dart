@@ -19,6 +19,18 @@ class GetAllUuidMetadataParams extends Parameters {
       this.filter,
       this.sort});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'include': include?.toList(),
+      'limit': limit,
+      'start': start,
+      'end': end,
+      'includeCount': includeCount,
+      'filter': filter,
+      'sort': sort?.toList(),
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = ['v2', 'objects', keyset.subscribeKey, 'uuids'];
@@ -114,6 +126,13 @@ class GetUuidMetadataParams extends Parameters {
 
   GetUuidMetadataParams(this.keyset, {this.include, this.uuid});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'uuid': uuid,
+      'include': include?.toList(),
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -158,6 +177,15 @@ class SetUuidMetadataParams extends Parameters {
 
   SetUuidMetadataParams(this.keyset, this.uuidMetadata,
       {this.include, this.uuid, this.ifMatchesEtag});
+  Map<String, dynamic> toJson() {
+    return {
+      'uuid': uuid,
+      'include': include?.toList(),
+      'uuidMetadata': uuidMetadata,
+      'ifMatchesEtag': ifMatchesEtag,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -200,6 +228,12 @@ class RemoveUuidMetadataParams extends Parameters {
   String? uuid;
 
   RemoveUuidMetadataParams(this.keyset, {this.uuid});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'uuid': uuid,
+    };
+  }
 
   @override
   Request toRequest() {

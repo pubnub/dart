@@ -8,6 +8,12 @@ class PamGrantTokenParams extends Parameters {
 
   PamGrantTokenParams(this.keyset, this.payload);
 
+  Map<String, dynamic> toJson() {
+    return {
+      'payload': payload,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = ['v3', 'pam', keyset.subscribeKey, 'grant'];
@@ -63,6 +69,23 @@ class PamGrantParams extends Parameters {
       this.get,
       this.update,
       this.join});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'authKeys': authKeys.toList(),
+      'ttl': ttl,
+      'channels': channels?.toList(),
+      'channelGroups': channelGroups?.toList(),
+      'uuids': uuids?.toList(),
+      'write': write,
+      'read': read,
+      'manage': manage,
+      'delete': delete,
+      'get': get,
+      'update': update,
+      'join': join,
+    };
+  }
 
   @override
   Request toRequest() {
@@ -195,6 +218,12 @@ class PamRevokeTokenParams extends Parameters {
   final String token;
 
   PamRevokeTokenParams(this.keyset, this.token);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'token': token,
+    };
+  }
 
   @override
   Request toRequest() {

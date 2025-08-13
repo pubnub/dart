@@ -26,6 +26,19 @@ class GetMembershipsMetadataParams extends Parameters {
       this.filter,
       this.sort});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'uuid': uuid,
+      'limit': limit,
+      'start': start,
+      'end': end,
+      'include': include?.toList(),
+      'includeCount': includeCount,
+      'filter': filter,
+      'sort': sort?.toList(),
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -127,6 +140,20 @@ class ManageMembershipsParams extends Parameters {
       this.filter,
       this.sort});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'uuid': uuid,
+      'limit': limit,
+      'start': start,
+      'end': end,
+      'include': include?.toList(),
+      'includeCount': includeCount,
+      'filter': filter,
+      'sort': sort?.toList(),
+      'membershipMetadata': membershipMetadata,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -175,6 +202,19 @@ class GetChannelMembersParams extends Parameters {
       this.includeCount,
       this.filter,
       this.sort});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'channelId': channelId,
+      'limit': limit,
+      'start': start,
+      'end': end,
+      'include': include?.toList(),
+      'includeCount': includeCount,
+      'filter': filter,
+      'sort': sort?.toList(),
+    };
+  }
 
   @override
   Request toRequest() {
@@ -281,7 +321,20 @@ class ManageChannelMembersParams extends Parameters {
       this.includeCount,
       this.filter,
       this.sort});
-  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'channelId': channelId,
+      'limit': limit,
+      'start': start,
+      'end': end,
+      'include': include?.toList(),
+      'includeCount': includeCount,
+      'filter': filter,
+      'sort': sort?.toList(),
+      'membersMetadata': membersMetadata,
+    };
+  }
+
   Request toRequest() {
     var pathSegments = [
       'v2',

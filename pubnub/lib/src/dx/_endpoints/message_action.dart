@@ -11,6 +11,15 @@ class FetchMessageActionsParams extends Parameters {
   FetchMessageActionsParams(this.keyset, this.channel,
       {this.start, this.end, this.limit});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'channel': channel,
+      'start': start?.value.toString(),
+      'end': end?.value.toString(),
+      'limit': limit,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -112,6 +121,14 @@ class AddMessageActionParams extends Parameters {
   AddMessageActionParams(
       this.keyset, this.channel, this.messageTimetoken, this.messageAction);
 
+  Map<String, dynamic> toJson() {
+    return {
+      'channel': channel,
+      'messageTimetoken': messageTimetoken.value.toString(),
+      'messageAction': messageAction,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -159,6 +176,14 @@ class DeleteMessageActionParams extends Parameters {
 
   DeleteMessageActionParams(
       this.keyset, this.channel, this.messageTimetoken, this.actionTimetoken);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'channel': channel,
+      'messageTimetoken': messageTimetoken.value.toString(),
+      'actionTimetoken': actionTimetoken.value.toString(),
+    };
+  }
 
   @override
   Request toRequest() {

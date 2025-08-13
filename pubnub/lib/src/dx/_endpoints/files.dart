@@ -11,6 +11,13 @@ class GenerateFileUploadUrlParams extends Parameters {
 
   GenerateFileUploadUrlParams(this.keyset, this.channel, this.payload);
 
+  Map<String, dynamic> toJson() {
+    return {
+      'channel': channel,
+      'payload': payload,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -54,6 +61,13 @@ class FileUploadParams extends Parameters {
 
   FileUploadParams(this.requestUrl, this.formData);
 
+  Map<String, dynamic> toJson() {
+    return {
+      'requestUrl': requestUrl.toString(),
+      'formData': formData,
+    };
+  }
+
   @override
   Request toRequest() {
     return Request.file(uri: requestUrl, body: formData);
@@ -78,6 +92,17 @@ class PublishFileMessageParams extends Parameters {
 
   PublishFileMessageParams(this.keyset, this.channel, this.message,
       {this.storeMessage, this.meta, this.ttl, this.customMessageType});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'channel': channel,
+      'message': message,
+      'storeMessage': storeMessage,
+      'ttl': ttl,
+      'meta': meta,
+      'customMessageType': customMessageType,
+    };
+  }
 
   @override
   Request toRequest() {
@@ -135,6 +160,12 @@ class DownloadFileParams extends Parameters {
 
   DownloadFileParams(this.uri);
 
+  Map<String, dynamic> toJson() {
+    return {
+      'uri': uri.toString(),
+    };
+  }
+
   @override
   Request toRequest() {
     return Request.get(uri: uri);
@@ -172,6 +203,14 @@ class ListFilesParams extends Parameters {
   String? next;
 
   ListFilesParams(this.keyset, this.channel, {this.limit, this.next});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'channel': channel,
+      'limit': limit,
+      'next': next,
+    };
+  }
 
   @override
   Request toRequest() {
@@ -248,6 +287,14 @@ class DeleteFileParams extends Parameters {
   String fileName;
 
   DeleteFileParams(this.keyset, this.channel, this.fileId, this.fileName);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'channel': channel,
+      'fileId': fileId,
+      'fileName': fileName,
+    };
+  }
 
   @override
   Request toRequest() {

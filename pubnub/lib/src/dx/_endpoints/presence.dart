@@ -12,6 +12,15 @@ class HeartbeatParams extends Parameters {
   HeartbeatParams(this.keyset,
       {this.channels, this.channelGroups, this.heartbeat, this.state});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'channels': channels?.toList(),
+      'channelGroups': channelGroups?.toList(),
+      'heartbeat': heartbeat,
+      'state': state,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -57,6 +66,14 @@ class SetUserStateParams extends Parameters {
 
   SetUserStateParams(this.keyset, this.state,
       {this.channels, this.channelGroups});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'channels': channels?.toList(),
+      'channelGroups': channelGroups?.toList(),
+      'state': state,
+    };
+  }
 
   @override
   Request toRequest() {
@@ -107,6 +124,13 @@ class GetUserStateParams extends Parameters {
 
   GetUserStateParams(this.keyset, {this.channels, this.channelGroups});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'channels': channels?.toList(),
+      'channelGroups': channelGroups?.toList(),
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -153,6 +177,13 @@ class LeaveParams extends Parameters {
   Set<String>? channelGroups;
 
   LeaveParams(this.keyset, {this.channels, this.channelGroups});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'channels': channels?.toList(),
+      'channelGroups': channelGroups?.toList(),
+    };
+  }
 
   @override
   Request toRequest() {
@@ -210,6 +241,15 @@ class HereNowParams extends Parameters {
       this.channels,
       this.channelGroups,
       this.stateInfo = StateInfo.onlyUUIDs});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'global': global,
+      'channels': channels?.toList(),
+      'channelGroups': channelGroups?.toList(),
+      'stateInfo': stateInfo?.toString().split('.').last,
+    };
+  }
 
   @override
   Request toRequest() {
@@ -318,6 +358,12 @@ class WhereNowParams extends Parameters {
   UUID uuid;
 
   WhereNowParams(this.keyset, this.uuid);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'uuid': uuid.value,
+    };
+  }
 
   @override
   Request toRequest() {
