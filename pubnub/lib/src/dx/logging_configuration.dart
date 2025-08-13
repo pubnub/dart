@@ -11,7 +11,7 @@ class LoggingConfiguration {
   final String? loggerName;
   final bool logToConsole;
   final String? logFormat;
-  final StreamLogger? customLogger;
+  final ILogger? customLogger;
 
   const LoggingConfiguration({
     this.logLevel = 0, // Level.off
@@ -22,7 +22,7 @@ class LoggingConfiguration {
   });
 
   /// Creates a logger based on this configuration
-  StreamLogger createLogger(String instanceId) {
+  ILogger createLogger(String instanceId) {
     if (customLogger != null) {
       return customLogger!;
     }
@@ -62,7 +62,7 @@ mixin PubNubLogging {
     }
 
     _loggingInstanceId = instanceId;
-    _instanceLogger = config.createLogger(instanceId);
+    _instanceLogger = config.createLogger(instanceId) as StreamLogger?;
     _logSubscription = config.setupConsoleOutput(_instanceLogger!);
 
     // Register in global registry for advanced use cases
