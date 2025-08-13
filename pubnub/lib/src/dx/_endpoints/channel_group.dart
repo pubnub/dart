@@ -7,6 +7,12 @@ class ChannelGroupListChannelsParams extends Parameters {
 
   ChannelGroupListChannelsParams(this.keyset, this.name);
 
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -59,6 +65,14 @@ class ChannelGroupChangeChannelsParams extends Parameters {
   ChannelGroupChangeChannelsParams(this.keyset, this.name,
       {this.add, this.remove});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'add': add,
+      'remove': remove,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -95,6 +109,12 @@ class ChannelGroupDeleteParams extends Parameters {
   String name;
 
   ChannelGroupDeleteParams(this.keyset, this.name);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+    };
+  }
 
   @override
   Request toRequest() {

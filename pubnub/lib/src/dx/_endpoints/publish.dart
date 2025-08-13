@@ -17,6 +17,18 @@ class PublishParams extends Parameters {
       this.noReplication,
       this.customMessageType});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'channel': channel,
+      'message': message,
+      'meta': meta,
+      'storeMessage': storeMessage,
+      'ttl': ttl,
+      'noReplication': noReplication,
+      'customMessageType': customMessageType,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [

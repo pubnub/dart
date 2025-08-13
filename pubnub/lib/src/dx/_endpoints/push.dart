@@ -65,6 +65,17 @@ class ListPushChannelsParams extends Parameters {
     this.count,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'deviceId': deviceId,
+      'pushGateway': pushGateway.toString().split('.').last,
+      'environment': environment?.toString().split('.').last,
+      'topic': topic,
+      'start': start,
+      'count': count,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -124,6 +135,16 @@ class AddPushChannelsParams extends Parameters {
       this.keyset, this.deviceId, this.pushGateway, this.channels,
       {this.topic, this.environment});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'deviceId': deviceId,
+      'channels': channels.toList(),
+      'pushGateway': pushGateway.toString().split('.').last,
+      'environment': environment?.toString().split('.').last,
+      'topic': topic,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -181,6 +202,16 @@ class RemovePushChannelsParams extends Parameters {
       this.keyset, this.deviceId, this.pushGateway, this.channels,
       {this.topic, this.environment});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'deviceId': deviceId,
+      'channels': channels.toList(),
+      'pushGateway': pushGateway.toString().split('.').last,
+      'environment': environment?.toString().split('.').last,
+      'topic': topic,
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -237,6 +268,15 @@ class RemoveDeviceParams extends Parameters {
 
   RemoveDeviceParams(this.keyset, this.deviceId, this.pushGateway,
       {this.topic, this.environment});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'deviceId': deviceId,
+      'pushGateway': pushGateway.toString().split('.').last,
+      'environment': environment?.toString().split('.').last,
+      'topic': topic,
+    };
+  }
 
   @override
   Request toRequest() {
