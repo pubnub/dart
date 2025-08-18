@@ -64,6 +64,81 @@ class LazyLogger implements ILogger {
   void warning(message) => logger.warning(message);
 }
 
+/// A logger that forwards logs to multiple underlying loggers.
+class CompositeLogger extends ILogger {
+  final List<ILogger> targets;
+
+  CompositeLogger(this.targets);
+
+  @override
+  ILogger get(String id) {
+    return CompositeLogger(targets.map((t) => t.get(id)).toList());
+  }
+
+  @override
+  void log(int level, dynamic message) {
+    for (final target in targets) {
+      target.log(level, message);
+    }
+  }
+
+  @override
+  void shout(dynamic message) {
+    for (final target in targets) {
+      target.shout(message);
+    }
+  }
+
+  @override
+  void fatal(dynamic message) {
+    for (final target in targets) {
+      target.fatal(message);
+    }
+  }
+
+  @override
+  void severe(dynamic message) {
+    for (final target in targets) {
+      target.severe(message);
+    }
+  }
+
+  @override
+  void warning(dynamic message) {
+    for (final target in targets) {
+      target.warning(message);
+    }
+  }
+
+  @override
+  void info(dynamic message) {
+    for (final target in targets) {
+      target.info(message);
+    }
+  }
+
+  @override
+  void fine(dynamic message) {
+    for (final target in targets) {
+      target.fine(message);
+    }
+  }
+
+  @override
+  void verbose(dynamic message) {
+    for (final target in targets) {
+      target.verbose(message);
+    }
+  }
+
+  @override
+  void silly(dynamic message) {
+    for (final target in targets) {
+      target.silly(message);
+    }
+  }
+}
+
 /// Get a logger from the provider.
 ///
 /// [id] is an arbitrary parameter, and different Logger implementations will handle it differently.

@@ -23,14 +23,17 @@ class LoggingConfiguration {
 
   /// Creates a logger based on this configuration
   ILogger createLogger(String instanceId) {
-    if (customLogger != null) {
-      return customLogger!;
-    }
-
-    return StreamLogger.root(
+    final streamLogger = StreamLogger.root(
       loggerName ?? 'PubNub-$instanceId',
       logLevel: logLevel,
     );
+
+    if (customLogger != null) {
+      // Fan out to both StreamLogger (default) and the provided custom logger
+      return CompositeLogger([streamLogger, customLogger!]);
+    }
+
+    return streamLogger;
   }
 
   /// Sets up console output for the logger if enabled
@@ -46,24 +49,37 @@ class LoggingConfiguration {
 
 /// A mixin that provides instance-level logging functionality
 mixin PubNubLogging {
-  StreamLogger? _instanceLogger;
+  ILogger? _instanceLogger;
   StreamSubscription<LogRecord>? _logSubscription;
   String? _loggingInstanceId;
 
   /// The logger for this PubNub instance
-  StreamLogger? get logger => _instanceLogger;
+  ILogger? get logger => _instanceLogger;
 
   /// Initialize logging for this instance
   @protected
   void initializeLogging(LoggingConfiguration? config, String instanceId) {
-    if (config == null || config.logLevel == 0) {
-      // Level.off
+    if (config == null) {
       return;
     }
 
     _loggingInstanceId = instanceId;
-    _instanceLogger = config.createLogger(instanceId) as StreamLogger?;
-    _logSubscription = config.setupConsoleOutput(_instanceLogger!);
+    final createdLogger = config.createLogger(instanceId);
+    _instanceLogger = createdLogger;
+
+    // Setup console output if StreamLogger is part of the logger chain
+    if (config.logLevel != 0) {
+      if (createdLogger is StreamLogger) {
+        _logSubscription = config.setupConsoleOutput(createdLogger);
+      } else if (createdLogger is CompositeLogger) {
+        for (final target in createdLogger.targets) {
+          if (target is StreamLogger) {
+            _logSubscription = config.setupConsoleOutput(target);
+            break;
+          }
+        }
+      }
+    }
 
     // Register in global registry for advanced use cases
     globalLoggerRegistry['pubnub-$instanceId'] = _instanceLogger!;
@@ -71,7 +87,16 @@ mixin PubNubLogging {
 
   /// Change the log level dynamically for this instance
   void setLogLevel(int level) {
-    _instanceLogger?.logLevel = level;
+    final current = _instanceLogger;
+    if (current is StreamLogger) {
+      current.logLevel = level;
+    } else if (current is CompositeLogger) {
+      for (final target in current.targets) {
+        if (target is StreamLogger) {
+          target.logLevel = level;
+        }
+      }
+    }
   }
 
   /// Clean up logging resources for this instance
@@ -82,7 +107,16 @@ mixin PubNubLogging {
 
     if (_instanceLogger != null && _loggingInstanceId != null) {
       globalLoggerRegistry.remove('pubnub-$_loggingInstanceId');
-      await _instanceLogger!.dispose();
+      final current = _instanceLogger;
+      if (current is StreamLogger) {
+        await current.dispose();
+      } else if (current is CompositeLogger) {
+        for (final target in current.targets) {
+          if (target is StreamLogger) {
+            await target.dispose();
+          }
+        }
+      }
       _instanceLogger = null;
     }
   }

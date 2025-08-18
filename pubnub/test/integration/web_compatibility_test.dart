@@ -16,5 +16,3 @@ void main() {
     expect(PubNub.version, isNotEmpty);
   });
 }
-
-
