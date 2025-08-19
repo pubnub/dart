@@ -1,6 +1,6 @@
 name: pubnub
 description: PubNub SDK v6 for Dart lang (with Flutter support) that allows you to create real-time applications
-version: 6.0.0
+version: 6.0.1
 homepage: https://www.pubnub.com/docs/sdks/dart
 
 environment:
