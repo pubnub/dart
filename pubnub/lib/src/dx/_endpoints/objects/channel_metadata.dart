@@ -19,6 +19,18 @@ class GetAllChannelMetadataParams extends Parameters {
       this.filter,
       this.sort});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'include': include?.toList(),
+      'limit': limit,
+      'start': start,
+      'end': end,
+      'includeCount': includeCount,
+      'filter': filter,
+      'sort': sort?.toList(),
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = ['v2', 'objects', keyset.subscribeKey, 'channels'];
@@ -106,6 +118,13 @@ class GetChannelMetadataParams extends Parameters {
 
   GetChannelMetadataParams(this.keyset, this.channelId, {this.include});
 
+  Map<String, dynamic> toJson() {
+    return {
+      'channelId': channelId,
+      'include': include?.toList(),
+    };
+  }
+
   @override
   Request toRequest() {
     var pathSegments = [
@@ -152,6 +171,15 @@ class SetChannelMetadataParams extends Parameters {
 
   SetChannelMetadataParams(this.keyset, this.channelId, this.channelMetadata,
       {this.include, this.ifMatchesEtag});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'channelId': channelId,
+      'include': include?.toList(),
+      'channelMetadata': channelMetadata,
+      'ifMatchesEtag': ifMatchesEtag,
+    };
+  }
 
   @override
   Request toRequest() {
@@ -200,6 +228,12 @@ class RemoveChannelMetadataParams extends Parameters {
   String channelID;
 
   RemoveChannelMetadataParams(this.keyset, this.channelID);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'channelID': channelID,
+    };
+  }
 
   @override
   Request toRequest() {

@@ -1,3 +1,13 @@
+## v6.0.1
+August 19 2025
+
+#### Fixed
+- Fixes package compatibility issues with web builds.
+
+#### Modified
+- Allow global custom logger to be ILogger based.
+- Upgrade outdated dependencies.
+
 ## v6.0.0
 August 06 2025
 

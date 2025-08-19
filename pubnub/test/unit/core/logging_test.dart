@@ -65,11 +65,11 @@ void main() {
         );
 
         // Get the instance logger and listen to it
-        var logger = pubnub.logger;
+        var logger = pubnub.logger as StreamLogger;
         expect(logger, isNotNull);
 
         // Listen to log messages
-        var subscription = logger!.stream.listen((record) {
+        var subscription = logger.stream.listen((record) {
           capturedLogs.add(record);
         });
 
@@ -125,8 +125,8 @@ void main() {
         );
 
         // Get the instance logger and listen to it
-        var logger = pubnub.logger;
-        var subscription = logger!.stream.listen((record) {
+        var logger = pubnub.logger as StreamLogger;
+        var subscription = logger.stream.listen((record) {
           capturedLogs.add(record);
         });
 
@@ -172,8 +172,8 @@ void main() {
         );
 
         // Get the instance logger and listen to it
-        var logger = pubnub.logger;
-        var subscription = logger!.stream.listen((record) {
+        var logger = pubnub.logger as StreamLogger;
+        var subscription = logger.stream.listen((record) {
           capturedLogs.add(record);
         });
 

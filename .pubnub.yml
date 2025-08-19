@@ -1,5 +1,14 @@
 ---
 changelog:
+  - date: 2025-08-19
+    version: v6.0.1
+    changes:
+      - type: bug
+        text: "Fixes package compatibility issues with web builds."
+      - type: improvement
+        text: "Allow global custom logger to be ILogger based."
+      - type: improvement
+        text: "Upgrade outdated dependencies."
   - date: 2025-08-06
     version: v6.0.0
     changes:
@@ -492,7 +501,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "6.0.0"
+version: "6.0.1"
 sdks:
   -
     full-name: PubNub Dart SDK

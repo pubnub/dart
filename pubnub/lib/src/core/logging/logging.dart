@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:mirrors';
 
 import 'package:pubnub/pubnub.dart';
 import '../../networking/response/response.dart';
@@ -63,6 +62,81 @@ class LazyLogger implements ILogger {
 
   @override
   void warning(message) => logger.warning(message);
+}
+
+/// A logger that forwards logs to multiple underlying loggers.
+class CompositeLogger extends ILogger {
+  final List<ILogger> targets;
+
+  CompositeLogger(this.targets);
+
+  @override
+  ILogger get(String id) {
+    return CompositeLogger(targets.map((t) => t.get(id)).toList());
+  }
+
+  @override
+  void log(int level, dynamic message) {
+    for (final target in targets) {
+      target.log(level, message);
+    }
+  }
+
+  @override
+  void shout(dynamic message) {
+    for (final target in targets) {
+      target.shout(message);
+    }
+  }
+
+  @override
+  void fatal(dynamic message) {
+    for (final target in targets) {
+      target.fatal(message);
+    }
+  }
+
+  @override
+  void severe(dynamic message) {
+    for (final target in targets) {
+      target.severe(message);
+    }
+  }
+
+  @override
+  void warning(dynamic message) {
+    for (final target in targets) {
+      target.warning(message);
+    }
+  }
+
+  @override
+  void info(dynamic message) {
+    for (final target in targets) {
+      target.info(message);
+    }
+  }
+
+  @override
+  void fine(dynamic message) {
+    for (final target in targets) {
+      target.fine(message);
+    }
+  }
+
+  @override
+  void verbose(dynamic message) {
+    for (final target in targets) {
+      target.verbose(message);
+    }
+  }
+
+  @override
+  void silly(dynamic message) {
+    for (final target in targets) {
+      target.silly(message);
+    }
+  }
 }
 
 /// Get a logger from the provider.
@@ -176,36 +250,22 @@ abstract class Level {
   }
 }
 
-Map<String, dynamic> extractObjectProperties(Object obj,
-    {List<String> skipProperties = const ['keyset']}) {
-  final result = <String, dynamic>{};
+Map<String, dynamic> _parametersToJson(Object? obj) {
+  if (obj == null) return {};
+  if (obj is Map<String, dynamic>) return obj;
 
   try {
-    final mirror = reflect(obj);
-    final declarations = mirror.type.declarations;
-
-    for (var declaration in declarations.values) {
-      if (declaration is VariableMirror && !declaration.isStatic) {
-        final name = MirrorSystem.getName(declaration.simpleName);
-
-        if (skipProperties.contains(name)) {
-          continue;
-        }
-
-        try {
-          final value = mirror.getField(declaration.simpleName).reflectee;
-          result[name] = value;
-        } catch (e) {
-          result[name] = '<inaccessible>';
-        }
-      }
+    final dynamic dynamicObject = obj;
+    final dynamic maybeMap = dynamicObject.toJson();
+    if (maybeMap is Map<String, dynamic>) {
+      return maybeMap;
     }
-  } catch (e) {
-    // Fallback: try to convert to string representation
-    result['toString'] = obj.toString();
+  } catch (_) {
+    // ignore and fallback
   }
 
-  return result;
+  // string value as fallback
+  return {'value': obj.toString()};
 }
 
 /// Enum for different types of log event details
@@ -280,16 +340,7 @@ class LogEvent {
           }
         }
       } else if (detailsType == LogEventDetailsType.apiParametersInfo) {
-        // Handle both Map and Object types
-        Map<String, dynamic> detailsMap;
-        if (details is Map) {
-          detailsMap = details as Map<String, dynamic>;
-        } else if (details != null) {
-          // Extract properties from any object
-          detailsMap = extractObjectProperties(details!);
-        } else {
-          detailsMap = {};
-        }
+        final detailsMap = _parametersToJson(details);
         messageString +=
             '\n\t${detailsMap.entries.map((entry) => '${entry.key}: ${entry.value}').join('\n\t')}';
       } else if (detailsType == LogEventDetailsType.networkRequestInfo) {

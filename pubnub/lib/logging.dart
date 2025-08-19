@@ -10,6 +10,7 @@ export 'src/core/logging/logging.dart'
         provideLogger,
         injectLogger,
         ILogger,
+        CompositeLogger,
         LogEvent,
         LogEventDetailsType,
         globalLoggerRegistry;
