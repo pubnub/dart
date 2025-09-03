@@ -44,7 +44,7 @@ class FakeRequestHandler extends IRequestHandler {
 
     var doesBodyMatch = mockBody == body;
 
-    var doesUriMatch = expectedUri.toString() == actualUri.toString();
+    var doesUriMatch = _compareUris(expectedUri, actualUri);
 
     return Future.microtask(() {
       resource.release();
@@ -83,6 +83,34 @@ class FakeRequestHandler extends IRequestHandler {
 
   @override
   bool get isCancelled => false;
+
+  /// Compare two URIs ignoring query parameter ordering
+  bool _compareUris(Uri expected, Uri actual) {
+    // Compare scheme, host, port, and path
+    if (expected.scheme != actual.scheme ||
+        expected.host != actual.host ||
+        expected.port != actual.port ||
+        expected.path != actual.path) {
+      return false;
+    }
+
+    // Compare query parameters (ignoring order)
+    var expectedParams = expected.queryParameters;
+    var actualParams = actual.queryParameters;
+
+    if (expectedParams.length != actualParams.length) {
+      return false;
+    }
+
+    for (var key in expectedParams.keys) {
+      if (!actualParams.containsKey(key) ||
+          expectedParams[key] != actualParams[key]) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }
 
 class MockRequest {
