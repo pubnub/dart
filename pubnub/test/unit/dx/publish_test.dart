@@ -27,7 +27,7 @@ void main() {
     });
   });
 
-  group('DX [publish] additional cases', () {
+  group('DX [publish] url build check cases', () {
     setUp(() {
       pubnub = PubNub(
         defaultKeyset: Keyset(
@@ -42,7 +42,7 @@ void main() {
     test('publish succeeds with valid channel and message', () async {
       when(
         method: 'GET',
-        path: '/publish/demo/demo/0/test/0/42?UserId=test',
+        path: '/publish/demo/demo/0/test/0/42?uuid=test',
       ).then(status: 200, body: _publishSuccessResponse);
       final result = await pubnub!.publish('test', 42);
       expect(result.isError, isFalse);
@@ -54,7 +54,7 @@ void main() {
       when(
         method: 'GET',
         path:
-            '/publish/demo/demo/0/test/0/42?meta=%7B%22foo%22%3A%22bar%22%7D&store=0&ttl=60&custom_message_type=custom&UserId=test',
+            '/publish/demo/demo/0/test/0/42?meta=%7B%22foo%22%3A%22bar%22%7D&store=0&ttl=60&custom_message_type=custom&uuid=test',
       ).then(status: 200, body: _publishSuccessResponse);
       final result = await pubnub!.publish(
         'test',
@@ -72,7 +72,7 @@ void main() {
         () async {
       when(
         method: 'GET',
-        path: '/publish/demo/demo/0/test/0/42?store=0&norep=true&UserId=test',
+        path: '/publish/demo/demo/0/test/0/42?store=0&norep=true&uuid=test',
       ).then(status: 200, body: _publishSuccessResponse);
       final result = await pubnub!.publish('test', 42, fire: true);
       expect(result.isError, isFalse);
@@ -99,7 +99,7 @@ void main() {
     test('publish returns error result on failure response', () async {
       when(
         method: 'GET',
-        path: '/publish/demo/demo/0/test/0/42?UserId=test',
+        path: '/publish/demo/demo/0/test/0/42?uuid=test',
       ).then(status: 200, body: _publishFailureResponse);
       final result = await pubnub!.publish('test', 42);
       expect(result.isError, isTrue);
@@ -121,7 +121,7 @@ void main() {
       // In a real test, you would compute the expected encrypted payload.
       when(
         method: 'GET',
-        path: '/publish/demo/demo/0/test/0/ENCRYPTED_PAYLOAD?UserId=test',
+        path: '/publish/demo/demo/0/test/0/ENCRYPTED_PAYLOAD?uuid=test',
       ).then(status: 200, body: _publishSuccessResponse);
       // This will not match the actual encrypted payload, so we expect a MockException.
       expect(() async => await pubnub!.publish('test', 'secret'),
