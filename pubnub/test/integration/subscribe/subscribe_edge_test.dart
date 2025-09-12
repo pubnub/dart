@@ -49,9 +49,11 @@ void main() {
         await badPubnub.publish(channel, 'message');
         fail('Expected publish to fail with invalid keys');
       } catch (e) {
-        if (e is TimeoutException || e.toString().contains('request timed out')) {
+        if (e is TimeoutException ||
+            e.toString().contains('request timed out')) {
           // This is acceptable since invalid keys may cause timeouts
-          print('Request timed out with invalid keys - this is expected behavior');
+          print(
+              'Request timed out with invalid keys - this is expected behavior');
         } else {
           expect(
               e is PubNubException &&
@@ -82,8 +84,7 @@ void main() {
       await expectLater(
         () => errorPubnub.publish(channel, 'message'),
         throwsA(predicate((e) =>
-            e is PubNubException && 
-            e.toString().contains('Network error'))),
+            e is PubNubException && e.toString().contains('Network error'))),
       );
     });
 
@@ -95,7 +96,7 @@ void main() {
       var messageCount = 10;
       var sentMessages = <String>[];
       var receivedMessages = <String>[];
-      
+
       // Set up subscription
       var sub = pubnub.subscribe(channels: {channel});
       await sub.whenStarts;
@@ -116,7 +117,8 @@ void main() {
       });
 
       // Publish messages rapidly
-      await Future.forEach(List.generate(messageCount, (i) => i), (int i) async {
+      await Future.forEach(List.generate(messageCount, (i) => i),
+          (int i) async {
         var msg = 'message-$i';
         sentMessages.add(msg);
         await pubnub.publish(channel, msg);
@@ -124,20 +126,20 @@ void main() {
 
       // Wait for all messages with timeout
       await expectLater(
-        allMessagesReceived.future.timeout(
-          Duration(seconds: 10),
-          onTimeout: () => throw TimeoutException('Did not receive all messages')),
+        allMessagesReceived.future.timeout(Duration(seconds: 10),
+            onTimeout: () =>
+                throw TimeoutException('Did not receive all messages')),
         completes,
         reason: 'Should receive all messages within timeout',
       );
 
       // Verify message ordering
       expect(receivedMessages.length, equals(messageCount),
-        reason: 'Did not receive expected number of messages');
+          reason: 'Did not receive expected number of messages');
 
       // Verify messages were received in order
       expect(receivedMessages, equals(sentMessages),
-        reason: 'Messages not received in correct order');
+          reason: 'Messages not received in correct order');
 
       await sub.cancel();
     });
@@ -146,10 +148,10 @@ void main() {
     test('large message publishing', () async {
       var channel = 'test-${DateTime.now().millisecondsSinceEpoch}';
       channelsToCleanup.add(channel);
-      
+
       var largeMessage = 'x' * 30000; // 30KB message
       var receivedMessage = '';
-      
+
       // Set up subscription
       var sub = pubnub.subscribe(channels: {channel});
       await sub.whenStarts;
@@ -177,7 +179,7 @@ void main() {
 class BrokenNetworkingModule extends NetworkingModule {
   BrokenNetworkingModule() : super();
 
-  // @override 
+  // @override
   // Future<dynamic> handler() async {
   //   throw PubNubException('Network error');
   // }
