@@ -164,13 +164,7 @@ class ObjectsTestUtils {
 
       await pubnub.objects.setUUIDMetadata(metadata, uuid: uuid);
       uuidIds.add(uuid);
-
-      // Small delay to avoid overwhelming the service
-      if (i % 10 == 9) {
-        await Future.delayed(Duration(milliseconds: 100));
-      }
     }
-
     return uuidIds;
   }
 
