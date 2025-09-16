@@ -60,8 +60,8 @@ Keyset createTestKeyset({String? userIdSuffix}) {
       : 'integration-test-${DateTime.now().millisecondsSinceEpoch}';
 
   return Keyset(
-    subscribeKey: Platform.environment['PUBNUB_SUB_KEY'] ?? 'demo',
-    publishKey: Platform.environment['PUBNUB_PUB_KEY'] ?? 'demo',
+    subscribeKey: Platform.environment['SDK_SUB_KEY'] ?? 'demo',
+    publishKey: Platform.environment['SDK_PUB_KEY'] ?? 'demo',
     userId: UserId(userId),
   );
 }
@@ -73,9 +73,9 @@ Keyset createPamKeyset({String? userIdSuffix, String? authKey}) {
       : 'pam-test-${DateTime.now().millisecondsSinceEpoch}';
 
   return Keyset(
-    subscribeKey: Platform.environment['PUBNUB_PAM_SUB_KEY'] ?? 'demo-36',
-    publishKey: Platform.environment['PUBNUB_PAM_PUB_KEY'] ?? 'demo-36',
-    secretKey: Platform.environment['PUBNUB_PAM_SEC_KEY'] ?? 'demo-36',
+    subscribeKey: Platform.environment['SDK_PAM_SUB_KEY'] ?? 'demo-36',
+    publishKey: Platform.environment['SDK_PAM_PUB_KEY'] ?? 'demo-36',
+    secretKey: Platform.environment['SDK_PAM_SEC_KEY'] ?? 'demo-36',
     userId: UserId(userId),
     authKey: authKey,
   );

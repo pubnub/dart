@@ -10,8 +10,8 @@ import 'package:test/test.dart';
 import 'package:pubnub/pubnub.dart';
 
 void main() {
-  final SUBSCRIBE_KEY = Platform.environment['SUB'] ?? 'demo';
-  final PUBLISH_KEY = Platform.environment['PUB'] ?? 'demo';
+  final SUBSCRIBE_KEY = Platform.environment['SDK_SUB_KEY'] ?? 'demo';
+  final PUBLISH_KEY = Platform.environment['SDK_PUB_KEY'] ?? 'demo';
 
   late PubNub pubnub;
   late List<Subscription> activeSubscriptions;

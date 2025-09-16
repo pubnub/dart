@@ -2,13 +2,14 @@
 @Tags(['integration'])
 
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'package:test/test.dart';
 import 'package:pubnub/pubnub.dart';
 
 void main() {
-  final SUBSCRIBE_KEY = 'demo';
-  final PUBLISH_KEY = 'demo';
+  final SUBSCRIBE_KEY = Platform.environment['SDK_SUB_KEY'] ?? 'demo';
+  final PUBLISH_KEY = Platform.environment['SDK_PUB_KEY'] ?? 'demo';
 
   group('Integration [channelGroups] - End-to-End Workflows', () {
     PubNub? pubnub;

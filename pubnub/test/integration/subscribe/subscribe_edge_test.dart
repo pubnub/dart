@@ -1,6 +1,7 @@
 @TestOn('vm')
 @Tags(['integration'])
 
+import 'dart:io';
 import 'dart:async';
 import 'package:test/test.dart';
 import 'package:pubnub/pubnub.dart';
@@ -12,8 +13,8 @@ void main() {
   setUp(() {
     pubnub = PubNub(
       defaultKeyset: Keyset(
-        subscribeKey: 'demo',
-        publishKey: 'demo',
+        subscribeKey: Platform.environment['SDK_SUB_KEY'] ?? 'demo',
+        publishKey: Platform.environment['SDK_PUB_KEY'] ?? 'demo',
         userId: UserId('dart-test'),
       ),
     );
