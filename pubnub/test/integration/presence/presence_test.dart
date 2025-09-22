@@ -14,10 +14,8 @@ void main() {
 
   final PRODUCER = UUID('PRODUCER');
 
-  final SUBSCRIBE_KEY = Platform.environment['SUB'] ??
-      'sub-c-1e8d1fe2-12d5-11eb-9b79-2636081330fc';
-  final PUBLISH_KEY = Platform.environment['PUB'] ??
-      'pub-c-8d1dad1a-ed99-4cb4-926c-cee03e792fd4';
+  final SUBSCRIBE_KEY = Platform.environment['SDK_SUB_KEY'] ?? 'demo';
+  final PUBLISH_KEY = Platform.environment['SDK_PUB_KEY'] ?? 'demo';
 
   var keyset = Keyset(
       subscribeKey: SUBSCRIBE_KEY, publishKey: PUBLISH_KEY, uuid: PRODUCER);
