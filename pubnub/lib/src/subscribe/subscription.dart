@@ -183,7 +183,9 @@ class Subscription {
   Future<void> dispose() => cancel();
 
   /// Alias for [resume].
-  void subscribe() => resume();
+  void subscribe() {
+    _manager.reconnect();
+  }
 
   /// Alias for [pause].
   void unsubscribe() => pause();

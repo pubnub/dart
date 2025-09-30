@@ -200,6 +200,7 @@ class SubscribeLoop {
           if (resolution is FailResolution) {
             update((state) => state.clone(isErrored: true));
             yield* Stream<Envelope>.error(exception);
+            tries = 0; // Reset to avoid having stale value in fiber.
             continue;
           } else if (resolution is DelayResolution) {
             await Future.delayed(resolution.delay);
