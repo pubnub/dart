@@ -7,25 +7,45 @@ export '../_endpoints/presence.dart';
 
 final _logger = injectLogger('pubnub.dx.presence');
 
+/// Maximum count limit for presence operations
+const int MAXIMUM_COUNT = 1000;
+const int DEFAULT_OFFSET = 0;
+
 mixin PresenceDx on Core {
   /// Gets the occupancy information from a list of [channels] and/or [channelGroups].
   ///
   /// If [stateInfo] is `.none`, then it will only return occupancy counts.
   /// If [stateInfo] is `.all`, then it will include each `UUID`s state.
   /// If [stateInfo] is `.onlyUUIDs` (as by default), then it will include `UUID`s without state.
+  /// [limit] to set the maximum number of entries to return. default is 1000. maximum is 1000.
+  /// If [limit] is greater than 1000, it will be capped to 1000.
+  /// [offset] to set the offset for the results. default is 0.
   Future<HereNowResult> hereNow(
       {Keyset? keyset,
       String? using,
       Set<String> channels = const {},
       Set<String> channelGroups = const {},
-      StateInfo? stateInfo}) async {
+      StateInfo? stateInfo,
+      int limit = MAXIMUM_COUNT,
+      int offset = DEFAULT_OFFSET}) async {
     _logger.info('Here now API call');
     keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
 
+    // Cap the limit to MAXIMUM_COUNT if it exceeds the maximum
+    if (limit > MAXIMUM_COUNT) {
+      _logger.warning(
+          'Limit is greater than maximum count. Capping to maximum count.');
+    }
+    final cappedLimit = limit > MAXIMUM_COUNT ? MAXIMUM_COUNT : limit;
+
     var params = HereNowParams(keyset,
-        channels: channels, channelGroups: channelGroups, stateInfo: stateInfo);
+        channels: channels,
+        channelGroups: channelGroups,
+        stateInfo: stateInfo ?? StateInfo.onlyUUIDs,
+        limit: cappedLimit,
+        offset: offset);
 
     _logger.fine(LogEvent(
         message: 'Here now API call with parameters:',
@@ -37,7 +57,9 @@ mixin PresenceDx on Core {
         core: this,
         params: params,
         serialize: (object, [_]) => HereNowResult.fromJson(object,
-            channelName: (channels.length == 1) ? channels.first : null));
+            channelName: (channels.length == 1) ? channels.first : null,
+            limit: limit,
+            offset: offset));
   }
 
   /// Announce in [channels] and [channelGroups] that a device linked to the UUID in the keyset left.

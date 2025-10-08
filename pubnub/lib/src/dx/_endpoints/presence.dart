@@ -1,6 +1,10 @@
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 
+/// Maximum count limit for presence operations
+const int MAXIMUM_COUNT = 1000;
+const int DEFAULT_OFFSET = 0;
+
 class HeartbeatParams extends Parameters {
   Keyset keyset;
   Set<String>? channels;
@@ -235,12 +239,15 @@ class HereNowParams extends Parameters {
   Set<String>? channels;
   Set<String>? channelGroups;
   StateInfo? stateInfo;
-
+  int limit;
+  int offset;
   HereNowParams(this.keyset,
       {this.global = false,
       this.channels,
       this.channelGroups,
-      this.stateInfo = StateInfo.onlyUUIDs});
+      this.stateInfo = StateInfo.onlyUUIDs,
+      this.limit = MAXIMUM_COUNT,
+      this.offset = DEFAULT_OFFSET});
 
   Map<String, dynamic> toJson() {
     return {
@@ -248,6 +255,8 @@ class HereNowParams extends Parameters {
       'channels': channels?.toList(),
       'channelGroups': channelGroups?.toList(),
       'stateInfo': stateInfo?.toString().split('.').last,
+      'limit': limit,
+      'offset': offset,
     };
   }
 
@@ -272,7 +281,9 @@ class HereNowParams extends Parameters {
       'uuid': '${keyset.uuid.value}',
       if (stateInfo == StateInfo.all || stateInfo == StateInfo.onlyUUIDs)
         'disable_uuids': '0',
-      if (stateInfo == StateInfo.all) 'state': '1'
+      if (stateInfo == StateInfo.all) 'state': '1',
+      if (global == false) 'limit': '$limit',
+      if (global == false && offset > DEFAULT_OFFSET) 'offset': '$offset'
     };
 
     return Request.get(
@@ -329,26 +340,38 @@ class HereNowResult extends Result {
   final int totalOccupancy;
   final int totalChannels;
 
-  HereNowResult._(this.channels, this.totalOccupancy, this.totalChannels);
+  int? nextOffset;
+
+  HereNowResult._(this.channels, this.totalOccupancy, this.totalChannels,
+      {this.nextOffset});
 
   factory HereNowResult.fromJson(Map<String, dynamic> object,
-      {String? channelName}) {
+      {String? channelName,
+      int? limit = MAXIMUM_COUNT,
+      int? offset = DEFAULT_OFFSET}) {
+    int? nextOffset;
     var result = DefaultResult.fromJson(object);
     if (result.otherKeys.containsKey('payload')) {
       var payload = result.otherKeys['payload'] as Map<String, dynamic>;
-
-      return HereNowResult._(
-          (payload['channels'] as Map<String, dynamic>).map((key, value) =>
-              MapEntry(
-                  key,
-                  ChannelOccupancy.fromJson(
-                      key, value as Map<String, dynamic>))),
-          payload['total_occupancy'] as int,
-          payload['total_channels'] as int);
+      var channelsOccupancies = (payload['channels'] as Map<String, dynamic>)
+          .map((key, value) => MapEntry(key,
+              ChannelOccupancy.fromJson(key, value as Map<String, dynamic>)));
+      var maxOccupancy = channelsOccupancies.values
+          .map((channel) => channel.count)
+          .reduce((a, b) => a > b ? a : b);
+      if ((offset! + limit!) < maxOccupancy) {
+        nextOffset = offset + limit;
+      }
+      return HereNowResult._(channelsOccupancies,
+          payload['total_occupancy'] as int, payload['total_channels'] as int,
+          nextOffset: nextOffset);
     } else {
+      if (result.otherKeys['occupancy'] as int > (limit! + offset!)) {
+        nextOffset = limit + offset;
+      }
       return HereNowResult._({
         channelName: ChannelOccupancy.fromJson(channelName!, result.otherKeys)
-      }, result.otherKeys['occupancy'] as int, 1);
+      }, result.otherKeys['occupancy'] as int, 1, nextOffset: nextOffset);
     }
   }
 }
