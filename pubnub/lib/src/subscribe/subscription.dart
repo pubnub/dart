@@ -184,7 +184,12 @@ class Subscription {
 
   /// Alias for [resume].
   void subscribe() {
-    _manager.reconnect();
+    if (!isPaused || isCancelled) {
+      _manager
+          .reconnect(); // Reconnect the subscription, when not intentionally paused.
+    } else {
+      resume(); // Resume the subscription, which was intentionally paused.
+    }
   }
 
   /// Alias for [pause].

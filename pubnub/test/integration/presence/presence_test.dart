@@ -83,10 +83,15 @@ void main() {
 
       await consumer.expectEvent(action: PresenceAction.join, uuid: PRODUCER);
 
+      // Explicitly announce heartbeat to ensure the server knows about our presence
+      await pubnub.announceHeartbeat(channels: {channel}, heartbeat: 20);
+
+      // Wait for the heartbeat to timeout (20 seconds + buffer)
       await consumer.expectEvent(
         action: PresenceAction.timeout,
         uuid: PRODUCER,
-        within: Duration(seconds: 25),
+        within:
+            Duration(seconds: 30), // 20 seconds heartbeat + 10 seconds buffer
       );
 
       await subscription.cancel();
