@@ -5,21 +5,6 @@ on:
     branches: [master]
     types: [closed]
 
-permissions:
-  actions: write
-  attestations: write
-  checks: write
-  contents: write
-  deployments: write
-  discussions: write
-  issues: write
-  id-token: write
-  packages: write
-  pull-requests: write
-  repository-projects: write
-  security-events: write
-  statuses: write
-
 jobs:
   check-release:
     name: Check release required
@@ -63,9 +48,13 @@ jobs:
       - name: Install Dart SDK
         uses: dart-lang/setup-dart@v1
       - name: Publish to Pub
-        uses: ./.github/.release/actions/actions/services/pub
+        uses: ./.github/.release/actions/actions/utils/sync-workflow-dispatch
         with:
           token: ${{ secrets.GH_TOKEN }}
+          branch: master
+          workflow-name: "dispatch-release.yml"
+          workflow-run-timeout: 10
+          status-poll-interval: 15
       - name: Create Release
         uses: ./.github/.release/actions/actions/services/github-release
         with:
