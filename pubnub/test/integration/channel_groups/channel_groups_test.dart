@@ -246,10 +246,12 @@ void main() {
     test('should integrate channel groups with subscribe functionality',
         () async {
       var groupName = generateGroupName('subscribe_test');
-      var testChannels = {'test_ch1', 'test_ch2'};
+      var randomSuffix = Random().nextInt(10000);
+      var testChannels = {'test_ch1_$randomSuffix', 'test_ch2_$randomSuffix'};
 
       // 1. Setup Group - Create group and add test channels
       await pubnub!.channelGroups.addChannels(groupName, testChannels);
+      await Future.delayed(Duration(seconds: 2));
       await waitForConsistency();
 
       // 2. Subscribe to Group - Create subscription to channel group
@@ -257,15 +259,17 @@ void main() {
       
       // Wait for subscription to actually start listening
       await subscription.whenStarts;
-      await Future.delayed(Duration(seconds: 1)); // Additional buffer for subscription to be fully ready
+      await Future.delayed(Duration(seconds: 2)); // Additional buffer for subscription to be fully ready
 
       // 3. Setup Message Listener - Set up listener BEFORE publishing
       var messageReceived = false;
       var messageCompleter = Completer<void>();
       var testMessage = 'Hello from channel group integration test!';
 
+      var testChannel = 'test_ch1_$randomSuffix';
+      
       subscription.messages.listen((envelope) {
-        if (envelope.payload == testMessage && envelope.channel == 'test_ch1') {
+        if (envelope.payload == testMessage && envelope.channel == testChannel) {
           messageReceived = true;
           if (!messageCompleter.isCompleted) {
             messageCompleter.complete();
@@ -274,7 +278,7 @@ void main() {
       });
 
       // 4. Publish to Channels - Publish messages to individual channels in group
-      await pubnub!.publish('test_ch1', testMessage);
+      await pubnub!.publish(testChannel, testMessage);
 
       // 5. Verify Reception - Wait for message with timeout
       try {
@@ -288,12 +292,12 @@ void main() {
               'Message should be received through channel group subscription');
 
       // 5. Group Modification - Add/remove channels and verify subscription updates
-      await pubnub!.channelGroups.addChannels(groupName, {'test_ch3'});
+      await pubnub!.channelGroups.addChannels(groupName, {'test_ch3_$randomSuffix'});
       await waitForConsistency();
 
       var listResult = await pubnub!.channelGroups.listChannels(groupName);
       expect(listResult.channels,
-          containsAll({'test_ch1', 'test_ch2', 'test_ch3'}));
+          containsAll({'test_ch1_$randomSuffix', 'test_ch2_$randomSuffix', 'test_ch3_$randomSuffix'}));
 
       await subscription.cancel();
     }, timeout: Timeout(Duration(seconds: 45)));
