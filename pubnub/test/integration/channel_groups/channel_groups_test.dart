@@ -254,26 +254,35 @@ void main() {
 
       // 2. Subscribe to Group - Create subscription to channel group
       var subscription = pubnub!.subscribe(channelGroups: {groupName});
-      await Future.delayed(
-          Duration(seconds: 3)); // Wait for subscription to be established
+      
+      // Wait for subscription to actually start listening
+      await subscription.whenStarts;
+      await Future.delayed(Duration(seconds: 1)); // Additional buffer for subscription to be fully ready
 
-      // 3. Publish to Channels - Publish messages to individual channels in group
-      var testMessage = 'Hello from channel group integration test!';
-      await pubnub!.publish('test_ch1', testMessage);
-
-      // 4. Verify Reception - Wait for message
+      // 3. Setup Message Listener - Set up listener BEFORE publishing
       var messageReceived = false;
-      var timeoutTimer = Timer(Duration(seconds: 10), () {});
+      var messageCompleter = Completer<void>();
+      var testMessage = 'Hello from channel group integration test!';
 
       subscription.messages.listen((envelope) {
         if (envelope.payload == testMessage && envelope.channel == 'test_ch1') {
           messageReceived = true;
-          timeoutTimer.cancel();
+          if (!messageCompleter.isCompleted) {
+            messageCompleter.complete();
+          }
         }
       });
 
-      // Wait for message or timeout
-      await Future.delayed(Duration(seconds: 5));
+      // 4. Publish to Channels - Publish messages to individual channels in group
+      await pubnub!.publish('test_ch1', testMessage);
+
+      // 5. Verify Reception - Wait for message with timeout
+      try {
+        await messageCompleter.future.timeout(Duration(seconds: 10));
+      } catch (e) {
+        // Timeout occurred
+      }
+      
       expect(messageReceived, isTrue,
           reason:
               'Message should be received through channel group subscription');
