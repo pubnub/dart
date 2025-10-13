@@ -256,10 +256,11 @@ void main() {
 
       // 2. Subscribe to Group - Create subscription to channel group
       var subscription = pubnub!.subscribe(channelGroups: {groupName});
-      
+
       // Wait for subscription to actually start listening
       await subscription.whenStarts;
-      await Future.delayed(Duration(seconds: 2)); // Additional buffer for subscription to be fully ready
+      await Future.delayed(Duration(
+          seconds: 2)); // Additional buffer for subscription to be fully ready
 
       // 3. Setup Message Listener - Set up listener BEFORE publishing
       var messageReceived = false;
@@ -267,9 +268,10 @@ void main() {
       var testMessage = 'Hello from channel group integration test!';
 
       var testChannel = 'test_ch1_$randomSuffix';
-      
+
       subscription.messages.listen((envelope) {
-        if (envelope.payload == testMessage && envelope.channel == testChannel) {
+        if (envelope.payload == testMessage &&
+            envelope.channel == testChannel) {
           messageReceived = true;
           if (!messageCompleter.isCompleted) {
             messageCompleter.complete();
@@ -286,18 +288,24 @@ void main() {
       } catch (e) {
         // Timeout occurred
       }
-      
+
       expect(messageReceived, isTrue,
           reason:
               'Message should be received through channel group subscription');
 
       // 5. Group Modification - Add/remove channels and verify subscription updates
-      await pubnub!.channelGroups.addChannels(groupName, {'test_ch3_$randomSuffix'});
+      await pubnub!.channelGroups
+          .addChannels(groupName, {'test_ch3_$randomSuffix'});
       await waitForConsistency();
 
       var listResult = await pubnub!.channelGroups.listChannels(groupName);
-      expect(listResult.channels,
-          containsAll({'test_ch1_$randomSuffix', 'test_ch2_$randomSuffix', 'test_ch3_$randomSuffix'}));
+      expect(
+          listResult.channels,
+          containsAll({
+            'test_ch1_$randomSuffix',
+            'test_ch2_$randomSuffix',
+            'test_ch3_$randomSuffix'
+          }));
 
       await subscription.cancel();
     }, timeout: Timeout(Duration(seconds: 45)));

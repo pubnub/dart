@@ -170,7 +170,7 @@ const _hereNowMixedStateResponse = '''
 }
 ''';
 
-const _hereNowWithOutNextOffsetResponse = '''
+const _hereNowWithNextOffsetNeededResponse = '''
 {
   "message": "OK",
   "payload": {

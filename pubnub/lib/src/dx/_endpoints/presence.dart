@@ -356,21 +356,26 @@ class HereNowResult extends Result {
       var channelsOccupancies = (payload['channels'] as Map<String, dynamic>)
           .map((key, value) => MapEntry(key,
               ChannelOccupancy.fromJson(key, value as Map<String, dynamic>)));
-      var maxOccupancy = channelsOccupancies.values
-          .map((channel) => channel.count)
-          .reduce((a, b) => a > b ? a : b);
-      if ((offset! + limit!) < maxOccupancy) {
-        nextOffset = offset + limit;
+      var maxOccupancyChannel = channelsOccupancies.values
+          .reduce((a, b) => a.count > b.count ? a : b);
+
+      if ((offset! + maxOccupancyChannel.uuids.length) <
+          maxOccupancyChannel.count) {
+        nextOffset = offset + maxOccupancyChannel.uuids.length;
       }
       return HereNowResult._(channelsOccupancies,
           payload['total_occupancy'] as int, payload['total_channels'] as int,
           nextOffset: nextOffset);
     } else {
-      if (result.otherKeys['occupancy'] as int > (limit! + offset!)) {
-        nextOffset = limit + offset;
+      var channelOccupancy =
+          ChannelOccupancy.fromJson(channelName!, result.otherKeys);
+      var fetchedOccupanciesCount = channelOccupancy.uuids.length;
+      if (result.otherKeys['occupancy'] as int >
+          (fetchedOccupanciesCount + offset!)) {
+        nextOffset = fetchedOccupanciesCount + offset;
       }
       return HereNowResult._({
-        channelName: ChannelOccupancy.fromJson(channelName!, result.otherKeys)
+        channelName: channelOccupancy
       }, result.otherKeys['occupancy'] as int, 1, nextOffset: nextOffset);
     }
   }

@@ -224,12 +224,12 @@ void main() {
           method: 'GET',
           path:
               '/v2/presence/sub_key/demo/channel/test,my_channel?uuid=test&disable_uuids=0&limit=1000',
-        ).then(status: 200, body: _hereNowWithOutNextOffsetResponse);
+        ).then(status: 200, body: _hereNowWithNextOffsetNeededResponse);
 
         final hereNowResponse = await pubnub!.hereNow(
           channels: {'test', 'my_channel'},
         );
-        expect(hereNowResponse.nextOffset, equals(null));
+        expect(hereNowResponse.nextOffset, equals(3));
       });
     });
 
