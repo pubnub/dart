@@ -57,9 +57,7 @@ mixin PresenceDx on Core {
         core: this,
         params: params,
         serialize: (object, [_]) => HereNowResult.fromJson(object,
-            channelName: (channels.length == 1) ? channels.first : null,
-            limit: limit,
-            offset: offset));
+            channelName: (channels.length == 1) ? channels.first : null));
   }
 
   /// Announce in [channels] and [channelGroups] that a device linked to the UUID in the keyset left.

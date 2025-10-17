@@ -340,43 +340,23 @@ class HereNowResult extends Result {
   final int totalOccupancy;
   final int totalChannels;
 
-  int? nextOffset;
-
-  HereNowResult._(this.channels, this.totalOccupancy, this.totalChannels,
-      {this.nextOffset});
+  HereNowResult._(this.channels, this.totalOccupancy, this.totalChannels);
 
   factory HereNowResult.fromJson(Map<String, dynamic> object,
-      {String? channelName,
-      int? limit = MAXIMUM_COUNT,
-      int? offset = DEFAULT_OFFSET}) {
-    int? nextOffset;
+      {String? channelName}) {
     var result = DefaultResult.fromJson(object);
     if (result.otherKeys.containsKey('payload')) {
       var payload = result.otherKeys['payload'] as Map<String, dynamic>;
       var channelsOccupancies = (payload['channels'] as Map<String, dynamic>)
           .map((key, value) => MapEntry(key,
               ChannelOccupancy.fromJson(key, value as Map<String, dynamic>)));
-      var maxOccupancyChannel = channelsOccupancies.values
-          .reduce((a, b) => a.count > b.count ? a : b);
-
-      if ((offset! + maxOccupancyChannel.uuids.length) <
-          maxOccupancyChannel.count) {
-        nextOffset = offset + maxOccupancyChannel.uuids.length;
-      }
       return HereNowResult._(channelsOccupancies,
-          payload['total_occupancy'] as int, payload['total_channels'] as int,
-          nextOffset: nextOffset);
+          payload['total_occupancy'] as int, payload['total_channels'] as int);
     } else {
       var channelOccupancy =
           ChannelOccupancy.fromJson(channelName!, result.otherKeys);
-      var fetchedOccupanciesCount = channelOccupancy.uuids.length;
-      if (result.otherKeys['occupancy'] as int >
-          (fetchedOccupanciesCount + offset!)) {
-        nextOffset = fetchedOccupanciesCount + offset;
-      }
-      return HereNowResult._({
-        channelName: channelOccupancy
-      }, result.otherKeys['occupancy'] as int, 1, nextOffset: nextOffset);
+      return HereNowResult._({channelName: channelOccupancy},
+          result.otherKeys['occupancy'] as int, 1);
     }
   }
 }
