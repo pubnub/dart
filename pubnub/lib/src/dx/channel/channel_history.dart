@@ -75,7 +75,7 @@ class ChannelHistory {
       keyset: _keyset,
       core: _core,
       params:
-          DeleteMessagesParams(_keyset, _channel.name, end: from, start: to),
+          DeleteMessagesParams(_keyset, _channel.name, end: to, start: from),
       serialize: (object, [_]) => DeleteMessagesResult.fromJson(object),
     );
   }
