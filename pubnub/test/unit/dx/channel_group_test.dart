@@ -22,7 +22,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F6.0.1&uuid=test',
+              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test',
         ).then(status: 200, body: _listChannelsSuccessResponse);
 
         final result = await pubnub!.channelGroups.listChannels('cg1');
@@ -38,7 +38,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/empty_group?pnsdk=PubNub-Dart%2F6.0.1&uuid=test',
+              '/v1/channel-registration/sub-key/test/channel-group/empty_group?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test',
         ).then(status: 200, body: _listChannelsEmptyResponse);
 
         final result = await pubnub!.channelGroups.listChannels('empty_group');
@@ -60,7 +60,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F6.0.1&uuid=test',
+              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test',
         ).then(status: 403, body: _forbiddenErrorResponse);
 
         expect(pubnub!.channelGroups.listChannels('cg1'),
@@ -72,7 +72,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/invalid_group?pnsdk=PubNub-Dart%2F6.0.1&uuid=test',
+              '/v1/channel-registration/sub-key/test/channel-group/invalid_group?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test',
         ).then(status: 400, body: _invalidArgumentsErrorResponse);
 
         expect(pubnub!.channelGroups.listChannels('invalid_group'),
@@ -88,7 +88,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/custom/channel-group/cg1?pnsdk=PubNub-Dart%2F6.0.1&uuid=custom',
+              '/v1/channel-registration/sub-key/custom/channel-group/cg1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=custom',
         ).then(status: 200, body: _listChannelsSuccessResponse);
 
         final result = await pubnub!.channelGroups
@@ -108,7 +108,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/named/channel-group/cg1?pnsdk=PubNub-Dart%2F6.0.1&uuid=named',
+              '/v1/channel-registration/sub-key/named/channel-group/cg1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=named',
         ).then(status: 200, body: _listChannelsSuccessResponse);
 
         final result =
@@ -126,7 +126,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F6.0.1&uuid=test&add=ch1%2Cch2&remove',
+              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test&add=ch1%2Cch2&remove',
         ).then(status: 200, body: _addChannelsSuccessResponse);
 
         final result = await pubnub!.channelGroups.addChannels('cg1', channels);
@@ -138,7 +138,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F6.0.1&uuid=test&add&remove',
+              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test&add&remove',
         ).then(status: 200, body: _addChannelsSuccessResponse);
 
         final result =
@@ -155,7 +155,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F6.0.1&uuid=test&add=$expectedChannelsParam&remove',
+              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test&add=$expectedChannelsParam&remove',
         ).then(status: 200, body: _addChannelsSuccessResponse);
 
         final result = await pubnub!.channelGroups.addChannels('cg1', channels);
@@ -174,7 +174,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F6.0.1&uuid=test&add=ch1&remove',
+              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test&add=ch1&remove',
         ).then(status: 403, body: _forbiddenErrorResponse);
 
         expect(pubnub!.channelGroups.addChannels('cg1', {'ch1'}),
@@ -190,7 +190,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F6.0.1&uuid=test&add&remove=ch1%2Cch2',
+              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test&add&remove=ch1%2Cch2',
         ).then(status: 200, body: _removeChannelsSuccessResponse);
 
         final result =
@@ -204,7 +204,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F6.0.1&uuid=test&add&remove=nonexistent',
+              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test&add&remove=nonexistent',
         ).then(status: 200, body: _removeChannelsSuccessResponse);
 
         final result =
@@ -217,7 +217,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F6.0.1&uuid=test&add&remove',
+              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test&add&remove',
         ).then(status: 200, body: _removeChannelsSuccessResponse);
 
         final result =
@@ -240,7 +240,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/cg1/remove?pnsdk=PubNub-Dart%2F6.0.1&uuid=test',
+              '/v1/channel-registration/sub-key/test/channel-group/cg1/remove?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test',
         ).then(status: 200, body: _deleteChannelGroupSuccessResponse);
 
         final result = await pubnub!.channelGroups.delete('cg1');
@@ -252,7 +252,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/nonexistent_group/remove?pnsdk=PubNub-Dart%2F6.0.1&uuid=test',
+              '/v1/channel-registration/sub-key/test/channel-group/nonexistent_group/remove?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test',
         ).then(status: 200, body: _deleteChannelGroupSuccessResponse);
 
         final result = await pubnub!.channelGroups.delete('nonexistent_group');
@@ -271,7 +271,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/cg1/remove?pnsdk=PubNub-Dart%2F6.0.1&uuid=test',
+              '/v1/channel-registration/sub-key/test/channel-group/cg1/remove?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test',
         ).then(status: 403, body: _forbiddenErrorResponse);
 
         expect(pubnub!.channelGroups.delete('cg1'),
@@ -292,7 +292,7 @@ void main() {
         when(
           method: 'GET',
           path:
-              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F6.0.1&uuid=test',
+              '/v1/channel-registration/sub-key/test/channel-group/cg1?pnsdk=PubNub-Dart%2F${PubNub.version}&uuid=test',
         ).then(status: 200, body: _malformedJsonResponse);
 
         expect(pubnub!.channelGroups.listChannels('cg1'),

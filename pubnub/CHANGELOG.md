@@ -1,3 +1,9 @@
+## v6.0.2
+October 20 2025
+
+#### Fixed
+- Fixes issue of delete message with `from` and `to` parameters. To delete range of message(s).
+
 ## v6.0.1
 August 19 2025
 

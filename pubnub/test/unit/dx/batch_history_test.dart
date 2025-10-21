@@ -334,4 +334,162 @@ void main() {
           throwsA(isA<InvariantException>()));
     });
   });
+
+  group('delete()', () {
+    late PubNub pubnub;
+
+    setUp(() {
+      pubnub = PubNub(
+        defaultKeyset:
+            Keyset(subscribeKey: 'sub', publishKey: 'pub', userId: UserId('u')),
+        networking: FakeNetworkingModule(),
+      );
+    });
+    test('delete with no from/to parameters', () async {
+      var channel = pubnub.channel('test-channel');
+      var history = channel.messages();
+
+      when(
+        method: 'DELETE',
+        path:
+            'v3/history/sub-key/sub/channel/test-channel?uuid=u&pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: '{"status":200,"error":false,"message":""}');
+
+      await history.delete();
+    });
+
+    test('delete with from parameter only', () async {
+      var channel = pubnub.channel('test-channel');
+      var fromTimetoken = Timetoken(BigInt.from(15610547826970050));
+      var history = channel.messages(from: fromTimetoken);
+
+      when(
+        method: 'DELETE',
+        path:
+            'v3/history/sub-key/sub/channel/test-channel?start=15610547826970050&uuid=u&pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: '{"status":200,"error":false,"message":""}');
+
+      await history.delete();
+    });
+
+    test('delete with to parameter only', () async {
+      var channel = pubnub.channel('test-channel');
+      var toTimetoken = Timetoken(BigInt.from(15645905639093361));
+      var history = channel.messages(to: toTimetoken);
+
+      when(
+        method: 'DELETE',
+        path:
+            'v3/history/sub-key/sub/channel/test-channel?end=15645905639093361&uuid=u&pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: '{"status":200,"error":false,"message":""}');
+
+      await history.delete();
+    });
+
+    test('delete with both from and to parameters', () async {
+      var channel = pubnub.channel('test-channel');
+      var fromTimetoken = Timetoken(BigInt.from(15610547826970050));
+      var toTimetoken = Timetoken(BigInt.from(15645905639093361));
+      var history = channel.messages(from: fromTimetoken, to: toTimetoken);
+
+      when(
+        method: 'DELETE',
+        path:
+            'v3/history/sub-key/sub/channel/test-channel?start=15610547826970050&end=15645905639093361&uuid=u&pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: '{"status":200,"error":false,"message":""}');
+
+      await history.delete();
+    });
+
+    test('delete with different channel name', () async {
+      var channel = pubnub.channel('another-channel');
+      var fromTimetoken = Timetoken(BigInt.from(12345));
+      var toTimetoken = Timetoken(BigInt.from(67890));
+      var history = channel.messages(from: fromTimetoken, to: toTimetoken);
+
+      when(
+        method: 'DELETE',
+        path:
+            'v3/history/sub-key/sub/channel/another-channel?start=12345&end=67890&uuid=u&pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: '{"status":200,"error":false,"message":""}');
+
+      await history.delete();
+    });
+
+    test('delete with authKey in keyset', () async {
+      pubnub = PubNub(
+        defaultKeyset: Keyset(
+          subscribeKey: 'sub',
+          publishKey: 'pub',
+          authKey: 'myAuthKey',
+          userId: UserId('u'),
+        ),
+        networking: FakeNetworkingModule(),
+      );
+
+      var channel = pubnub.channel('test-channel');
+      var fromTimetoken = Timetoken(BigInt.from(1000));
+      var toTimetoken = Timetoken(BigInt.from(2000));
+      var history = channel.messages(from: fromTimetoken, to: toTimetoken);
+
+      when(
+        method: 'DELETE',
+        path:
+            'v3/history/sub-key/sub/channel/test-channel?start=1000&end=2000&auth=myAuthKey&uuid=u&pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: '{"status":200,"error":false,"message":""}');
+
+      await history.delete();
+    });
+
+    test('delete with named keyset', () async {
+      pubnub.keysets.add(
+          'alt',
+          Keyset(
+              subscribeKey: 'alt-sub',
+              publishKey: 'alt-pub',
+              userId: UserId('u')));
+
+      var channel = pubnub.channel('test-channel', using: 'alt');
+      var fromTimetoken = Timetoken(BigInt.from(100));
+      var toTimetoken = Timetoken(BigInt.from(200));
+      var history = channel.messages(from: fromTimetoken, to: toTimetoken);
+
+      when(
+        method: 'DELETE',
+        path:
+            'v3/history/sub-key/alt-sub/channel/test-channel?start=100&end=200&uuid=u&pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: '{"status":200,"error":false,"message":""}');
+
+      await history.delete();
+    });
+
+    test('delete with very large timetoken values', () async {
+      var channel = pubnub.channel('test-channel');
+      var fromTimetoken = Timetoken(BigInt.parse('99999999999999999'));
+      var toTimetoken = Timetoken(BigInt.parse('99999999999999999999'));
+      var history = channel.messages(from: fromTimetoken, to: toTimetoken);
+
+      when(
+        method: 'DELETE',
+        path:
+            'v3/history/sub-key/sub/channel/test-channel?start=99999999999999999&end=99999999999999999999&uuid=u&pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: '{"status":200,"error":false,"message":""}');
+
+      await history.delete();
+    });
+
+    test('delete with special characters in channel name', () async {
+      var channel = pubnub.channel('test-channel-with-special_chars.123');
+      var fromTimetoken = Timetoken(BigInt.from(100));
+      var history = channel.messages(from: fromTimetoken);
+
+      when(
+        method: 'DELETE',
+        path:
+            'v3/history/sub-key/sub/channel/test-channel-with-special_chars.123?start=100&uuid=u&pnsdk=PubNub-Dart%2F${PubNub.version}',
+      ).then(status: 200, body: '{"status":200,"error":false,"message":""}');
+
+      await history.delete();
+    });
+  });
 }

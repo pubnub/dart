@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2025-10-20
+    version: v6.0.2
+    changes:
+      - type: bug
+        text: "Fixes issue of delete message with `from` and `to` parameters. To delete range of message(s)."
   - date: 2025-08-19
     version: v6.0.1
     changes:
@@ -501,7 +506,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "6.0.1"
+version: "6.0.2"
 sdks:
   -
     full-name: PubNub Dart SDK
