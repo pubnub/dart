@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the sendFile method from the FileDx class, for the Dart programming language.">
+  <title>sendFile method - FileDx class - files library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">pubnub</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_files/">src&#47;dx&#47;files&#47;files.dart</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_files/FileDx-class.html">FileDx</a></li>
+    <li class="self-crumb">sendFile method</li>
+  </ol>
+  <div class="self-name">sendFile</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_files&#47;FileDx-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">sendFile</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Future-class.html">Future</a></span>
+<span class="name ">sendFile</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="sendFile-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-fileName"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">fileName</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-file"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.9.4/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">file</span>, {</span></li>
+<li><span class="parameter" id="sendFile-param-cipherKey"><span class="type-annotation">dynamic</span> <span class="parameter-name">cipherKey</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-fileMessage"><span class="type-annotation">dynamic</span> <span class="parameter-name">fileMessage</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-storeFileMessage"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">storeFileMessage</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-fileMessageTtl"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">fileMessageTtl</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-customMessageType"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">customMessageType</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-fileMessageMeta"><span class="type-annotation">dynamic</span> <span class="parameter-name">fileMessageMeta</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-keyset"><span class="type-annotation">dynamic</span> <span class="parameter-name">keyset</span>, </span></li>
+<li><span class="parameter" id="sendFile-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
+</ol>})
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>This method allows to send a <code>file</code> to a <code>channel</code> with an optional <code>fileMessage</code>.</p>
+<blockquote>
+<p>Ensure that your <a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_core_keyset_keyset/Keyset-class.html">Keyset</a> has a <code>publishKey</code> defined.</p>
+</blockquote>
+<p>If you provide a <code>cipherKey</code>, the file will be encrypted with it.
+If its missing, then <a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_core_keyset_keyset/Keyset/cipherKey.html">Keyset.cipherKey</a> will be used.
+If no <code>cipherKey</code> is provided, then the file won't be encrypted.</p>
+<p>If the upload was successful, but publishing the file event to the <code>channel</code> wasn't,
+this method will retry publishing up to a value configured in <code>fileMessagePublishRetryLimit</code>.
+In case that is unsuccessful, you can retry publishing the file event manually by passing <a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_schema/FileInfo-class.html">FileInfo</a>
+to the <a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_files/FileDx/publishFileMessage.html">publishFileMessage</a> method.</p>
+<h4 id="additional-file-event-options">Additional file event options</h4>
+<ul>
+<li>
+<p>You can set a per-message time to live in storage using <code>fileMessageTtl</code> option.
+If set to <code>0</code>, message won't expire. If unset, expiration will fall back to default.</p>
+</li>
+<li>
+<p>You can override the default account configuration on message
+saving using <code>storeFileMessage</code> flag - <code>true</code> to save and <code>false</code> to discard.
+Leave this option unset if you want to use the default.</p>
+</li>
+<li>
+<p>Provide <code>fileMessageMeta</code> for additional information.</p>
+</li>
+</ul>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;PublishFileMessageResult&gt; sendFile(
+    String channel, String fileName, List&lt;int&gt; file,
+    {CipherKey? cipherKey,
+    dynamic fileMessage,
+    bool? storeFileMessage,
+    int? fileMessageTtl,
+    String? customMessageType,
+    dynamic fileMessageMeta,
+    Keyset? keyset,
+    String? using}) async {
+  _logger.info(&#39;Send file API call&#39;);
+  &#47;&#47; Validate input parameters to prevent path traversal attacks
+  FileValidation.validateChannelName(channel);
+  FileValidation.validateFileName(fileName);
+
+  keyset ??= _core.keysets[using];
+
+  var requestPayload = await _core.parser.encode({&#39;name&#39;: fileName});
+
+  var uploadDetails = await defaultFlow&lt;GenerateFileUploadUrlParams,
+          GenerateFileUploadUrlResult&gt;(
+      keyset: keyset,
+      core: _core,
+      params: GenerateFileUploadUrlParams(keyset, channel, requestPayload),
+      serialize: (object, [_]) =&gt;
+          GenerateFileUploadUrlResult.fromJson(object));
+
+  if (keyset.cipherKey != null ||
+      cipherKey != null ||
+      _core.crypto is CryptoModule) {
+    file = (cipherKey != null ||
+            !(keyset.cipherKey == _core.keysets.defaultKeyset.cipherKey))
+        ? _core.crypto.encryptFileData(cipherKey ?? keyset.cipherKey!, file)
+        : _core.crypto.encrypt(file);
+  }
+
+  var fileInfo = FileInfo(
+    uploadDetails.fileId,
+    uploadDetails.fileName,
+    getFileUrl(channel, uploadDetails.fileId, uploadDetails.fileName,
+            keyset: keyset)
+        .toString(),
+  );
+
+  var publishMessage = FileMessage(fileInfo, message: fileMessage);
+
+  var retryCount = keyset.fileMessagePublishRetryLimit;
+
+  var params = FileUploadParams(
+      uploadDetails.uploadUri, {...uploadDetails.formFields, &#39;file&#39;: file});
+
+  _logger.fine(LogEvent(
+      message: &#39;Send file API call with parameters:&#39;,
+      details: {
+        &#39;channel&#39;: channel,
+        &#39;fileName&#39;: fileName,
+        &#39;fileSize&#39;: file.length,
+        &#39;cipherKey&#39;: cipherKey != null ? &#39;provided&#39; : &#39;not provided&#39;,
+        &#39;fileMessage&#39;: fileMessage,
+        &#39;storeFileMessage&#39;: storeFileMessage,
+        &#39;fileMessageTtl&#39;: fileMessageTtl,
+        &#39;customMessageType&#39;: customMessageType,
+        &#39;fileMessageMeta&#39;: fileMessageMeta,
+      },
+      detailsType: LogEventDetailsType.apiParametersInfo));
+
+  await defaultFlow&lt;FileUploadParams, FileUploadResult&gt;(
+      keyset: keyset,
+      core: _core,
+      params: params,
+      deserialize: false,
+      serialize: (object, [_]) =&gt; FileUploadResult.fromJson(object));
+
+  var publishFileResult = PublishFileMessageResult();
+
+  do {
+    try {
+      publishFileResult = await publishFileMessage(channel, publishMessage,
+          ttl: fileMessageTtl,
+          storeMessage: storeFileMessage,
+          meta: fileMessageMeta,
+          cipherKey: cipherKey,
+          customMessageType: customMessageType,
+          keyset: keyset,
+          using: using);
+    } catch (e) {
+      publishFileResult.description =
+          &#39;File message publish failed due to $e please refer fileInfo for file details&#39;;
+      publishFileResult.isError = true;
+    }
+    if (!publishFileResult.isError!) {
+      publishFileResult.fileInfo = fileInfo;
+      return publishFileResult;
+    }
+    --retryCount;
+  } while (retryCount &gt; 0);
+
+  return publishFileResult..fileInfo = fileInfo;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">pubnub</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_files/">files</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_files/FileDx-class.html">FileDx</a></li>
+    <li class="self-crumb">sendFile method</li>
+</ol>
+
+    <h5>FileDx class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    pubnub
+      6.0.2
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

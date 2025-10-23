@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the setChannelMetadata method from the ObjectsDx class, for the Dart programming language.">
+  <title>setChannelMetadata method - ObjectsDx class - objects library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">pubnub</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_objects/">src&#47;dx&#47;objects&#47;objects.dart</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_objects/ObjectsDx-class.html">ObjectsDx</a></li>
+    <li class="self-crumb">setChannelMetadata method</li>
+  </ol>
+  <div class="self-name">setChannelMetadata</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_objects&#47;ObjectsDx-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">setChannelMetadata</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_objects_channel_metadata/SetChannelMetadataResult-class.html">SetChannelMetadataResult</a></span>&gt;</span></span>
+<span class="name ">setChannelMetadata</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="setChannelMetadata-param-channelId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channelId</span>, </span></li>
+<li><span class="parameter" id="setChannelMetadata-param-channelMetadataInput"><span class="type-annotation"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_schema/ChannelMetadataInput-class.html">ChannelMetadataInput</a></span> <span class="parameter-name">channelMetadataInput</span>, {</span></li>
+<li><span class="parameter" id="setChannelMetadata-param-includeCustomFields"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeCustomFields</span>, </span></li>
+<li><span class="parameter" id="setChannelMetadata-param-includeStatus"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeStatus</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="setChannelMetadata-param-includeType"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeType</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="setChannelMetadata-param-ifMatchesEtag"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">ifMatchesEtag</span>, </span></li>
+<li><span class="parameter" id="setChannelMetadata-param-keyset"><span class="type-annotation">dynamic</span> <span class="parameter-name">keyset</span>, </span></li>
+<li><span class="parameter" id="setChannelMetadata-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
+</ol>})
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Sets metadata for the specified <code>channelId</code> in the database.
+Returns the updated uuid object, optionally including custom properties.
+<code>channelId</code> is Channel identifier. Must not be empty, and may contain up to 92 UTF-8 byte sequences.
+Prohibited characters are ,, /, , *, :, channel, non-printable ASCII control characters, and Unicode zero.</p>
+<ul>
+<li>You can change all of the channel's metadata, except its identifier.</li>
+<li>Invalid property names are silently ignored and will not cause a request to fail.</li>
+<li>If you set the "custom" property, you must completely replace it; partial updates are not supported.</li>
+<li>The custom object can only contain scalar values.</li>
+</ul>
+<p>To omit <code>status</code> field from metadata, set <code>includeStatus</code> to <code>false</code>
+Default is <code>true</code>.</p>
+<p>To omit <code>type</code> field from metadata, set <code>includeType</code> to <code>false</code>
+Default is <code>true</code>.</p>
+<p>To include <code>custom</code> property fields in response, set <code>includeCustomFields</code> to <code>true</code>
+Omit this parameter if you don't want to retrieve additional metadata.</p>
+<p>You can provide <code>ifMatchesEtag</code> value to prevent concurrent modification of the same channel object
+this allows clients to (optionally) request that their updates only be performed if the object hasn't been modified since it was read.
+If the request is sent with an old eTag value that doesn't match the Channel object's current eTag value, the request will fail with a 412 (Precondition failed) error.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;SetChannelMetadataResult&gt; setChannelMetadata(
+    String channelId, ChannelMetadataInput channelMetadataInput,
+    {bool? includeCustomFields,
+    bool includeStatus = true,
+    bool includeType = true,
+    String? ifMatchesEtag,
+    Keyset? keyset,
+    String? using}) async {
+  keyset ??= _core.keysets[using];
+
+  Ensure(channelId).isNotNull(&#39;channelId&#39;);
+  Ensure(channelMetadataInput).isNotNull(&#39;channelMetadataInput&#39;);
+
+  var payload = await _core.parser.encode(channelMetadataInput);
+
+  var include = &lt;String&gt;{};
+  if (includeCustomFields != null &amp;&amp; includeCustomFields) {
+    include.add(&#39;custom&#39;);
+  }
+  if (includeStatus) {
+    include.add(&#39;status&#39;);
+  }
+  if (includeType) {
+    include.add(&#39;type&#39;);
+  }
+
+  var params = SetChannelMetadataParams(keyset, channelId, payload,
+      include: include, ifMatchesEtag: ifMatchesEtag);
+  _logger.fine(LogEvent(
+    message: &#39;setChannelMetadata API call with parameters:&#39;,
+    details: params,
+    detailsType: LogEventDetailsType.apiParametersInfo,
+  ));
+
+  return defaultFlow&lt;SetChannelMetadataParams, SetChannelMetadataResult&gt;(
+      keyset: keyset,
+      core: _core,
+      params: params,
+      serialize: (object, [_]) =&gt; SetChannelMetadataResult.fromJson(object));
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">pubnub</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_objects/">objects</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_objects/ObjectsDx-class.html">ObjectsDx</a></li>
+    <li class="self-crumb">setChannelMetadata method</li>
+</ol>
+
+    <h5>ObjectsDx class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    pubnub
+      6.0.2
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

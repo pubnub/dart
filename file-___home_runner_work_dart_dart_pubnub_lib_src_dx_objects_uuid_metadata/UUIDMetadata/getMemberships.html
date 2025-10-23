@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the getMemberships method from the UUIDMetadata class, for the Dart programming language.">
+  <title>getMemberships method - UUIDMetadata class - uuid_metadata library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">pubnub</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_uuid_metadata/">src&#47;dx&#47;objects&#47;uuid_metadata.dart</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_uuid_metadata/UUIDMetadata-class.html">UUIDMetadata</a></li>
+    <li class="self-crumb">getMemberships method</li>
+  </ol>
+  <div class="self-name">getMemberships</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_uuid_metadata&#47;UUIDMetadata-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">getMemberships</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_objects_membership_metadata/MembershipsResult-class.html">MembershipsResult</a></span>&gt;</span></span>
+<span class="name ">getMemberships</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="getMemberships-param-limit"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">limit</span>, </span></li>
+<li><span class="parameter" id="getMemberships-param-start"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">start</span>, </span></li>
+<li><span class="parameter" id="getMemberships-param-end"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">end</span>, </span></li>
+<li><span class="parameter" id="getMemberships-param-includeCustomFields"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeCustomFields</span>, </span></li>
+<li><span class="parameter" id="getMemberships-param-includeChannelFields"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeChannelFields</span>, </span></li>
+<li><span class="parameter" id="getMemberships-param-includeChannelCustomFields"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeChannelCustomFields</span>, </span></li>
+<li><span class="parameter" id="getMemberships-param-includeCount"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeCount</span>, </span></li>
+<li><span class="parameter" id="getMemberships-param-includeChannelStatus"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeChannelStatus</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="getMemberships-param-includeChannelType"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeChannelType</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="getMemberships-param-includeStatus"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeStatus</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="getMemberships-param-includeType"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeType</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="getMemberships-param-filter"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">filter</span>, </span></li>
+<li><span class="parameter" id="getMemberships-param-sort"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">sort</span>, </span></li>
+</ol>})
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>It returns membership metadata paginated list if <code>uuid</code></p>
+<p>To include <code>custom</code> property fields of membership in response, set <code>includeCustomFields</code> to <code>true</code>
+To include <code>channel</code> metadata fields of uuid's membership in response, set <code>includeChannelFields</code> to <code>true</code>
+To include <code>custom</code> fields of membership's channel metadata, set <code>includeChannelCustomFields</code> to <code>true</code></p>
+<p>To omit <code>status</code> field from membership metadata, set <code>includeStatus</code> to <code>false</code>
+Default is <code>true</code>.</p>
+<p>To omit <code>type</code> field from membership metadata, set <code>includeType</code> to <code>false</code>
+Default is <code>true</code>.</p>
+<p>To get <code>status</code> field of channel metadata, set <code>includeChannelStatus</code> to <code>true</code>
+Default is <code>false</code>.</p>
+<p>To omit <code>type</code> field of channel metadata, set <code>includeChannelType</code> to <code>true</code>
+Default is <code>false</code>.</p>
+<p>Use <code>limit</code> to specify Number of objects to return in response.
+Default is 100, which is also the maximum value.</p>
+<p><code>filter</code> is a Expression used to filter the results.
+Only objects whose properties satisfy the given expression are returned.</p>
+<p>Provide <code>start</code> and <code>end</code> for Previously-returned cursor bookmark for
+fetching the next/previous page.</p>
+<p>To omit <code>totalCount</code> field from paginated list, set <code>includeCount</code> to <code>false</code>
+Default is <code>true</code>.</p>
+<p>You can provide <code>sort</code> List of attributes to sort by.
+Append :asc or :desc to an attribute to specify sort direction.
+The default sort direction is ascending.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;MembershipsResult&gt; getMemberships(
+        {int? limit,
+        String? start,
+        String? end,
+        bool? includeCustomFields,
+        bool? includeChannelFields,
+        bool? includeChannelCustomFields,
+        bool? includeCount,
+        bool includeChannelStatus = false,
+        bool includeChannelType = false,
+        bool includeStatus = true,
+        bool includeType = true,
+        String? filter,
+        Set&lt;String&gt;? sort}) =&gt;
+    _objects.getMemberships(
+        uuid: _uuid,
+        limit: limit,
+        start: start,
+        end: end,
+        includeCustomFields: includeCustomFields,
+        includeChannelFields: includeChannelFields,
+        includeChannelCustomFields: includeChannelCustomFields,
+        includeCount: includeCount,
+        includeChannelStatus: includeChannelStatus,
+        includeChannelType: includeChannelType,
+        includeStatus: includeStatus,
+        includeType: includeType,
+        filter: filter,
+        sort: sort,
+        keyset: _keyset);</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">pubnub</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_uuid_metadata/">uuid_metadata</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_uuid_metadata/UUIDMetadata-class.html">UUIDMetadata</a></li>
+    <li class="self-crumb">getMemberships method</li>
+</ol>
+
+    <h5>UUIDMetadata class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    pubnub
+      6.0.2
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

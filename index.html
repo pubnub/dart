@@ -30,17 +30,14 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
   <div id="dartdoc-main-content" class="main-content">
@@ -56,7 +53,7 @@
 <p><code>pubnub</code> uses the standard <code>pub</code> tool for package management to distribute Dart code.</p>
 <p>To add the package to your Dart or Flutter project, add <code>pubnub</code> as a dependency in your <code>pubspec.yaml</code>.</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  pubnub: ^5.1.1
+  pubnub: ^6.0.2
 </code></pre>
 <p>After adding the dependency to <code>pubspec.yaml</code>, run the <code>dart pub get</code> command in the root directory of your project (the same that the <code>pubspec.yaml</code> is in).</p>
 <h3 id="using-git">Using Git</h3>
@@ -188,16 +185,702 @@ dart pub get
           <h2>Libraries</h2>
         <dl>
           <dt id="pubnub">
-  <span class="name"><a href="pubnub/pubnub-library.html">pubnub</a></span> 
+  <span class="name"><a href="pubnub/">pubnub</a></span> 
 
 </dt>
 <dd>PubNub is an SDK that allows you to communicate with
 PubNub Data Streaming Network in a fast and easy manner.
 </dd>
 
+          <dt id="cipher_key">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_crypto_cipher_key/">src/core/crypto/cipher_key</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="crypto">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_crypto_crypto/">src/core/crypto/crypto</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="endpoint">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_endpoint/">src/core/endpoint</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="exceptions">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_exceptions/">src/core/exceptions</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="keyset">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_keyset_keyset/">src/core/keyset/keyset</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="store">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_keyset_store/">src/core/keyset/store</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="logging">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_logging_logging/">src/core/logging/logging</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="base_message">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_message_base_message/">src/core/message/base_message</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="message">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_message_message/">src/core/message/message</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="message_type">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_message_message_type/">src/core/message/message_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="exceptions">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_net_exceptions/">src/core/net/exceptions</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="net">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_net_net/">src/core/net/net</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="request">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_net_request/">src/core/net/request</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="request_handler">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_net_request_handler/">src/core/net/request_handler</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="request_type">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_net_request_type/">src/core/net/request_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="response">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_net_response/">src/core/net/response</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="parser">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_parser/">src/core/parser</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="retry_policy">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_policies_retry_policy/">src/core/policies/retry_policy</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="event">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_supervisor_event/">src/core/supervisor/event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="fiber">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_supervisor_fiber/">src/core/supervisor/fiber</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="resolution">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_supervisor_resolution/">src/core/supervisor/resolution</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="signals">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_supervisor_signals/">src/core/supervisor/signals</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="supervisor">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_supervisor_supervisor/">src/core/supervisor/supervisor</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="timetoken">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_timetoken/">src/core/timetoken</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="user_id">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_user_id/">src/core/user_id</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="uuid">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_uuid/">src/core/uuid</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="aesCbcCryptor">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_aesCbcCryptor/">src/crypto/aesCbcCryptor</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="crypto">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_crypto/">src/crypto/crypto</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cryptoConfiguration">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_cryptoConfiguration/">src/crypto/cryptoConfiguration</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cryptorHeader">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_cryptorHeader/">src/crypto/cryptorHeader</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="encryption_mode">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_encryption_mode/">src/crypto/encryption_mode</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="legacyCryptor">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_legacyCryptor/">src/crypto/legacyCryptor</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="default">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_default/">src/default</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="channel_group">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_channel_group/">src/dx/_endpoints/channel_group</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="files">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_files/">src/dx/_endpoints/files</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="message_action">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_message_action/">src/dx/_endpoints/message_action</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="channel_metadata">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_objects_channel_metadata/">src/dx/_endpoints/objects/channel_metadata</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="membership_metadata">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_objects_membership_metadata/">src/dx/_endpoints/objects/membership_metadata</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="uuid_metadata">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_objects_uuid_metadata/">src/dx/_endpoints/objects/uuid_metadata</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="presence">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_presence/">src/dx/_endpoints/presence</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="publish">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_publish/">src/dx/_endpoints/publish</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="push">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_push/">src/dx/_endpoints/push</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="signal">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_signal/">src/dx/_endpoints/signal</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="time">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_time/">src/dx/_endpoints/time</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="default_flow">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_default_flow/">src/dx/_utils/default_flow</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="default_result">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_default_result/">src/dx/_utils/default_result</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="ensure">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_ensure/">src/dx/_utils/ensure</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="exceptions">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_exceptions/">src/dx/_utils/exceptions</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="file_validation">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_file_validation/">src/dx/_utils/file_validation</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="signature">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_signature/">src/dx/_utils/signature</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="time">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_time/">src/dx/_utils/time</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="utils">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_utils/">src/dx/_utils/utils</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="batch">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_batch_batch/">src/dx/batch/batch</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="channel">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_channel_channel/">src/dx/channel/channel</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="channel_group">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_channel_channel_group/">src/dx/channel/channel_group</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="channel_history">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_channel_channel_history/">src/dx/channel/channel_history</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="keyset">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_extensions_keyset/">src/dx/files/extensions/keyset</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="files">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_files/">src/dx/files/files</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="schema">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_schema/">src/dx/files/schema</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="logging_configuration">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_logging_configuration/">src/dx/logging_configuration</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="message_action">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_message_action_message_action/">src/dx/message_action/message_action</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="channel_metadata">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_channel_metadata/">src/dx/objects/channel_metadata</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="objects">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_objects/">src/dx/objects/objects</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="objects_types">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_objects_types/">src/dx/objects/objects_types</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="schema">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_schema/">src/dx/objects/schema</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="uuid_metadata">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_uuid_metadata/">src/dx/objects/uuid_metadata</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cbor">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_pam_cbor/">src/dx/pam/cbor</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="keyset">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_pam_extensions_keyset/">src/dx/pam/extensions/keyset</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="pam">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_pam_pam/">src/dx/pam/pam</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="resource">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_pam_resource/">src/dx/pam/resource</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="token">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_pam_token/">src/dx/pam/token</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="token_request">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_pam_token_request/">src/dx/pam/token_request</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="presence">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_presence_presence/">src/dx/presence/presence</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="publish">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_publish_publish/">src/dx/publish/publish</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="push">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_push_push/">src/dx/push/push</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="signal">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_signal_signal/">src/dx/signal/signal</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="supervisor">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_supervisor_supervisor/">src/dx/supervisor/supervisor</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="time">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_time/">src/dx/time</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="logging">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_logging_logging/">src/logging/logging</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="diagnostics">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_meta_diagnostics_diagnostics/">src/networking/meta/diagnostics/diagnostics</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="stub">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_meta_diagnostics_stub/">src/networking/meta/diagnostics/stub</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="meta">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_meta_meta/">src/networking/meta/meta</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="strategy">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_meta_strategy/">src/networking/meta/strategy</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="networking">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_networking/">src/networking/networking</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="request_handler">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_request_handler_request_handler/">src/networking/request_handler/request_handler</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="stub">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_request_handler_stub/">src/networking/request_handler/stub</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="response">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_response_response/">src/networking/response/response</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="stub">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_response_stub/">src/networking/response/stub</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="parser">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_parser_parser/">src/parser/parser</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="subscribe">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe__endpoints_subscribe/">src/subscribe/_endpoints/subscribe</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="envelope">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_envelope/">src/subscribe/envelope</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="keyset">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_extensions_keyset/">src/subscribe/extensions/keyset</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="manager">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_manager/">src/subscribe/manager</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="subscribe">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_subscribe/">src/subscribe/subscribe</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="subscribe_fiber">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_subscribe_loop_subscribe_fiber/">src/subscribe/subscribe_loop/subscribe_fiber</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="subscribe_loop">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_subscribe_loop_subscribe_loop/">src/subscribe/subscribe_loop/subscribe_loop</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="subscribe_loop_state">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_subscribe_loop_subscribe_loop_state/">src/subscribe/subscribe_loop/subscribe_loop_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="subscription">
+  <span class="name"><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_subscription/">src/subscribe/subscription</a></span> 
+
+</dt>
+<dd>
+</dd>
+
           <h3>Modules</h3>
             <dt id="pubnub.crypto">
-  <span class="name"><a href="pubnub.crypto/pubnub.crypto-library.html">crypto</a></span> 
+  <span class="name"><a href="pubnub.crypto/">crypto</a></span> 
     <span class="category modules cp-7" title="This is part of the Modules topic.">Modules</span>
 
 </dt>
@@ -205,7 +888,7 @@ PubNub Data Streaming Network in a fast and easy manner.
 </dd>
 
             <dt id="pubnub.logging">
-  <span class="name"><a href="pubnub.logging/pubnub.logging-library.html">logging</a></span> 
+  <span class="name"><a href="pubnub.logging/">logging</a></span> 
     <span class="category modules cp-7" title="This is part of the Modules topic.">Modules</span>
 
 </dt>
@@ -213,7 +896,7 @@ PubNub Data Streaming Network in a fast and easy manner.
 </dd>
 
             <dt id="pubnub.networking">
-  <span class="name"><a href="pubnub.networking/pubnub.networking-library.html">networking</a></span> 
+  <span class="name"><a href="pubnub.networking/">networking</a></span> 
     <span class="category modules cp-7" title="This is part of the Modules topic.">Modules</span>
 
 </dt>
@@ -245,11 +928,109 @@ PubNub Data Streaming Network in a fast and easy manner.
         <li><a href="topics/Exceptions-topic.html">Exceptions</a></li>
         <li><a href="topics/Results-topic.html">Results</a></li>
       <li class="section-title">Libraries</li>
-      <li><a href="pubnub/pubnub-library.html">pubnub</a></li>
+      <li><a href="pubnub/">pubnub</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_crypto_cipher_key/">src/core/crypto/cipher_key</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_crypto_crypto/">src/core/crypto/crypto</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_endpoint/">src/core/endpoint</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_exceptions/">src/core/exceptions</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_keyset_keyset/">src/core/keyset/keyset</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_keyset_store/">src/core/keyset/store</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_logging_logging/">src/core/logging/logging</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_message_base_message/">src/core/message/base_message</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_message_message/">src/core/message/message</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_message_message_type/">src/core/message/message_type</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_net_exceptions/">src/core/net/exceptions</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_net_net/">src/core/net/net</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_net_request/">src/core/net/request</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_net_request_handler/">src/core/net/request_handler</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_net_request_type/">src/core/net/request_type</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_net_response/">src/core/net/response</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_parser/">src/core/parser</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_policies_retry_policy/">src/core/policies/retry_policy</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_supervisor_event/">src/core/supervisor/event</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_supervisor_fiber/">src/core/supervisor/fiber</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_supervisor_resolution/">src/core/supervisor/resolution</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_supervisor_signals/">src/core/supervisor/signals</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_supervisor_supervisor/">src/core/supervisor/supervisor</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_timetoken/">src/core/timetoken</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_user_id/">src/core/user_id</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_core_uuid/">src/core/uuid</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_aesCbcCryptor/">src/crypto/aesCbcCryptor</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_crypto/">src/crypto/crypto</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_cryptoConfiguration/">src/crypto/cryptoConfiguration</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_cryptorHeader/">src/crypto/cryptorHeader</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_encryption_mode/">src/crypto/encryption_mode</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_legacyCryptor/">src/crypto/legacyCryptor</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_default/">src/default</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_channel_group/">src/dx/_endpoints/channel_group</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_files/">src/dx/_endpoints/files</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_message_action/">src/dx/_endpoints/message_action</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_objects_channel_metadata/">src/dx/_endpoints/objects/channel_metadata</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_objects_membership_metadata/">src/dx/_endpoints/objects/membership_metadata</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_objects_uuid_metadata/">src/dx/_endpoints/objects/uuid_metadata</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_presence/">src/dx/_endpoints/presence</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_publish/">src/dx/_endpoints/publish</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_push/">src/dx/_endpoints/push</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_signal/">src/dx/_endpoints/signal</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_time/">src/dx/_endpoints/time</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_default_flow/">src/dx/_utils/default_flow</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_default_result/">src/dx/_utils/default_result</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_ensure/">src/dx/_utils/ensure</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_exceptions/">src/dx/_utils/exceptions</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_file_validation/">src/dx/_utils/file_validation</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_signature/">src/dx/_utils/signature</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_time/">src/dx/_utils/time</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx__utils_utils/">src/dx/_utils/utils</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_batch_batch/">src/dx/batch/batch</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_channel_channel/">src/dx/channel/channel</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_channel_channel_group/">src/dx/channel/channel_group</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_channel_channel_history/">src/dx/channel/channel_history</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_extensions_keyset/">src/dx/files/extensions/keyset</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_files/">src/dx/files/files</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_files_schema/">src/dx/files/schema</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_logging_configuration/">src/dx/logging_configuration</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_message_action_message_action/">src/dx/message_action/message_action</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_channel_metadata/">src/dx/objects/channel_metadata</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_objects/">src/dx/objects/objects</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_objects_types/">src/dx/objects/objects_types</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_schema/">src/dx/objects/schema</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_uuid_metadata/">src/dx/objects/uuid_metadata</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_pam_cbor/">src/dx/pam/cbor</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_pam_extensions_keyset/">src/dx/pam/extensions/keyset</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_pam_pam/">src/dx/pam/pam</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_pam_resource/">src/dx/pam/resource</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_pam_token/">src/dx/pam/token</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_pam_token_request/">src/dx/pam/token_request</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_presence_presence/">src/dx/presence/presence</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_publish_publish/">src/dx/publish/publish</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_push_push/">src/dx/push/push</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_signal_signal/">src/dx/signal/signal</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_supervisor_supervisor/">src/dx/supervisor/supervisor</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_dx_time/">src/dx/time</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_logging_logging/">src/logging/logging</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_meta_diagnostics_diagnostics/">src/networking/meta/diagnostics/diagnostics</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_meta_diagnostics_stub/">src/networking/meta/diagnostics/stub</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_meta_meta/">src/networking/meta/meta</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_meta_strategy/">src/networking/meta/strategy</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_networking/">src/networking/networking</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_request_handler_request_handler/">src/networking/request_handler/request_handler</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_request_handler_stub/">src/networking/request_handler/stub</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_response_response/">src/networking/response/response</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_networking_response_stub/">src/networking/response/stub</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_parser_parser/">src/parser/parser</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe__endpoints_subscribe/">src/subscribe/_endpoints/subscribe</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_envelope/">src/subscribe/envelope</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_extensions_keyset/">src/subscribe/extensions/keyset</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_manager/">src/subscribe/manager</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_subscribe/">src/subscribe/subscribe</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_subscribe_loop_subscribe_fiber/">src/subscribe/subscribe_loop/subscribe_fiber</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_subscribe_loop_subscribe_loop/">src/subscribe/subscribe_loop/subscribe_loop</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_subscribe_loop_subscribe_loop_state/">src/subscribe/subscribe_loop/subscribe_loop_state</a></li>
+      <li><a href="file-___home_runner_work_dart_dart_pubnub_lib_src_subscribe_subscription/">src/subscribe/subscription</a></li>
       <li class="section-subtitle">Modules</li>
-        <li class="section-subitem"><a href="pubnub.crypto/pubnub.crypto-library.html">crypto</a></li>
-        <li class="section-subitem"><a href="pubnub.logging/pubnub.logging-library.html">logging</a></li>
-        <li class="section-subitem"><a href="pubnub.networking/pubnub.networking-library.html">networking</a></li>
+        <li class="section-subitem"><a href="pubnub.crypto/">crypto</a></li>
+        <li class="section-subitem"><a href="pubnub.logging/">logging</a></li>
+        <li class="section-subitem"><a href="pubnub.networking/">networking</a></li>
 </ol>
 
   </div>
@@ -259,7 +1040,7 @@ PubNub Data Streaming Network in a fast and easy manner.
 <footer>
   <span class="no-break">
     pubnub
-      5.1.1
+      6.0.2
   </span>
   
 </footer>

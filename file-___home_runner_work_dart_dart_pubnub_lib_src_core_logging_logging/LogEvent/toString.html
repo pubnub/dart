@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the toString method from the LogEvent class, for the Dart programming language.">
+  <title>toString method - LogEvent class - logging library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">pubnub</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_core_logging_logging/">src&#47;core&#47;logging&#47;logging.dart</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_core_logging_logging/LogEvent-class.html">LogEvent</a></li>
+    <li class="self-crumb">toString method</li>
+  </ol>
+  <div class="self-name">toString</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="file-___home_runner_work_dart_dart_pubnub_lib_src_core_logging_logging&#47;LogEvent-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">toString</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.dart.dev/stable/3.9.4/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span>
+<span class="name ">toString</span>(<wbr>)
+
+      <div class="features"><span class="feature">override</span></div>
+
+    </section>
+    
+<section class="desc markdown">
+  <p>A string representation of this object.</p>
+<p>Some classes have a default textual representation,
+often paired with a static <code>parse</code> function (like <a href="https://api.dart.dev/stable/3.9.4/dart-core/int/parse.html">int.parse</a>).
+These classes will provide the textual representation as
+their string representation.</p>
+<p>Other classes have no meaningful textual representation
+that a program will care about.
+Such classes will typically override <code>toString</code> to provide
+useful information when inspecting the object,
+mainly for debugging or logging.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">@override
+String toString() {
+  var messageString = message ?? &#39;&#39;;
+  try {
+    if (detailsType == LogEventDetailsType.pubNubInstanceInfo) {
+      var pubnub = details as PubNub;
+      var keysets = pubnub.keysets;
+
+      messageString += &#39;\n\tPubNub Instance Information:&#39;;
+      messageString += &#39;\n\tInstance ID: ${Core.instanceId}&#39;;
+      messageString += &#39;\n\tVersion: ${Core.version}&#39;;
+
+      &#47;&#47; Log module information
+      messageString += &#39;\n\tModules:&#39;;
+      messageString += &#39;\n\t  Networking: ${pubnub.networking}&#39;;
+      messageString += &#39;\n\t  Parser: ${pubnub.parser}&#39;;
+      messageString += &#39;\n\t  Crypto: ${pubnub.crypto}&#39;;
+
+      &#47;&#47; Log keyset information
+      messageString += &#39;\n\tKeysets:&#39;;
+      var allKeysets = keysets.keysets;
+      if (allKeysets.isEmpty) {
+        messageString += &#39;\n\t  No keysets configured&#39;;
+      } else {
+        &#47;&#47; Get all keyset names by trying to access them
+        var keysetNames = &lt;String&gt;[];
+        try {
+          &#47;&#47; Try to get the default keyset name by checking which one is the default
+          var defaultKeyset = keysets.defaultKeyset;
+          for (var keyset in allKeysets) {
+            &#47;&#47; Find the name by comparing with default
+            if (keyset == defaultKeyset) {
+              keysetNames.add(&#39;default&#39;);
+            } else {
+              &#47;&#47; For non-default keysets, we&#39;ll use a generic name
+              keysetNames.add(&#39;keyset_${keysetNames.length + 1}&#39;);
+            }
+          }
+        } catch (e) {
+          &#47;&#47; If no default keyset, just number them
+          for (var i = 0; i &lt; allKeysets.length; i++) {
+            keysetNames.add(&#39;keyset_${i + 1}&#39;);
+          }
+        }
+
+        for (var i = 0; i &lt; allKeysets.length; i++) {
+          var keyset = allKeysets[i];
+          var name = keysetNames[i];
+          messageString += &#39;\n\t  $name:&#39;;
+          messageString += keyset.toString();
+          if (i == 0 &amp;&amp; keysetNames[i] == &#39;default&#39;) {
+            messageString += &#39;\n\t    (Default)&#39;;
+          }
+        }
+      }
+    } else if (detailsType == LogEventDetailsType.apiParametersInfo) {
+      final detailsMap = _parametersToJson(details);
+      messageString +=
+          &#39;\n\t${detailsMap.entries.map((entry) =&gt; &#39;${entry.key}: ${entry.value}&#39;).join(&#39;\n\t&#39;)}&#39;;
+    } else if (detailsType == LogEventDetailsType.networkRequestInfo) {
+      messageString += (details as Request).toString();
+    } else if (detailsType == LogEventDetailsType.networkResponseInfo) {
+      if (details is Response) {
+        messageString += details.toString();
+      } else if (details is Map) {
+        var detailsMap = details as Map&lt;String, dynamic&gt;;
+        var request = detailsMap[&#39;request&#39;] as Request;
+        var response = detailsMap[&#39;response&#39;] as Response;
+        messageString += &#39;\n\tURL: ${request.uri}&#39;;
+        messageString += response.toString();
+      }
+    }
+  } catch (e) {
+    messageString += &#39;\n logging error: $e&#39;;
+  }
+  return messageString;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">pubnub</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_core_logging_logging/">logging</a></li>
+    <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_core_logging_logging/LogEvent-class.html">LogEvent</a></li>
+    <li class="self-crumb">toString method</li>
+</ol>
+
+    <h5>LogEvent class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    pubnub
+      6.0.2
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
