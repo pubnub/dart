@@ -47,4 +47,4 @@ jobs:
         uses: ./.github/.release/actions/actions/services/pub
         with:
           token: ${{ secrets.GH_TOKEN }}
-          issue-number: ${{ inputs.issueId }}
+          issue-number: ${{ inputs['issue-number'] }}
