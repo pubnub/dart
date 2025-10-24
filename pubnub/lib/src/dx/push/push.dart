@@ -15,7 +15,7 @@ mixin PushNotificationDx on Core {
   /// [deviceId] is the id/token of the device.
   /// [gateway] indicates the backend to use for push service:
   /// * apns or apns2 for Apple service.
-  /// * gcm for Google service.
+  /// * fcm for Google service.
   /// * mpns for Microsoft service.
   ///
   /// If [gateway] is [PushGateway.apns2] then [topic] is mandatory to provide.

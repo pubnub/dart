@@ -183,7 +183,14 @@ class Subscription {
   Future<void> dispose() => cancel();
 
   /// Alias for [resume].
-  void subscribe() => resume();
+  void subscribe() {
+    if (!isPaused || isCancelled) {
+      _manager
+          .reconnect(); // Reconnect the subscription, when not intentionally paused.
+    } else {
+      resume(); // Resume the subscription, which was intentionally paused.
+    }
+  }
 
   /// Alias for [pause].
   void unsubscribe() => pause();

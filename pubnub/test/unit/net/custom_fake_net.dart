@@ -76,8 +76,8 @@ class FakeCustomRequestHandler extends IRequestHandler {
 
       if (doesMethodMatch && doesBodyMatch && doesUriMatch) {
         if (![200, 204].contains(mock.response.statusCode)) {
-          throw original.MockException(
-              'HTTP ${mock.response.statusCode}: ${mock.response.body}');
+          throw RequestFailureException(mock.response,
+              statusCode: mock.response.statusCode);
         } else {
           return mock.response;
         }

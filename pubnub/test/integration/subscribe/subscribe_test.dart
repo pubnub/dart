@@ -21,7 +21,7 @@ void main() {
         defaultKeyset: Keyset(
           subscribeKey: SUBSCRIBE_KEY,
           publishKey: PUBLISH_KEY,
-          uuid: UUID('dart-test'),
+          userId: UserId('dart-test'),
         ),
       );
       var channel = 'test-${DateTime.now().millisecondsSinceEpoch}';
@@ -66,7 +66,7 @@ void main() {
         defaultKeyset: Keyset(
           subscribeKey: SUBSCRIBE_KEY,
           publishKey: PUBLISH_KEY,
-          uuid: UUID('dart-test'),
+          userId: UserId('dart-test'),
         ),
       );
       var customOldTimetoken =

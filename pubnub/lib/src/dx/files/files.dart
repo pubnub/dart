@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/files.dart';
+import 'package:pubnub/src/dx/pam/extensions/keyset.dart';
 
 import '../../../crypto.dart';
 import 'schema.dart';
@@ -363,7 +364,7 @@ class FileDx {
       'uuid': keyset.uuid.value,
       if (keyset.secretKey != null)
         'timestamp': '${Time().now()!.millisecondsSinceEpoch ~/ 1000}',
-      if (keyset.authKey != null) 'auth': keyset.authKey!
+      if (keyset.hasAuth()) 'auth': keyset.getAuth()
     };
     if (keyset.secretKey != null) {
       queryParams.addAll(

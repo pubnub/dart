@@ -101,5 +101,5 @@ class ForbiddenException extends PubNubException {
   final String reason;
 
   ForbiddenException(this.service, this.reason)
-      : super('Forbidden because $reason');
+      : super('Forbidden error, with deatils: $reason');
 }

@@ -3,8 +3,8 @@ import '../_utils/utils.dart';
 
 /// Push gateway type.
 ///
-/// * [apns]and [apns2] uses Apple services.
-/// * [fcm] and [gcm] uses Google services.
+/// * [apns]and [apns2] use Apple services.
+/// * [fcm] uses Google services.
 /// * [mpns] uses Microsoft services.
 ///
 /// {@category Push}
@@ -32,13 +32,13 @@ extension PushGatewayExtension on PushGateway {
   String value() {
     switch (this) {
       case PushGateway.fcm:
-        return 'gcm';
+        return 'fcm';
       case PushGateway.gcm:
-        return 'gcm';
+        return 'fcm';
       case PushGateway.apns:
         return 'apns';
       case PushGateway.mpns:
-        return 'apns';
+        return 'mpns';
       case PushGateway.apns2:
         return 'apns2';
     }

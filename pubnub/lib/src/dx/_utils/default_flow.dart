@@ -89,7 +89,10 @@ Future<R> _defaultFlow<P extends Parameters, R>({
     dynamic error;
     try {
       error = await core.parser.decode(exception.response.text,
-          type: request.type == RequestType.file ? 'xml' : 'json');
+          type: request.type == RequestType.file ||
+                  exception.response.text.startsWith('<?xml')
+              ? 'xml'
+              : 'json');
 
       if (error is Map) {
         error = DefaultResult.fromJson(error);

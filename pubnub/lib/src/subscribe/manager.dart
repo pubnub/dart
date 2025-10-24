@@ -79,4 +79,11 @@ class Manager {
   Future<void> restore() async {
     _loop.update((state) => state.clone(isErrored: false), skipCancel: false);
   }
+
+  void reconnect() {
+    _loop.update(
+        (state) =>
+            state.clone(timetoken: Timetoken(BigInt.zero), isErrored: false),
+        skipCancel: false);
+  }
 }

@@ -359,6 +359,72 @@ void main() {
         expect(fileUrl.queryParameters, contains('auth'));
         expect(fileUrl.queryParameters['auth'], equals('test-auth-key'));
       });
+
+      test('getFileUrl should use token value set by setToken method', () {
+        var testToken = 'test-token-abc123';
+
+        // Create PubNub instance with basic keyset (no authKey or token initially)
+        var basicKeyset = Keyset(
+            subscribeKey: 'test', publishKey: 'test', userId: UserId('test'));
+
+        pubnub = PubNub(
+          defaultKeyset: basicKeyset,
+          networking: FakeNetworkingModule(),
+        );
+
+        // Verify no auth parameter initially
+        var fileUrlBefore =
+            pubnub.files.getFileUrl('test-channel', 'file-id', 'file.txt');
+        expect(fileUrlBefore.queryParameters, isNot(contains('auth')));
+
+        // Set token using setToken method
+        pubnub.setToken(testToken);
+
+        // Get file URL after setting token
+        var fileUrlAfter =
+            pubnub.files.getFileUrl('test-channel', 'file-id', 'file.txt');
+
+        // Verify auth parameter is present and contains the token value
+        expect(fileUrlAfter.queryParameters, contains('auth'));
+        expect(fileUrlAfter.queryParameters['auth'], equals(testToken));
+      });
+
+      test(
+          'getFileUrl should prioritize token over authKey when both are present',
+          () {
+        var testToken = 'priority-token-xyz789';
+        var authKey = 'fallback-auth-key';
+
+        // Create PubNub instance with authKey
+        var keysetWithAuth = Keyset(
+            subscribeKey: 'test',
+            publishKey: 'test',
+            authKey: authKey,
+            userId: UserId('test'));
+
+        pubnub = PubNub(
+          defaultKeyset: keysetWithAuth,
+          networking: FakeNetworkingModule(),
+        );
+
+        // Verify it uses authKey initially
+        var fileUrlWithAuthKey =
+            pubnub.files.getFileUrl('test-channel', 'file-id', 'file.txt');
+        expect(fileUrlWithAuthKey.queryParameters['auth'], equals(authKey));
+
+        // Set token using setToken method
+        pubnub.setToken(testToken);
+
+        // Get file URL after setting token
+        var fileUrlWithToken =
+            pubnub.files.getFileUrl('test-channel', 'file-id', 'file.txt');
+
+        // Verify it now uses the token instead of authKey
+        expect(fileUrlWithToken.queryParameters, contains('auth'));
+        expect(fileUrlWithToken.queryParameters['auth'], equals(testToken));
+        expect(
+            fileUrlWithToken.queryParameters['auth'], isNot(equals(authKey)));
+      });
     });
 
     // GROUP 7: Error Handling
@@ -386,6 +452,227 @@ void main() {
 
         expect(() async => await pubnub.files.listFiles('test-channel'),
             throwsA(isA<PubNubException>()));
+      });
+
+      test('sendFile should handle EntityTooLarge XML error from S3', () async {
+        // Mock the generate upload URL to succeed
+        enhanced
+            .whenExternal(
+                method: 'POST',
+                path:
+                    '/v1/files/test/channels/test-channel/generate-upload-url?uuid=test',
+                body: '{"name":"large-file.txt"}')
+            .then(status: 200, body: '''
+          {
+            "data": {
+              "id": "large-file-id-123",
+              "name": "large-file.txt"
+            },
+            "file_upload_request": {
+              "url": "https://s3.example.com/upload",
+              "form_fields": [
+                {"key": "key", "value": "files/large-file-id-123/large-file.txt"},
+                {"key": "bucket", "value": "pubnub-files"}
+              ]
+            }
+          }
+          ''');
+
+        // Mock the S3 upload to return EntityTooLarge XML error
+        enhanced
+            .whenExternal(
+                method: 'POST',
+                path: 'https://s3.example.com/upload',
+                body: 'FILE_UPLOAD_DATA')
+            .then(status: 413, body: _entityTooLargeXmlError);
+
+        var largeFileContent =
+            List<int>.filled(5244154, 65); // Content that exceeds limit
+
+        expect(
+            () async => await pubnub.files
+                .sendFile('test-channel', 'large-file.txt', largeFileContent),
+            throwsA(predicate((e) =>
+                e is PubNubException &&
+                e.message.contains('EntityTooLarge') &&
+                e.message.contains('exceeds the maximum allowed size') &&
+                e.message.contains('5244154') &&
+                e.message.contains('5242880'))));
+      });
+
+      test('downloadFile should handle NoSuchKey XML error from S3', () async {
+        enhanced
+            .whenExternal(
+                method: 'GET',
+                path:
+                    '/v1/files/test/channels/test-channel/files/nonexistent-file-id/nonexistent-file.txt?uuid=test')
+            .then(status: 404, body: _noSuchKeyXmlError);
+
+        expect(
+            () async => await pubnub.files.downloadFile(
+                'test-channel', 'nonexistent-file-id', 'nonexistent-file.txt'),
+            throwsA(predicate((e) =>
+                e is PubNubException &&
+                e.message.contains('NoSuchKey') &&
+                e.message.contains('specified key does not exist') &&
+                e.message.contains(
+                    'files/nonexistent-file-id/nonexistent-file.txt'))));
+      });
+
+      test('sendFile should handle AccessDenied XML error from S3', () async {
+        // Mock the generate upload URL to succeed
+        enhanced
+            .whenExternal(
+                method: 'POST',
+                path:
+                    '/v1/files/test/channels/test-channel/generate-upload-url?uuid=test',
+                body: '{"name":"access-denied-file.txt"}')
+            .then(status: 200, body: '''
+          {
+            "data": {
+              "id": "access-denied-file-id",
+              "name": "access-denied-file.txt"
+            },
+            "file_upload_request": {
+              "url": "https://s3.example.com/upload",
+              "form_fields": [
+                {"key": "key", "value": "files/access-denied-file-id/access-denied-file.txt"},
+                {"key": "bucket", "value": "pubnub-files"}
+              ]
+            }
+          }
+          ''');
+
+        // Mock the S3 upload to return AccessDenied XML error
+        enhanced
+            .whenExternal(
+                method: 'POST',
+                path: 'https://s3.example.com/upload',
+                body: 'FILE_UPLOAD_DATA')
+            .then(status: 403, body: _accessDeniedXmlError);
+
+        var fileContent = utf8.encode('Test file content');
+
+        expect(
+            () async => await pubnub.files.sendFile(
+                'test-channel', 'access-denied-file.txt', fileContent),
+            throwsA(predicate((e) =>
+                e is PubNubException &&
+                e.message.contains('AccessDenied') &&
+                e.message.contains('Access Denied'))));
+      });
+
+      test('sendFile should handle SignatureDoesNotMatch XML error from S3',
+          () async {
+        // Mock the generate upload URL to succeed
+        enhanced
+            .whenExternal(
+                method: 'POST',
+                path:
+                    '/v1/files/test/channels/test-channel/generate-upload-url?uuid=test',
+                body: '{"name":"signature-error-file.txt"}')
+            .then(status: 200, body: '''
+          {
+            "data": {
+              "id": "signature-error-file-id",
+              "name": "signature-error-file.txt"
+            },
+            "file_upload_request": {
+              "url": "https://s3.example.com/upload",
+              "form_fields": [
+                {"key": "key", "value": "files/signature-error-file-id/signature-error-file.txt"},
+                {"key": "bucket", "value": "pubnub-files"}
+              ]
+            }
+          }
+          ''');
+
+        // Mock the S3 upload to return SignatureDoesNotMatch XML error
+        enhanced
+            .whenExternal(
+                method: 'POST',
+                path: 'https://s3.example.com/upload',
+                body: 'FILE_UPLOAD_DATA')
+            .then(status: 403, body: _signatureDoesNotMatchXmlError);
+
+        var fileContent = utf8.encode('Test file content');
+
+        expect(
+            () async => await pubnub.files.sendFile(
+                'test-channel', 'signature-error-file.txt', fileContent),
+            throwsA(predicate((e) =>
+                e is PubNubException &&
+                e.message.contains('SignatureDoesNotMatch') &&
+                e.message.contains('signature we calculated does not match') &&
+                e.message.contains('AKIAIOSFODNN7EXAMPLE'))));
+      });
+
+      test('downloadFile should handle InternalError XML from S3', () async {
+        enhanced
+            .whenExternal(
+                method: 'GET',
+                path:
+                    '/v1/files/test/channels/test-channel/files/error-file-id/error-file.txt?uuid=test')
+            .then(status: 500, body: _internalErrorXmlError);
+
+        expect(
+            () async => await pubnub.files.downloadFile(
+                'test-channel', 'error-file-id', 'error-file.txt'),
+            throwsA(predicate((e) =>
+                e is PubNubException &&
+                e.message.contains('InternalError') &&
+                e.message.contains('We encountered an internal error'))));
+      });
+
+      test('listFiles should handle XML errors from S3', () async {
+        enhanced
+            .whenExternal(
+                method: 'GET',
+                path: '/v1/files/test/channels/test-channel/files?uuid=test')
+            .then(status: 400, body: _invalidBucketNameXmlError);
+
+        expect(
+            () async => await pubnub.files.listFiles('test-channel'),
+            throwsA(predicate((e) =>
+                e is PubNubException &&
+                e.message.contains('InvalidBucketName') &&
+                e.message.contains('specified bucket is not valid'))));
+      });
+
+      test('deleteFile should handle XML errors from S3', () async {
+        enhanced
+            .whenExternal(
+                method: 'DELETE',
+                path:
+                    '/v1/files/test/channels/test-channel/files/delete-file-id/delete-file.txt?uuid=test')
+            .then(status: 404, body: _deleteFileNoSuchKeyXmlError);
+
+        expect(
+            () async => await pubnub.files.deleteFile(
+                'test-channel', 'delete-file-id', 'delete-file.txt'),
+            throwsA(predicate((e) =>
+                e is PubNubException &&
+                e.message.contains('NoSuchKey') &&
+                e.message.contains('specified key does not exist'))));
+      });
+
+      test('should handle XML error with special characters and encoding',
+          () async {
+        enhanced
+            .whenExternal(
+                method: 'GET',
+                path:
+                    '/v1/files/test/channels/test-channel/files/special-file-id/special-file.txt?uuid=test')
+            .then(status: 400, body: _specialCharactersXmlError);
+
+        expect(
+            () async => await pubnub.files.downloadFile(
+                'test-channel', 'special-file-id', 'special-file.txt'),
+            throwsA(predicate((e) =>
+                e is PubNubException &&
+                e.message.contains('InvalidArgument') &&
+                e.message.contains('<test> & "quotes" \'single\'') &&
+                e.message.contains('test<>&"\'file.txt'))));
       });
     });
 

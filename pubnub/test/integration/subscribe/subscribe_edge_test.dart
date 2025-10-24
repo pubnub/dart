@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:test/test.dart';
 import 'package:pubnub/pubnub.dart';
+import 'package:pubnub/core.dart';
 
 void main() {
   late PubNub pubnub;
@@ -180,8 +181,22 @@ void main() {
 class BrokenNetworkingModule extends NetworkingModule {
   BrokenNetworkingModule() : super();
 
-  // @override
-  // Future<dynamic> handler() async {
-  //   throw PubNubException('Network error');
-  // }
+  @override
+  Future<IRequestHandler> handler() async {
+    return BrokenRequestHandler();
+  }
+}
+
+// Mock request handler that always throws network errors
+class BrokenRequestHandler extends IRequestHandler {
+  @override
+  bool get isCancelled => false;
+
+  @override
+  void cancel([reason]) {}
+
+  @override
+  Future<IResponse> response(Request request) async {
+    throw PubNubException('Network error');
+  }
 }

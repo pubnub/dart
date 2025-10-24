@@ -1,12 +1,553 @@
 import 'package:test/test.dart';
 
 import 'package:pubnub/pubnub.dart';
+import 'package:pubnub/src/dx/_endpoints/push.dart';
 
 import '../net/fake_net.dart';
 part './fixtures/push.dart';
 
 void main() {
   late PubNub pubnub;
+
+  // URL Generation Tests for PushGateway enum usage
+  group('DX [pushNotification] URL Generation Tests', () {
+    late Keyset keyset;
+
+    setUp(() {
+      keyset = Keyset(
+        subscribeKey: 'test-sub-key',
+        publishKey: 'test-pub-key',
+        uuid: UUID('test-uuid'),
+        authKey: 'test-auth-key',
+      );
+    });
+
+    group('ListPushChannelsParams URL generation', () {
+      test('generates correct URL for FCM gateway', () {
+        var params = ListPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.fcm,
+          start: 'ch1',
+          count: 100,
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.pathSegments,
+            equals([
+              'v1',
+              'push',
+              'sub-key',
+              'test-sub-key',
+              'devices',
+              'device123'
+            ]));
+        expect(request.uri!.queryParameters['type'], equals('fcm'));
+        expect(request.uri!.queryParameters['uuid'], equals('test-uuid'));
+        expect(request.uri!.queryParameters['auth'], equals('test-auth-key'));
+        expect(request.uri!.queryParameters['start'], equals('ch1'));
+        expect(request.uri!.queryParameters['count'], equals('100'));
+      });
+
+      test('generates correct URL for GCM gateway (maps to FCM)', () {
+        var params = ListPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.gcm,
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.pathSegments,
+            equals([
+              'v1',
+              'push',
+              'sub-key',
+              'test-sub-key',
+              'devices',
+              'device123'
+            ]));
+        expect(request.uri!.queryParameters['type'], equals('fcm'));
+      });
+
+      test('generates correct URL for APNS gateway', () {
+        var params = ListPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.apns,
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.pathSegments,
+            equals([
+              'v1',
+              'push',
+              'sub-key',
+              'test-sub-key',
+              'devices',
+              'device123'
+            ]));
+        expect(request.uri!.queryParameters['type'], equals('apns'));
+      });
+
+      test('generates correct URL for MPNS gateway', () {
+        var params = ListPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.mpns,
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.pathSegments,
+            equals([
+              'v1',
+              'push',
+              'sub-key',
+              'test-sub-key',
+              'devices',
+              'device123'
+            ]));
+        expect(request.uri!.queryParameters['type'], equals('mpns'));
+      });
+
+      test(
+          'generates correct URL for APNS2 gateway with development environment',
+          () {
+        var params = ListPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.apns2,
+          topic: 'com.example.app',
+          environment: Environment.development,
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.pathSegments,
+            equals([
+              'v2',
+              'push',
+              'sub-key',
+              'test-sub-key',
+              'devices-apns2',
+              'device123'
+            ]));
+        expect(
+            request.uri!.queryParameters['environment'], equals('development'));
+        expect(
+            request.uri!.queryParameters['topic'], equals('com.example.app'));
+        expect(request.uri!.queryParameters.containsKey('type'), isFalse);
+      });
+
+      test(
+          'generates correct URL for APNS2 gateway with production environment',
+          () {
+        var params = ListPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.apns2,
+          topic: 'com.example.app',
+          environment: Environment.production,
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.pathSegments,
+            equals([
+              'v2',
+              'push',
+              'sub-key',
+              'test-sub-key',
+              'devices-apns2',
+              'device123'
+            ]));
+        expect(
+            request.uri!.queryParameters['environment'], equals('production'));
+        expect(
+            request.uri!.queryParameters['topic'], equals('com.example.app'));
+        expect(request.uri!.queryParameters.containsKey('type'), isFalse);
+      });
+
+      test(
+          'generates correct URL for APNS2 gateway with default development environment',
+          () {
+        var params = ListPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.apns2,
+          topic: 'com.example.app',
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.queryParameters['environment'], equals('development'));
+      });
+    });
+
+    group('AddPushChannelsParams URL generation', () {
+      test('generates correct URL for FCM gateway', () {
+        var params = AddPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.fcm,
+          {'channel1', 'channel2'},
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.pathSegments,
+            equals([
+              'v1',
+              'push',
+              'sub-key',
+              'test-sub-key',
+              'devices',
+              'device123'
+            ]));
+        expect(request.uri!.queryParameters['type'], equals('fcm'));
+        expect(
+            request.uri!.queryParameters['add'], equals('channel1,channel2'));
+      });
+
+      test('generates correct URL for GCM gateway (maps to FCM)', () {
+        var params = AddPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.gcm,
+          {'channel1'},
+        );
+
+        var request = params.toRequest();
+
+        expect(request.uri!.queryParameters['type'], equals('fcm'));
+      });
+
+      test('generates correct URL for APNS gateway', () {
+        var params = AddPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.apns,
+          {'channel1'},
+        );
+
+        var request = params.toRequest();
+
+        expect(request.uri!.queryParameters['type'], equals('apns'));
+      });
+
+      test('generates correct URL for MPNS gateway', () {
+        var params = AddPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.mpns,
+          {'channel1'},
+        );
+
+        var request = params.toRequest();
+
+        expect(request.uri!.queryParameters['type'], equals('mpns'));
+      });
+
+      test('generates correct URL for APNS2 gateway', () {
+        var params = AddPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.apns2,
+          {'channel1', 'channel2'},
+          topic: 'com.example.app',
+          environment: Environment.production,
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.pathSegments,
+            equals([
+              'v2',
+              'push',
+              'sub-key',
+              'test-sub-key',
+              'devices-apns2',
+              'device123'
+            ]));
+        expect(
+            request.uri!.queryParameters['environment'], equals('production'));
+        expect(
+            request.uri!.queryParameters['topic'], equals('com.example.app'));
+        expect(
+            request.uri!.queryParameters['add'], equals('channel1,channel2'));
+        expect(request.uri!.queryParameters.containsKey('type'), isFalse);
+      });
+    });
+
+    group('RemovePushChannelsParams URL generation', () {
+      test('generates correct URL for FCM gateway', () {
+        var params = RemovePushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.fcm,
+          {'channel1', 'channel2'},
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.pathSegments,
+            equals([
+              'v1',
+              'push',
+              'sub-key',
+              'test-sub-key',
+              'devices',
+              'device123'
+            ]));
+        expect(request.uri!.queryParameters['type'], equals('fcm'));
+        expect(request.uri!.queryParameters['remove'],
+            equals('channel1,channel2'));
+      });
+
+      test('generates correct URL for GCM gateway (maps to FCM)', () {
+        var params = RemovePushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.gcm,
+          {'channel1'},
+        );
+
+        var request = params.toRequest();
+
+        expect(request.uri!.queryParameters['type'], equals('fcm'));
+      });
+
+      test('generates correct URL for APNS gateway', () {
+        var params = RemovePushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.apns,
+          {'channel1'},
+        );
+
+        var request = params.toRequest();
+
+        expect(request.uri!.queryParameters['type'], equals('apns'));
+      });
+
+      test('generates correct URL for MPNS gateway', () {
+        var params = RemovePushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.mpns,
+          {'channel1'},
+        );
+
+        var request = params.toRequest();
+
+        expect(request.uri!.queryParameters['type'], equals('mpns'));
+      });
+
+      test('generates correct URL for APNS2 gateway', () {
+        var params = RemovePushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.apns2,
+          {'channel1', 'channel2'},
+          topic: 'com.example.app',
+          environment: Environment.development,
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.pathSegments,
+            equals([
+              'v2',
+              'push',
+              'sub-key',
+              'test-sub-key',
+              'devices-apns2',
+              'device123'
+            ]));
+        expect(
+            request.uri!.queryParameters['environment'], equals('development'));
+        expect(
+            request.uri!.queryParameters['topic'], equals('com.example.app'));
+        expect(request.uri!.queryParameters['remove'],
+            equals('channel1,channel2'));
+        expect(request.uri!.queryParameters.containsKey('type'), isFalse);
+      });
+    });
+
+    group('RemoveDeviceParams URL generation', () {
+      test('generates correct URL for FCM gateway', () {
+        var params = RemoveDeviceParams(
+          keyset,
+          'device123',
+          PushGateway.fcm,
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.pathSegments,
+            equals([
+              'v1',
+              'push',
+              'sub-key',
+              'test-sub-key',
+              'devices',
+              'device123',
+              'remove'
+            ]));
+        expect(request.uri!.queryParameters['type'], equals('fcm'));
+      });
+
+      test('generates correct URL for GCM gateway (maps to FCM)', () {
+        var params = RemoveDeviceParams(
+          keyset,
+          'device123',
+          PushGateway.gcm,
+        );
+
+        var request = params.toRequest();
+
+        expect(request.uri!.queryParameters['type'], equals('fcm'));
+      });
+
+      test('generates correct URL for APNS gateway', () {
+        var params = RemoveDeviceParams(
+          keyset,
+          'device123',
+          PushGateway.apns,
+        );
+
+        var request = params.toRequest();
+
+        expect(request.uri!.queryParameters['type'], equals('apns'));
+      });
+
+      test('generates correct URL for MPNS gateway', () {
+        var params = RemoveDeviceParams(
+          keyset,
+          'device123',
+          PushGateway.mpns,
+        );
+
+        var request = params.toRequest();
+
+        expect(request.uri!.queryParameters['type'], equals('mpns'));
+      });
+
+      test('generates correct URL for APNS2 gateway', () {
+        var params = RemoveDeviceParams(
+          keyset,
+          'device123',
+          PushGateway.apns2,
+          topic: 'com.example.app',
+          environment: Environment.production,
+        );
+
+        var request = params.toRequest();
+
+        expect(
+            request.uri!.pathSegments,
+            equals([
+              'v2',
+              'push',
+              'sub-key',
+              'test-sub-key',
+              'devices-apns2',
+              'device123',
+              'remove'
+            ]));
+        expect(
+            request.uri!.queryParameters['environment'], equals('production'));
+        expect(
+            request.uri!.queryParameters['topic'], equals('com.example.app'));
+        expect(request.uri!.queryParameters.containsKey('type'), isFalse);
+      });
+    });
+
+    group('PushGatewayExtension value() method tests', () {
+      test('FCM gateway returns correct value', () {
+        expect(PushGateway.fcm.value(), equals('fcm'));
+      });
+
+      test('GCM gateway maps to FCM value', () {
+        expect(PushGateway.gcm.value(), equals('fcm'));
+      });
+
+      test('APNS gateway returns correct value', () {
+        expect(PushGateway.apns.value(), equals('apns'));
+      });
+
+      test('APNS2 gateway returns correct value', () {
+        expect(PushGateway.apns2.value(), equals('apns2'));
+      });
+
+      test('MPNS gateway returns correct value', () {
+        expect(PushGateway.mpns.value(), equals('mpns'));
+      });
+    });
+
+    group('Edge cases and validation', () {
+      test('handles empty channels set in AddPushChannelsParams', () {
+        var params = AddPushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.fcm,
+          <String>{},
+        );
+
+        var request = params.toRequest();
+
+        expect(request.uri!.queryParameters.containsKey('add'), isFalse);
+      });
+
+      test('handles empty channels set in RemovePushChannelsParams', () {
+        var params = RemovePushChannelsParams(
+          keyset,
+          'device123',
+          PushGateway.fcm,
+          <String>{},
+        );
+
+        var request = params.toRequest();
+
+        expect(request.uri!.queryParameters.containsKey('remove'), isFalse);
+      });
+
+      test('handles keyset without authKey', () {
+        var keysetNoAuth = Keyset(
+          subscribeKey: 'test-sub-key',
+          publishKey: 'test-pub-key',
+          uuid: UUID('test-uuid'),
+        );
+
+        var params = ListPushChannelsParams(
+          keysetNoAuth,
+          'device123',
+          PushGateway.fcm,
+        );
+
+        var request = params.toRequest();
+
+        expect(request.uri!.queryParameters.containsKey('auth'), isFalse);
+        expect(request.uri!.queryParameters['uuid'], equals('test-uuid'));
+      });
+    });
+  });
+
   group('DX [pushNotification]', () {
     setUp(() {
       pubnub = PubNub(
