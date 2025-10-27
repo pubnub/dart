@@ -26,8 +26,8 @@ mixin PresenceDx on Core {
       Set<String> channels = const {},
       Set<String> channelGroups = const {},
       StateInfo? stateInfo,
-       int limit = MAXIMUM_COUNT,
-       int offset = DEFAULT_OFFSET}) async {
+      int limit = MAXIMUM_COUNT,
+      int offset = DEFAULT_OFFSET}) async {
     _logger.silly('Here now API call');
     keyset ??= keysets[using];
 
