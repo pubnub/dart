@@ -2,6 +2,12 @@ name: Dispatched product release
 
 on:
   workflow_dispatch:
+    inputs:
+      issue-number:
+        description: "Number of the PR/issue that triggered release"
+        required: true
+        type: string
+
 
 permissions:
   actions: write
@@ -41,3 +47,4 @@ jobs:
         uses: ./.github/.release/actions/actions/services/pub
         with:
           token: ${{ secrets.GH_TOKEN }}
+          issue-number: ${{ inputs['issue-number'] }}
