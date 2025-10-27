@@ -44,7 +44,7 @@ mixin PublishDx on Core {
       int? ttl,
       bool? fire,
       String? customMessageType}) async {
-    _logger.info('Publish API call');
+    _logger.silly('Publish API call');
     Ensure(channel).isNotEmpty('channel name');
     Ensure(message).isNotNull('message');
 

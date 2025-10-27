@@ -8,7 +8,7 @@ final _logger = injectLogger('pubnub.dx.time');
 mixin TimeDx on Core {
   /// Get current timetoken value from the PubNub network.
   Future<Timetoken> time() async {
-    _logger.info('Time API call');
+    _logger.silly('Time API call');
     _logger.fine(LogEvent(
         message: 'Time API call with parameters:',
         details: {},

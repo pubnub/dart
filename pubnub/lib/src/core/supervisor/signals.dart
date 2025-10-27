@@ -14,14 +14,14 @@ class Signals {
   /// @nodoc
   void notify(SupervisorEvent event) {
     if (_isNetworkAvailable == true && event is NetworkIsDownEvent) {
-      _logger.verbose('Signaled that network is down.');
+      _logger.fine('Signaled that network is down.');
       _isNetworkAvailable = false;
 
       _controller.add(event);
     }
 
     if (_isNetworkAvailable == false && event is NetworkIsUpEvent) {
-      _logger.verbose('Signaled that network is up.');
+      _logger.fine('Signaled that network is up.');
       _isNetworkAvailable = true;
 
       _controller.add(event);

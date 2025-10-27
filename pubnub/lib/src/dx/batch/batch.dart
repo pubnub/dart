@@ -33,7 +33,7 @@ class BatchDx {
       bool includeMessageType = true,
       bool includeCustomMessageType = false,
       bool includeUUID = true}) async {
-    _logger.info('Fetch messages API call');
+    _logger.silly('Fetch messages API call');
     keyset ??= _core.keysets[using];
 
     var SINGLE_CHANNEL_MAX = 100;
@@ -87,7 +87,7 @@ class BatchDx {
   ///   Additionally, if a value in the map is null, it will use a timetoken from a named parameter [timetoken].
   Future<CountMessagesResult> countMessages(dynamic channels,
       {Keyset? keyset, String? using, Timetoken? timetoken}) {
-    _logger.info('Count messages API call');
+    _logger.silly('Count messages API call');
     keyset ??= _core.keysets[using];
 
     var params = CountMessagesParams(keyset);
