@@ -67,7 +67,7 @@ class FileDx {
       dynamic fileMessageMeta,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Send file API call');
+    _logger.silly('Send file API call');
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
     FileValidation.validateFileName(fileName);
@@ -186,7 +186,7 @@ class FileDx {
       String? customMessageType,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Publish file message API call');
+    _logger.silly('Publish file message API call');
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
 
@@ -235,7 +235,7 @@ class FileDx {
   Future<DownloadFileResult> downloadFile(
       String channel, String fileId, String fileName,
       {CipherKey? cipherKey, Keyset? keyset, String? using}) async {
-    _logger.info('Download file API call');
+    _logger.silly('Download file API call');
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
     FileValidation.validateFileId(fileId);
@@ -282,7 +282,7 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   Future<ListFilesResult> listFiles(String channel,
       {int? limit, String? next, Keyset? keyset, String? using}) async {
-    _logger.info('List files API call');
+    _logger.silly('List files API call');
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
 
@@ -310,7 +310,7 @@ class FileDx {
   Future<DeleteFileResult> deleteFile(
       String channel, String fileId, String fileName,
       {Keyset? keyset, String? using}) async {
-    _logger.info('Delete file API call');
+    _logger.silly('Delete file API call');
     // Validate input parameters to prevent path traversal attacks
     FileValidation.validateChannelName(channel);
     FileValidation.validateFileId(fileId);

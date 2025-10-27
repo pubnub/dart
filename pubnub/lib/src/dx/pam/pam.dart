@@ -45,7 +45,7 @@ mixin PamDx on Core {
       bool? join,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Grant API call');
+    _logger.silly('Grant API call');
     keyset ??= keysets[using];
     Ensure(keyset.secretKey).isNotNull('secretKey');
 
@@ -104,7 +104,7 @@ mixin PamDx on Core {
   }
 
   Future<Token> grantToken(TokenRequest tokenRequest) {
-    _logger.info('Grant token API call');
+    _logger.silly('Grant token API call');
     return tokenRequest.send();
   }
 
@@ -119,7 +119,7 @@ mixin PamDx on Core {
 
   Future<PamRevokeTokenResult> revokeToken(String token,
       {String? using, Keyset? keyset}) async {
-    _logger.info('Revoke token API call');
+    _logger.silly('Revoke token API call');
     keyset ??= keysets[using];
 
     Ensure(keyset.secretKey).isNotNull('secretKey');

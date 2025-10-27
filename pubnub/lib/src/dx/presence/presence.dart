@@ -26,9 +26,9 @@ mixin PresenceDx on Core {
       Set<String> channels = const {},
       Set<String> channelGroups = const {},
       StateInfo? stateInfo,
-      int limit = MAXIMUM_COUNT,
-      int offset = DEFAULT_OFFSET}) async {
-    _logger.info('Here now API call');
+       int limit = MAXIMUM_COUNT,
+       int offset = DEFAULT_OFFSET}) async {
+    _logger.silly('Here now API call');
     keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
@@ -67,7 +67,7 @@ mixin PresenceDx on Core {
     Set<String> channels = const {},
     Set<String> channelGroups = const {},
   }) {
-    _logger.info('Announce leave API call');
+    _logger.silly('Announce leave API call');
     keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
@@ -94,7 +94,7 @@ mixin PresenceDx on Core {
       Set<String> channels = const {},
       Set<String> channelGroups = const {},
       int? heartbeat}) {
-    _logger.info('Announce heartbeat API call');
+    _logger.silly('Announce heartbeat API call');
     keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
@@ -119,7 +119,7 @@ mixin PresenceDx on Core {
       String? using,
       Set<String> channels = const {},
       Set<String> channelGroups = const {}}) async {
-    _logger.info('Get state API call');
+    _logger.silly('Get state API call');
     keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');
@@ -144,7 +144,7 @@ mixin PresenceDx on Core {
       String? using,
       Set<String> channels = const {},
       Set<String> channelGroups = const {}}) async {
-    _logger.info('Set state API call');
+    _logger.silly('Set state API call');
     keyset ??= keysets[using];
 
     Ensure(keyset).isNotNull('keyset');

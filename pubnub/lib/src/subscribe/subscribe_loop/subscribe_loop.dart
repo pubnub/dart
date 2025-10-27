@@ -132,7 +132,7 @@ class SubscribeLoop {
               (object['e'] == null || object['e'] == 4 || object['e'] == 0) &&
               !object['c'].endsWith('-pnpres')) {
             try {
-              _logger.info('Decrypting message...');
+              _logger.silly('Decrypting message...');
               if (!(object['d'] is String)) {
                 throw FormatException('not a base64 String');
               }

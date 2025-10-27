@@ -33,7 +33,7 @@ mixin PushNotificationDx on Core {
       int? count,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('List push channels API call');
+    _logger.silly('List push channels API call');
     keyset ??= keysets[using];
 
     Ensure(deviceId).isNotEmpty('deviceId');
@@ -82,7 +82,7 @@ mixin PushNotificationDx on Core {
       Environment? environment,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Add push channels API call');
+    _logger.silly('Add push channels API call');
     keyset ??= keysets[using];
 
     Ensure(deviceId).isNotEmpty('deviceId');
@@ -124,7 +124,7 @@ mixin PushNotificationDx on Core {
       Environment? environment,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Remove push channels API call');
+    _logger.silly('Remove push channels API call');
     keyset ??= keysets[using];
 
     Ensure(deviceId).isNotEmpty('deviceId');
@@ -159,7 +159,7 @@ mixin PushNotificationDx on Core {
       Environment? environment,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Remove device API call');
+    _logger.silly('Remove device API call');
     keyset ??= keysets[using];
 
     Ensure(deviceId).isNotEmpty('deviceId');
