@@ -86,8 +86,9 @@ void main() {
         await Future.delayed(Duration(milliseconds: 100));
 
         // Verify that logs were captured (signal API logs at silly and fine levels)
-        var allLogs = capturedLogs.where((log) => 
-            log.level == Level.silly || log.level == Level.fine).toList();
+        var allLogs = capturedLogs
+            .where((log) => log.level == Level.silly || log.level == Level.fine)
+            .toList();
         expect(allLogs, isNotEmpty,
             reason: 'Should have captured logs from signal API');
 
@@ -119,7 +120,8 @@ void main() {
               publishKey: 'demo',
               uuid: UUID('test-uuid')),
           logging: LoggingConfiguration(
-            logLevel: Level.warning, // Enable logging at warning level only (80)
+            logLevel:
+                Level.warning, // Enable logging at warning level only (80)
             logToConsole: false,
           ),
         );
@@ -213,7 +215,8 @@ void main() {
             .where((log) => log.level == Level.silly || log.level == Level.fine)
             .length;
         expect(logsAfterChange, greaterThan(0),
-            reason: 'Should log silly/fine messages after changing level to all');
+            reason:
+                'Should log silly/fine messages after changing level to all');
 
         // Clean up
         await subscription.cancel();
