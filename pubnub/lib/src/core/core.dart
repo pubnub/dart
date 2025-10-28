@@ -21,7 +21,7 @@ class Core {
   /// Internal module responsible for supervising.
   SupervisorModule supervisor = SupervisorModule();
 
-  static String version = '6.0.2';
+  static String version = '7.0.0';
 
   static String instanceId =
       '${(DateTime.now().millisecondsSinceEpoch % 100000)}'.padLeft(5);

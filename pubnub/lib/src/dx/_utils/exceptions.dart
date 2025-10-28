@@ -9,10 +9,14 @@ PubNubException getExceptionFromAny(dynamic error) {
   }
 
   if (error is XmlDocument) {
-    var details = error.rootElement.getElement('Message')?.value;
+    // handling the error for files
+    var details = '';
 
-    return PubNubException(
-        'Request to third party service failed. Details: $details');
+    error.rootElement.childElements.forEach((element) {
+      details += '${element.name}: ${element.innerText}\n';
+    });
+
+    return PubNubException('Request failed. Details: $details');
   }
   if (error is List) {
     if (error.isEmpty) {

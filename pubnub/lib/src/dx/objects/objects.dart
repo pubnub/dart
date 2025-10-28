@@ -64,7 +64,7 @@ class ObjectsDx {
       Set<String>? sort,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Get all UUID metadata API call');
+    _logger.silly('Get all UUID metadata API call');
     keyset ??= _core.keysets[using];
 
     var include = <String>{};
@@ -123,7 +123,7 @@ class ObjectsDx {
     bool includeStatus = true,
     bool includeType = true,
   }) async {
-    _logger.info('Get UUID metadata API call');
+    _logger.silly('Get UUID metadata API call');
     keyset ??= _core.keysets[using];
 
     var include = <String>{};
@@ -187,7 +187,7 @@ class ObjectsDx {
       String? ifMatchesEtag,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Set UUID metadata API call');
+    _logger.silly('Set UUID metadata API call');
     keyset ??= _core.keysets[using];
     Ensure(uuidMetadataInput).isNotNull('uuid metadata input');
 
@@ -225,7 +225,7 @@ class ObjectsDx {
   /// and `uuid` not provided in argument then it throws InvariantException
   Future<RemoveUuidMetadataResult> removeUUIDMetadata(
       {String? uuid, Keyset? keyset, String? using}) async {
-    _logger.info('Remove UUID metadata API call');
+    _logger.silly('Remove UUID metadata API call');
     keyset ??= _core.keysets[using];
 
     var params = RemoveUuidMetadataParams(keyset, uuid: uuid);
@@ -283,7 +283,7 @@ class ObjectsDx {
       Set<String>? sort,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Get all channel metadata API call');
+    _logger.silly('Get all channel metadata API call');
     keyset ??= _core.keysets[using];
 
     var include = <String>{};

@@ -50,7 +50,7 @@ void main() {
         // Create a list to capture log messages
         List<LogRecord> capturedLogs = [];
 
-        // Create PubNub instance with logging enabled at info level
+        // Create PubNub instance with logging enabled at all level
         // Using demo keys to avoid authentication errors
         var pubnub = PubNub(
           defaultKeyset: Keyset(
@@ -58,7 +58,7 @@ void main() {
               publishKey: 'demo',
               uuid: UUID('test-uuid')),
           logging: LoggingConfiguration(
-            logLevel: Level.info, // Enable logging at info level
+            logLevel: Level.all, // Enable all logging levels
             loggerName: 'test-pubnub',
             logToConsole: false, // Disable console output for testing
           ),
@@ -73,8 +73,8 @@ void main() {
           capturedLogs.add(record);
         });
 
-        // Perform an operation that generates info logs
-        // The signal API should log 'Signal API call' at info level
+        // Perform an operation that generates logs
+        // The signal API logs at silly and fine levels
         try {
           await pubnub.signal('test-channel', {'message': 'test'});
         } catch (e) {
@@ -85,14 +85,15 @@ void main() {
         await pumpEventQueue();
         await Future.delayed(Duration(milliseconds: 100));
 
-        // Verify that info level logs were captured
-        var infoLogs =
-            capturedLogs.where((log) => log.level == Level.info).toList();
-        expect(infoLogs, isNotEmpty,
-            reason: 'Should have captured info level logs');
+        // Verify that logs were captured (signal API logs at silly and fine levels)
+        var allLogs = capturedLogs
+            .where((log) => log.level == Level.silly || log.level == Level.fine)
+            .toList();
+        expect(allLogs, isNotEmpty,
+            reason: 'Should have captured logs from signal API');
 
-        // Check for the specific 'Signal API call' log
-        var signalLog = infoLogs
+        // Check for the specific 'Signal API call' log (logged at silly level)
+        var signalLog = capturedLogs
             .where((log) => log.message.toString().contains('Signal API call'))
             .toList();
         expect(signalLog, isNotEmpty,
@@ -119,7 +120,8 @@ void main() {
               publishKey: 'demo',
               uuid: UUID('test-uuid')),
           logging: LoggingConfiguration(
-            logLevel: Level.warning, // Enable logging at warning level only
+            logLevel:
+                Level.warning, // Enable logging at warning level only (80)
             logToConsole: false,
           ),
         );
@@ -130,7 +132,7 @@ void main() {
           capturedLogs.add(record);
         });
 
-        // Perform an operation that generates info logs
+        // Perform an operation that generates silly and fine logs
         try {
           await pubnub.signal('test-channel', {'message': 'test'});
         } catch (e) {
@@ -141,12 +143,18 @@ void main() {
         await pumpEventQueue();
         await Future.delayed(Duration(milliseconds: 100));
 
-        // Verify that info level logs were NOT captured (since we set level to warning)
-        var infoLogs =
-            capturedLogs.where((log) => log.level == Level.info).toList();
-        expect(infoLogs, isEmpty,
+        // Verify that silly/fine level logs were NOT captured (since we set level to warning)
+        // Signal API logs at silly (640) and fine (500) levels, both > warning (80)
+        var sillyLogs =
+            capturedLogs.where((log) => log.level == Level.silly).toList();
+        var fineLogs =
+            capturedLogs.where((log) => log.level == Level.fine).toList();
+        expect(sillyLogs, isEmpty,
             reason:
-                'Should NOT capture info logs when level is set to warning');
+                'Should NOT capture silly logs when level is set to warning');
+        expect(fineLogs, isEmpty,
+            reason:
+                'Should NOT capture fine logs when level is set to warning');
 
         // Clean up
         await subscription.cancel();
@@ -166,7 +174,7 @@ void main() {
               publishKey: 'demo',
               uuid: UUID('test-uuid')),
           logging: LoggingConfiguration(
-            logLevel: Level.warning, // Start with warning level
+            logLevel: Level.warning, // Start with warning level (80)
             logToConsole: false,
           ),
         );
@@ -177,7 +185,7 @@ void main() {
           capturedLogs.add(record);
         });
 
-        // First operation - should not log info messages
+        // First operation - should not log silly/fine messages
         try {
           await pubnub.signal('test-channel', {'message': 'test1'});
         } catch (e) {}
@@ -185,16 +193,16 @@ void main() {
         await pumpEventQueue();
         await Future.delayed(Duration(milliseconds: 100));
 
-        var infoLogsBeforeChange =
-            capturedLogs.where((log) => log.level == Level.info).length;
-        expect(infoLogsBeforeChange, equals(0),
-            reason: 'Should not log info messages at warning level');
+        var sillyLogsBeforeChange =
+            capturedLogs.where((log) => log.level == Level.silly).length;
+        expect(sillyLogsBeforeChange, equals(0),
+            reason: 'Should not log silly messages at warning level');
 
-        // Change log level to info
-        pubnub.setLogLevel(Level.info);
+        // Change log level to all (to capture silly and fine logs)
+        pubnub.setLogLevel(Level.all);
         capturedLogs.clear();
 
-        // Second operation - should now log info messages
+        // Second operation - should now log silly/fine messages
         try {
           await pubnub.signal('test-channel', {'message': 'test2'});
         } catch (e) {}
@@ -202,10 +210,13 @@ void main() {
         await pumpEventQueue();
         await Future.delayed(Duration(milliseconds: 100));
 
-        var infoLogsAfterChange =
-            capturedLogs.where((log) => log.level == Level.info).length;
-        expect(infoLogsAfterChange, greaterThan(0),
-            reason: 'Should log info messages after changing level');
+        // Signal API logs at silly and fine levels
+        var logsAfterChange = capturedLogs
+            .where((log) => log.level == Level.silly || log.level == Level.fine)
+            .length;
+        expect(logsAfterChange, greaterThan(0),
+            reason:
+                'Should log silly/fine messages after changing level to all');
 
         // Clean up
         await subscription.cancel();

@@ -17,7 +17,7 @@ class ChannelGroupDx {
   /// Lists all channels in a channel [group].
   Future<ChannelGroupListChannelsResult> listChannels(String group,
       {Keyset? keyset, String? using}) {
-    _logger.info('List channels API call');
+    _logger.silly('List channels API call');
     keyset ??= _core.keysets[using];
 
     var params = ChannelGroupListChannelsParams(keyset, group);
@@ -40,7 +40,7 @@ class ChannelGroupDx {
   Future<ChannelGroupChangeChannelsResult> addChannels(
       String group, Set<String> channels,
       {Keyset? keyset, String? using}) {
-    _logger.info('Add channels API call');
+    _logger.silly('Add channels API call');
     keyset ??= _core.keysets[using];
 
     var params = ChannelGroupChangeChannelsParams(keyset, group, add: channels);
@@ -63,7 +63,7 @@ class ChannelGroupDx {
   Future<ChannelGroupChangeChannelsResult> removeChannels(
       String group, Set<String> channels,
       {Keyset? keyset, String? using}) {
-    _logger.info('Remove channels API call');
+    _logger.silly('Remove channels API call');
     keyset ??= _core.keysets[using];
 
     var params =
@@ -86,7 +86,7 @@ class ChannelGroupDx {
   /// Removes ALL channels from a channel [group].
   Future<ChannelGroupDeleteResult> delete(String group,
       {Keyset? keyset, String? using}) {
-    _logger.info('Delete channel group API call');
+    _logger.silly('Delete channel group API call');
     keyset ??= _core.keysets[using];
 
     var params = ChannelGroupDeleteParams(keyset, group);

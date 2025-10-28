@@ -15,7 +15,7 @@ mixin PushNotificationDx on Core {
   /// [deviceId] is the id/token of the device.
   /// [gateway] indicates the backend to use for push service:
   /// * apns or apns2 for Apple service.
-  /// * gcm for Google service.
+  /// * fcm for Google service.
   /// * mpns for Microsoft service.
   ///
   /// If [gateway] is [PushGateway.apns2] then [topic] is mandatory to provide.
@@ -33,7 +33,7 @@ mixin PushNotificationDx on Core {
       int? count,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('List push channels API call');
+    _logger.silly('List push channels API call');
     keyset ??= keysets[using];
 
     Ensure(deviceId).isNotEmpty('deviceId');
@@ -82,7 +82,7 @@ mixin PushNotificationDx on Core {
       Environment? environment,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Add push channels API call');
+    _logger.silly('Add push channels API call');
     keyset ??= keysets[using];
 
     Ensure(deviceId).isNotEmpty('deviceId');
@@ -124,7 +124,7 @@ mixin PushNotificationDx on Core {
       Environment? environment,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Remove push channels API call');
+    _logger.silly('Remove push channels API call');
     keyset ??= keysets[using];
 
     Ensure(deviceId).isNotEmpty('deviceId');
@@ -159,7 +159,7 @@ mixin PushNotificationDx on Core {
       Environment? environment,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Remove device API call');
+    _logger.silly('Remove device API call');
     keyset ??= keysets[using];
 
     Ensure(deviceId).isNotEmpty('deviceId');

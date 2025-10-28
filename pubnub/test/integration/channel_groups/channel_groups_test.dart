@@ -246,45 +246,66 @@ void main() {
     test('should integrate channel groups with subscribe functionality',
         () async {
       var groupName = generateGroupName('subscribe_test');
-      var testChannels = {'test_ch1', 'test_ch2'};
+      var randomSuffix = Random().nextInt(10000);
+      var testChannels = {'test_ch1_$randomSuffix', 'test_ch2_$randomSuffix'};
 
       // 1. Setup Group - Create group and add test channels
       await pubnub!.channelGroups.addChannels(groupName, testChannels);
+      await Future.delayed(Duration(seconds: 2));
       await waitForConsistency();
 
       // 2. Subscribe to Group - Create subscription to channel group
       var subscription = pubnub!.subscribe(channelGroups: {groupName});
-      await Future.delayed(
-          Duration(seconds: 3)); // Wait for subscription to be established
 
-      // 3. Publish to Channels - Publish messages to individual channels in group
-      var testMessage = 'Hello from channel group integration test!';
-      await pubnub!.publish('test_ch1', testMessage);
+      // Wait for subscription to actually start listening
+      await subscription.whenStarts;
+      await Future.delayed(Duration(
+          seconds: 2)); // Additional buffer for subscription to be fully ready
 
-      // 4. Verify Reception - Wait for message
+      // 3. Setup Message Listener - Set up listener BEFORE publishing
       var messageReceived = false;
-      var timeoutTimer = Timer(Duration(seconds: 10), () {});
+      var messageCompleter = Completer<void>();
+      var testMessage = 'Hello from channel group integration test!';
+
+      var testChannel = 'test_ch1_$randomSuffix';
 
       subscription.messages.listen((envelope) {
-        if (envelope.payload == testMessage && envelope.channel == 'test_ch1') {
+        if (envelope.payload == testMessage &&
+            envelope.channel == testChannel) {
           messageReceived = true;
-          timeoutTimer.cancel();
+          if (!messageCompleter.isCompleted) {
+            messageCompleter.complete();
+          }
         }
       });
 
-      // Wait for message or timeout
-      await Future.delayed(Duration(seconds: 5));
+      // 4. Publish to Channels - Publish messages to individual channels in group
+      await pubnub!.publish(testChannel, testMessage);
+
+      // 5. Verify Reception - Wait for message with timeout
+      try {
+        await messageCompleter.future.timeout(Duration(seconds: 10));
+      } catch (e) {
+        // Timeout occurred
+      }
+
       expect(messageReceived, isTrue,
           reason:
               'Message should be received through channel group subscription');
 
       // 5. Group Modification - Add/remove channels and verify subscription updates
-      await pubnub!.channelGroups.addChannels(groupName, {'test_ch3'});
+      await pubnub!.channelGroups
+          .addChannels(groupName, {'test_ch3_$randomSuffix'});
       await waitForConsistency();
 
       var listResult = await pubnub!.channelGroups.listChannels(groupName);
-      expect(listResult.channels,
-          containsAll({'test_ch1', 'test_ch2', 'test_ch3'}));
+      expect(
+          listResult.channels,
+          containsAll({
+            'test_ch1_$randomSuffix',
+            'test_ch2_$randomSuffix',
+            'test_ch3_$randomSuffix'
+          }));
 
       await subscription.cancel();
     }, timeout: Timeout(Duration(seconds: 45)));

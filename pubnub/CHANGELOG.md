@@ -1,3 +1,18 @@
+## v7.0.0
+October 28 2025
+
+#### Added
+- BREAKING CHANGES: The `hereNow` method will return a maximum of 1000 occupants per channel. Previously, it was returning all occupants without limit parameter support. Use pagination through offset when more than 1000 occupants present in channel.
+
+#### Fixed
+- Fixes issue of not getting proper error details when file upload fails.
+- Fixes issue of no-op when `subscribe()` called on inactive or errored subscrption.
+- Fixes issue of generate upload file url to incorporate token when configured or set explicitly.
+- Discard use of gcm and replaced with fcm for push notification service type of google.
+
+#### Modified
+- Pubnub access manager tests.
+
 ## v6.0.2
 October 20 2025
 

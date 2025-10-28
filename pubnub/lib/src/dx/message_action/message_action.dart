@@ -32,7 +32,7 @@ mixin MessageActionDx on Core {
       int? limit = 100,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Fetch message actions API call');
+    _logger.silly('Fetch message actions API call');
     keyset ??= keysets[using];
 
     Ensure(channel).isNotEmpty('channel');
@@ -71,7 +71,7 @@ mixin MessageActionDx on Core {
       required Timetoken timetoken,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Add message action API call');
+    _logger.silly('Add message action API call');
     keyset ??= keysets[using];
 
     Ensure(type).isNotEmpty('message action type');
@@ -110,7 +110,7 @@ mixin MessageActionDx on Core {
       required Timetoken actionTimetoken,
       Keyset? keyset,
       String? using}) async {
-    _logger.info('Delete message action API call');
+    _logger.silly('Delete message action API call');
     keyset ??= keysets[using];
 
     Ensure(channel).isNotEmpty('channel');

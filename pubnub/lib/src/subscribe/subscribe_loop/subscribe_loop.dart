@@ -132,7 +132,7 @@ class SubscribeLoop {
               (object['e'] == null || object['e'] == 4 || object['e'] == 0) &&
               !object['c'].endsWith('-pnpres')) {
             try {
-              _logger.info('Decrypting message...');
+              _logger.silly('Decrypting message...');
               if (!(object['d'] is String)) {
                 throw FormatException('not a base64 String');
               }
@@ -200,6 +200,7 @@ class SubscribeLoop {
           if (resolution is FailResolution) {
             update((state) => state.clone(isErrored: true));
             yield* Stream<Envelope>.error(exception);
+            tries = 0; // Reset to avoid having stale value in fiber.
             continue;
           } else if (resolution is DelayResolution) {
             await Future.delayed(resolution.delay);
