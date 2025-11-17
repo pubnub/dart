@@ -96,7 +96,6 @@ extension PresenceActionExtension on PresenceAction {
         return PresenceAction.stateChange;
       case 'interval':
         return PresenceAction.interval;
-      case null:
       default:
         return PresenceAction.unknown;
     }

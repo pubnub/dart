@@ -1,3 +1,9 @@
+## v7.0.1
+November 17 2025
+
+#### Modified
+- Remove invalid switch cases for null message type which was causing issue with web assembly build. Fixed the following issues reported by [@Ali-Toosi](https://github.com/Ali-Toosi): [#145](https://github.com/pubnub/dart/issues/145).
+
 ## v7.0.0
 October 28 2025
 

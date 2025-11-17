@@ -15,9 +15,7 @@ extension MessageTypeExtension on MessageType {
         return MessageType.messageAction;
       case 4:
         return MessageType.file;
-
       case 0:
-      case null:
       default:
         return MessageType.normal;
     }
