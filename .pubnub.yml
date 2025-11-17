@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2025-11-17
+    version: v7.0.1
+    changes:
+      - type: improvement
+        text: "Remove invalid switch cases for null message type which was causing issue with web assembly build."
   - date: 2025-10-28
     version: v7.0.0
     changes:
@@ -521,7 +526,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "7.0.0"
+version: "7.0.1"
 sdks:
   -
     full-name: PubNub Dart SDK
