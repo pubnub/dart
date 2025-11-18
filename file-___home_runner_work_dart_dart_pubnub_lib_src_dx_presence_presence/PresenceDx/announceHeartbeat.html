@@ -54,12 +54,12 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_presence/HeartbeatResult-class.html">HeartbeatResult</a></span>&gt;</span></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.10.0/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_presence/HeartbeatResult-class.html">HeartbeatResult</a></span>&gt;</span></span>
 <span class="name ">announceHeartbeat</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="announceHeartbeat-param-keyset"><span class="type-annotation">dynamic</span> <span class="parameter-name">keyset</span>, </span></li>
-<li><span class="parameter" id="announceHeartbeat-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
-<li><span class="parameter" id="announceHeartbeat-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span> = <span class="default-value">const {}</span>, </span></li>
-<li><span class="parameter" id="announceHeartbeat-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channelGroups</span> = <span class="default-value">const {}</span>, </span></li>
-<li><span class="parameter" id="announceHeartbeat-param-heartbeat"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">heartbeat</span>, </span></li>
+<li><span class="parameter" id="announceHeartbeat-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
+<li><span class="parameter" id="announceHeartbeat-param-channels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channels</span> = <span class="default-value">const {}</span>, </span></li>
+<li><span class="parameter" id="announceHeartbeat-param-channelGroups"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">channelGroups</span> = <span class="default-value">const {}</span>, </span></li>
+<li><span class="parameter" id="announceHeartbeat-param-heartbeat"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">heartbeat</span>, </span></li>
 </ol>})
 
       
@@ -80,7 +80,7 @@
     Set&lt;String&gt; channels = const {},
     Set&lt;String&gt; channelGroups = const {},
     int? heartbeat}) {
-  _logger.info(&#39;Announce heartbeat API call&#39;);
+  _logger.silly(&#39;Announce heartbeat API call&#39;);
   keyset ??= keysets[using];
 
   Ensure(keyset).isNotNull(&#39;keyset&#39;);
@@ -126,7 +126,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      6.0.2
+      7.0.1
   </span>
   
 </footer>

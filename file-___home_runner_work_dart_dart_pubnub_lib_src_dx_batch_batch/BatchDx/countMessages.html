@@ -54,10 +54,10 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Future-class.html">Future</a></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.10.0/dart-core/Future-class.html">Future</a></span>
 <span class="name ">countMessages</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="countMessages-param-channels"><span class="type-annotation">dynamic</span> <span class="parameter-name">channels</span>, {</span></li>
 <li><span class="parameter" id="countMessages-param-keyset"><span class="type-annotation">dynamic</span> <span class="parameter-name">keyset</span>, </span></li>
-<li><span class="parameter" id="countMessages-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
+<li><span class="parameter" id="countMessages-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
 <li><span class="parameter" id="countMessages-param-timetoken"><span class="type-annotation">dynamic</span> <span class="parameter-name">timetoken</span>, </span></li>
 </ol>})
 
@@ -81,7 +81,7 @@ Additionally, if a value in the map is null, it will use a timetoken from a name
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;CountMessagesResult&gt; countMessages(dynamic channels,
     {Keyset? keyset, String? using, Timetoken? timetoken}) {
-  _logger.info(&#39;Count messages API call&#39;);
+  _logger.silly(&#39;Count messages API call&#39;);
   keyset ??= _core.keysets[using];
 
   var params = CountMessagesParams(keyset);
@@ -138,7 +138,7 @@ Additionally, if a value in the map is null, it will use a timetoken from a name
 <footer>
   <span class="no-break">
     pubnub
-      6.0.2
+      7.0.1
   </span>
   
 </footer>

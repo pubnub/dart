@@ -54,12 +54,12 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Future-class.html">Future</a></span>
-<span class="name ">deleteFile</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="deleteFile-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span></li>
-<li><span class="parameter" id="deleteFile-param-fileId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">fileId</span>, </span></li>
-<li><span class="parameter" id="deleteFile-param-fileName"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">fileName</span>, {</span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.10.0/dart-core/Future-class.html">Future</a></span>
+<span class="name ">deleteFile</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="deleteFile-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span></li>
+<li><span class="parameter" id="deleteFile-param-fileId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a></span> <span class="parameter-name">fileId</span>, </span></li>
+<li><span class="parameter" id="deleteFile-param-fileName"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a></span> <span class="parameter-name">fileName</span>, {</span></li>
 <li><span class="parameter" id="deleteFile-param-keyset"><span class="type-annotation">dynamic</span> <span class="parameter-name">keyset</span>, </span></li>
-<li><span class="parameter" id="deleteFile-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
+<li><span class="parameter" id="deleteFile-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
 </ol>})
 
       
@@ -80,7 +80,7 @@ If that fails as well, then it will throw <a href="../../file-___home_runner_wor
   <pre class="language-dart"><code class="language-dart">Future&lt;DeleteFileResult&gt; deleteFile(
     String channel, String fileId, String fileName,
     {Keyset? keyset, String? using}) async {
-  _logger.info(&#39;Delete file API call&#39;);
+  _logger.silly(&#39;Delete file API call&#39;);
   &#47;&#47; Validate input parameters to prevent path traversal attacks
   FileValidation.validateChannelName(channel);
   FileValidation.validateFileId(fileId);
@@ -128,7 +128,7 @@ If that fails as well, then it will throw <a href="../../file-___home_runner_wor
 <footer>
   <span class="no-break">
     pubnub
-      6.0.2
+      7.0.1
   </span>
   
 </footer>

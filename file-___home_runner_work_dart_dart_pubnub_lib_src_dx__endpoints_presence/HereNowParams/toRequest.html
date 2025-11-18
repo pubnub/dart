@@ -56,7 +56,7 @@
       
   <div>
     <ol class="annotation-list">
-        <li>@<a href="https://api.dart.dev/stable/3.9.4/dart-core/override-constant.html">override</a></li>
+        <li>@<a href="https://api.dart.dev/stable/3.10.0/dart-core/override-constant.html">override</a></li>
     </ol>
   </div>
 <span class="returntype">dynamic</span>
@@ -92,7 +92,9 @@ Request toRequest() {
     &#39;uuid&#39;: &#39;${keyset.uuid.value}&#39;,
     if (stateInfo == StateInfo.all || stateInfo == StateInfo.onlyUUIDs)
       &#39;disable_uuids&#39;: &#39;0&#39;,
-    if (stateInfo == StateInfo.all) &#39;state&#39;: &#39;1&#39;
+    if (stateInfo == StateInfo.all) &#39;state&#39;: &#39;1&#39;,
+    if (global == false) &#39;limit&#39;: &#39;$limit&#39;,
+    if (global == false &amp;&amp; offset &gt; DEFAULT_OFFSET) &#39;offset&#39;: &#39;$offset&#39;
   };
 
   return Request.get(
@@ -125,7 +127,7 @@ Request toRequest() {
 <footer>
   <span class="no-break">
     pubnub
-      6.0.2
+      7.0.1
   </span>
   
 </footer>

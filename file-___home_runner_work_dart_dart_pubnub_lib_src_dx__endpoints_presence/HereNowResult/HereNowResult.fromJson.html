@@ -54,8 +54,8 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">HereNowResult.fromJson</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="fromJson-param-object"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">object</span>, {</span></li>
-<li><span class="parameter" id="fromJson-param-channelName"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">channelName</span>, </span></li>
+      <span class="name ">HereNowResult.fromJson</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="fromJson-param-object"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">object</span>, {</span></li>
+<li><span class="parameter" id="fromJson-param-channelName"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">channelName</span>, </span></li>
 </ol>})
     </section>
     
@@ -69,19 +69,16 @@
   var result = DefaultResult.fromJson(object);
   if (result.otherKeys.containsKey(&#39;payload&#39;)) {
     var payload = result.otherKeys[&#39;payload&#39;] as Map&lt;String, dynamic&gt;;
-
-    return HereNowResult._(
-        (payload[&#39;channels&#39;] as Map&lt;String, dynamic&gt;).map((key, value) =&gt;
-            MapEntry(
-                key,
-                ChannelOccupancy.fromJson(
-                    key, value as Map&lt;String, dynamic&gt;))),
-        payload[&#39;total_occupancy&#39;] as int,
-        payload[&#39;total_channels&#39;] as int);
+    var channelsOccupancies = (payload[&#39;channels&#39;] as Map&lt;String, dynamic&gt;)
+        .map((key, value) =&gt; MapEntry(key,
+            ChannelOccupancy.fromJson(key, value as Map&lt;String, dynamic&gt;)));
+    return HereNowResult._(channelsOccupancies,
+        payload[&#39;total_occupancy&#39;] as int, payload[&#39;total_channels&#39;] as int);
   } else {
-    return HereNowResult._({
-      channelName: ChannelOccupancy.fromJson(channelName!, result.otherKeys)
-    }, result.otherKeys[&#39;occupancy&#39;] as int, 1);
+    var channelOccupancy =
+        ChannelOccupancy.fromJson(channelName!, result.otherKeys);
+    return HereNowResult._({channelName: channelOccupancy},
+        result.otherKeys[&#39;occupancy&#39;] as int, 1);
   }
 }</code></pre>
 </section>
@@ -111,7 +108,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      6.0.2
+      7.0.1
   </span>
   
 </footer>

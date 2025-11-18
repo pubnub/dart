@@ -54,12 +54,12 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_signal/SignalResult-class.html">SignalResult</a></span>&gt;</span></span>
-<span class="name ">signal</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="signal-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.10.0/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_signal/SignalResult-class.html">SignalResult</a></span>&gt;</span></span>
+<span class="name ">signal</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="signal-param-channel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a></span> <span class="parameter-name">channel</span>, </span></li>
 <li><span class="parameter" id="signal-param-message"><span class="type-annotation">dynamic</span> <span class="parameter-name">message</span>, {</span></li>
-<li><span class="parameter" id="signal-param-customMessageType"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">customMessageType</span>, </span></li>
+<li><span class="parameter" id="signal-param-customMessageType"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">customMessageType</span>, </span></li>
 <li><span class="parameter" id="signal-param-keyset"><span class="type-annotation">dynamic</span> <span class="parameter-name">keyset</span>, </span></li>
-<li><span class="parameter" id="signal-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
+<li><span class="parameter" id="signal-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
 </ol>})
 
       
@@ -76,7 +76,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;SignalResult&gt; signal(String channel, dynamic message,
     {String? customMessageType, Keyset? keyset, String? using}) async {
-  _logger.info(&#39;Signal API call&#39;);
+  _logger.silly(&#39;Signal API call&#39;);
   keyset ??= keysets[using];
   Ensure(keyset.publishKey).isNotNull(&#39;publishKey&#39;);
 
@@ -121,7 +121,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      6.0.2
+      7.0.1
   </span>
   
 </footer>

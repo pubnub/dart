@@ -73,10 +73,14 @@
   }
 
   if (error is XmlDocument) {
-    var details = error.rootElement.getElement(&#39;Message&#39;)?.value;
+    &#47;&#47; handling the error for files
+    var details = &#39;&#39;;
 
-    return PubNubException(
-        &#39;Request to third party service failed. Details: $details&#39;);
+    error.rootElement.childElements.forEach((element) {
+      details += &#39;${element.name}: ${element.innerText}\n&#39;;
+    });
+
+    return PubNubException(&#39;Request failed. Details: $details&#39;);
   }
   if (error is List) {
     if (error.isEmpty) {
@@ -114,7 +118,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      6.0.2
+      7.0.1
   </span>
   
 </footer>

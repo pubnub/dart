@@ -54,15 +54,15 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_objects_uuid_metadata/SetUuidMetadataResult-class.html">SetUuidMetadataResult</a></span>&gt;</span></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.10.0/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_objects_uuid_metadata/SetUuidMetadataResult-class.html">SetUuidMetadataResult</a></span>&gt;</span></span>
 <span class="name ">setUUIDMetadata</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="setUUIDMetadata-param-uuidMetadataInput"><span class="type-annotation"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx_objects_schema/UuidMetadataInput-class.html">UuidMetadataInput</a></span> <span class="parameter-name">uuidMetadataInput</span>, {</span></li>
-<li><span class="parameter" id="setUUIDMetadata-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">uuid</span>, </span></li>
-<li><span class="parameter" id="setUUIDMetadata-param-includeCustomFields"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeCustomFields</span>, </span></li>
-<li><span class="parameter" id="setUUIDMetadata-param-includeStatus"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeStatus</span> = <span class="default-value">true</span>, </span></li>
-<li><span class="parameter" id="setUUIDMetadata-param-includeType"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeType</span> = <span class="default-value">true</span>, </span></li>
-<li><span class="parameter" id="setUUIDMetadata-param-ifMatchesEtag"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">ifMatchesEtag</span>, </span></li>
+<li><span class="parameter" id="setUUIDMetadata-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">uuid</span>, </span></li>
+<li><span class="parameter" id="setUUIDMetadata-param-includeCustomFields"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeCustomFields</span>, </span></li>
+<li><span class="parameter" id="setUUIDMetadata-param-includeStatus"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeStatus</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="setUUIDMetadata-param-includeType"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeType</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="setUUIDMetadata-param-ifMatchesEtag"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">ifMatchesEtag</span>, </span></li>
 <li><span class="parameter" id="setUUIDMetadata-param-keyset"><span class="type-annotation">dynamic</span> <span class="parameter-name">keyset</span>, </span></li>
-<li><span class="parameter" id="setUUIDMetadata-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
+<li><span class="parameter" id="setUUIDMetadata-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
 </ol>})
 
       
@@ -110,7 +110,7 @@ If the request is sent with an old eTag value that doesn't match the User object
     String? ifMatchesEtag,
     Keyset? keyset,
     String? using}) async {
-  _logger.info(&#39;Set UUID metadata API call&#39;);
+  _logger.silly(&#39;Set UUID metadata API call&#39;);
   keyset ??= _core.keysets[using];
   Ensure(uuidMetadataInput).isNotNull(&#39;uuid metadata input&#39;);
 
@@ -167,7 +167,7 @@ If the request is sent with an old eTag value that doesn't match the User object
 <footer>
   <span class="no-break">
     pubnub
-      6.0.2
+      7.0.1
   </span>
   
 </footer>

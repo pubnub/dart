@@ -54,10 +54,10 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_objects_uuid_metadata/RemoveUuidMetadataResult-class.html">RemoveUuidMetadataResult</a></span>&gt;</span></span>
-<span class="name ">removeUUIDMetadata</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="removeUUIDMetadata-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">uuid</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.10.0/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_objects_uuid_metadata/RemoveUuidMetadataResult-class.html">RemoveUuidMetadataResult</a></span>&gt;</span></span>
+<span class="name ">removeUUIDMetadata</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="removeUUIDMetadata-param-uuid"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">uuid</span>, </span></li>
 <li><span class="parameter" id="removeUUIDMetadata-param-keyset"><span class="type-annotation">dynamic</span> <span class="parameter-name">keyset</span>, </span></li>
-<li><span class="parameter" id="removeUUIDMetadata-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
+<li><span class="parameter" id="removeUUIDMetadata-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
 </ol>})
 
       
@@ -78,7 +78,7 @@ and <code>uuid</code> not provided in argument then it throws InvariantException
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;RemoveUuidMetadataResult&gt; removeUUIDMetadata(
     {String? uuid, Keyset? keyset, String? using}) async {
-  _logger.info(&#39;Remove UUID metadata API call&#39;);
+  _logger.silly(&#39;Remove UUID metadata API call&#39;);
   keyset ??= _core.keysets[using];
 
   var params = RemoveUuidMetadataParams(keyset, uuid: uuid);
@@ -121,7 +121,7 @@ and <code>uuid</code> not provided in argument then it throws InvariantException
 <footer>
   <span class="no-break">
     pubnub
-      6.0.2
+      7.0.1
   </span>
   
 </footer>

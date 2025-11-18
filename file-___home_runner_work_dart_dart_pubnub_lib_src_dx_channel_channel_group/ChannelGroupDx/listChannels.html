@@ -54,10 +54,10 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.9.4/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_channel_group/ChannelGroupListChannelsResult-class.html">ChannelGroupListChannelsResult</a></span>&gt;</span></span>
-<span class="name ">listChannels</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="listChannels-param-group"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">group</span>, {</span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.10.0/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_dx__endpoints_channel_group/ChannelGroupListChannelsResult-class.html">ChannelGroupListChannelsResult</a></span>&gt;</span></span>
+<span class="name ">listChannels</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="listChannels-param-group"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a></span> <span class="parameter-name">group</span>, {</span></li>
 <li><span class="parameter" id="listChannels-param-keyset"><span class="type-annotation">dynamic</span> <span class="parameter-name">keyset</span>, </span></li>
-<li><span class="parameter" id="listChannels-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.9.4/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
+<li><span class="parameter" id="listChannels-param-using"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.10.0/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">using</span>, </span></li>
 </ol>})
 
       
@@ -74,7 +74,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;ChannelGroupListChannelsResult&gt; listChannels(String group,
     {Keyset? keyset, String? using}) {
-  _logger.info(&#39;List channels API call&#39;);
+  _logger.silly(&#39;List channels API call&#39;);
   keyset ??= _core.keysets[using];
 
   var params = ChannelGroupListChannelsParams(keyset, group);
@@ -119,7 +119,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      6.0.2
+      7.0.1
   </span>
   
 </footer>
