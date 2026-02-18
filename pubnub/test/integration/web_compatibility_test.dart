@@ -30,7 +30,8 @@ void main() {
       );
     });
 
-    test('time() makes a successful HTTP request and returns a timetoken', () async {
+    test('time() makes a successful HTTP request and returns a timetoken',
+        () async {
       var timetoken = await pubnub.time();
       expect(timetoken.value, greaterThan(BigInt.zero));
     });
@@ -52,9 +53,8 @@ void main() {
 
       await pubnub.publish(channel, {'message': 'hello from browser'});
 
-      var envelope = await subscription.messages
-          .timeout(Duration(seconds: 10))
-          .first;
+      var envelope =
+          await subscription.messages.timeout(Duration(seconds: 10)).first;
 
       expect(envelope.payload, isNotNull);
 
