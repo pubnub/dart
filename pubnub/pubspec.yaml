@@ -25,6 +25,7 @@ dependencies:
   meta: ^1.17.0
   pedantic: ^1.11.0
   pool: ^1.5.1
+  web: ^1.0.0
   xml: ^6.1.0
 dev_dependencies:
   test: ^1.24.3

@@ -1,11 +1,12 @@
-import 'dart:html';
 import 'dart:async';
 import 'dart:convert';
+import 'dart:js_interop';
 import 'dart:typed_data';
 
 import 'package:form_data/form_data.dart';
 import 'package:pool/pool.dart';
 import 'package:pubnub/core.dart';
+import 'package:web/web.dart' as web;
 
 import '../response/response.dart';
 import '../utils.dart';
@@ -17,7 +18,7 @@ class RequestHandler extends IRequestHandler {
   final int _id;
   final PoolResource _resource;
 
-  HttpRequest request = HttpRequest();
+  web.XMLHttpRequest xhr = web.XMLHttpRequest();
   final _cancel = Completer<Exception>();
 
   Timer? _sendTimeoutTimer;
@@ -82,15 +83,14 @@ class RequestHandler extends IRequestHandler {
         throw await cancelReason;
       }
 
-      request
-        ..open(
-          data.type.method,
-          uri.replace(query: uri.query.replaceAll('+', '%20')).toString(),
-        )
-        ..responseType = 'arraybuffer';
+      xhr.open(
+        data.type.method,
+        uri.replace(query: uri.query.replaceAll('+', '%20')).toString(),
+      );
+      xhr.responseType = 'arraybuffer';
 
       _abortRequest = (reason) {
-        request.abort();
+        xhr.abort();
       };
 
       if (isCancelled) {
@@ -110,7 +110,7 @@ class RequestHandler extends IRequestHandler {
       for (var header in headers.entries) {
         // NOTE: See https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name
         if (!isHeaderForbidden(header.key)) {
-          request.setRequestHeader(header.key, header.value);
+          xhr.setRequestHeader(header.key, header.value);
         }
       }
 
@@ -119,24 +119,47 @@ class RequestHandler extends IRequestHandler {
           details: data,
           detailsType: LogEventDetailsType.networkRequestInfo));
 
+      var loadCompleter = Completer<bool>();
+
+      xhr.addEventListener(
+          'load',
+          ((web.Event e) {
+            if (!loadCompleter.isCompleted) {
+              loadCompleter.complete(true);
+            }
+          }).toJS);
+
+      xhr.addEventListener(
+          'error',
+          ((web.Event e) {
+            if (!loadCompleter.isCompleted) {
+              loadCompleter.complete(false);
+            }
+          }).toJS);
+
+      xhr.addEventListener(
+          'abort',
+          ((web.Event e) {
+            if (!loadCompleter.isCompleted) {
+              loadCompleter.complete(false);
+            }
+          }).toJS);
+
       if (body != null) {
-        request.send(Uint8List.fromList(body));
+        xhr.send(Uint8List.fromList(body).toJS);
       } else {
-        request.send();
+        xhr.send();
       }
 
-      var event = await Future.any([
-        request.onLoad.first.then((_) => true),
-        request.onError.first.then((_) => false)
-      ]);
+      var event = await loadCompleter.future;
 
       if (!event) {
         throw Exception('XMLHttpRequest failed.');
       }
 
-      var byteList = (request.response as ByteBuffer).asUint8List();
+      var byteList = (xhr.response as JSArrayBuffer).toDart.asUint8List();
 
-      var response = Response(byteList, request);
+      var response = Response(byteList, xhr);
       _logger.fine(LogEvent(
           message: 'Received HTTP response:',
           details: response,
@@ -165,7 +188,7 @@ class RequestHandler extends IRequestHandler {
       if (!_isReleased) {
         _isReleased = true;
         _resource.release();
-        request.abort();
+        xhr.abort();
         _sendTimeoutTimer?.cancel();
         _logger.info('($_id) Resource released...');
       }
