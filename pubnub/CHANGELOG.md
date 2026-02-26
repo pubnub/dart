@@ -1,3 +1,9 @@
+## v7.1.0
+February 25 2026
+
+#### Added
+- Migration from dart html package to web for wasm compatibility.
+
 ## v7.0.1
 November 17 2025
 

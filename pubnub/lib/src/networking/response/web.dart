@@ -1,13 +1,13 @@
 import 'dart:convert';
-import 'dart:html';
 
 import 'package:pubnub/core.dart';
+import 'package:web/web.dart' as web;
 
 class Response extends IResponse {
   final List<int> _bytes;
-  final HttpRequest _request;
+  final web.XMLHttpRequest _xhr;
 
-  Response(this._bytes, this._request);
+  Response(this._bytes, this._xhr);
 
   @override
   List<int> get byteList => _bytes;
@@ -16,15 +16,21 @@ class Response extends IResponse {
   Map<String, List<String>> get headers {
     var headers = <String, List<String>>{};
 
-    _request.responseHeaders.forEach((key, values) {
-      headers[key] = [values];
-    });
+    var allHeaders = _xhr.getAllResponseHeaders();
+    for (var line in allHeaders.split('\r\n')) {
+      if (line.isEmpty) continue;
+      var colonIndex = line.indexOf(':');
+      if (colonIndex == -1) continue;
+      var key = line.substring(0, colonIndex).trim().toLowerCase();
+      var value = line.substring(colonIndex + 1).trim();
+      headers[key] = [value];
+    }
 
     return headers;
   }
 
   @override
-  int get statusCode => _request.status ?? 400;
+  int get statusCode => _xhr.status;
 
   @override
   String get text => utf8.decode(_bytes);
@@ -32,7 +38,7 @@ class Response extends IResponse {
   @override
   String toString() {
     var parts = [
-      'URL: ${_request.responseUrl}',
+      'URL: ${_xhr.responseURL}',
       'Status Code: $statusCode',
     ];
     if (headers.containsKey('server')) {

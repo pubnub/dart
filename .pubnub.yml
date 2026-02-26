@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2026-02-25
+    version: v7.1.0
+    changes:
+      - type: feature
+        text: "Migration from dart html package to web for wasm compatibility."
   - date: 2025-11-17
     version: v7.0.1
     changes:
@@ -526,7 +531,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "7.0.1"
+version: "7.1.0"
 sdks:
   -
     full-name: PubNub Dart SDK
