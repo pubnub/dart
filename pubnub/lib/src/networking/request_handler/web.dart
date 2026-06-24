@@ -13,6 +13,10 @@ import '../utils.dart';
 
 final _logger = injectLogger('pubnub.networking.request_handler');
 
+/// No-op on the web platform: the browser owns the HTTP transport, so there is
+/// nothing for the SDK to tear down.
+void disposeTransport(INetworkingModule module) {}
+
 class RequestHandler extends IRequestHandler {
   final INetworkingModule _module;
   final int _id;
