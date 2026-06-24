@@ -5,26 +5,37 @@ import 'package:pubnub/core.dart';
 
 class Response extends IResponse {
   final List<int> _bytes;
-  final HttpClientResponse _response;
-
-  Response(this._bytes, this._response);
 
   @override
-  List<int> get byteList => _bytes;
+  final int statusCode;
 
   @override
-  Map<String, List<String>> get headers {
+  final Map<String, List<String>> headers;
+
+  Response._(this._bytes, this.statusCode, this.headers);
+
+  /// Builds a [Response] from a `dart:io` [HttpClientResponse] (HTTP/1.1 path).
+  factory Response.fromHttpClientResponse(
+      List<int> bytes, HttpClientResponse response) {
     var headers = <String, List<String>>{};
 
-    _response.headers.forEach((key, values) {
+    response.headers.forEach((key, values) {
       headers[key] = values;
     });
 
-    return headers;
+    return Response._(bytes, response.statusCode, headers);
   }
 
+  /// Builds a [Response] from an HTTP/2 stream's status code and headers.
+  ///
+  /// [headers] must already have HTTP/2 pseudo-headers (such as `:status`)
+  /// stripped out so the exposed map matches the HTTP/1.1 shape.
+  factory Response.fromHttp2(
+          List<int> bytes, int statusCode, Map<String, List<String>> headers) =>
+      Response._(bytes, statusCode, headers);
+
   @override
-  int get statusCode => _response.statusCode;
+  List<int> get byteList => _bytes;
 
   @override
   String get text => utf8.decode(_bytes);
