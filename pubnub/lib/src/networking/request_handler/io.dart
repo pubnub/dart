@@ -185,6 +185,10 @@ class RequestHandler extends IRequestHandler {
       throw await cancelReason;
     }
 
+    // Cancel any timer already installed by a caller (e.g. the HTTP/2 path
+    // before it fell back here) so it can't outlive this request as an
+    // orphaned timer once we overwrite the reference below.
+    _sendTimeoutTimer?.cancel();
     _sendTimeoutTimer =
         Timer(Duration(milliseconds: data.type.sendTimeout), () {
       if (!isDone) {
