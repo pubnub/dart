@@ -170,6 +170,12 @@ class PubNub extends Core
   /// This will clean up logging resources and any other allocated resources.
   /// After calling this method, the instance should not be used anymore.
   Future<void> dispose() async {
+    // Release any transport resources (e.g. pooled HTTP/2 connections and
+    // their keep-alive timers) held by the networking module. Guarded by a
+    // type check so the `INetworkingModule` interface stays unchanged.
+    if (networking is NetworkingModule) {
+      (networking as NetworkingModule).dispose();
+    }
     await cleanupLogging();
     // Additional cleanup can be added here in the future
   }
