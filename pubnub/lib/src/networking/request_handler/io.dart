@@ -71,9 +71,8 @@ class RequestHandler extends IRequestHandler {
 
   Future<Exception> get cancelReason => _cancel.future;
 
-  bool get _enableHttp2 => _module is NetworkingModule
-      ? (_module as NetworkingModule).enableHttp2
-      : true;
+  bool get _enableHttp2 =>
+      _module is NetworkingModule ? _module.enableHttp2 : true;
 
   /// Decides whether the HTTP/2 path should be attempted for [uri].
   ///
