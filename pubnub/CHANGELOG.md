@@ -1,3 +1,9 @@
+## v8.0.0
+July 06 2026
+
+#### Added
+- **BREAKING CHANGES**: added support for h2 protocol using http2 package.
+
 ## v7.1.0
 February 25 2026
 
