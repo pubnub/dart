@@ -54,7 +54,7 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.dart.dev/stable/3.11.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.12.2/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
 <span class="name ">dispose</span>(<wbr>)
 
       
@@ -72,6 +72,12 @@ After calling this method, the instance should not be used anymore.</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; dispose() async {
+  &#47;&#47; Release any transport resources (e.g. pooled HTTP&#47;2 connections and
+  &#47;&#47; their keep-alive timers) held by the networking module. Guarded by a
+  &#47;&#47; type check so the `INetworkingModule` interface stays unchanged.
+  if (networking is NetworkingModule) {
+    (networking as NetworkingModule).dispose();
+  }
   await cleanupLogging();
   &#47;&#47; Additional cleanup can be added here in the future
 }</code></pre>
@@ -102,7 +108,7 @@ After calling this method, the instance should not be used anymore.</p>
 <footer>
   <span class="no-break">
     pubnub
-      7.1.0
+      8.0.0
   </span>
   
 </footer>
