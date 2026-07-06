@@ -335,6 +335,7 @@ class ManageChannelMembersParams extends Parameters {
     };
   }
 
+  @override
   Request toRequest() {
     var pathSegments = [
       'v2',

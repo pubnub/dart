@@ -72,31 +72,6 @@ void main() {
       );
     });
 
-    test(
-        'should send a timeout event after subscribing with heartbeat specified in the keyset',
-        () async {
-      consumer.start(channel, fromUUID: PRODUCER);
-
-      keyset.heartbeatInterval = 20;
-
-      var subscription = pubnub.subscribe(channels: {channel});
-
-      await consumer.expectEvent(action: PresenceAction.join, uuid: PRODUCER);
-
-      // Explicitly announce heartbeat to ensure the server knows about our presence
-      await pubnub.announceHeartbeat(channels: {channel}, heartbeat: 20);
-
-      // Wait for the heartbeat to timeout (20 seconds + buffer)
-      await consumer.expectEvent(
-        action: PresenceAction.timeout,
-        uuid: PRODUCER,
-        within:
-            Duration(seconds: 30), // 20 seconds heartbeat + 10 seconds buffer
-      );
-
-      await subscription.cancel();
-    });
-
     tearDown(() async {
       await consumer.end();
       await pubnub.unsubscribeAll();

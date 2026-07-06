@@ -22,8 +22,20 @@ class NetworkingModule extends INetworkingModule {
   /// Whether `https` or `http` should be used.
   final bool ssl;
 
-  NetworkingModule({RetryPolicy? retryPolicy, this.origin, bool? ssl})
-      : ssl = ssl ?? true {
+  /// Whether to negotiate HTTP/2 (with automatic HTTP/1.1 fallback) on the
+  /// native (`dart:io`) transport.
+  ///
+  /// Defaults to `true`. When `true`, requests use HTTP/2 if the origin
+  /// negotiates `h2` via TLS ALPN, otherwise they transparently fall back to
+  /// HTTP/1.1. Set to `false` to always use HTTP/1.1 (e.g. behind a proxy that
+  /// is not detected from the environment). Has no effect on the web platform,
+  /// where the browser controls the protocol.
+  final bool enableHttp2;
+
+  NetworkingModule(
+      {RetryPolicy? retryPolicy, this.origin, bool? ssl, bool? enableHttp2})
+      : ssl = ssl ?? true,
+        enableHttp2 = enableHttp2 ?? true {
     this.retryPolicy = retryPolicy ?? RetryPolicy.exponential();
   }
 
@@ -54,6 +66,16 @@ class NetworkingModule extends INetworkingModule {
     core.supervisor.registerDiagnostic(getNetworkDiagnostic);
     core.supervisor
         .registerStrategy(NetworkingStrategy(retryPolicy: retryPolicy));
+  }
+
+  /// Releases any transport resources held by this module.
+  ///
+  /// On the native platform this closes pooled HTTP/2 connections and their
+  /// keep-alive timers. Optional to call — idle connections are otherwise
+  /// reaped automatically — but useful for a deterministic shutdown. No-op on
+  /// the web platform.
+  void dispose() {
+    disposeTransport(this);
   }
 
   @override

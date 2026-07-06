@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2026-07-06
+    version: v8.0.0
+    changes:
+      - type: feature
+        text: "BREAKING CHANGES: added support for h2 protocol using http2 package."
   - date: 2026-02-25
     version: v7.1.0
     changes:
@@ -531,7 +536,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "7.1.0"
+version: "8.0.0"
 sdks:
   -
     full-name: PubNub Dart SDK
