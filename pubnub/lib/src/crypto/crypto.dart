@@ -21,9 +21,19 @@ class CryptoModule implements ICryptoModule {
         LegacyCryptoModule(defaultConfiguration: defaultConfiguration);
   }
 
+  /// Creates a [CryptoModule] that encrypts with the legacy cryptor.
+  ///
+  /// New content is encrypted using the deprecated [LegacyCryptor]. Prefer
+  /// [CryptoModule.aesCbcCryptoModule], which encrypts with [AesCbcCryptor]
+  /// while still decrypting legacy content.
+  @Deprecated(
+      'Use CryptoModule.aesCbcCryptoModule for new applications. This factory '
+      'encrypts with the legacy cryptor and is retained only for '
+      'backward compatibility.')
   factory CryptoModule.legacyCryptoModule(CipherKey cipherKey,
       {defaultCryptoConfiguration = const CryptoConfiguration()}) {
     return CryptoModule(
+        // ignore: deprecated_member_use_from_same_package
         defaultCryptor: LegacyCryptor(cipherKey,
             cryptoConfiguration: defaultCryptoConfiguration),
         cryptors: <ICryptor>[AesCbcCryptor(cipherKey)]);
@@ -34,6 +44,7 @@ class CryptoModule implements ICryptoModule {
     return CryptoModule(
         defaultCryptor: AesCbcCryptor(cipherKey),
         cryptors: <ICryptor>[
+          // ignore: deprecated_member_use_from_same_package
           LegacyCryptor(cipherKey,
               cryptoConfiguration: defaultCryptoConfiguration),
         ]);

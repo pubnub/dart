@@ -22,6 +22,10 @@ class Keyset {
   final String? secretKey;
 
   /// Used for message encryption.
+  ///
+  /// Prefer configuring encryption on the `PubNub` instance with an AES-CBC
+  /// cryptor instead of setting a `cipherKey` here (which uses the legacy
+  /// cryptor). See [Keyset.new] for details.
   final CipherKey? cipherKey;
 
   /// If PAM is enabled, authentication key is required to access channels.
@@ -37,7 +41,13 @@ class Keyset {
     this.publishKey,
     this.secretKey,
     this.authKey,
-    @Deprecated('Use `cipherKey` at CryptoModule') this.cipherKey,
+    @Deprecated(
+        'Providing a cipherKey on Keyset uses the legacy cryptor. Configure '
+        'encryption on the PubNub instance with an AES-CBC cryptor instead, '
+        'e.g. PubNub(crypto: CryptoModule.aesCbcCryptoModule('
+        'CipherKey.fromUtf8("your-cipher-key")), defaultKeyset: ...). '
+        'This parameter will be removed in a future release.')
+    this.cipherKey,
   })  : assert((uuid == null) ^ (userId == null)),
         uuid = userId != null ? UUID(userId.value) : uuid!;
 
@@ -52,7 +62,10 @@ class Keyset {
       'Cipher Key: ${cipherKey != null ? 'provided' : 'not provided'}'
     ];
     if (settings.isNotEmpty) {
-      parts.add('Settings: $settings');
+      // `settings` can hold sensitive values (e.g. the PAM access token stored
+      // under the `#token` key by the PAM extension), so never print raw
+      // values here. Emit only the setting names.
+      parts.add('Settings: ${settings.keys.toList()}');
     }
     return '\n\t    ${parts.join('\n\t    ')}';
   }
