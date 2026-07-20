@@ -1,3 +1,10 @@
+## v8.0.1
+July 20 2026
+
+#### Fixed
+- Added deprecation warning for legacy cryptor configuration, cipherKey initialisation at Keyset level.
+- Refactored exception handling in cryptors without revealing extensive details of failure.
+
 ## v8.0.0
 July 06 2026
 
