@@ -1,5 +1,12 @@
 ---
 changelog:
+  - date: 2026-07-20
+    version: v8.0.1
+    changes:
+      - type: bug
+        text: "Added deprecation warning for legacy cryptor configuration, cipherKey initialisation at Keyset level."
+      - type: bug
+        text: "Refactored exception handling in cryptors without revealing extensive details of failure."
   - date: 2026-07-06
     version: v8.0.0
     changes:
@@ -536,7 +543,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "8.0.0"
+version: "8.0.1"
 sdks:
   -
     full-name: PubNub Dart SDK

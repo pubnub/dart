@@ -4,6 +4,15 @@ import 'dart:typed_data' show Uint8List;
 
 import 'package:pubnub/core.dart';
 
+final _logger = injectLogger('pubnub.crypto.aescbc');
+
+/// Opaque message thrown for all decryption failures.
+///
+/// The underlying exception is intentionally excluded from the thrown message
+/// to avoid leaking details that could aid a decryption/padding oracle attack.
+/// The real cause is logged internally via [_logger] instead.
+const String _decryptionErrorMessage = 'decryption error';
+
 /// AesCbcCryptor is new and enhanced cryptor to encrypt/decrypt
 /// PubNub messages.
 /// It's always preferred to use this cryptor instead old cryptor.
@@ -19,9 +28,14 @@ class AesCbcCryptor implements ICryptor {
     var encrypter = crypto.Encrypter(
       crypto.AES(_getKey(), mode: crypto.AESMode.cbc),
     );
-    return encrypter.decryptBytes(
-        crypto.Encrypted(Uint8List.fromList(encryptedData.data.toList())),
-        iv: crypto.IV(Uint8List.fromList(encryptedData.metadata.toList())));
+    try {
+      return encrypter.decryptBytes(
+          crypto.Encrypted(Uint8List.fromList(encryptedData.data.toList())),
+          iv: crypto.IV(Uint8List.fromList(encryptedData.metadata.toList())));
+    } catch (e) {
+      _logger.warning('AES-CBC decryption failed: $e');
+      throw CryptoException(_decryptionErrorMessage);
+    }
   }
 
   @override

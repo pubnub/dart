@@ -9,8 +9,28 @@ import 'cryptoConfiguration.dart';
 import 'encryption_mode.dart';
 import 'crypto.dart';
 
+final _logger = injectLogger('pubnub.crypto.legacy');
+
+/// Opaque message thrown for all decryption failures.
+///
+/// The underlying exception is intentionally excluded from the thrown message
+/// to avoid leaking details that could aid a decryption/padding oracle attack.
+/// The real cause is logged internally via [_logger] instead.
+const String _decryptionErrorMessage = 'decryption error';
+
+/// Opaque message thrown for all encryption failures.
+const String _encryptionErrorMessage = 'encryption error';
+
 /// Legacy cryptor exists so that SDK will be able to decrypt old contents
-/// Which encrypted in past
+/// which were encrypted in the past.
+///
+/// It uses AES-CBC with a key derived by SHA-256 and, by default, a random IV.
+/// For new applications prefer [AesCbcCryptor], which is the enhanced,
+/// recommended cryptor.
+@Deprecated(
+    'Use AesCbcCryptor for new applications. LegacyCryptor is retained only '
+    'to decrypt content encrypted by older SDK versions and will be removed '
+    'in a future release.')
 class LegacyCryptor implements ICryptor {
   final CryptoConfiguration cryptoConfiguration;
   final CipherKey cipherKey;
@@ -91,6 +111,7 @@ class LegacyCryptoModule implements ICryptoModule {
     var encrypter = crypto.Encrypter(
         crypto.AES(_getKey(key, config), mode: config.encryptionMode.value()));
     try {
+      // ignore: deprecated_member_use_from_same_package
       if (config.useRandomInitializationVector) {
         return encrypter.decryptBytes(
             crypto.Encrypted(Uint8List.fromList(input.sublist(16))),
@@ -101,7 +122,8 @@ class LegacyCryptoModule implements ICryptoModule {
             .decryptBytes(crypto.Encrypted(Uint8List.fromList(input)), iv: iv);
       }
     } catch (e) {
-      throw CryptoException('Error while decrypting message:\n$e');
+      _logger.warning('Legacy message decryption failed: $e');
+      throw CryptoException(_decryptionErrorMessage);
     }
   }
 
@@ -116,6 +138,7 @@ class LegacyCryptoModule implements ICryptoModule {
     var encrypter = crypto.Encrypter(
         crypto.AES(_getKey(key, config), mode: config.encryptionMode.value()));
     try {
+      // ignore: deprecated_member_use_from_same_package
       if (config.useRandomInitializationVector) {
         var iv = crypto.IV.fromSecureRandom(16);
         var encrypted = [];
@@ -129,7 +152,8 @@ class LegacyCryptoModule implements ICryptoModule {
         return encrypter.encryptBytes(input, iv: iv).bytes;
       }
     } catch (e) {
-      throw CryptoException('Error while encrypting message:\n$e');
+      _logger.warning('Legacy message encryption failed: $e');
+      throw CryptoException(_encryptionErrorMessage);
     }
   }
 
@@ -147,7 +171,8 @@ class LegacyCryptoModule implements ICryptoModule {
           crypto.Encrypted(Uint8List.fromList(input.sublist(16))),
           iv: crypto.IV.fromBase64(base64.encode(input.sublist(0, 16))));
     } catch (e) {
-      throw CryptoException('Error while decrypting file data: \n$e}');
+      _logger.warning('Legacy file data decryption failed: $e');
+      throw CryptoException(_decryptionErrorMessage);
     }
   }
 
@@ -166,7 +191,8 @@ class LegacyCryptoModule implements ICryptoModule {
       var encrypted = encrypter.encryptBytes(input, iv: iv).bytes;
       return [...iv.bytes, ...encrypted];
     } catch (e) {
-      throw CryptoException('Error while encrypting file data:\n$e');
+      _logger.warning('Legacy file data encryption failed: $e');
+      throw CryptoException(_encryptionErrorMessage);
     }
   }
 
