@@ -86,6 +86,7 @@ List&lt;int&gt; encryptWithKey(CipherKey key, List&lt;int&gt; input,
   var encrypter = crypto.Encrypter(
       crypto.AES(_getKey(key, config), mode: config.encryptionMode.value()));
   try {
+    &#47;&#47; ignore: deprecated_member_use_from_same_package
     if (config.useRandomInitializationVector) {
       var iv = crypto.IV.fromSecureRandom(16);
       var encrypted = [];
@@ -99,7 +100,8 @@ List&lt;int&gt; encryptWithKey(CipherKey key, List&lt;int&gt; input,
       return encrypter.encryptBytes(input, iv: iv).bytes;
     }
   } catch (e) {
-    throw CryptoException(&#39;Error while encrypting message:\n$e&#39;);
+    _logger.warning(&#39;Legacy message encryption failed: $e&#39;);
+    throw CryptoException(_encryptionErrorMessage);
   }
 }</code></pre>
 </section>
@@ -129,7 +131,7 @@ List&lt;int&gt; encryptWithKey(CipherKey key, List&lt;int&gt; input,
 <footer>
   <span class="no-break">
     pubnub
-      8.0.0
+      8.0.1
   </span>
   
 </footer>

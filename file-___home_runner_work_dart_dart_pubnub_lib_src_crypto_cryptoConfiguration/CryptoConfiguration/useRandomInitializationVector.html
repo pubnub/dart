@@ -27,7 +27,7 @@
     <li><a href="../../index.html">pubnub</a></li>
     <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_cryptoConfiguration/">src&#47;crypto&#47;cryptoConfiguration.dart</a></li>
     <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_cryptoConfiguration/CryptoConfiguration-class.html">CryptoConfiguration</a></li>
-    <li class="self-crumb">useRandomInitializationVector property</li>
+    <li class="self-crumb"><span class="deprecated">useRandomInitializationVector</span> property</li>
   </ol>
   <div class="self-name">useRandomInitializationVector</div>
   <form class="search navbar-right" role="search">
@@ -55,20 +55,34 @@
     
       <section class="multi-line-signature">
         
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.dart.dev/stable/3.12.2/dart-core/Deprecated/Deprecated.html">Deprecated</a>(&#39;A static initialization vector is insecure. Keep this enabled (the &#39; &#39;default) or migrate to AesCbcCryptor. The static-IV option is retained &#39; &#39;only for backward-compatible decryption and will be removed in a future &#39; &#39;release.&#39;)</li>
+    </ol>
+  </div>
         <a href="https://api.dart.dev/stable/3.12.2/dart-core/bool-class.html">bool</a>
-        <span class="name ">useRandomInitializationVector</span>
+        <span class="name deprecated">useRandomInitializationVector</span>
         <div class="features"><span class="feature">final</span></div>
 
       </section>
       
 <section class="desc markdown">
   <p>Whether a random IV should be used.</p>
+<p>A random initialization vector is required for secure encryption. Setting
+this to <code>false</code> selects a hard-coded static IV, which is insecure and
+exists only to decrypt historical content. Prefer <a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_aesCbcCryptor/AesCbcCryptor-class.html">AesCbcCryptor</a>, which
+always uses a random IV.</p>
 </section>
 
       
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">final bool useRandomInitializationVector;</code></pre>
+  <pre class="language-dart"><code class="language-dart">@Deprecated(
+    &#39;A static initialization vector is insecure. Keep this enabled (the &#39;
+    &#39;default) or migrate to AesCbcCryptor. The static-IV option is retained &#39;
+    &#39;only for backward-compatible decryption and will be removed in a future &#39;
+    &#39;release.&#39;)
+final bool useRandomInitializationVector;</code></pre>
 </section>
 
 
@@ -85,7 +99,7 @@
     <li><a href="../../index.html">pubnub</a></li>
     <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_cryptoConfiguration/">cryptoConfiguration</a></li>
     <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_cryptoConfiguration/CryptoConfiguration-class.html">CryptoConfiguration</a></li>
-    <li class="self-crumb">useRandomInitializationVector property</li>
+    <li class="self-crumb"><span class="deprecated">useRandomInitializationVector</span> property</li>
 </ol>
 
   <h5>CryptoConfiguration class</h5>
@@ -97,7 +111,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      8.0.0
+      8.0.1
   </span>
   
 </footer>

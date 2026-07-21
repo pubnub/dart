@@ -94,7 +94,10 @@ String toString() {
     &#39;Cipher Key: ${cipherKey != null ? &#39;provided&#39; : &#39;not provided&#39;}&#39;
   ];
   if (settings.isNotEmpty) {
-    parts.add(&#39;Settings: $settings&#39;);
+    &#47;&#47; `settings` can hold sensitive values (e.g. the PAM access token stored
+    &#47;&#47; under the `#token` key by the PAM extension), so never print raw
+    &#47;&#47; values here. Emit only the setting names.
+    parts.add(&#39;Settings: ${settings.keys.toList()}&#39;);
   }
   return &#39;\n\t    ${parts.join(&#39;\n\t    &#39;)}&#39;;
 }</code></pre>
@@ -125,7 +128,7 @@ String toString() {
 <footer>
   <span class="no-break">
     pubnub
-      8.0.0
+      8.0.1
   </span>
   
 </footer>

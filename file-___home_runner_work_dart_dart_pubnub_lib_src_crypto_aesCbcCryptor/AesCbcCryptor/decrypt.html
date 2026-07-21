@@ -80,9 +80,14 @@ List&lt;int&gt; decrypt(EncryptedData encryptedData) {
   var encrypter = crypto.Encrypter(
     crypto.AES(_getKey(), mode: crypto.AESMode.cbc),
   );
-  return encrypter.decryptBytes(
-      crypto.Encrypted(Uint8List.fromList(encryptedData.data.toList())),
-      iv: crypto.IV(Uint8List.fromList(encryptedData.metadata.toList())));
+  try {
+    return encrypter.decryptBytes(
+        crypto.Encrypted(Uint8List.fromList(encryptedData.data.toList())),
+        iv: crypto.IV(Uint8List.fromList(encryptedData.metadata.toList())));
+  } catch (e) {
+    _logger.warning(&#39;AES-CBC decryption failed: $e&#39;);
+    throw CryptoException(_decryptionErrorMessage);
+  }
 }</code></pre>
 </section>
 
@@ -111,7 +116,7 @@ List&lt;int&gt; decrypt(EncryptedData encryptedData) {
 <footer>
   <span class="no-break">
     pubnub
-      8.0.0
+      8.0.1
   </span>
   
 </footer>

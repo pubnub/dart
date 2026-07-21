@@ -88,6 +88,7 @@ List&lt;int&gt; decryptWithKey(CipherKey key, List&lt;int&gt; input,
   var encrypter = crypto.Encrypter(
       crypto.AES(_getKey(key, config), mode: config.encryptionMode.value()));
   try {
+    &#47;&#47; ignore: deprecated_member_use_from_same_package
     if (config.useRandomInitializationVector) {
       return encrypter.decryptBytes(
           crypto.Encrypted(Uint8List.fromList(input.sublist(16))),
@@ -98,7 +99,8 @@ List&lt;int&gt; decryptWithKey(CipherKey key, List&lt;int&gt; input,
           .decryptBytes(crypto.Encrypted(Uint8List.fromList(input)), iv: iv);
     }
   } catch (e) {
-    throw CryptoException(&#39;Error while decrypting message:\n$e&#39;);
+    _logger.warning(&#39;Legacy message decryption failed: $e&#39;);
+    throw CryptoException(_decryptionErrorMessage);
   }
 }</code></pre>
 </section>
@@ -128,7 +130,7 @@ List&lt;int&gt; decryptWithKey(CipherKey key, List&lt;int&gt; input,
 <footer>
   <span class="no-break">
     pubnub
-      8.0.0
+      8.0.1
   </span>
   
 </footer>

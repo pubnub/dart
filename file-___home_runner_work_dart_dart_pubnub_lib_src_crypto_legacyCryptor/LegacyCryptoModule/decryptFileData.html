@@ -89,7 +89,8 @@ List&lt;int&gt; decryptFileData(CipherKey key, List&lt;int&gt; input,
         crypto.Encrypted(Uint8List.fromList(input.sublist(16))),
         iv: crypto.IV.fromBase64(base64.encode(input.sublist(0, 16))));
   } catch (e) {
-    throw CryptoException(&#39;Error while decrypting file data: \n$e}&#39;);
+    _logger.warning(&#39;Legacy file data decryption failed: $e&#39;);
+    throw CryptoException(_decryptionErrorMessage);
   }
 }</code></pre>
 </section>
@@ -119,7 +120,7 @@ List&lt;int&gt; decryptFileData(CipherKey key, List&lt;int&gt; input,
 <footer>
   <span class="no-break">
     pubnub
-      8.0.0
+      8.0.1
   </span>
   
 </footer>

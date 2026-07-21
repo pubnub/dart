@@ -27,7 +27,7 @@
     <li><a href="../../index.html">pubnub</a></li>
     <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_crypto/">src&#47;crypto&#47;crypto.dart</a></li>
     <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_crypto/CryptoModule-class.html">CryptoModule</a></li>
-    <li class="self-crumb">CryptoModule.legacyCryptoModule factory constructor</li>
+    <li class="self-crumb"><span class="deprecated">CryptoModule.legacyCryptoModule</span> factory constructor</li>
   </ol>
   <div class="self-name">CryptoModule.legacyCryptoModule</div>
   <form class="search navbar-right" role="search">
@@ -54,19 +54,35 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">CryptoModule.legacyCryptoModule</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="legacyCryptoModule-param-cipherKey"><span class="type-annotation">dynamic</span> <span class="parameter-name">cipherKey</span>, {</span></li>
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.dart.dev/stable/3.12.2/dart-core/Deprecated/Deprecated.html">Deprecated</a>(&#39;Use CryptoModule.aesCbcCryptoModule for new applications. This factory &#39; &#39;encrypts with the legacy cryptor and is retained only for &#39; &#39;backward compatibility.&#39;)</li>
+    </ol>
+  </div>
+      <span class="name deprecated">CryptoModule.legacyCryptoModule</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="legacyCryptoModule-param-cipherKey"><span class="type-annotation">dynamic</span> <span class="parameter-name">cipherKey</span>, {</span></li>
 <li><span class="parameter" id="legacyCryptoModule-param-defaultCryptoConfiguration"><span class="type-annotation">dynamic</span> <span class="parameter-name">defaultCryptoConfiguration</span> = <span class="default-value">const CryptoConfiguration()</span>, </span></li>
 </ol>})
     </section>
     
+<section class="desc markdown">
+  <p>Creates a <a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_crypto/CryptoModule-class.html">CryptoModule</a> that encrypts with the legacy cryptor.</p>
+<p>New content is encrypted using the deprecated <a class="deprecated" href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_legacyCryptor/LegacyCryptor-class.html">LegacyCryptor</a>. Prefer
+<a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_crypto/CryptoModule/CryptoModule.aesCbcCryptoModule.html">CryptoModule.aesCbcCryptoModule</a>, which encrypts with <a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_aesCbcCryptor/AesCbcCryptor-class.html">AesCbcCryptor</a>
+while still decrypting legacy content.</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">factory CryptoModule.legacyCryptoModule(CipherKey cipherKey,
+  <pre class="language-dart"><code class="language-dart">@Deprecated(
+    &#39;Use CryptoModule.aesCbcCryptoModule for new applications. This factory &#39;
+    &#39;encrypts with the legacy cryptor and is retained only for &#39;
+    &#39;backward compatibility.&#39;)
+factory CryptoModule.legacyCryptoModule(CipherKey cipherKey,
     {defaultCryptoConfiguration = const CryptoConfiguration()}) {
   return CryptoModule(
+      &#47;&#47; ignore: deprecated_member_use_from_same_package
       defaultCryptor: LegacyCryptor(cipherKey,
           cryptoConfiguration: defaultCryptoConfiguration),
       cryptors: &lt;ICryptor&gt;[AesCbcCryptor(cipherKey)]);
@@ -86,7 +102,7 @@
     <li><a href="../../index.html">pubnub</a></li>
     <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_crypto/">crypto</a></li>
     <li><a href="../../file-___home_runner_work_dart_dart_pubnub_lib_src_crypto_crypto/CryptoModule-class.html">CryptoModule</a></li>
-    <li class="self-crumb">CryptoModule.legacyCryptoModule factory constructor</li>
+    <li class="self-crumb"><span class="deprecated">CryptoModule.legacyCryptoModule</span> factory constructor</li>
 </ol>
 
     <h5>CryptoModule class</h5>
@@ -98,7 +114,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      8.0.0
+      8.0.1
   </span>
   
 </footer>

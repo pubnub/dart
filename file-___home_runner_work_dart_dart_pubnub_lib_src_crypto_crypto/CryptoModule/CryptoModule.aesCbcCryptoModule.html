@@ -69,6 +69,7 @@
   return CryptoModule(
       defaultCryptor: AesCbcCryptor(cipherKey),
       cryptors: &lt;ICryptor&gt;[
+        &#47;&#47; ignore: deprecated_member_use_from_same_package
         LegacyCryptor(cipherKey,
             cryptoConfiguration: defaultCryptoConfiguration),
       ]);
@@ -100,7 +101,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      8.0.0
+      8.0.1
   </span>
   
 </footer>
