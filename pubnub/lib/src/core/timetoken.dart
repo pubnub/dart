@@ -9,6 +9,13 @@ class Timetoken implements Result {
 
   const Timetoken(this.value);
 
+  /// Creates a [Timetoken] from a JSON-decoded value.
+  ///
+  /// Accepts [String], [int], [BigInt], or any value whose `toString()` is a
+  /// valid integer literal. On Flutter Web, large protocol integers may arrive
+  /// as [String] after precision-preserving JSON preprocessing.
+  factory Timetoken.from(dynamic value) => Timetoken(BigInt.parse('$value'));
+
   /// Returns a string representation of this Timetoken.
   @override
   String toString() => '$value';

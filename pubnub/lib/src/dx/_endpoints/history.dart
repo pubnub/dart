@@ -80,8 +80,8 @@ class FetchHistoryResult extends Result {
     if (object is List) {
       return FetchHistoryResult._(
           object[0],
-          Timetoken(BigInt.parse('${object[1]}')),
-          Timetoken(BigInt.parse('${object[2]}')));
+          Timetoken.from(object[1]),
+          Timetoken.from(object[2]));
     }
 
     throw getExceptionFromAny(object);
@@ -232,7 +232,7 @@ class BatchHistoryResultEntry {
 
     return BatchHistoryResultEntry._(
         message,
-        Timetoken(BigInt.parse('${object['timetoken']}')),
+        Timetoken.from(object['timetoken']),
         object['uuid'],
         MessageTypeExtension.fromInt(object['message_type']),
         object['actions'],

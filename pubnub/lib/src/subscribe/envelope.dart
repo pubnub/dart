@@ -59,10 +59,10 @@ class Envelope extends BaseMessage {
       uuid: UUID(object['i'] ?? ''),
       customMessageType: object['cmt'] as String?,
       originalTimetoken: object['o'] != null
-          ? Timetoken(BigInt.parse('${object['o']['t']}'))
+          ? Timetoken.from(object['o']['t'])
           : null,
       originalRegion: object['o']?['r'],
-      publishedAt: Timetoken(BigInt.parse('${object['p']['t']}')),
+      publishedAt: Timetoken.from(object['p']['t']),
       region: object['p']['r'],
       userMeta: object['u'],
       error: object['error'],
