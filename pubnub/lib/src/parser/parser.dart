@@ -3,6 +3,8 @@ import 'package:xml/xml.dart' show XmlDocument;
 
 import 'package:pubnub/core.dart';
 
+import 'big_int_json.dart';
+
 /// @nodoc
 abstract class Parser<T> {
   Future<T> decode(String input);
@@ -16,7 +18,9 @@ class _JsonParser extends Parser<dynamic> {
 
   @override
   Future decode(String input) async {
-    return json.decode(input);
+    // On web, quote 16+ digit integers so they survive JSON.parse precisely.
+    // Native targets use an identity preprocess (true 64-bit ints).
+    return json.decode(quoteBigIntegers(input));
   }
 
   @override

@@ -1,4 +1,6 @@
 import 'package:pubnub/src/core/parser.dart';
+import 'package:pubnub/src/core/timetoken.dart';
+import 'package:pubnub/src/dx/_endpoints/history.dart';
 import 'package:pubnub/src/parser/parser.dart';
 
 import 'package:test/test.dart';
@@ -29,6 +31,28 @@ void main() {
         var input = 'inval[id]';
 
         expect(parser.decode(input), throwsA(TypeMatcher<ParserException>()));
+      });
+
+      test('decodes time response timetoken exactly', () async {
+        const literal = '17847152241442333';
+        final decoded = await parser.decode('[$literal]') as List;
+
+        expect(Timetoken.from(decoded[0]).value, equals(BigInt.parse(literal)));
+      });
+
+      test('decodes v2 history start/end and message timetokens exactly',
+          () async {
+        const literal = '17847152241442333';
+        final input =
+            '[[{"message":"hello","timetoken":$literal}],$literal,17847152241442330]';
+        final decoded = await parser.decode(input);
+        final result = FetchHistoryResult.fromJson(decoded);
+
+        expect(result.startTimetoken.value, equals(BigInt.parse(literal)));
+        expect(result.endTimetoken.value,
+            equals(BigInt.parse('17847152241442330')));
+        expect(Timetoken.from(result.messages[0]['timetoken']).value,
+            equals(BigInt.parse(literal)));
       });
     });
 

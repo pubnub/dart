@@ -58,7 +58,7 @@ class Token {
   int get ttl => _data!['ttl'] as int;
 
   /// Timetoken that is the start time for [ttl].
-  Timetoken get timetoken => Timetoken(BigInt.from(_data!['timetoken']));
+  Timetoken get timetoken => Timetoken.from(_data!['timetoken']);
 
   /// authorized UUID which is authorized to use this token to make requests
   String? get authorizedUUID => _data!['authorizedUUID'];

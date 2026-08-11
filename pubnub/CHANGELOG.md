@@ -1,3 +1,9 @@
+## v8.0.2
+August 10 2026
+
+#### Fixed
+- Fixes precision issues in web for history related endpoints that return bare large integers. Fixed the following issues reported by [@aovooyov](https://github.com/aovooyov): [#152](https://github.com/pubnub/dart/issues/152).
+
 ## v8.0.1
 July 20 2026
 

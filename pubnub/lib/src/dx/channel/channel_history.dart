@@ -125,7 +125,7 @@ class ChannelHistory {
           }
         }
         return BaseMessage(
-            publishedAt: Timetoken(BigInt.from(message['timetoken'])),
+            publishedAt: Timetoken.from(message['timetoken']),
             content: message['message'],
             originalMessage: message,
             error: error);
@@ -240,7 +240,7 @@ class PaginatedChannelHistory {
       }
       return BaseMessage(
           originalMessage: message,
-          publishedAt: Timetoken(BigInt.from(message['timetoken'])),
+          publishedAt: Timetoken.from(message['timetoken']),
           content: message['message'],
           error: error);
     })));
