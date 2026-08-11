@@ -114,7 +114,7 @@
         }
       }
       return BaseMessage(
-          publishedAt: Timetoken(BigInt.from(message[&#39;timetoken&#39;])),
+          publishedAt: Timetoken.from(message[&#39;timetoken&#39;]),
           content: message[&#39;message&#39;],
           originalMessage: message,
           error: error);
@@ -148,7 +148,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      8.0.1
+      8.0.2
   </span>
   
 </footer>

@@ -79,7 +79,7 @@
   return defaultFlow&lt;TimeParams, Timetoken&gt;(
       core: this,
       params: TimeParams(),
-      serialize: (object, [_]) =&gt; Timetoken(BigInt.parse(&#39;${object[0]}&#39;)));
+      serialize: (object, [_]) =&gt; Timetoken.from(object[0]));
 }</code></pre>
 </section>
 
@@ -108,7 +108,7 @@
 <footer>
   <span class="no-break">
     pubnub
-      8.0.1
+      8.0.2
   </span>
   
 </footer>
