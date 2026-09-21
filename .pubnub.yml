@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2026-09-21
+    version: v8.0.3
+    changes:
+      - type: improvement
+        text: "Pubspec file updates with repository, topics details."
   - date: 2026-08-10
     version: v8.0.2
     changes:
@@ -548,7 +553,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "8.0.2"
+version: "8.0.3"
 sdks:
   -
     full-name: PubNub Dart SDK

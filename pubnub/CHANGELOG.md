@@ -1,3 +1,9 @@
+## v8.0.3
+September 21 2026
+
+#### Modified
+- Pubspec file updates with repository, topics details.
+
 ## v8.0.2
 August 10 2026
 
