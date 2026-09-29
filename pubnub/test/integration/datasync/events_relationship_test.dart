@@ -7,39 +7,21 @@ import 'package:test/test.dart';
 import '_helpers.dart';
 
 void main() {
-  late PubNub pubnub;
-  late Cleanup cleanup;
-  late String id;
-  late String customerId;
-  late String loanQuoteId;
-
-  setUp(() async {
-    pubnub = superClient();
-    cleanup = Cleanup();
-    id = freshId('dartrequestedby');
-    (customerId, loanQuoteId) =
-        await seedRelationshipEndpoints(pubnub, cleanup);
-  });
-
-  tearDown(() async {
-    await cleanup.run();
-    await pubnub.unsubscribeAll();
-  });
-
   // Relationship events are delivered on the channels of both endpoint
   // entities, never on the relationship id.
-  Set<String> endpoints() => {customerId, loanQuoteId};
+  void expectRelationshipEvent(DataSyncEvent event, DataSyncEventType type,
+      String id, String customerId, String loanQuoteId) {
+    expectEventCommon(event,
+        type: type,
+        objectType: DataSyncObjectType.relationship,
+        id: id,
+        channelOneOf: {customerId, loanQuoteId},
+        className: requestedByClass,
+        classLevel: 'SubKey');
+  }
 
-  void expectCommon(DataSyncEvent event, DataSyncEventType type) =>
-      expectEventCommon(event,
-          type: type,
-          objectType: DataSyncObjectType.relationship,
-          id: id,
-          channelOneOf: endpoints(),
-          className: requestedByClass,
-          classLevel: 'SubKey');
-
-  void expectEndpoints(DataSyncEvent event) {
+  void expectEndpoints(
+      DataSyncEvent event, String customerId, String loanQuoteId) {
     expect(event.entityAId, equals(customerId));
     expect(event.entityBId, equals(loanQuoteId));
   }
@@ -47,25 +29,35 @@ void main() {
   group('DataSync events [relationship DartREQUESTED_BY]', () {
     test('relationship create emits a create event on the endpoint channels',
         () async {
+      var (pubnub, cleanup) = testClient();
+      var id = freshId('dartrequestedby');
+      var (customerId, loanQuoteId) =
+          await seedRelationshipEndpoints(pubnub, cleanup);
+
       var event = await captureEvent(
           pubnub,
-          endpoints(),
+          {customerId, loanQuoteId},
           eventFor(DataSyncEventType.create, id),
           () =>
               createRequestedBy(pubnub, cleanup, id, customerId, loanQuoteId));
 
-      expectCommon(event, DataSyncEventType.create);
-      expectEndpoints(event);
+      expectRelationshipEvent(
+          event, DataSyncEventType.create, id, customerId, loanQuoteId);
+      expectEndpoints(event, customerId, loanQuoteId);
       expectEventObjectData(event,
           status: 'active', payload: {'linkedAt': linkedAt});
     });
 
     test('relationship set (PUT) emits an update event', () async {
+      var (pubnub, cleanup) = testClient();
+      var id = freshId('dartrequestedby');
+      var (customerId, loanQuoteId) =
+          await seedRelationshipEndpoints(pubnub, cleanup);
       await createRequestedBy(pubnub, cleanup, id, customerId, loanQuoteId);
 
       var event = await captureEvent(
           pubnub,
-          endpoints(),
+          {customerId, loanQuoteId},
           eventFor(DataSyncEventType.update, id),
           () => pubnub.dataSync.setRelationship(
               id,
@@ -74,43 +66,59 @@ void main() {
                   status: 'active',
                   payload: {'linkedAt': '2026-08-01T00:00:00.000Z'})));
 
-      expectCommon(event, DataSyncEventType.update);
-      expectEndpoints(event);
+      expectRelationshipEvent(
+          event, DataSyncEventType.update, id, customerId, loanQuoteId);
+      expectEndpoints(event, customerId, loanQuoteId);
       expectEventObjectData(event,
           payload: {'linkedAt': '2026-08-01T00:00:00.000Z'});
     });
 
     test('relationship update (PATCH) emits an update event', () async {
+      var (pubnub, cleanup) = testClient();
+      var id = freshId('dartrequestedby');
+      var (customerId, loanQuoteId) =
+          await seedRelationshipEndpoints(pubnub, cleanup);
       await createRequestedBy(pubnub, cleanup, id, customerId, loanQuoteId);
 
       var event = await captureEvent(
           pubnub,
-          endpoints(),
+          {customerId, loanQuoteId},
           eventFor(DataSyncEventType.update, id),
           () => pubnub.dataSync.updateRelationship(id,
               replace: {'/payload/linkedAt': '2026-09-01T00:00:00.000Z'}));
 
-      expectCommon(event, DataSyncEventType.update);
-      expectEndpoints(event);
+      expectRelationshipEvent(
+          event, DataSyncEventType.update, id, customerId, loanQuoteId);
+      expectEndpoints(event, customerId, loanQuoteId);
       expectEventObjectData(event,
           payload: {'linkedAt': '2026-09-01T00:00:00.000Z'});
     });
 
     test('relationship delete emits a delete event with only id and deletedAt',
         () async {
+      var (pubnub, cleanup) = testClient();
+      var id = freshId('dartrequestedby');
+      var (customerId, loanQuoteId) =
+          await seedRelationshipEndpoints(pubnub, cleanup);
       await createRequestedBy(pubnub, cleanup, id, customerId, loanQuoteId);
 
       var event = await captureEvent(
           pubnub,
-          endpoints(),
+          {customerId, loanQuoteId},
           eventFor(DataSyncEventType.delete, id),
           () => pubnub.dataSync.removeRelationship(id));
 
-      expectCommon(event, DataSyncEventType.delete);
+      expectRelationshipEvent(
+          event, DataSyncEventType.delete, id, customerId, loanQuoteId);
       expectEventDeleteData(event, id);
     });
 
     test('a subscriber to the relationship id receives nothing', () async {
+      var (pubnub, cleanup) = testClient();
+      var id = freshId('dartrequestedby');
+      var (customerId, loanQuoteId) =
+          await seedRelationshipEndpoints(pubnub, cleanup);
+
       await expectNoEvent(
           pubnub,
           {id},

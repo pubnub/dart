@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:async/async.dart';
 import 'package:pubnub/pubnub.dart';
 import 'package:test/test.dart';
 
@@ -23,12 +24,16 @@ const eventTimeout = Duration(seconds: 20);
 
 final _random = Random();
 
-/// Identifier made of [prefix] and a 3-4 digit random number. The service
+/// Random number wide enough to keep the ids of test files that run
+/// concurrently against the same keyset apart.
+int _randomSuffix() => 100000 + _random.nextInt(900000);
+
+/// Identifier made of [prefix] and a 6 digit random number. The service
 /// rejects `_` in ids (DS-0004), so prefixes must not contain it.
-String freshId(String prefix) => '$prefix-${100 + _random.nextInt(9900)}';
+String freshId(String prefix) => '$prefix-${_randomSuffix()}';
 
 /// Single token value used to find the objects created by one test.
-String runMarker() => 'm${100 + _random.nextInt(9900)}';
+String runMarker() => 'm${_randomSuffix()}';
 
 PubNub superClient({String userId = 'dsdart'}) => PubNub(
     defaultKeyset: Keyset(
@@ -36,6 +41,18 @@ PubNub superClient({String userId = 'dsdart'}) => PubNub(
         publishKey: publishKey,
         secretKey: secretKey,
         userId: UserId(userId)));
+
+/// Super client and cleanup owned by the calling test. Both are released
+/// when the test ends.
+(PubNub, Cleanup) testClient() {
+  var pubnub = superClient(userId: freshId('dsdart'));
+  var cleanup = Cleanup();
+  addTearDown(() async {
+    await cleanup.run();
+    await pubnub.unsubscribeAll();
+  });
+  return (pubnub, cleanup);
+}
 
 PubNub readerClient(String userId, String token) {
   var pubnub = PubNub(
@@ -194,22 +211,38 @@ Future<MembershipRecord> createMembership(
 }
 
 /// Subscribes to [channels], runs [trigger] once the long poll is established
-/// and returns the first DataSync event that satisfies [predicate].
+/// and returns the first DataSync event that satisfies [predicate] within
+/// [timeout] of the trigger completing.
 Future<DataSyncEvent> captureEvent(PubNub pubnub, Set<String> channels,
     bool Function(DataSyncEvent) predicate, Future<void> Function() trigger,
     {Duration settle = const Duration(seconds: 3),
     Duration timeout = eventTimeout}) async {
   var subscription = pubnub.subscribe(channels: channels);
+  var event = subscription.dataSync.firstWhere(predicate);
   try {
-    var event = subscription.dataSync.firstWhere(predicate).timeout(timeout);
     await subscription.whenStarts;
     // Events are only delivered once the long poll is established.
     await Future<void>.delayed(settle);
     await trigger();
-    return await event;
+    return await event.timeout(timeout);
   } finally {
+    event.ignore();
     await subscription.cancel();
   }
+}
+
+/// Next event of [queue] that satisfies [predicate], skipping the others.
+Future<DataSyncEvent> nextEvent(
+    StreamQueue<DataSyncEvent> queue, bool Function(DataSyncEvent) predicate,
+    {Duration timeout = eventTimeout}) async {
+  Future<DataSyncEvent> take() async {
+    while (true) {
+      var event = await queue.next;
+      if (predicate(event)) return event;
+    }
+  }
+
+  return take().timeout(timeout);
 }
 
 /// Subscribes to [channels], runs [trigger] and expects no DataSync event
@@ -233,8 +266,12 @@ Future<void> expectNoEvent(
   }
 }
 
-bool Function(DataSyncEvent) eventFor(DataSyncEventType type, String id) =>
-    (event) => event.event == type && event.id == id;
+bool Function(DataSyncEvent) eventFor(DataSyncEventType type, String id,
+        {String? channel}) =>
+    (event) =>
+        event.event == type &&
+        event.id == id &&
+        (channel == null || event.channel == channel);
 
 void expectNoDuplicatedClassFields(Map<String, dynamic> data) {
   for (var key in [
