@@ -19,6 +19,8 @@ class TokenRequest {
 
   final List<Resource> _resources = [];
 
+  final List<Projection> _projections = [];
+
   /// Token metadata.
   final Map<String, dynamic>? meta;
 
@@ -33,9 +35,16 @@ class TokenRequest {
 
   /// Adds new resource to this token request.
   ///
-  /// [name] can either be a `String` or a `RegExp`.
-  /// * If [name] is a `String`, it adds a normal resource.
-  /// * If [name] is a `RegExp`, it adds a pattern instead.
+  /// Provide [name] to grant permissions to a single resource, or [pattern] to
+  /// grant them to every resource matching that pattern.
+  ///
+  /// DataSync resource types ([ResourceType.entity],
+  /// [ResourceType.relationship], [ResourceType.membership])
+  /// and [ResourceType.user] only support the CRUD permissions [create], [get],
+  /// [update] and [delete].
+  ///
+  /// **Note:** [ResourceType.user] grants permissions in the `users` scope.
+  /// Use [ResourceType.uuid] for App Context UUID metadata permissions.
   void add(ResourceType type,
       {String? name,
       String? pattern,
@@ -60,26 +69,58 @@ class TokenRequest {
         join: join));
   }
 
+  /// Assigns a DataSync projection to this token request.
+  ///
+  /// A projection restricts which fields of the matched DataSync resources are
+  /// visible. Pass [defaultProjection] to assign the base projection.
+  ///
+  /// Projections are supported for [ResourceType.entity],
+  /// [ResourceType.relationship], [ResourceType.membership],
+  /// [ResourceType.user] and [ResourceType.channel]. Exactly one of [name] or
+  /// [pattern] must be provided. When a resource matches both a [name] and a
+  /// [pattern] assignment, the [name] assignment takes priority.
+  ///
+  /// A projection does not grant any permission by itself: the resources it
+  /// applies to have to be granted with [add] as well.
+  void addDataSyncProjection(ResourceType type,
+      {String? name, String? pattern, required String projection}) {
+    if (!type.supportsProjection) {
+      Ensure.fail('invalid-type', 'type', [
+        'entity',
+        'relationship',
+        'membership',
+        'user',
+        'channel',
+      ]);
+    }
+
+    if (name != null && pattern != null) {
+      Ensure.fail('not-together', 'name', ['pattern']);
+    }
+
+    Ensure(name ?? pattern).isNotEmpty('name/pattern');
+    Ensure(projection).isNotEmpty('projection');
+
+    _projections.add(
+        Projection(type, name: name, pattern: pattern, projection: projection));
+  }
+
   /// Sends the request to the server.
   Future<Token> send() async {
+    // Projections only select which fields of the granted resources are
+    // visible, so a grant without resources carries no permissions and is
+    // rejected by the server.
     Ensure(_resources).isNotEmpty('resources');
 
-    var userSpaceEntities = [ResourceType.user, ResourceType.space];
-    var hasUserSpaceResourceType =
-        _resources.any((resource) => userSpaceEntities.contains(resource.type));
-    var hasLegacyResourceType = _resources
-        .any((resource) => !userSpaceEntities.contains(resource.type));
+    bool hasType(ResourceType type) =>
+        _resources.any((resource) => resource.type == type);
 
-    if (hasUserSpaceResourceType && hasLegacyResourceType) {
-      Ensure.fail(
-          'not-together', 'user/space', ['channel', 'uuid', 'channelGroup']);
+    if (hasType(ResourceType.user) && hasType(ResourceType.uuid)) {
+      Ensure.fail('not-together', 'user', ['uuid']);
     }
-    if (authorizedUUID != null && hasUserSpaceResourceType) {
-      Ensure.fail('not-together', 'authorizedUUID', ['user', 'space']);
-    }
-    if (authorizedUserId != null && hasLegacyResourceType) {
-      Ensure.fail('not-together', 'authorizedUserId',
-          ['channel', 'uuid', 'channelGroup']);
+
+    if (hasType(ResourceType.space) && hasType(ResourceType.channel)) {
+      Ensure.fail('not-together', 'space', ['channel']);
     }
 
     Map<String, dynamic> combine<T extends Pattern>(
@@ -95,11 +136,15 @@ class TokenRequest {
 
     var resources = _resources
         .where((resource) => resource.name is String)
-        .fold({'channels': {}, 'groups': {}, 'uuids': {}}, combine);
+        .fold(
+            {'channels': {}, 'groups': {}, 'uuids': {}, 'users': {}}, combine);
 
     var patterns = _resources
         .where((resource) => resource.pattern is String)
-        .fold({'channels': {}, 'groups': {}, 'uuids': {}}, combine);
+        .fold(
+            {'channels': {}, 'groups': {}, 'uuids': {}, 'users': {}}, combine);
+
+    var projections = _encodeProjections();
 
     var data = {
       'ttl': ttl,
@@ -108,7 +153,11 @@ class TokenRequest {
         'patterns': patterns,
         if (authorizedUUID != null || authorizedUserId != null)
           'uuid': authorizedUUID ?? authorizedUserId,
-        if (meta != null) 'meta': meta
+        if (meta != null || projections != null)
+          'meta': {
+            ...?meta,
+            if (projections != null) 'pn-projections': projections
+          }
       }
     };
 
@@ -126,5 +175,30 @@ class TokenRequest {
 
           return Token(result.token);
         });
+  }
+
+  /// Encodes the assigned projections into the `pn-projections` payload.
+  ///
+  /// Returns `null` when no projections have been assigned.
+  Map<String, dynamic>? _encodeProjections() {
+    if (_projections.isEmpty) return null;
+
+    var resources = <String, dynamic>{};
+    var patterns = <String, dynamic>{};
+
+    for (var projection in _projections) {
+      var type = projection.type.projectionScope;
+
+      if (projection.name != null) {
+        resources['$type:${projection.name}'] = projection.projection;
+      } else {
+        patterns['$type:${projection.pattern}'] = projection.projection;
+      }
+    }
+
+    return {
+      if (resources.isNotEmpty) 'res': resources,
+      if (patterns.isNotEmpty) 'pat': patterns
+    };
   }
 }

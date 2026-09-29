@@ -101,6 +101,6 @@ Future<R> _defaultFlow<P extends Parameters, R>({
       error = exception.response.text;
     }
 
-    throw getExceptionFromAny(error);
+    throw getExceptionFromAny(error, statusCode: exception.statusCode);
   }
 }
