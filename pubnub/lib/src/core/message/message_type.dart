@@ -1,12 +1,25 @@
 /// Represents the type of a message.
 ///
 /// {@category Basic Features}
-enum MessageType { normal, signal, objects, messageAction, file }
+enum MessageType {
+  normal,
+  signal,
+  objects,
+  messageAction,
+  file,
+  dataSync,
+
+  /// Represents a message type that is unrecognized by the SDK.
+  unknown
+}
 
 /// @nodoc
 extension MessageTypeExtension on MessageType {
   static MessageType fromInt(int? messageType) {
     switch (messageType) {
+      case null:
+      case 0:
+        return MessageType.normal;
       case 1:
         return MessageType.signal;
       case 2:
@@ -15,9 +28,10 @@ extension MessageTypeExtension on MessageType {
         return MessageType.messageAction;
       case 4:
         return MessageType.file;
-      case 0:
+      case 5:
+        return MessageType.dataSync;
       default:
-        return MessageType.normal;
+        return MessageType.unknown;
     }
   }
 
@@ -33,6 +47,10 @@ extension MessageTypeExtension on MessageType {
         return 3;
       case MessageType.file:
         return 4;
+      case MessageType.dataSync:
+        return 5;
+      case MessageType.unknown:
+        return -1;
     }
   }
 }
