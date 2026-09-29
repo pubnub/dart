@@ -6,9 +6,6 @@ import 'package:pubnub/pubnub.dart';
 
 import '../net/fake_net.dart';
 
-// Envelopes captured by the JavaScript SDK test suite
-// (`test/unit/data_sync/subscribe-event-parsing.test.ts`).
-
 Map<String, dynamic> _wire(
         {required String t,
         required String c,

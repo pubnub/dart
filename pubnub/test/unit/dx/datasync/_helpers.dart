@@ -65,9 +65,6 @@ String body(Object value) => jsonEncode(value);
 
 String dataBody(Map<String, dynamic> data) => jsonEncode({'data': data});
 
-// Fixtures below are the recorded responses of the JavaScript SDK test suite
-// (`test/integration/endpoints/data_sync/fixtures.ts`).
-
 const entityCursorPage2 = 'eyJpIjoiMTQzNTYzIiwic3YiOltdfQ';
 const entityCursorPage3 = 'eyJpIjoiMTQzNjEyIiwic3YiOltdfQ';
 
