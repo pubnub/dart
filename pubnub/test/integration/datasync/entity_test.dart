@@ -260,11 +260,11 @@ void main() {
               .having((e) => e.path, 'path', '/payload/nosuch')));
     });
 
-    test('an unparsable filter is rejected with DS-0005', () async {
+    test('an unparsable filter is rejected with DS-1000', () async {
       await expectLater(
           pubnub.dataSync
               .getEntities(customerClass, filterFast: "lastName == 'a' AND"),
-          throwsDataSync('DS-0005'));
+          throwsDataSync('DS-1000'));
     });
 
     test('removing an entity twice fails with DS-0100', () async {
