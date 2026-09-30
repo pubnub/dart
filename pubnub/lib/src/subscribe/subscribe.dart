@@ -52,7 +52,27 @@ mixin SubscribeDx on Core {
   /// ```dart
   /// var subscription = pubnub.subscribe(channels: {'my_test_channel'});
   /// subscription.messages.listen((envelope) {
-  ///   // handle envelope
+  ///   // handle published message
+  /// });
+  /// subscription.signals.listen((signal) {
+  ///   // handle signal
+  /// });
+  /// ```
+  ///
+  /// Other kinds of events are emitted on [Subscription.messageActions],
+  /// [Subscription.files], [Subscription.objects], [Subscription.dataSync]
+  /// and [Subscription.presence], or all of them together on
+  /// [Subscription.events]:
+  ///
+  /// ```dart
+  /// subscription.events.listen((event) {
+  ///   switch (event) {
+  ///     case MessageEvent(:final message):
+  ///       print('message: $message');
+  ///     case FileEvent(:final file):
+  ///       print('file: ${file?.name}');
+  ///     default:
+  ///   }
   /// });
   /// ```
   Subscription subscribe(

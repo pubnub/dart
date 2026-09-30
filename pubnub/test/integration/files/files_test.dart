@@ -420,7 +420,12 @@ void main() {
       final subscription = pubnub.subscribe(channels: {channel});
       activeSubscriptions.add(subscription);
 
-      final messageQueue = StreamQueue(subscription.messages);
+      // File messages are emitted on the `files` stream, not on `messages`.
+      final fileEvents = <FileEvent>[];
+      final messageQueue = StreamQueue(subscription.files.map((event) {
+        fileEvents.add(event);
+        return event.envelope;
+      }));
       await subscription.whenStarts;
 
       // Upload file with custom message
@@ -439,6 +444,7 @@ void main() {
           description: 'file message');
 
       // Verify file message structure
+      expect(envelope.messageType, equals(MessageType.file));
       expect(envelope.payload, isNotNull);
       expect(envelope.channel, equals(channel));
       expect(envelope.publishedAt, isNotNull);
@@ -452,6 +458,17 @@ void main() {
         expect(fileInfo['id'], equals(uploadResult.fileInfo!.id));
         expect(fileInfo['name'], equals(fileName));
       }
+
+      // Verify typed file event
+      final fileEvent = fileEvents.single;
+      expect(fileEvent.file!.id, equals(uploadResult.fileInfo!.id));
+      expect(fileEvent.file!.name, equals(fileName));
+      expect(fileEvent.message, equals(customMessage));
+      expect(fileEvent.customMessageType, equals('file_notification'));
+      expect(
+          fileEvent.url,
+          equals(
+              pubnub.files.getFileUrl(channel, fileEvent.file!.id, fileName)));
 
       print('File message received successfully');
 

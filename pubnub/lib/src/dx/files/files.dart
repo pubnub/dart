@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/files.dart';
-import 'package:pubnub/src/dx/pam/extensions/keyset.dart';
 
 import '../../../crypto.dart';
 import 'schema.dart';
 import 'extensions/keyset.dart';
+import 'file_url.dart';
 
 export 'schema.dart';
 export 'extensions/keyset.dart';
@@ -343,40 +343,8 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   Uri getFileUrl(String channel, String fileId, String fileName,
       {Keyset? keyset, String? using}) {
-    // Validate input parameters to prevent path traversal attacks
-    FileValidation.validateChannelName(channel);
-    FileValidation.validateFileId(fileId);
-    FileValidation.validateFileName(fileName);
-
     keyset ??= _core.keysets[using];
-    var pathSegments = [
-      'v1',
-      'files',
-      keyset.subscribeKey,
-      'channels',
-      channel,
-      'files',
-      fileId,
-      fileName
-    ];
-    var queryParams = {
-      'pnsdk': 'PubNub-Dart/${Core.version}',
-      'uuid': keyset.uuid.value,
-      if (keyset.secretKey != null)
-        'timestamp': '${Time().now()!.millisecondsSinceEpoch ~/ 1000}',
-      if (keyset.hasAuth()) 'auth': keyset.getAuth()
-    };
-    if (keyset.secretKey != null) {
-      queryParams.addAll(
-          {'signature': computeSignature(keyset, pathSegments, queryParams)});
-    }
-
-    return Uri(
-      scheme: 'https',
-      host: 'ps.pndsn.com',
-      pathSegments: pathSegments,
-      queryParameters: queryParams,
-    );
+    return buildFileUrl(keyset, channel, fileId, fileName);
   }
 
   /// Encrypts file content in bytes format.

@@ -13,6 +13,9 @@ env:
   SDK_PAM_SUB_KEY: ${{ secrets.SDK_PAM_SUB_KEY }}
   SDK_PAM_PUB_KEY: ${{ secrets.SDK_PAM_PUB_KEY }}
   SDK_PAM_SEC_KEY: ${{ secrets.SDK_PAM_SEC_KEY }}
+  DS_SUBSCRIBE_KEY: ${{ secrets.SDK_DS_SUB_KEY }}
+  DS_PUBLISH_KEY: ${{ secrets.SDK_DS_PUB_KEY }}
+  DS_SECRET_KEY: ${{ secrets.SDK_DS_SEC_KEY }}
 defaults:
   run:
     shell: bash

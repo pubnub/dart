@@ -16,6 +16,8 @@ export 'src/core/keyset/store.dart' show KeysetStore;
 export 'src/core/message/message.dart' show MessageType, BaseMessage;
 export 'src/core/exceptions.dart'
     show
+        DataSyncException,
+        ForbiddenException,
         KeysetException,
         InvalidArgumentsException,
         MaximumRetriesException,
@@ -52,6 +54,58 @@ export 'src/dx/channel/channel_group.dart'
         ChannelGroupChangeChannelsResult,
         ChannelGroupDeleteResult,
         ChannelGroupListChannelsResult;
+export 'src/dx/datasync/datasync.dart'
+    show
+        DataSyncDx,
+        ChannelInput,
+        ChannelRecord,
+        ChannelUpdate,
+        ClassLevel,
+        CreateChannelResult,
+        CreateEntityResult,
+        CreateMembershipResult,
+        CreateRelationshipResult,
+        CreateUserResult,
+        DataSyncLinks,
+        DataSyncPage,
+        EntityInput,
+        EntityRecord,
+        EntityUpdate,
+        GetChannelResult,
+        GetChannelsResult,
+        GetEntitiesResult,
+        GetEntityResult,
+        GetMembershipResult,
+        GetMembershipsResult,
+        GetRelationshipResult,
+        GetRelationshipsResult,
+        GetUserResult,
+        GetUsersResult,
+        JsonPointerPair,
+        MembershipInput,
+        MembershipRecord,
+        MembershipUpdate,
+        RelationshipInput,
+        RelationshipRecord,
+        RelationshipUpdate,
+        RemoveChannelResult,
+        RemoveEntityResult,
+        RemoveMembershipResult,
+        RemoveRelationshipResult,
+        RemoveUserResult,
+        SetChannelResult,
+        SetEntityResult,
+        SetMembershipResult,
+        SetRelationshipResult,
+        SetUserResult,
+        UpdateChannelResult,
+        UpdateEntityResult,
+        UpdateMembershipResult,
+        UpdateRelationshipResult,
+        UpdateUserResult,
+        UserInput,
+        UserRecord,
+        UserUpdate;
 export 'src/dx/files/files.dart'
     show
         FileDx,
@@ -98,6 +152,8 @@ export 'src/dx/pam/pam.dart'
         Resource,
         ResourceType,
         ResourceTypeExtension,
+        Projection,
+        defaultProjection,
         Token,
         TokenRequest,
         PamGrantTokenResult,
@@ -131,8 +187,25 @@ export 'src/dx/supervisor/supervisor.dart' show Signals;
 // Subscribe
 export 'src/subscribe/subscription.dart' show Subscription;
 export 'src/subscribe/extensions/keyset.dart' show SubscribeKeysetExtension;
-export 'src/subscribe/envelope.dart'
-    show Envelope, PresenceEvent, PresenceAction;
+export 'src/subscribe/envelope.dart' show Envelope;
+export 'src/subscribe/events.dart'
+    show
+        SubscriptionEvent,
+        MessageEvent,
+        SignalEvent,
+        MessageActionEvent,
+        MessageActionEventType,
+        FileEvent,
+        ObjectsEvent,
+        ObjectsEventType,
+        UuidMetadataEvent,
+        ChannelMetadataEvent,
+        MembershipMetadataEvent,
+        DataSyncEvent,
+        DataSyncEventType,
+        DataSyncObjectType,
+        PresenceEvent,
+        PresenceAction;
 
 // Logging
 export 'src/logging/logging.dart' show LogRecord, StreamLogger;

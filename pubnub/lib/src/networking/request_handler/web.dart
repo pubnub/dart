@@ -78,6 +78,12 @@ class RequestHandler extends IRequestHandler {
     } else {
       if (data.body != null) {
         headers['Content-Type'] = 'application/json';
+        // Re-apply the caller's headers so an endpoint-specific Content-Type
+        // (e.g. a DataSync vendor type or `application/json-patch+json`) wins
+        // over the default. Matches the native handler.
+        if (data.headers != null && data.headers!.isNotEmpty) {
+          data.headers!.forEach((k, v) => headers[k] = v);
+        }
         body = utf8.encode(data.body.toString());
       }
     }

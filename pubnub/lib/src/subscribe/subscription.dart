@@ -4,6 +4,7 @@ import 'package:pubnub/core.dart';
 
 import 'manager.dart';
 import 'envelope.dart';
+import 'events.dart';
 
 final _logger = injectLogger('pubnub.subscription');
 
@@ -50,30 +51,52 @@ class Subscription {
   Set<String> get presenceChannelGroups =>
       channelGroups.map((channelGroup) => '$channelGroup-pnpres').toSet();
 
-  /// Broadcast stream of messages in this subscription.
+  /// Broadcast stream of all events in this subscription.
+  ///
+  /// Each kind of event has its own [SubscriptionEvent] subtype, so the
+  /// events can be handled with an exhaustive `switch`. Events of a type that
+  /// is not recognized by the SDK are discarded.
+  Stream<SubscriptionEvent> get events => _eventsController.stream;
+
+  /// Broadcast stream of messages published to the channels of this subscription.
+  ///
+  /// Signals, message actions, files, objects and DataSync events are emitted
+  /// on [signals], [messageActions], [files], [objects] and [dataSync].
   Stream<Envelope> get messages =>
-      _envelopesController.stream.where((envelope) =>
-          channels.contains(envelope.channel) ||
-          channels.contains(envelope.subscriptionPattern) ||
-          channelGroups.contains(envelope.subscriptionPattern));
+      _eventsOfType<MessageEvent>().map((event) => event.envelope);
 
   /// Broadcast stream of presence events.
   ///
   /// Will only emit when [withPresence] is true.
-  Stream<PresenceEvent> get presence => _envelopesController.stream
-      .where((envelope) =>
-          envelope.userMeta != null &&
-          (presenceChannels.contains(envelope.channel) ||
-              presenceChannels.contains(envelope.subscriptionPattern) ||
-              presenceChannelGroups.contains(envelope.subscriptionPattern)))
-      .map<PresenceEvent>((envelope) => PresenceEvent.fromEnvelope(envelope));
+  Stream<PresenceEvent> get presence => _eventsOfType<PresenceEvent>();
+
+  /// Broadcast stream of signals.
+  Stream<SignalEvent> get signals => _eventsOfType<SignalEvent>();
+
+  /// Broadcast stream of message actions being added or removed.
+  Stream<MessageActionEvent> get messageActions =>
+      _eventsOfType<MessageActionEvent>();
+
+  /// Broadcast stream of shared files.
+  Stream<FileEvent> get files => _eventsOfType<FileEvent>();
+
+  /// Broadcast stream of App Context (objects) changes.
+  Stream<ObjectsEvent> get objects => _eventsOfType<ObjectsEvent>();
+
+  /// Broadcast stream of DataSync changes.
+  Stream<DataSyncEvent> get dataSync => _eventsOfType<DataSyncEvent>();
+
+  Stream<T> _eventsOfType<T extends SubscriptionEvent>() =>
+      _eventsController.stream.where((event) => event is T).cast<T>();
 
   final Completer<void> _cancelCompleter = Completer();
 
-  final StreamController<Envelope> _envelopesController =
+  final StreamController<SubscriptionEvent> _eventsController =
       StreamController.broadcast();
 
-  StreamSubscription<Envelope>? _envelopeSubscription;
+  StreamSubscription<SubscriptionEvent>? _envelopeSubscription;
+
+  final Set<dynamic> _reportedUnknownTypes = {};
 
   Subscription(
       this._manager, this._channels, this._channelGroups, this._withPresence);
@@ -95,49 +118,70 @@ class Subscription {
 
     _logger.verbose('Resuming subscription.');
 
-    _envelopeSubscription = _manager.envelopes.where((envelope) {
-      // If message was sent to one of our channels.
-      if (channels.contains(envelope.channel)) {
-        return true;
+    _envelopeSubscription = _manager.envelopes
+        .where((envelope) {
+          // If message was sent to one of our channels.
+          if (channels.contains(envelope.channel)) {
+            return true;
+          }
+
+          // If message was sent to one of our channel patterns.
+          if (channels.contains(envelope.subscriptionPattern)) {
+            return true;
+          }
+
+          // If message was sent to one of our channel groups.
+          if (channelGroups.contains(envelope.subscriptionPattern)) {
+            return true;
+          }
+
+          // If presence is enabled...
+
+          if (withPresence) {
+            // ...and message was sent to one of our presence channels.
+            if (presenceChannels.contains(envelope.channel)) {
+              return true;
+            }
+
+            // ...and message was sent to one of our presence channel groups.
+            if (presenceChannelGroups.contains(envelope.subscriptionPattern)) {
+              return true;
+            }
+          }
+
+          // Otherwise this is not our message.
+          return false;
+        })
+        .map(_toEvent)
+        .where((event) => event != null)
+        .cast<SubscriptionEvent>()
+        .listen(
+          _eventsController.add,
+          onError: (error) {
+            _eventsController.addError(error);
+          },
+        );
+  }
+
+  SubscriptionEvent? _toEvent(Envelope envelope) {
+    var event = SubscriptionEvent.fromEnvelope(envelope, keyset);
+
+    if (event == null) {
+      var type = envelope.originalMessage['e'];
+      if (_reportedUnknownTypes.add(type)) {
+        _logger.warning(
+            'Discarding events of unrecognized or malformed type (e: $type).');
       }
+      _logger
+          .silly('Discarded event on channel ${envelope.channel} (e: $type).');
+    }
 
-      // If message was sent to one of our channel patterns.
-      if (channels.contains(envelope.subscriptionPattern)) {
-        return true;
-      }
-
-      // If message was sent to one of our channel groups.
-      if (channelGroups.contains(envelope.subscriptionPattern)) {
-        return true;
-      }
-
-      // If presence is enabled...
-
-      if (withPresence) {
-        // ...and message was sent to one of our presence channels.
-        if (presenceChannels.contains(envelope.channel)) {
-          return true;
-        }
-
-        // ...and message was sent to one of our presence channel groups.
-        if (presenceChannelGroups.contains(envelope.subscriptionPattern)) {
-          return true;
-        }
-      }
-
-      // Otherwise this is not our message.
-      return false;
-    }).listen(
-      _envelopesController.add,
-      onError: (error) {
-        _envelopesController.addError(error);
-      },
-    );
+    return event;
   }
 
   /// Pause subscription.
   ///
-  /// Pausing subscription will prevent the [messages] and [presence] streams from emitting messages.
+  /// Pausing subscription will prevent all streams of this subscription from emitting events.
   /// Keep in mind that you may miss messages while subscription is paused.
   /// If subscription is currently paused, this method is a no-op.
   void pause() {
@@ -172,7 +216,7 @@ class Subscription {
     _logger.verbose('Subscription cancelled.');
 
     await _envelopeSubscription?.cancel();
-    await _envelopesController.close();
+    await _eventsController.close();
 
     _cancelCompleter.complete();
 

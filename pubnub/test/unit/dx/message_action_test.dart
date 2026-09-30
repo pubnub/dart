@@ -177,7 +177,7 @@ void main() {
           .then(status: 403, body: messageAction403ErrorResponse);
 
       expect(() async => await pubnub.fetchMessageActions('test'),
-          throwsA(TypeMatcher<TypeError>()));
+          throwsA(TypeMatcher<ForbiddenException>()));
     });
 
     test('delete_message_action_handles_404_not_found', () async {

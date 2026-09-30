@@ -9,6 +9,7 @@ class Request {
 
   Request.get({this.uri, this.headers, this.body}) : type = RequestType.get;
   Request.post({this.uri, this.headers, this.body}) : type = RequestType.post;
+  Request.put({this.uri, this.headers, this.body}) : type = RequestType.put;
   Request.patch({this.uri, this.headers, this.body}) : type = RequestType.patch;
   Request.delete({this.uri, this.headers, this.body})
       : type = RequestType.delete;

@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'package:test/test.dart';
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/default.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/pam/resource.dart';
-import 'package:pubnub/src/dx/pam/token.dart';
 import 'package:pubnub/src/dx/pam/token_request.dart';
 import '../net/fake_net.dart';
 
@@ -79,10 +77,11 @@ void main() {
           throwsA(TypeMatcher<AssertionError>()));
     });
 
-    test('requestToken.send throws with invalid resource uuid/space', () {
+    test('requestToken.send throws with invalid resource user/uuid', () {
       var request = pubnub.requestToken(ttl: 1440)
-        ..add(ResourceType.uuid, name: 'uuid', join: true)
-        ..add(ResourceType.space, name: 'space', create: true);
+        ..add(ResourceType.user, name: 'user', get: true)
+        ..add(ResourceType.uuid, name: 'uuid', get: true);
+
       expect(request.send(), throwsA(TypeMatcher<InvariantException>()));
     });
 
@@ -94,20 +93,21 @@ void main() {
       expect(request.send(), throwsA(TypeMatcher<InvariantException>()));
     });
 
-    test('requestToken.send throws with space and authorizedUUID', () {
+    test('requestToken.send allows space with authorizedUUID', () {
       var request = pubnub.requestToken(
           ttl: 1440, authorizedUUID: 'authorizedUUID')
         ..add(ResourceType.space, name: 'space', create: true);
 
-      expect(request.send(), throwsA(TypeMatcher<InvariantException>()));
+      // Reaching the (unmocked) network layer proves local validation passed.
+      expect(request.send(), throwsA(TypeMatcher<MockException>()));
     });
 
-    test('requestToken.send throws with channel and authorizedUserId', () {
+    test('requestToken.send allows channel with authorizedUserId', () {
       var request = pubnub.requestToken(
           ttl: 1440, authorizedUserId: 'authorizedUserId')
         ..add(ResourceType.channel, name: 'ch1', create: true);
 
-      expect(request.send(), throwsA(TypeMatcher<InvariantException>()));
+      expect(request.send(), throwsA(TypeMatcher<MockException>()));
     });
 
     // ========== MERGED GRANTTOKEN TESTS ==========
@@ -180,68 +180,94 @@ void main() {
             throwsA(TypeMatcher<InvariantException>()));
       });
 
-      test(
-          'grantToken throws InvariantException when mixing user/space with legacy resources',
+      test('grantToken throws InvariantException when mixing user with uuid',
           () async {
         var tokenRequest = pubnub.requestToken(ttl: 60)
-          ..add(ResourceType.user, name: 'user-1', read: true)
+          ..add(ResourceType.user, name: 'user-1', get: true)
+          ..add(ResourceType.uuid, name: 'uuid-1', get: true);
+
+        expect(pubnub.grantToken(tokenRequest),
+            throwsA(TypeMatcher<InvariantException>()));
+      });
+
+      test(
+          'grantToken throws InvariantException when mixing space with channel',
+          () async {
+        var tokenRequest = pubnub.requestToken(ttl: 60)
+          ..add(ResourceType.space, name: 'space-1', read: true)
           ..add(ResourceType.channel, name: 'channel-1', read: true);
 
         expect(pubnub.grantToken(tokenRequest),
             throwsA(TypeMatcher<InvariantException>()));
       });
 
-      test('grantToken throws when mixing user/space with legacy resources',
-          () async {
-        var tokenRequest = pubnub.requestToken(ttl: 60)
-          ..add(ResourceType.user, name: 'user-1', read: true)
-          ..add(ResourceType.channel, name: 'channel-1', read: true);
-
-        expect(pubnub.grantToken(tokenRequest),
-            throwsA(TypeMatcher<InvariantException>()));
-      });
-
-      test(
-          'grantToken throws InvariantException when using authorizedUUID with user/space resources',
-          () async {
-        var tokenRequest = pubnub.requestToken(
-            ttl: 60, authorizedUUID: 'test-uuid')
-          ..add(ResourceType.user, name: 'user-1', read: true);
-
-        expect(pubnub.grantToken(tokenRequest),
-            throwsA(TypeMatcher<InvariantException>()));
-      });
-
-      test(
-          'grantToken throws when using authorizedUUID with user/space resources',
-          () async {
-        var tokenRequest = pubnub.requestToken(
-            ttl: 60, authorizedUUID: 'test-uuid')
-          ..add(ResourceType.user, name: 'user-1', read: true);
-
-        expect(pubnub.grantToken(tokenRequest),
-            throwsA(TypeMatcher<InvariantException>()));
-      });
-
-      test(
-          'grantToken throws InvariantException when using authorizedUserId with legacy resources',
+      test('grantToken allows authorizedUserId with legacy resources',
           () async {
         var tokenRequest = pubnub.requestToken(
             ttl: 60, authorizedUserId: 'test-user-id')
           ..add(ResourceType.channel, name: 'channel-1', read: true);
 
+        // Reaching the (unmocked) network layer proves local validation passed.
+        expect(pubnub.grantToken(tokenRequest),
+            throwsA(TypeMatcher<MockException>()));
+      });
+
+      test('grantToken rejects a grant carrying only projections', () async {
+        var tokenRequest = pubnub.requestToken(ttl: 60)
+          ..addDataSyncProjection(ResourceType.entity,
+              name: 'user.A', projection: 'proj1');
+
+        // A projection grants no permission, the server rejects such grants.
         expect(pubnub.grantToken(tokenRequest),
             throwsA(TypeMatcher<InvariantException>()));
       });
 
-      test(
-          'grantToken throws when using authorizedUserId with legacy resources',
-          () async {
-        var tokenRequest = pubnub.requestToken(
-            ttl: 60, authorizedUserId: 'test-user-id')
-          ..add(ResourceType.channel, name: 'channel-1', read: true);
+      test('grantToken allows projections alongside resources', () async {
+        var tokenRequest = pubnub.requestToken(ttl: 60)
+          ..add(ResourceType.entity, name: 'user.A', get: true)
+          ..addDataSyncProjection(ResourceType.entity,
+              name: 'user.A', projection: 'proj1');
 
         expect(pubnub.grantToken(tokenRequest),
+            throwsA(TypeMatcher<MockException>()));
+      });
+
+      test(
+          'addDataSyncProjection rejects resource types without a projection scope',
+          () {
+        var tokenRequest = pubnub.requestToken(ttl: 60);
+
+        expect(
+            () => tokenRequest.addDataSyncProjection(ResourceType.uuid,
+                name: 'uuid-1', projection: 'proj1'),
+            throwsA(TypeMatcher<InvariantException>()));
+
+        expect(
+            () => tokenRequest.addDataSyncProjection(ResourceType.channelGroup,
+                name: 'group-1', projection: 'proj1'),
+            throwsA(TypeMatcher<InvariantException>()));
+
+        expect(
+            () => tokenRequest.addDataSyncProjection(ResourceType.space,
+                name: 'space-1', projection: 'proj1'),
+            throwsA(TypeMatcher<InvariantException>()));
+      });
+
+      test('addDataSyncProjection rejects both a name and a pattern', () {
+        var tokenRequest = pubnub.requestToken(ttl: 60);
+
+        expect(
+            () => tokenRequest.addDataSyncProjection(ResourceType.entity,
+                name: 'user.A', pattern: 'user.*', projection: 'proj1'),
+            throwsA(TypeMatcher<InvariantException>()));
+      });
+
+      test('addDataSyncProjection rejects neither a name nor a pattern', () {
+        var tokenRequest = pubnub.requestToken(ttl: 60);
+
+        expect(
+            () => tokenRequest.addDataSyncProjection(ResourceType.entity,
+                projection: 'proj1'),
             throwsA(TypeMatcher<InvariantException>()));
       });
     });
@@ -718,14 +744,33 @@ void main() {
         expect(ResourceType.values, contains(ResourceType.channelGroup));
         expect(ResourceType.values, contains(ResourceType.user));
         expect(ResourceType.values, contains(ResourceType.space));
+        expect(ResourceType.values, contains(ResourceType.entity));
+        expect(ResourceType.values, contains(ResourceType.relationship));
+        expect(ResourceType.values, contains(ResourceType.membership));
       });
 
       test('ResourceType extension provides correct string values', () {
         expect(ResourceType.channel.value, equals('channels'));
         expect(ResourceType.uuid.value, equals('uuids'));
         expect(ResourceType.channelGroup.value, equals('groups'));
-        expect(ResourceType.user.value, equals('uuids'));
+        expect(ResourceType.user.value, equals('users'));
         expect(ResourceType.space.value, equals('channels'));
+        expect(ResourceType.entity.value, equals('datasync:entities'));
+        expect(
+            ResourceType.relationship.value, equals('datasync:relationships'));
+        expect(ResourceType.membership.value, equals('datasync:memberships'));
+      });
+
+      test('isDataSync is only true for the DataSync scopes', () {
+        expect(ResourceType.entity.isDataSync, isTrue);
+        expect(ResourceType.relationship.isDataSync, isTrue);
+        expect(ResourceType.membership.isDataSync, isTrue);
+
+        expect(ResourceType.channel.isDataSync, isFalse);
+        expect(ResourceType.uuid.isDataSync, isFalse);
+        expect(ResourceType.channelGroup.isDataSync, isFalse);
+        expect(ResourceType.user.isDataSync, isFalse);
+        expect(ResourceType.space.isDataSync, isFalse);
       });
     });
   });

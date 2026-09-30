@@ -20,6 +20,7 @@ import 'dx/push/push.dart';
 import 'dx/presence/presence.dart';
 import 'dx/files/files.dart';
 import 'dx/logging_configuration.dart';
+import 'dx/datasync/datasync.dart';
 import 'dx/objects/objects_types.dart';
 import 'dx/objects/objects.dart';
 import 'dx/supervisor/supervisor.dart';
@@ -68,6 +69,9 @@ class PubNub extends Core
   /// Contains methods that allow managing files.
   late final FileDx files;
 
+  /// Contains methods to manage DataSync entities.
+  late final DataSyncDx dataSync;
+
   /// Current version of this library.
   static String version = Core.version;
 
@@ -92,6 +96,7 @@ class PubNub extends Core
     channelGroups = ChannelGroupDx(this);
     objects = ObjectsDx(this);
     files = FileDx(this);
+    dataSync = DataSyncDx(this);
     _logPubNubInstanceInformation();
   }
 

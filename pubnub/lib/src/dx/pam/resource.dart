@@ -1,14 +1,23 @@
 /// Represents a resource type.
 ///
 /// {@category Access Manager}
-enum ResourceType { channel, uuid, channelGroup, user, space }
+enum ResourceType {
+  channel,
+  uuid,
+  channelGroup,
+  user,
+  space,
+  entity,
+  relationship,
+  membership
+}
 
 /// @nodoc
 extension ResourceTypeExtension on ResourceType {
   String get value {
     switch (this) {
       case ResourceType.user:
-        return 'uuids';
+        return 'users';
       case ResourceType.space:
         return 'channels';
       case ResourceType.uuid:
@@ -17,12 +26,67 @@ extension ResourceTypeExtension on ResourceType {
         return 'channels';
       case ResourceType.channelGroup:
         return 'groups';
+      case ResourceType.entity:
+        return 'datasync:entities';
+      case ResourceType.relationship:
+        return 'datasync:relationships';
+      case ResourceType.membership:
+        return 'datasync:memberships';
     }
   }
+
+  /// Whether this resource type is one of the DataSync scopes.
+  ///
+  /// DataSync scopes only support the CRUD permissions
+  /// ([Resource.create], [Resource.get], [Resource.update] and
+  /// [Resource.delete]).
+  bool get isDataSync =>
+      this == ResourceType.entity ||
+      this == ResourceType.relationship ||
+      this == ResourceType.membership;
+
+  /// Key identifying this type within the DataSync projections payload.
+  ///
+  /// Projections are keyed by a `datasync:`-prefixed scope for every DataSync
+  /// resource kind, including users and channels — unlike their *permissions*,
+  /// which reuse the un-prefixed `users` and `channels` grant scopes.
+  ///
+  /// `null` for types that cannot carry a projection.
+  String? get projectionScope {
+    switch (this) {
+      case ResourceType.entity:
+        return 'datasync:entities';
+      case ResourceType.relationship:
+        return 'datasync:relationships';
+      case ResourceType.membership:
+        return 'datasync:memberships';
+      case ResourceType.user:
+        return 'datasync:users';
+      case ResourceType.channel:
+        return 'datasync:channels';
+      case ResourceType.uuid:
+      case ResourceType.channelGroup:
+      case ResourceType.space:
+        return null;
+    }
+  }
+
+  /// Whether a projection can be assigned to this resource type.
+  bool get supportsProjection => projectionScope != null;
 }
 
+/// Name of the base DataSync projection.
+///
+/// {@category Access Manager}
+const String defaultProjection = '__default__';
+
 /// @nodoc
-ResourceType getResourceTypeFromString(String type) {
+///
+/// Maps a resource type key found in a parsed token to a [ResourceType].
+///
+/// Returns `null` for unrecognized keys so that scopes introduced by the
+/// server in the future are skipped instead of failing the whole token parse.
+ResourceType? getResourceTypeFromString(String type) {
   switch (type) {
     case 'chan':
       return ResourceType.channel;
@@ -34,8 +98,14 @@ ResourceType getResourceTypeFromString(String type) {
       return ResourceType.user;
     case 'spc':
       return ResourceType.space;
+    case 'datasync:entities':
+      return ResourceType.entity;
+    case 'datasync:relationships':
+      return ResourceType.relationship;
+    case 'datasync:memberships':
+      return ResourceType.membership;
     default:
-      throw Exception('invalid resource type');
+      return null;
   }
 }
 
@@ -56,15 +126,15 @@ class Resource {
 
   /// Readonly bitfield. Contains permissions for this resource.
   ///
-  /// This is a 5-bit field. No permissions is represented by `00000` binary or `0` in decimal.
-  /// * 1st bit: join priviledge.
-  /// * 2nd bit: update priviledge.
-  /// * 3rd bit: get priviledge.
-  /// * 4th bit: create priviledge.
-  /// * 5th bit: delete priviledge.
-  /// * 6th bit: manage priviledge.
-  /// * 7th bit: write priviledge.
-  /// * 8th bit: read priviledge.
+  /// This is an 8-bit field. No permissions is represented by `0`.
+  /// * `1`: read priviledge.
+  /// * `2`: write priviledge.
+  /// * `4`: manage priviledge.
+  /// * `8`: delete priviledge.
+  /// * `16`: create priviledge.
+  /// * `32`: get priviledge.
+  /// * `64`: update priviledge.
+  /// * `128`: join priviledge.
   int get bit => _bit;
 
   bool get join => _bit & 128 == 128;
@@ -123,4 +193,33 @@ class Resource {
           get: get ?? this.get,
           update: update ?? this.update,
           join: join ?? this.join);
+}
+
+/// Represents a DataSync projection assignment.
+///
+/// A projection restricts which fields of a DataSync resource are visible.
+/// Projections can only be assigned to resource types that have a
+/// [ResourceTypeExtension.projectionScope] — the three DataSync scopes plus
+/// [ResourceType.user] and [ResourceType.channel].
+///
+/// Exactly one of [name] or [pattern] is set: [name] for an exact-match
+/// assignment, [pattern] for one matching resources by pattern. When a resource
+/// matches both, the exact-match assignment takes priority.
+///
+/// {@category Access Manager}
+class Projection {
+  /// DataSync type this projection applies to.
+  final ResourceType type;
+
+  /// Name of the resource this projection applies to.
+  final String? name;
+
+  /// Pattern matching the resources this projection applies to.
+  final String? pattern;
+
+  /// Name of the projection. [defaultProjection] refers to the base projection.
+  final String projection;
+
+  const Projection(this.type,
+      {this.name, this.pattern, required this.projection});
 }

@@ -1,9 +1,10 @@
 /// @nodoc
-enum RequestType { get, post, patch, subscribe, delete, file }
+enum RequestType { get, post, put, patch, subscribe, delete, file }
 
 const _sendTimeoutRequestDefault = {
   RequestType.get: 10000,
   RequestType.post: 10000,
+  RequestType.put: 10000,
   RequestType.delete: 10000,
   RequestType.patch: 10000,
   RequestType.subscribe: 300000,
@@ -13,6 +14,7 @@ const _sendTimeoutRequestDefault = {
 const _receiveTimeoutRequestDefault = {
   RequestType.get: 10000,
   RequestType.post: 10000,
+  RequestType.put: 10000,
   RequestType.delete: 10000,
   RequestType.patch: 10000,
   RequestType.subscribe: 300000,
@@ -22,6 +24,7 @@ const _receiveTimeoutRequestDefault = {
 const _connectTimeoutRequestDefault = {
   RequestType.get: 10000,
   RequestType.post: 10000,
+  RequestType.put: 10000,
   RequestType.delete: 10000,
   RequestType.patch: 10000,
   RequestType.subscribe: 300000,
@@ -33,6 +36,7 @@ extension RequestTypeExtension on RequestType {
   static const methods = {
     RequestType.get: 'GET',
     RequestType.post: 'POST',
+    RequestType.put: 'PUT',
     RequestType.patch: 'PATCH',
     RequestType.subscribe: 'GET',
     RequestType.delete: 'DELETE',

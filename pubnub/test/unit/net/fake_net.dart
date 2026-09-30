@@ -42,14 +42,20 @@ class FakeRequestHandler extends IRequestHandler {
       mockBody = json.encode(json.decode(mock.request.body));
     }
 
-    var doesBodyMatch = mockBody == body;
+    var doesBodyMatch = mockBody == body || _jsonEquals(mockBody, body);
+
+    var headerMismatches = _compareHeaders(request.headers ?? {});
+    var doesHeadersMatch = headerMismatches.isEmpty;
 
     var doesUriMatch = _compareUris(expectedUri, actualUri);
 
     return Future.microtask(() {
       resource.release();
 
-      if (doesMethodMatch && doesBodyMatch && doesUriMatch) {
+      if (doesMethodMatch &&
+          doesBodyMatch &&
+          doesUriMatch &&
+          doesHeadersMatch) {
         if (![200, 204].contains(mock.response.statusCode)) {
           throw RequestFailureException(mock.response,
               statusCode: mock.response.statusCode);
@@ -71,6 +77,9 @@ class FakeRequestHandler extends IRequestHandler {
           exceptionBody +=
               '\n* body:\n| EXPECTED:\n$mockBody\n| ACTUAL:\n$body';
         }
+        if (!doesHeadersMatch) {
+          exceptionBody += '\n* headers:\n${headerMismatches.join('\n')}';
+        }
 
         throw MockException(
             'mock request does not match the expected request $exceptionBody');
@@ -83,6 +92,60 @@ class FakeRequestHandler extends IRequestHandler {
 
   @override
   bool get isCancelled => false;
+
+  /// Compares request headers against the expected and absent headers of the
+  /// mock. Header names are case insensitive. Returns the mismatches.
+  List<String> _compareHeaders(Map<String, String> actual) {
+    var lowerCased = {
+      for (var entry in actual.entries) entry.key.toLowerCase(): entry.value
+    };
+    var mismatches = <String>[];
+
+    mock.request.headers.forEach((name, values) {
+      var expected = values.join(',');
+      var value = lowerCased[name.toLowerCase()];
+      if (value != expected) {
+        mismatches.add('| $name EXPECTED: $expected | ACTUAL: $value');
+      }
+    });
+
+    for (var name in mock.request.absentHeaders) {
+      if (lowerCased.containsKey(name.toLowerCase())) {
+        mismatches.add(
+            '| $name EXPECTED: absent | ACTUAL: ${lowerCased[name.toLowerCase()]}');
+      }
+    }
+
+    return mismatches;
+  }
+
+  /// Compares two JSON documents ignoring the order of object keys.
+  bool _jsonEquals(String? expected, String? actual) {
+    if (expected == null || actual == null) return false;
+    try {
+      return _deepEquals(json.decode(expected), json.decode(actual));
+    } on FormatException {
+      return false;
+    }
+  }
+
+  bool _deepEquals(dynamic a, dynamic b) {
+    if (a is Map && b is Map) {
+      if (a.length != b.length) return false;
+      for (var key in a.keys) {
+        if (!b.containsKey(key) || !_deepEquals(a[key], b[key])) return false;
+      }
+      return true;
+    }
+    if (a is List && b is List) {
+      if (a.length != b.length) return false;
+      for (var i = 0; i < a.length; i++) {
+        if (!_deepEquals(a[i], b[i])) return false;
+      }
+      return true;
+    }
+    return a == b;
+  }
 
   /// Compare two URIs ignoring query parameter ordering
   bool _compareUris(Uri expected, Uri actual) {
@@ -119,8 +182,11 @@ class MockRequest {
   final dynamic body;
   final Map<String, List<String>> headers;
 
+  /// Names of headers that must not be sent.
+  final Set<String> absentHeaders;
+
   const MockRequest(this.method, this.path,
-      [this.headers = const {}, this.body]);
+      [this.headers = const {}, this.body, this.absentHeaders = const {}]);
 }
 
 class MockResponse implements IResponse {
@@ -177,10 +243,11 @@ MockBuilder when({
   required String path,
   Map<String, List<String>> headers = const {},
   dynamic body,
+  Set<String> absentHeaders = const {},
   MockRequest? request,
 }) {
-  return MockBuilder(
-      _queue, request ?? MockRequest(method, path, headers, body));
+  return MockBuilder(_queue,
+      request ?? MockRequest(method, path, headers, body, absentHeaders));
 }
 
 class FakeNetworkingModule implements INetworkingModule {
