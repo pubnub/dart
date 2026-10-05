@@ -76,6 +76,25 @@ Map<String, dynamic> customerPayload(String id,
       ...overrides,
     };
 
+// Sorted payload fields of a `DartCustomer` in each projection, see the
+// `projections` test suite of the JavaScript SDK.
+const customerDefaultFields = [
+  'city',
+  'creditScore',
+  'customerId',
+  'email',
+  'firstName',
+  'lastName'
+];
+const customerAdminFields = [
+  'city',
+  'creditScore',
+  'customerId',
+  'firstName',
+  'lastName',
+  'private'
+];
+
 Map<String, dynamic> loanQuotePayload(String id,
         [Map<String, dynamic> overrides = const {}]) =>
     {
@@ -215,9 +234,11 @@ Future<MembershipRecord> createMembership(
 /// [timeout] of the trigger completing.
 Future<DataSyncEvent> captureEvent(PubNub pubnub, Set<String> channels,
     bool Function(DataSyncEvent) predicate, Future<void> Function() trigger,
-    {Duration settle = const Duration(seconds: 3),
+    {String? withProjection,
+    Duration settle = const Duration(seconds: 3),
     Duration timeout = eventTimeout}) async {
-  var subscription = pubnub.subscribe(channels: channels);
+  var subscription =
+      pubnub.subscribe(channels: channels, withProjection: withProjection);
   var event = subscription.dataSync.firstWhere(predicate);
   try {
     await subscription.whenStarts;
@@ -249,9 +270,11 @@ Future<DataSyncEvent> nextEvent(
 /// within [window].
 Future<void> expectNoEvent(
     PubNub pubnub, Set<String> channels, Future<void> Function() trigger,
-    {Duration settle = const Duration(seconds: 3),
+    {String? withProjection,
+    Duration settle = const Duration(seconds: 3),
     Duration window = const Duration(seconds: 8)}) async {
-  var subscription = pubnub.subscribe(channels: channels);
+  var subscription =
+      pubnub.subscribe(channels: channels, withProjection: withProjection);
   var events = <DataSyncEvent>[];
   var listener = subscription.dataSync.listen(events.add);
   try {

@@ -14,6 +14,7 @@ export '../_endpoints/datasync/membership.dart';
 export '../_endpoints/datasync/relationship.dart';
 export '../_endpoints/datasync/user.dart';
 export 'schema.dart';
+export 'subscribable.dart' show DataSyncChannel, DataSyncEntity, DataSyncUser;
 
 final _logger = injectLogger('pubnub.dx.datasync');
 

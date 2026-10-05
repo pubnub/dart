@@ -17,6 +17,7 @@ class Subscription {
   final bool? _withPresence;
   final Set<String>? _channels;
   final Set<String>? _channelGroups;
+  final String? _projection;
 
   /// Keyset that this subscription is using.
   Keyset get keyset => _manager.keyset;
@@ -24,7 +25,14 @@ class Subscription {
   /// Whether this subscription receives presence events.
   bool get withPresence => _withPresence ?? false;
 
+  /// DataSync projection observed by this subscription, `null` for the base
+  /// projection.
+  String? get projection => _projection;
+
   /// Set of channels that this subscription represents.
+  ///
+  /// When [projection] is set, these are the projection data channels
+  /// `__{projection}__{id}` of the requested channels.
   Set<String> get channels => {..._channels ?? <String>{}};
 
   /// Set of channel groups that this subscription represents.
@@ -99,7 +107,9 @@ class Subscription {
   final Set<dynamic> _reportedUnknownTypes = {};
 
   Subscription(
-      this._manager, this._channels, this._channelGroups, this._withPresence);
+      this._manager, this._channels, this._channelGroups, this._withPresence,
+      {String? projection})
+      : _projection = projection;
 
   /// Resume currently paused subscription.
   ///

@@ -57,6 +57,9 @@ export 'src/dx/channel/channel_group.dart'
 export 'src/dx/datasync/datasync.dart'
     show
         DataSyncDx,
+        DataSyncChannel,
+        DataSyncEntity,
+        DataSyncUser,
         ChannelInput,
         ChannelRecord,
         ChannelUpdate,

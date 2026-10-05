@@ -75,10 +75,27 @@ mixin SubscribeDx on Core {
   ///   }
   /// });
   /// ```
+  ///
+  /// {@template pubnub.subscribe.withProjection}
+  /// Set [withProjection] to observe a DataSync projection: instead of each
+  /// `id` of [channels], its projection data channel `__{projection}__{id}`
+  /// is subscribed, and [Subscription.dataSync] emits events shaped by that
+  /// projection.
+  ///
+  /// ```dart
+  /// var subscription = pubnub.subscribe(
+  ///     channels: {'customer-1'}, withProjection: 'admin');
+  /// // Subscribes to `__admin__customer-1`.
+  /// ```
+  ///
+  /// * [withProjection] does not apply to [channelGroups].
+  /// {@endtemplate}
+  /// {@macro pubnub.subscribe.projectionRules}
   Subscription subscribe(
       {Set<String>? channels,
       Set<String>? channelGroups,
       bool withPresence = false,
+      String? withProjection,
       Keyset? keyset,
       String? using,
       Timetoken? timetoken}) {
@@ -91,6 +108,7 @@ mixin SubscribeDx on Core {
           'channels': channels,
           'channelGroups': channelGroups,
           'withPresence': withPresence,
+          'withProjection': withProjection,
           'timetoken': timetoken,
         },
         detailsType: LogEventDetailsType.apiParametersInfo));
@@ -101,6 +119,7 @@ mixin SubscribeDx on Core {
         channels: channels,
         channelGroups: channelGroups,
         withPresence: withPresence,
+        projection: withProjection,
         timetoken: timetoken);
 
     subscription.resume();
@@ -111,10 +130,14 @@ mixin SubscribeDx on Core {
   /// Creates an inactive subscription to [channels] and [channelGroups]. Returns [Subscription].
   ///
   /// You can activate an inactive subscription by calling `subscription.subscribe()`.
+  ///
+  /// {@macro pubnub.subscribe.withProjection}
+  /// {@macro pubnub.subscribe.projectionRules}
   Subscription subscription(
       {Set<String>? channels,
       Set<String>? channelGroups,
       bool withPresence = false,
+      String? withProjection,
       Keyset? keyset,
       String? using,
       Timetoken? timetoken}) {
@@ -126,6 +149,7 @@ mixin SubscribeDx on Core {
         channels: channels,
         channelGroups: channelGroups,
         withPresence: withPresence,
+        projection: withProjection,
         timetoken: timetoken);
 
     return subscription;

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:pubnub/core.dart';
 
+import 'projection.dart';
 import 'subscribe_loop/subscribe_loop_state.dart';
 import 'subscribe_loop/subscribe_loop.dart';
 import 'subscription.dart';
@@ -52,9 +53,15 @@ class Manager {
       {Set<String>? channels,
       Set<String>? channelGroups,
       bool? withPresence,
+      String? projection,
       Timetoken? timetoken}) {
-    var subscription =
-        Subscription(this, channels, channelGroups, withPresence);
+    var normalized = normalizeProjection(projection);
+    var subscription = Subscription(
+        this,
+        channels?.map((id) => projectionChannel(id, normalized)).toSet(),
+        channelGroups,
+        withPresence,
+        projection: normalized);
 
     subscriptions.add(subscription);
 

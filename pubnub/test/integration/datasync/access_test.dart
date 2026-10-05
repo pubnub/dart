@@ -11,22 +11,6 @@ const _loanQuoteSecret = 'loanquote-private-value';
 
 // Payload fields of each projection, see the `projections` test suite of
 // the JavaScript SDK.
-const _customerDefaultFields = [
-  'city',
-  'creditScore',
-  'customerId',
-  'email',
-  'firstName',
-  'lastName'
-];
-const _customerAdminFields = [
-  'city',
-  'creditScore',
-  'customerId',
-  'firstName',
-  'lastName',
-  'private'
-];
 const _loanQuoteDefaultFields = ['make', 'model', 'price', 'quoteId'];
 const _loanQuoteAdminFields = ['private', 'quoteId'];
 
@@ -175,7 +159,7 @@ void main() {
       var client = await reader(grantAll);
 
       var entity = (await client.dataSync.getEntity(customerId)).entity;
-      _expectFields(entity.payload, _customerDefaultFields);
+      _expectFields(entity.payload, customerDefaultFields);
 
       var full = (await pubnub.dataSync.getEntity(customerId)).entity;
       expect(full.payload!['private'], equals(_customerSecret));
@@ -188,7 +172,7 @@ void main() {
             pattern: 'dartcustomer-.*', projection: 'admin'));
 
       var entity = (await client.dataSync.getEntity(customerId)).entity;
-      _expectFields(entity.payload, _customerAdminFields);
+      _expectFields(entity.payload, customerAdminFields);
       expect(entity.payload!['private'], equals(_customerSecret));
     });
 
@@ -201,7 +185,7 @@ void main() {
 
       _expectFields(
           (await client.dataSync.getEntity(customerId)).entity.payload,
-          _customerAdminFields);
+          customerAdminFields);
       _expectFields(
           (await client.dataSync.getEntity(loanQuoteId)).entity.payload,
           _loanQuoteDefaultFields);
@@ -215,7 +199,7 @@ void main() {
 
       _expectFields(
           (await client.dataSync.getEntity(customerId)).entity.payload,
-          _customerDefaultFields);
+          customerDefaultFields);
     });
 
     test('list reads are projected too', () async {
@@ -226,7 +210,7 @@ void main() {
 
       var result = await client.dataSync.getEntities(customerClass,
           filterFast: "customerId == '$customerId'");
-      _expectFields(result.entities.single.payload, _customerAdminFields);
+      _expectFields(result.entities.single.payload, customerAdminFields);
     });
 
     test('LoanQuote admin narrows the payload to quoteId and private',
