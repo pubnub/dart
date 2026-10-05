@@ -1,3 +1,5 @@
+<img width="1920" height="600" alt="image" src="https://github.com/user-attachments/assets/799d7a8a-79f0-420d-a809-ffcbcf3dfb03" />
+
 # PubNub Dart SDK
 
 This is the official PubNub Dart SDK repository. 
