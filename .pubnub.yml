@@ -1,5 +1,12 @@
 ---
 changelog:
+  - date: 2026-10-07
+    version: v9.0.0
+    changes:
+      - type: feature
+        text: "Added dataSync feature support."
+      - type: improvement
+        text: "Subscription has separate streams based on event types."
   - date: 2026-09-21
     version: v8.0.3
     changes:
@@ -588,7 +595,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "8.0.3"
+version: "9.0.0"
 sdks:
   -
     full-name: PubNub Dart SDK
