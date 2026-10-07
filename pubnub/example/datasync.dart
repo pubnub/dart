@@ -579,18 +579,20 @@ Future<void> getRelationshipsPagination() async {
 
 // snippet.data_sync_event_listener
 Future<void> listenForDataSyncEvents() async {
-  var subscription = pubnub.subscribe(channels: {'product-sneaker-42'});
+  var subscription = pubnub.dataSyncEntity('product-sneaker-42').subscription();
 
   subscription.dataSync.listen((event) {
     print('${event.event.name} ${event.objectType.name} ${event.id} '
         '(class ${event.className})');
   });
+
+  subscription.subscribe();
 }
 // snippet.end
 
 // snippet.data_sync_event_switch
 Future<void> listenForAllEvents() async {
-  var subscription = pubnub.subscribe(channels: {'user-alice'});
+  var subscription = pubnub.dataSyncUser('user-alice').subscription();
 
   subscription.events.listen((event) {
     switch (event) {
@@ -601,20 +603,29 @@ Future<void> listenForAllEvents() async {
       default:
     }
   });
+
+  subscription.subscribe();
 }
 // snippet.end
 
 // snippet.subscribe_to_projection_channels
 Future<void> subscribeToProjectionChannels() async {
-  var subscription = pubnub.subscribe(channels: {
-    'product-sneaker-42',
-    '__admin__product-sneaker-42',
+  var entity = pubnub.dataSyncEntity('product-sneaker-42');
+
+  // Observes `product-sneaker-42`, the base projection.
+  var base = entity.subscription();
+  // Observes `__admin__product-sneaker-42`.
+  var admin = entity.subscription(projection: 'admin');
+
+  base.dataSync.listen((event) {
+    print('base ${event.event.name} ${event.id} payload ${event.payload}');
+  });
+  admin.dataSync.listen((event) {
+    print('admin ${event.event.name} ${event.id} payload ${event.payload}');
   });
 
-  subscription.dataSync.listen((event) {
-    print('${event.channel}: ${event.event.name} ${event.id} '
-        'payload ${event.payload}');
-  });
+  base.subscribe();
+  admin.subscribe();
 }
 // snippet.end
 
