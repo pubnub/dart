@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:pubnub/core.dart';
 
+import 'projection.dart';
 import 'subscribe_loop/subscribe_loop_state.dart';
 import 'subscribe_loop/subscribe_loop.dart';
 import 'subscription.dart';
@@ -12,6 +13,10 @@ final _logger = injectLogger('pubnub.dx.subscribe.manager');
 /// @nodoc
 class Manager {
   final Keyset keyset;
+
+  /// Networking origin used when building file download URLs.
+  final Uri origin;
+
   final Set<Subscription> subscriptions = {};
   late final SubscribeLoop _loop;
 
@@ -19,7 +24,7 @@ class Manager {
 
   Future<void> get whenStarts => _loop.whenStarts;
 
-  Manager(Core core, this.keyset) {
+  Manager(Core core, this.keyset) : origin = core.networking.getOrigin() {
     _loop = SubscribeLoop(core, SubscribeLoopState(keyset));
   }
 
@@ -52,9 +57,15 @@ class Manager {
       {Set<String>? channels,
       Set<String>? channelGroups,
       bool? withPresence,
+      String? projection,
       Timetoken? timetoken}) {
-    var subscription =
-        Subscription(this, channels, channelGroups, withPresence);
+    var normalized = normalizeProjection(projection);
+    var subscription = Subscription(
+        this,
+        channels?.map((id) => projectionChannel(id, normalized)).toSet(),
+        channelGroups,
+        withPresence,
+        projection: normalized);
 
     subscriptions.add(subscription);
 

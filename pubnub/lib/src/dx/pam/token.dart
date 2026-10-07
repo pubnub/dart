@@ -23,32 +23,81 @@ class Token {
         'meta': object['meta']
       };
 
-      var resources = <Resource>[];
-      var patterns = <Resource>[];
-
-      for (var typeEntry in object['res'].cast<String, dynamic>().entries) {
-        var type = getResourceTypeFromString(typeEntry.key);
-
-        for (var resourceEntry in typeEntry.value.entries) {
-          resources.add(Resource(type,
-              name: resourceEntry.key, bit: resourceEntry.value));
-        }
-      }
-
-      for (var typeEntry in object['pat'].cast<String, dynamic>().entries) {
-        var type = getResourceTypeFromString(typeEntry.key);
-
-        for (var resourceEntry in typeEntry.value.entries) {
-          patterns.add(Resource(type,
-              pattern: resourceEntry.key, bit: resourceEntry.value));
-        }
-      }
-
-      _memoizedData!['resources'] = resources;
-      _memoizedData!['patterns'] = patterns;
+      _memoizedData!['resources'] = _decodeResources(object['res'], false);
+      _memoizedData!['patterns'] = _decodeResources(object['pat'], true);
+      _memoizedData!['projections'] = _decodeProjections(object['meta']);
     }
 
     return _memoizedData;
+  }
+
+  /// Decodes a `res` or `pat` section of a parsed token into resources.
+  ///
+  /// Scopes that are not recognized are skipped so that scopes introduced by
+  /// the server in the future do not fail the whole parse.
+  static List<Resource> _decodeResources(dynamic section, bool isPattern) {
+    var result = <Resource>[];
+
+    if (section is! Map) return result;
+
+    for (var typeEntry in section.cast<String, dynamic>().entries) {
+      var type = getResourceTypeFromString(typeEntry.key);
+      if (type == null) continue;
+
+      if (typeEntry.value is! Map) continue;
+
+      for (var resourceEntry in (typeEntry.value as Map).entries) {
+        result.add(Resource(type,
+            name: isPattern ? null : resourceEntry.key as String,
+            pattern: isPattern ? resourceEntry.key as String : null,
+            bit: resourceEntry.value as int));
+      }
+    }
+
+    return result;
+  }
+
+  /// Decodes the `pn-projections` entry of the token metadata.
+  ///
+  /// Composite keys are of the form `<datasync scope>:<resource id>`. Both the
+  /// scope and the id can contain `:`, so the known scope prefixes are matched
+  /// instead of splitting on the separator.
+  static List<Projection> _decodeProjections(dynamic meta) {
+    if (meta is! Map) return const [];
+
+    var encoded = meta['pn-projections'];
+    if (encoded is! Map) return const [];
+
+    var result = <Projection>[];
+
+    void decodeSection(dynamic section, bool isPattern) {
+      if (section is! Map) return;
+
+      for (var entry in section.entries) {
+        var key = entry.key;
+        if (key is! String || entry.value is! String) continue;
+
+        for (var type
+            in ResourceType.values.where((type) => type.supportsProjection)) {
+          var prefix = '${type.projectionScope}:';
+          if (!key.startsWith(prefix)) continue;
+
+          var id = key.substring(prefix.length);
+          if (id.isEmpty) break;
+
+          result.add(Projection(type,
+              name: isPattern ? null : id,
+              pattern: isPattern ? id : null,
+              projection: entry.value as String));
+          break;
+        }
+      }
+    }
+
+    decodeSection(encoded['res'], false);
+    decodeSection(encoded['pat'], true);
+
+    return result;
   }
 
   /// Version of the token encoding.
@@ -74,6 +123,11 @@ class Token {
 
   /// All patterns attached to this token.
   List<Resource> get patterns => (_data!['patterns']);
+
+  /// All DataSync projections attached to this token.
+  ///
+  /// Empty when the token carries no projection assignments.
+  List<Projection> get projections => (_data!['projections']);
 
   Token(this._stringToken);
 

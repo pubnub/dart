@@ -52,13 +52,50 @@ mixin SubscribeDx on Core {
   /// ```dart
   /// var subscription = pubnub.subscribe(channels: {'my_test_channel'});
   /// subscription.messages.listen((envelope) {
-  ///   // handle envelope
+  ///   // handle published message
+  /// });
+  /// subscription.signals.listen((signal) {
+  ///   // handle signal
   /// });
   /// ```
+  ///
+  /// Other kinds of events are emitted on [Subscription.messageActions],
+  /// [Subscription.files], [Subscription.objects], [Subscription.dataSync]
+  /// and [Subscription.presence], or all of them together on
+  /// [Subscription.events]:
+  ///
+  /// ```dart
+  /// subscription.events.listen((event) {
+  ///   switch (event) {
+  ///     case MessageEvent(:final message):
+  ///       print('message: $message');
+  ///     case FileEvent(:final file):
+  ///       print('file: ${file?.name}');
+  ///     default:
+  ///   }
+  /// });
+  /// ```
+  ///
+  /// {@template pubnub.subscribe.withProjection}
+  /// Set [withProjection] to observe a DataSync projection: instead of each
+  /// `id` of [channels], its projection data channel `__{projection}__{id}`
+  /// is subscribed, and [Subscription.dataSync] emits events shaped by that
+  /// projection.
+  ///
+  /// ```dart
+  /// var subscription = pubnub.subscribe(
+  ///     channels: {'customer-1'}, withProjection: 'admin');
+  /// // Subscribes to `__admin__customer-1`.
+  /// ```
+  ///
+  /// * [withProjection] does not apply to [channelGroups].
+  /// {@endtemplate}
+  /// {@macro pubnub.subscribe.projectionRules}
   Subscription subscribe(
       {Set<String>? channels,
       Set<String>? channelGroups,
       bool withPresence = false,
+      String? withProjection,
       Keyset? keyset,
       String? using,
       Timetoken? timetoken}) {
@@ -71,6 +108,7 @@ mixin SubscribeDx on Core {
           'channels': channels,
           'channelGroups': channelGroups,
           'withPresence': withPresence,
+          'withProjection': withProjection,
           'timetoken': timetoken,
         },
         detailsType: LogEventDetailsType.apiParametersInfo));
@@ -81,6 +119,7 @@ mixin SubscribeDx on Core {
         channels: channels,
         channelGroups: channelGroups,
         withPresence: withPresence,
+        projection: withProjection,
         timetoken: timetoken);
 
     subscription.resume();
@@ -91,10 +130,14 @@ mixin SubscribeDx on Core {
   /// Creates an inactive subscription to [channels] and [channelGroups]. Returns [Subscription].
   ///
   /// You can activate an inactive subscription by calling `subscription.subscribe()`.
+  ///
+  /// {@macro pubnub.subscribe.withProjection}
+  /// {@macro pubnub.subscribe.projectionRules}
   Subscription subscription(
       {Set<String>? channels,
       Set<String>? channelGroups,
       bool withPresence = false,
+      String? withProjection,
       Keyset? keyset,
       String? using,
       Timetoken? timetoken}) {
@@ -106,6 +149,7 @@ mixin SubscribeDx on Core {
         channels: channels,
         channelGroups: channelGroups,
         withPresence: withPresence,
+        projection: withProjection,
         timetoken: timetoken);
 
     return subscription;

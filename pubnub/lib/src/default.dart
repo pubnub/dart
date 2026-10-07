@@ -20,6 +20,7 @@ import 'dx/push/push.dart';
 import 'dx/presence/presence.dart';
 import 'dx/files/files.dart';
 import 'dx/logging_configuration.dart';
+import 'dx/datasync/datasync.dart';
 import 'dx/objects/objects_types.dart';
 import 'dx/objects/objects.dart';
 import 'dx/supervisor/supervisor.dart';
@@ -68,6 +69,9 @@ class PubNub extends Core
   /// Contains methods that allow managing files.
   late final FileDx files;
 
+  /// Contains methods to manage DataSync entities.
+  late final DataSyncDx dataSync;
+
   /// Current version of this library.
   static String version = Core.version;
 
@@ -92,6 +96,7 @@ class PubNub extends Core
     channelGroups = ChannelGroupDx(this);
     objects = ObjectsDx(this);
     files = FileDx(this);
+    dataSync = DataSyncDx(this);
     _logPubNubInstanceInformation();
   }
 
@@ -111,6 +116,48 @@ class PubNub extends Core
     keyset ??= keysets[using];
 
     return Channel(this, keyset, name);
+  }
+
+  /// Returns a real-time handle for the DataSync user [id].
+  ///
+  /// A wildcard such as `user.*` keeps working. Subscribe with
+  /// [DataSyncUser.subscription].
+  ///
+  /// {@template pubnub.datasync.handle}
+  /// [id] is used verbatim.
+  ///
+  /// If [keyset] is not provided, then it tries to obtain a keyset named
+  /// [using]. If that fails, then it uses the default keyset. If that fails
+  /// as well, it throws [InvariantException].
+  /// {@endtemplate}
+  DataSyncUser dataSyncUser(String id, {Keyset? keyset, String? using}) {
+    keyset ??= keysets[using];
+
+    return DataSyncUser(this, keyset, id);
+  }
+
+  /// Returns a real-time handle for the DataSync channel [id].
+  ///
+  /// A wildcard such as `channel.*` keeps working. Subscribe with
+  /// [DataSyncChannel.subscription].
+  ///
+  /// {@macro pubnub.datasync.handle}
+  DataSyncChannel dataSyncChannel(String id, {Keyset? keyset, String? using}) {
+    keyset ??= keysets[using];
+
+    return DataSyncChannel(this, keyset, id);
+  }
+
+  /// Returns a real-time handle for the DataSync entity [id].
+  ///
+  /// A wildcard such as `customer.*` keeps working. Subscribe with
+  /// [DataSyncEntity.subscription].
+  ///
+  /// {@macro pubnub.datasync.handle}
+  DataSyncEntity dataSyncEntity(String id, {Keyset? keyset, String? using}) {
+    keyset ??= keysets[using];
+
+    return DataSyncEntity(this, keyset, id);
   }
 
   /// Creates [UUIDMetadata] and sets metadata for given [uuid] in the database.

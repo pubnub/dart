@@ -314,7 +314,7 @@ void main() {
           'test-channel',
           ChannelMetadataInput(name: 'test channel'),
         ),
-        throwsA(TypeMatcher<TypeError>()),
+        throwsA(TypeMatcher<ForbiddenException>()),
       );
     });
 

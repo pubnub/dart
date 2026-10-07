@@ -1,3 +1,5 @@
+<img width="1920" height="600" alt="image" src="https://github.com/user-attachments/assets/799d7a8a-79f0-420d-a809-ffcbcf3dfb03" />
+
 # PubNub Dart SDK
 
 This is the official PubNub Dart SDK repository. 
@@ -37,43 +39,29 @@ You will need the publish and subscribe keys to authenticate your app. Get your 
 
 ## Add event listeners
 
+`messages` emits published messages only. Each other kind has its own stream, and `events` delivers all of them as a typed `SubscriptionEvent`.
+
 ```dart
-/*A Subscription contains a Dart Stream of messages from the channel(s) to which you are subscribed. You can transform that stream in the usual ways, or add a listener using listen:*/
-  subscription.messages.listen((envelope) {
-    switch (envelope.messageType) {
-      case MessageType.normal:
-          print('${envelope.publishedBy} sent a message: ${envelope.content}');
-          break;
-      case MessageType.signal:
-          print('${envelope.publishedBy} sent a signal message: ${envelope.content}');
-        break;
-      case MessageType.objects:
-          print('object event received from ${envelope.publishedBy} with data ${envelope.payload['data']}');
-        break;
-      case MessageType.messageAction:
-          print('message action event ${envelope.payload['event']} received with data ${envelope.payload['data']}');
-        break;
-      case MessageType.file:
-          var fileInfo = envelope.payload['file'];
-          var id = fileInfo['id']; // unique file id
-          var name = fileInfo['name']; // file name
-          print('${envelope.publishedBy} sends file $name with message  ${envelope.payload['message']}');
-        break;
-      default:
-        print('${envelope.publishedBy} sent a message: ${envelope.content}');
-    }
-  });
+subscription.messages.listen((envelope) {
+  print('${envelope.uuid} sent: ${envelope.content}');
+});
 
-  subscription.presence.listen((event) {
-      print('''Presence Event with action: ${event.action},
-      received from uuid: ${event.uuid}
-      with time token: ${event.timetoken},
-      Total Occupancy now is: ${event.occupancy}
-      ''');
-  });
+subscription.signals.listen((signal) => print(signal.message));
+subscription.messageActions.listen((action) => print(action.event));
+subscription.files.listen((file) => print(file.file?.name));
+subscription.objects.listen((object) => print(object.event));
+subscription.dataSync.listen((change) => print('${change.event} ${change.id}'));
+subscription.presence.listen((presence) => print(presence.action));
 
-var envelope =
-    await subscription.messages.firstWhere((envelope) => envelope.channel == 'my_channel');
+subscription.events.listen((event) {
+  switch (event) {
+    case MessageEvent(:final message):
+      print(message);
+    case DataSyncEvent(:final id):
+      print(id);
+    default:
+  }
+});
 ```
 
 ## Publish/subscribe

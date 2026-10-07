@@ -9,7 +9,13 @@ import 'extensions/keyset.dart';
 export 'package:pubnub/src/dx/_endpoints/pam.dart'
     show PamGrantResult, PamGrantTokenResult, PamRevokeTokenResult;
 export 'token.dart' show Token;
-export 'resource.dart' show Resource, ResourceType, ResourceTypeExtension;
+export 'resource.dart'
+    show
+        Resource,
+        ResourceType,
+        ResourceTypeExtension,
+        Projection,
+        defaultProjection;
 export 'extensions/keyset.dart' show PamKeysetExtension;
 export 'token_request.dart' show TokenRequest;
 

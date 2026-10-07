@@ -1,3 +1,12 @@
+## v9.0.0
+October 07 2026
+
+#### Added
+- Added dataSync feature support.
+
+#### Modified
+- Subscription has separate streams based on event types.
+
 ## v8.0.3
 September 21 2026
 

@@ -7,6 +7,9 @@ dartdoc:
     "Objects":
       markdown: "doc/Objects.md"
       name: "Objects"
+    "DataSync":
+      markdown: "doc/DataSync.md"
+      name: "DataSync"
     "Files":
       markdown: "doc/Files.md"
       name: "Files"
@@ -24,6 +27,6 @@ dartdoc:
       name: "Results"
     "Modules":
       name: "Modules"
-  categoryOrder: ["Basic Features", "Objects", "Files", "Push", "Access Manager", "Exceptions", "Results"]
+  categoryOrder: ["Basic Features", "Objects", "DataSync", "Files", "Push", "Access Manager", "Exceptions", "Results"]
   examplePathPrefix: "./examples"
   showUndocumentedCategories: true

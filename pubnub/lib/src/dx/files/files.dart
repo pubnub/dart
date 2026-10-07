@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'package:pubnub/src/dx/_endpoints/files.dart';
-import 'package:pubnub/src/dx/pam/extensions/keyset.dart';
 
 import '../../../crypto.dart';
 import 'schema.dart';
 import 'extensions/keyset.dart';
+import 'file_url.dart';
 
 export 'schema.dart';
 export 'extensions/keyset.dart';
@@ -243,8 +243,11 @@ class FileDx {
 
     keyset ??= _core.keysets[using];
 
+    // Drop the authority so the request handler applies the networking origin,
+    // including a custom port that [getFileUrl] may have written into the Uri.
     var params = DownloadFileParams(
-        getFileUrl(channel, fileId, fileName).replace(scheme: '', host: ''));
+        getFileUrl(channel, fileId, fileName, keyset: keyset)
+            .replace(scheme: '', host: '', port: 0));
 
     _logger.fine(LogEvent(
         message: 'Download file API call with parameters:',
@@ -335,6 +338,8 @@ class FileDx {
   /// Returns [Uri] to download the file with [fileId] and [fileName] from [channel].
   ///
   /// You can download the file by making a GET request to returned Uri.
+  /// The host is the configured networking origin, or `ps.pndsn.com` when
+  /// none is set.
   ///
   /// > If the file is encrypted, you will have to decrypt it on your own.
   ///
@@ -343,40 +348,9 @@ class FileDx {
   /// If that fails as well, then it will throw [InvariantException].
   Uri getFileUrl(String channel, String fileId, String fileName,
       {Keyset? keyset, String? using}) {
-    // Validate input parameters to prevent path traversal attacks
-    FileValidation.validateChannelName(channel);
-    FileValidation.validateFileId(fileId);
-    FileValidation.validateFileName(fileName);
-
     keyset ??= _core.keysets[using];
-    var pathSegments = [
-      'v1',
-      'files',
-      keyset.subscribeKey,
-      'channels',
-      channel,
-      'files',
-      fileId,
-      fileName
-    ];
-    var queryParams = {
-      'pnsdk': 'PubNub-Dart/${Core.version}',
-      'uuid': keyset.uuid.value,
-      if (keyset.secretKey != null)
-        'timestamp': '${Time().now()!.millisecondsSinceEpoch ~/ 1000}',
-      if (keyset.hasAuth()) 'auth': keyset.getAuth()
-    };
-    if (keyset.secretKey != null) {
-      queryParams.addAll(
-          {'signature': computeSignature(keyset, pathSegments, queryParams)});
-    }
-
-    return Uri(
-      scheme: 'https',
-      host: 'ps.pndsn.com',
-      pathSegments: pathSegments,
-      queryParameters: queryParams,
-    );
+    return buildFileUrl(keyset, channel, fileId, fileName,
+        origin: _core.networking.getOrigin());
   }
 
   /// Encrypts file content in bytes format.
