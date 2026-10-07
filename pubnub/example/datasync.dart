@@ -629,6 +629,19 @@ Future<void> subscribeToProjectionChannels() async {
 }
 // snippet.end
 
+// snippet.subscribe_with_wildcard
+Future<void> subscribeWithWildcard() async {
+  var subscription = pubnub.dataSyncEntity('product.*').subscription();
+
+  subscription.dataSync.listen((event) {
+    // event.channel -> 'product.sneaker-42'
+    print('changed: ${event.id}');
+  });
+
+  subscription.subscribe();
+}
+// snippet.end
+
 // snippet.grant_token_data_sync
 Future<void> grantTokenDataSync() async {
   var request = pubnub.requestToken(
