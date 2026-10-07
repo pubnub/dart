@@ -27,6 +27,39 @@ void main() {
       expect(result.toString(), equals(_getFileUrl));
     });
 
+    test('getFileUrl uses the default origin when none is configured', () {
+      var client = PubNub(
+        defaultKeyset: keyset,
+        networking: NetworkingModule(),
+      );
+      var result = client.files.getFileUrl('channel', 'fileId', 'fileName');
+
+      expect(result.scheme, equals('https'));
+      expect(result.host, equals('ps.pndsn.com'));
+      expect(result.hasPort, isFalse);
+      expect(result.path,
+          equals('/v1/files/test/channels/channel/files/fileId/fileName'));
+    });
+
+    test('getFileUrl uses a custom origin', () {
+      var client = PubNub(
+        defaultKeyset: keyset,
+        networking:
+            NetworkingModule(origin: 'files.example.com:8443', ssl: false),
+      );
+      var result = client.files.getFileUrl('channel', 'fileId', 'fileName');
+
+      expect(result.scheme, equals('http'));
+      expect(result.host, equals('files.example.com'));
+      expect(result.hasPort, isTrue);
+      expect(result.port, equals(8443));
+      expect(result.path,
+          equals('/v1/files/test/channels/channel/files/fileId/fileName'));
+      expect(result.queryParameters['pnsdk'],
+          equals('PubNub-Dart/${PubNub.version}'));
+      expect(result.queryParameters['uuid'], equals('test'));
+    });
+
     test('file encryption mechanism', () async {
       var input = 'hello there!';
       var encryptedData = pubnub.files.encryptFile(utf8.encode(input),

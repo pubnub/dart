@@ -5,9 +5,12 @@ import 'package:pubnub/src/dx/pam/extensions/keyset.dart';
 /// Builds the [Uri] to download the file with [fileId] and [fileName] from [channel]
 /// using [keyset].
 ///
+/// [origin] supplies the scheme, host, and port. When it is omitted, the Uri
+/// uses `https` and `ps.pndsn.com`.
+///
 /// @nodoc
-Uri buildFileUrl(
-    Keyset keyset, String channel, String fileId, String fileName) {
+Uri buildFileUrl(Keyset keyset, String channel, String fileId, String fileName,
+    {Uri? origin}) {
   // Validate input parameters to prevent path traversal attacks
   FileValidation.validateChannelName(channel);
   FileValidation.validateFileId(fileId);
@@ -36,8 +39,11 @@ Uri buildFileUrl(
   }
 
   return Uri(
-    scheme: 'https',
-    host: 'ps.pndsn.com',
+    scheme:
+        origin != null && origin.scheme.isNotEmpty ? origin.scheme : 'https',
+    host:
+        origin != null && origin.host.isNotEmpty ? origin.host : 'ps.pndsn.com',
+    port: origin != null && origin.hasPort ? origin.port : null,
     pathSegments: pathSegments,
     queryParameters: queryParams,
   );

@@ -457,9 +457,58 @@ void main() {
       expect(signals.single.message, equals('typing'));
       expect(messageActions.single.action.value, equals('smile'));
       expect(files.single.file!.name, equals('cat.png'));
+      expect(files.single.url!.scheme, equals('https'));
+      expect(files.single.url!.host, equals('ps.pndsn.com'));
+      expect(files.single.url!.hasPort, isFalse);
+      expect(files.single.url,
+          equals(pubnub.files.getFileUrl('ch', 'abc-123', 'cat.png')));
       expect(objects.map((e) => e.runtimeType),
           [ChannelMetadataEvent, UuidMetadataEvent, MembershipMetadataEvent]);
       expect(dataSync.single.id, equals('dartcustomer.40601'));
+
+      await subscription.cancel();
+    });
+
+    test('file events use a custom origin', () async {
+      var origin = Uri(
+        scheme: 'http',
+        host: 'files.example.com',
+        port: 8443,
+        queryParameters: {'pnsdk': 'PubNub-Dart/${Core.version}'},
+      );
+      pubnub = PubNub(
+          networking: FakeNetworkingModule(origin: origin),
+          defaultKeyset: _keyset);
+
+      when(method: 'GET', path: 'v2/subscribe/demo/ch/0?tt=0&uuid=test').then(
+          status: 200, body: '{"t":{"t":"17905741222336765","r":41},"m":[]}');
+      when(
+        method: 'GET',
+        path:
+            'v2/subscribe/demo/ch/0?tt=17905741222336765&tr=41&uuid=test',
+      ).then(
+          status: 200,
+          body: json.encode({
+            't': {'t': '17905741900000001', 'r': 41},
+            'm': [json.decode(_file)]
+          }));
+
+      var subscription = pubnub.subscription(channels: {'ch'});
+      var files = <FileEvent>[];
+      var received = Completer<void>();
+      subscription.files.listen((event) {
+        files.add(event);
+        if (!received.isCompleted) received.complete();
+      }, onError: (Object _) {});
+      subscription.subscribe();
+
+      await received.future.timeout(Duration(seconds: 5));
+
+      expect(files.single.url!.scheme, equals('http'));
+      expect(files.single.url!.host, equals('files.example.com'));
+      expect(files.single.url!.port, equals(8443));
+      expect(files.single.url,
+          equals(pubnub.files.getFileUrl('ch', 'abc-123', 'cat.png')));
 
       await subscription.cancel();
     });

@@ -243,8 +243,11 @@ class FileDx {
 
     keyset ??= _core.keysets[using];
 
+    // Drop the authority so the request handler applies the networking origin,
+    // including a custom port that [getFileUrl] may have written into the Uri.
     var params = DownloadFileParams(
-        getFileUrl(channel, fileId, fileName).replace(scheme: '', host: ''));
+        getFileUrl(channel, fileId, fileName, keyset: keyset)
+            .replace(scheme: '', host: '', port: 0));
 
     _logger.fine(LogEvent(
         message: 'Download file API call with parameters:',
@@ -335,6 +338,8 @@ class FileDx {
   /// Returns [Uri] to download the file with [fileId] and [fileName] from [channel].
   ///
   /// You can download the file by making a GET request to returned Uri.
+  /// The host is the configured networking origin, or `ps.pndsn.com` when
+  /// none is set.
   ///
   /// > If the file is encrypted, you will have to decrypt it on your own.
   ///
@@ -344,7 +349,8 @@ class FileDx {
   Uri getFileUrl(String channel, String fileId, String fileName,
       {Keyset? keyset, String? using}) {
     keyset ??= _core.keysets[using];
-    return buildFileUrl(keyset, channel, fileId, fileName);
+    return buildFileUrl(keyset, channel, fileId, fileName,
+        origin: _core.networking.getOrigin());
   }
 
   /// Encrypts file content in bytes format.

@@ -253,7 +253,10 @@ MockBuilder when({
 class FakeNetworkingModule implements INetworkingModule {
   final Pool _pool = Pool(2);
 
-  FakeNetworkingModule() {
+  /// When set, [getOrigin] returns this Uri instead of the default origin.
+  final Uri? origin;
+
+  FakeNetworkingModule({this.origin}) {
     _queue.clear();
   }
 
@@ -274,10 +277,11 @@ class FakeNetworkingModule implements INetworkingModule {
 
   @override
   Uri getOrigin() {
-    return Uri(
-      scheme: 'https',
-      host: 'ps.pndsn.com',
-      queryParameters: {'pnsdk': 'PubNub-Dart/${Core.version}'},
-    );
+    return origin ??
+        Uri(
+          scheme: 'https',
+          host: 'ps.pndsn.com',
+          queryParameters: {'pnsdk': 'PubNub-Dart/${Core.version}'},
+        );
   }
 }

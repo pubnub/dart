@@ -55,7 +55,8 @@ sealed class SubscriptionEvent {
   /// or its payload has an unexpected shape. Such events should be discarded.
   ///
   /// @nodoc
-  static SubscriptionEvent? fromEnvelope(Envelope envelope, Keyset keyset) {
+  static SubscriptionEvent? fromEnvelope(Envelope envelope, Keyset keyset,
+      {Uri? origin}) {
     try {
       if (envelope.channel.endsWith(_presenceSuffix)) {
         return PresenceEvent.fromEnvelope(envelope);
@@ -71,7 +72,7 @@ sealed class SubscriptionEvent {
         case MessageType.messageAction:
           return MessageActionEvent._fromEnvelope(envelope);
         case MessageType.file:
-          return FileEvent._fromEnvelope(envelope, keyset);
+          return FileEvent._fromEnvelope(envelope, keyset, origin);
         case MessageType.dataSync:
           // A payload that is not marked as DataSync is an ordinary message.
           if (!DataSyncEvent._isDataSyncPayload(envelope.payload)) {
@@ -199,6 +200,7 @@ final class FileEvent extends SubscriptionEvent {
   final Envelope envelope;
 
   final Keyset _keyset;
+  final Uri? _origin;
 
   /// Shared file. It is `null` only when [error] is not `null`.
   final FileInfo? file;
@@ -206,11 +208,13 @@ final class FileEvent extends SubscriptionEvent {
   /// Message published along with the file.
   final dynamic message;
 
-  FileEvent._(this.envelope, this._keyset, this.file, this.message);
+  FileEvent._(
+      this.envelope, this._keyset, this.file, this.message, this._origin);
 
-  factory FileEvent._fromEnvelope(Envelope envelope, Keyset keyset) {
+  factory FileEvent._fromEnvelope(
+      Envelope envelope, Keyset keyset, Uri? origin) {
     if (envelope.error != null) {
-      return FileEvent._(envelope, keyset, null, null);
+      return FileEvent._(envelope, keyset, null, null, origin);
     }
 
     var payload = envelope.payload as Map<String, dynamic>;
@@ -219,15 +223,18 @@ final class FileEvent extends SubscriptionEvent {
         envelope,
         keyset,
         FileInfo(file['id'] as String, file['name'] as String),
-        payload['message']);
+        payload['message'],
+        origin);
   }
 
   /// Uri to download the [file].
   ///
   /// It is computed on every access, so it is signed with a fresh timestamp
-  /// when the keyset has a `secretKey`. Returns `null` when [file] is `null`.
+  /// when the keyset has a `secretKey`. The host is the subscription's
+  /// networking origin, or `ps.pndsn.com` when none is set. Returns `null`
+  /// when [file] is `null`.
   Uri? get url => file != null
-      ? buildFileUrl(_keyset, channel, file!.id, file!.name)
+      ? buildFileUrl(_keyset, channel, file!.id, file!.name, origin: _origin)
       : null;
 
   /// UUID of the publisher.

@@ -13,6 +13,10 @@ final _logger = injectLogger('pubnub.dx.subscribe.manager');
 /// @nodoc
 class Manager {
   final Keyset keyset;
+
+  /// Networking origin used when building file download URLs.
+  final Uri origin;
+
   final Set<Subscription> subscriptions = {};
   late final SubscribeLoop _loop;
 
@@ -20,7 +24,7 @@ class Manager {
 
   Future<void> get whenStarts => _loop.whenStarts;
 
-  Manager(Core core, this.keyset) {
+  Manager(Core core, this.keyset) : origin = core.networking.getOrigin() {
     _loop = SubscribeLoop(core, SubscribeLoopState(keyset));
   }
 
