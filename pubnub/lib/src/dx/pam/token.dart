@@ -26,6 +26,7 @@ class Token {
       _memoizedData!['resources'] = _decodeResources(object['res'], false);
       _memoizedData!['patterns'] = _decodeResources(object['pat'], true);
       _memoizedData!['projections'] = _decodeProjections(object['meta']);
+      _memoizedData!['categories'] = _decodeCategories(object['cat']);
     }
 
     return _memoizedData;
@@ -52,6 +53,30 @@ class Token {
             pattern: isPattern ? resourceEntry.key as String : null,
             bit: resourceEntry.value as int));
       }
+    }
+
+    return result;
+  }
+
+  /// Decodes the `cat` section of a parsed token into category-level
+  /// permissions.
+  ///
+  /// Unknown categories and malformed entries are skipped so that categories
+  /// introduced by the server in the future do not fail the whole parse.
+  static List<Resource> _decodeCategories(dynamic section) {
+    var result = <Resource>[];
+
+    if (section is! Map) return result;
+
+    for (var entry in section.entries) {
+      var key = entry.key;
+      var bit = entry.value;
+      if (key is! String || bit is! int) continue;
+
+      var type = getResourceTypeFromString(key);
+      if (type == null || !type.supportsCategory) continue;
+
+      result.add(Resource(type, bit: bit));
     }
 
     return result;
@@ -128,6 +153,11 @@ class Token {
   ///
   /// Empty when the token carries no projection assignments.
   List<Projection> get projections => (_data!['projections']);
+
+  /// All category-level permissions attached to this token.
+  ///
+  /// Empty when the token carries no category grants.
+  List<Resource> get categories => (_data!['categories']);
 
   Token(this._stringToken);
 
