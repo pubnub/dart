@@ -7,6 +7,9 @@ import 'package:pubnub/src/dx/_utils/utils.dart';
 import 'resource.dart';
 import 'token.dart';
 
+/// Bit of the only permission allowed in the grant `categories` payload.
+const int _categoryGet = 32;
+
 /// Represents a token request.
 ///
 /// {@category Access Manager}
@@ -20,6 +23,8 @@ class TokenRequest {
   final List<Resource> _resources = [];
 
   final List<Projection> _projections = [];
+
+  final Set<ResourceType> _categories = {};
 
   /// Token metadata.
   final Map<String, dynamic>? meta;
@@ -105,12 +110,28 @@ class TokenRequest {
         Projection(type, name: name, pattern: pattern, projection: projection));
   }
 
+  /// Grants category-level `get` permission on a whole resource type.
+  ///
+  /// Allows listing all App Context metadata of [type] on the subscribe key:
+  /// [ResourceType.channel] for channel metadata and [ResourceType.uuid] for
+  /// uuid metadata. A resource-level or pattern `get` grant added with [add]
+  /// does not imply this permission.
+  void addCategory(ResourceType type) {
+    if (!type.supportsCategory) {
+      Ensure.fail('invalid-type', 'type', ['channel', 'uuid']);
+    }
+
+    _categories.add(type);
+  }
+
   /// Sends the request to the server.
   Future<Token> send() async {
     // Projections only select which fields of the granted resources are
-    // visible, so a grant without resources carries no permissions and is
-    // rejected by the server.
-    Ensure(_resources).isNotEmpty('resources');
+    // visible, so a grant without resources or categories carries no
+    // permissions and is rejected by the server.
+    if (_resources.isEmpty && _categories.isEmpty) {
+      Ensure.fail('not-empty', 'resources/categories', []);
+    }
 
     bool hasType(ResourceType type) =>
         _resources.any((resource) => resource.type == type);
@@ -144,6 +165,10 @@ class TokenRequest {
         .fold(
             {'channels': {}, 'groups': {}, 'uuids': {}, 'users': {}}, combine);
 
+    var categories = {
+      for (var type in _categories) type.categoryScope!: _categoryGet
+    };
+
     var projections = _encodeProjections();
 
     var data = {
@@ -151,6 +176,7 @@ class TokenRequest {
       'permissions': {
         'resources': resources,
         'patterns': patterns,
+        if (categories.isNotEmpty) 'categories': categories,
         if (authorizedUUID != null || authorizedUserId != null)
           'uuid': authorizedUUID ?? authorizedUserId,
         if (meta != null || projections != null)

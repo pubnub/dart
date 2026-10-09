@@ -1,82 +1,138 @@
 <img width="1920" height="600" alt="image" src="https://github.com/user-attachments/assets/799d7a8a-79f0-420d-a809-ffcbcf3dfb03" />
 
-# PubNub Dart SDK
+# PubNub Dart and Flutter SDK
 
-This is the official PubNub Dart SDK repository. 
+[pubnub](pubnub/) [![Pub Version](https://img.shields.io/pub/v/pubnub)](https://pub.dev/packages/pubnub)
 
-PubNub takes care of the infrastructure and APIs needed for the realtime communication layer of your application. Work on your app's logic and let PubNub handle sending and receiving data across the world in less than 100ms.
+The PubNub SDK for Dart and Flutter applications on Android, iOS, Linux, macOS, web, and Windows.
 
-This repository contains the following packages:
+[Documentation](https://www.pubnub.com/docs/sdks/dart) · [API reference](https://www.pubnub.com/docs/sdks/dart/api-reference/publish-and-subscribe) · [Changelog](https://www.pubnub.com/docs/sdks/dart/changelog)
 
-* [pubnub](pubnub/) [![Pub Version](https://img.shields.io/pub/v/pubnub)](https://pub.dev/packages/pubnub) - a Flutter-friendly SDK written in Dart that allows you to connect to PubNub Data Streaming Network and add real-time features to your application.
+## Requirements
 
-* [pubnub_flutter](pubnub_flutter/) - a collection of widgets for PubNub Dart SDK that allows you to create PubNub powered cross-platform applications with ease.
+- **Dart SDK:** [Dart 3.2 or later](https://pub.dev/packages/pubnub)
+- **Supported targets:** [Android, iOS, Linux, macOS, web, and Windows](https://www.pubnub.com/docs/sdks/dart)
+- **Platform network access:** Android requires `android.permission.INTERNET`. A sandboxed macOS app requires the `com.apple.security.network.client` entitlement. iOS requires no extra Internet permission.
 
-## Get keys
+## Install
 
-You will need the publish and subscribe keys to authenticate your app. Get your keys from the [Admin Portal](https://dashboard.pubnub.com/login).
+From the root of the Dart package:
 
-## Configure PubNub
-
-1. Integrate the Dart SDK into your project using the pub package manager by adding the following dependency in your `pubspec.yml` file:
-
-    ```yaml
-    dependencies:
-      pubnub: ^4.2.2
-    ```
-
-    Make sure to provide the latest version of the `pubnub` package in the dependency declaration.
-
-2. From the directory where your `pubspec.yml` file is located, run the `dart pub get` or `flutter pub get` command to install the PubNub package.
-
-3. Configure your keys:
-
-    ```dart
-    var pubnub = PubNub(
-      defaultKeyset:
-          Keyset(subscribeKey: 'mySubscribeKey', publishKey: 'myPublishKey', uuid: UUID('ReplaceWithYourClientIdentifier')));
-    ```
-
-## Add event listeners
-
-`messages` emits published messages only. Each other kind has its own stream, and `events` delivers all of them as a typed `SubscriptionEvent`.
-
-```dart
-subscription.messages.listen((envelope) {
-  print('${envelope.uuid} sent: ${envelope.content}');
-});
-
-subscription.signals.listen((signal) => print(signal.message));
-subscription.messageActions.listen((action) => print(action.event));
-subscription.files.listen((file) => print(file.file?.name));
-subscription.objects.listen((object) => print(object.event));
-subscription.dataSync.listen((change) => print('${change.event} ${change.id}'));
-subscription.presence.listen((presence) => print(presence.action));
-
-subscription.events.listen((event) {
-  switch (event) {
-    case MessageEvent(:final message):
-      print(message);
-    case DataSyncEvent(:final id):
-      print(id);
-    default:
-  }
-});
+```sh
+dart pub add pubnub
 ```
 
-## Publish/subscribe
+Environment setup: [Dart SDK guide](https://www.pubnub.com/docs/sdks/dart).
+
+## Example
+
+This example runs in a standalone Dart package.
+
+If Access Manager is enabled, obtain a token from your trusted backend and call `pubnub.setToken(token)`. Keep the secret key on the backend.
+
+Create a Dart package, then save the example as `bin/pubnub_example.dart`:
 
 ```dart
-var channel = "getting_started";
-var subscription = pubnub.subscribe(channels: {channel});
+import 'dart:async';
 
-await pubnub.publish(channel, "Hello world");
+import 'package:pubnub/pubnub.dart';
+
+Future<void> main() async {
+  final pubnub = PubNub(
+    defaultKeyset: Keyset(
+      subscribeKey: 'YOUR_SUBSCRIBE_KEY',
+      publishKey: 'YOUR_PUBLISH_KEY',
+      userId: UserId('hello-world-user'),
+    ),
+  );
+
+  final subscription = pubnub.subscribe(
+    channels: {'hello_world'},
+  );
+
+  final received = Completer<void>();
+
+  final listener = subscription.messages.listen((message) {
+    print(message.content);
+
+    if (!received.isCompleted) {
+      received.complete();
+    }
+  });
+
+  await Future<void>.delayed(const Duration(seconds: 1));
+
+  await pubnub.publish(
+    'hello_world',
+    'Hello world',
+  );
+
+  await received.future.timeout(const Duration(seconds: 10));
+
+  await listener.cancel();
+  await subscription.dispose();
+}
 ```
 
-## Documentation
+## Run
 
-* [API reference for Dart ](https://www.pubnub.com/docs/sdks/dart)
+```sh
+dart run bin/pubnub_example.dart
+```
 
-## Support
+Expected output in the terminal:
 
-If you **need help** or have a **general question**, contact support@pubnub.com.
+```text
+Hello world
+```
+
+The example cancels the Dart Stream listener and calls `subscription.dispose()` after receiving the message.
+
+Full guide: [Dart SDK documentation](https://www.pubnub.com/docs/sdks/dart).
+
+## Next steps
+
+| Task | Guide |
+| --- | --- |
+| Configure the client | [Configuration](https://www.pubnub.com/docs/sdks/dart/api-reference/configuration) |
+| Work with subscriptions and messages | [Publish & Subscribe](https://www.pubnub.com/docs/sdks/dart/api-reference/publish-and-subscribe) |
+| Check channel occupancy | [Presence](https://www.pubnub.com/docs/sdks/dart/api-reference/presence) |
+| Read message history | [Message Persistence](https://www.pubnub.com/docs/sdks/dart/api-reference/storage-and-playback) |
+
+Access Manager: [Access Manager](https://www.pubnub.com/docs/sdks/dart/api-reference/access-manager).
+
+## Client lifetime and delivery
+
+Reuse the PubNub client for the application/session lifetime. Cancel owned Stream listeners and call `subscription.dispose()` when a subscription is no longer needed.
+
+Live delivery through PubNub SDKs is at-most-once. A subscriber can miss messages while disconnected or if its buffer overflows. For longer-gap recovery, see [Message Persistence](https://www.pubnub.com/docs/sdks/dart/api-reference/storage-and-playback).
+
+## Troubleshooting
+
+**Dart cannot resolve `package:pubnub`**
+
+Run the example inside a Dart package with a `pubspec.yaml`, install the dependency, and run it with `dart run`. See the [Dart SDK guide](https://www.pubnub.com/docs/sdks/dart).
+
+**A sandboxed macOS Flutter application fails PubNub requests**
+
+Enable outbound networking with `com.apple.security.network.client` in both macOS entitlement files and rebuild. See the [Dart SDK guide](https://www.pubnub.com/docs/sdks/dart).
+
+In Flutter, retain the PubNub client and subscription in the owning State or service object. Cancel the Stream listener and dispose the subscription during lifecycle cleanup instead of accumulating subscriptions across rebuilds.
+
+More troubleshooting: [Dart SDK guide](https://www.pubnub.com/docs/sdks/dart).
+
+## Changelog
+
+[Changelog](https://www.pubnub.com/docs/sdks/dart/changelog)
+
+For a major version change, review the [Dart SDK changelog](https://www.pubnub.com/docs/sdks/dart/changelog) for breaking changes before upgrading.
+
+## Contributing
+
+Report issues at [github.com/pubnub/dart/issues](https://github.com/pubnub/dart/issues).
+
+Run `dart pub get`, generate required sources with the repository's build_runner workflow, run the Dart test suite, and include tests for behavioral changes before opening a pull request.
+
+## License
+
+[PubNub Software Development Kit License](https://github.com/pubnub/dart/blob/master/LICENSE)
