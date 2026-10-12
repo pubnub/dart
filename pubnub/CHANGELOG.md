@@ -1,3 +1,12 @@
+## v9.1.0
+October 12 2026
+
+#### Added
+- Support for PAM v3 category permissions, so grant tokens can allow listing all channel and uuid metadata.
+
+#### Modified
+- Update example code to use updated client configurations. Fixed the following issues reported by [@Ali-Toosi](https://github.com/Ali-Toosi): [#148](https://github.com/pubnub/dart/issues/148).
+
 ## v9.0.0
 October 07 2026
 

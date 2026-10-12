@@ -73,6 +73,31 @@ extension ResourceTypeExtension on ResourceType {
 
   /// Whether a projection can be assigned to this resource type.
   bool get supportsProjection => projectionScope != null;
+
+  /// Key identifying this type within the grant `categories` payload.
+  ///
+  /// Category-level permissions apply to a resource type as a whole. Only
+  /// channel and uuid metadata support them.
+  ///
+  /// `null` for types that cannot carry a category permission.
+  String? get categoryScope {
+    switch (this) {
+      case ResourceType.channel:
+        return 'channels';
+      case ResourceType.uuid:
+        return 'uuids';
+      case ResourceType.channelGroup:
+      case ResourceType.user:
+      case ResourceType.space:
+      case ResourceType.entity:
+      case ResourceType.relationship:
+      case ResourceType.membership:
+        return null;
+    }
+  }
+
+  /// Whether a category-level permission can be granted on this resource type.
+  bool get supportsCategory => categoryScope != null;
 }
 
 /// Name of the base DataSync projection.
@@ -110,6 +135,9 @@ ResourceType? getResourceTypeFromString(String type) {
 }
 
 /// Represents a resource in PAM.
+///
+/// A resource decoded from the category-level permissions of a token
+/// (`Token.categories`) has neither a [name] nor a [pattern].
 ///
 /// {@category Access Manager}
 class Resource {

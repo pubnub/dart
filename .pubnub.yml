@@ -1,5 +1,12 @@
 ---
 changelog:
+  - date: 2026-10-12
+    version: v9.1.0
+    changes:
+      - type: feature
+        text: "Support for PAM v3 category permissions, so grant tokens can allow listing all channel and uuid metadata."
+      - type: improvement
+        text: "Update example code to use updated client configurations."
   - date: 2026-10-07
     version: v9.0.0
     changes:
@@ -595,7 +602,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "9.0.0"
+version: "9.1.0"
 sdks:
   -
     full-name: PubNub Dart SDK

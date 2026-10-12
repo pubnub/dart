@@ -4,7 +4,9 @@ void main() async {
   // Create PubNub instance with default keyset.
   var pubnub = PubNub(
       defaultKeyset:
-          Keyset(subscribeKey: 'demo', publishKey: 'demo', uuid: UUID('demo')));
+          Keyset(subscribeKey: 'YOUR_SUBSCRIBE_KEY',
+                 publishKey: 'YOUR_PUBLISH_KEY',
+                 userId: UserId('YOUR_USER_ID')));
 
   // Subscribe to a channel
   var subscription = pubnub.subscribe(channels: {'test'});
