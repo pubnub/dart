@@ -2,7 +2,7 @@
 
 # PubNub Dart and Flutter SDK
 
-[pubnub](pubnub/) [![Pub Version](https://img.shields.io/pub/v/pubnub)](https://pub.dev/packages/pubnub)
+[![Pub Version](https://img.shields.io/pub/v/pubnub)](https://pub.dev/packages/pubnub)
 
 The PubNub SDK for Dart and Flutter applications on Android, iOS, Linux, macOS, web, and Windows.
 
