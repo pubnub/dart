@@ -414,8 +414,9 @@ DataSyncObjectType? _dataSyncObjectTypeFromString(String? type) {
 /// Represents a change to a DataSync entity, relationship, user, channel or
 /// membership.
 ///
-/// When [event] is [DataSyncEventType.delete], only [id] and [deletedAt] are
-/// set on the object.
+/// When [event] is [DataSyncEventType.delete], [id] and [deletedAt] are set.
+/// A membership delete also sets [channelId] and [userId]. A relationship
+/// delete also sets [entityAId] and [entityBId].
 ///
 /// {@category Results}
 /// {@category DataSync}

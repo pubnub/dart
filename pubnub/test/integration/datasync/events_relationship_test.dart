@@ -94,7 +94,7 @@ void main() {
           payload: {'linkedAt': '2026-09-01T00:00:00.000Z'});
     });
 
-    test('relationship delete emits a delete event with only id and deletedAt',
+    test('relationship delete emits a delete event with the endpoints',
         () async {
       var (pubnub, cleanup) = testClient();
       var id = freshId('dartrequestedby');
@@ -110,7 +110,11 @@ void main() {
 
       expectRelationshipEvent(
           event, DataSyncEventType.delete, id, customerId, loanQuoteId);
-      expectEventDeleteData(event, id);
+      expectEndpoints(event, customerId, loanQuoteId);
+      expect(event.deletedAt, isA<String>());
+      expect(DateTime.tryParse(event.deletedAt!), isNotNull);
+      expect(event.data.keys,
+          unorderedEquals(['id', 'deletedAt', 'entityAId', 'entityBId']));
     });
 
     test('a subscriber to the relationship id receives nothing', () async {
