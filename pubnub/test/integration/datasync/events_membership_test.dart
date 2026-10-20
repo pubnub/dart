@@ -98,8 +98,7 @@ void main() {
       expectEventObjectData(event, payload: {'role': 'admin'});
     });
 
-    test('membership delete emits a delete event with only id and deletedAt',
-        () async {
+    test('membership delete emits a delete event with the endpoints', () async {
       await createMembership(pubnub, cleanup, id, userId, channelId);
 
       var event = await captureEvent(
@@ -109,7 +108,11 @@ void main() {
           () => pubnub.dataSync.removeMembership(id));
 
       expectCommon(event, DataSyncEventType.delete);
-      expectEventDeleteData(event, id);
+      expectEndpoints(event);
+      expect(event.deletedAt, isA<String>());
+      expect(DateTime.tryParse(event.deletedAt!), isNotNull);
+      expect(event.data.keys,
+          unorderedEquals(['id', 'deletedAt', 'channelId', 'userId']));
     });
 
     test('a subscriber to the membership id receives nothing', () async {
