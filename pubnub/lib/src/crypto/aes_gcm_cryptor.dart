@@ -35,13 +35,15 @@ class AesGcmCryptor implements ICryptor {
 
   /// Decrypts a full `PNED` payload when its cryptor id is [cryptorId].
   ///
-  /// Returns null when [input] is not an AES-256-GCM payload. An empty list
-  /// is a successful decryption of an empty plaintext.
+  /// Returns null when [input] has no `PNED` header or its cryptor id is not
+  /// [cryptorId]. An empty list is a successful decryption of an empty
+  /// plaintext. A malformed `PNED` header throws [CryptoException].
   static List<int>? tryDecrypt(CipherKey key, List<int> input) {
     CryptorHeaderV1? header;
     try {
       header = CryptorHeader.tryParse(input);
     } on CryptoException {
+      if (_startsWithSentinel(input)) rethrow;
       return null;
     }
     if (header == null || header.identifier != cryptorId) {
@@ -56,6 +58,15 @@ class AesGcmCryptor implements ICryptor {
     return AesGcmCryptor(key).decrypt(
       EncryptedData.from(input.sublist(headerLength), metadata),
     );
+  }
+
+  static bool _startsWithSentinel(List<int> input) {
+    var sentinel = CryptorHeader.SENTINEL.codeUnits;
+    if (input.length < sentinel.length) return false;
+    for (var i = 0; i < sentinel.length; i++) {
+      if (input[i] != sentinel[i]) return false;
+    }
+    return true;
   }
 
   @override

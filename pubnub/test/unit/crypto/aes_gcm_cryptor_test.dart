@@ -172,6 +172,47 @@ void main() {
       }
     });
 
+    test('a 10-byte header ending on the metadata-size byte parses', () {
+      // PNED, version, ACRH, and a size of 0. The size byte is the last byte.
+      var payload = <int>[
+        0x50, 0x4e, 0x45, 0x44, // PNED
+        0x01, // version
+        0x41, 0x43, 0x52, 0x48, // ACRH
+        0x00, // metadata length 0
+      ];
+
+      var header = CryptorHeader.tryParse(payload);
+
+      expect(header, isNotNull);
+      expect(header!.identifier, 'ACRH');
+      expect(header.metadataLength, 0);
+      expect(header.length, payload.length);
+    });
+
+    test('a malformed PNED header throws CryptoException', () {
+      var missingMetadataSize = <int>[
+        0x50, 0x4e, 0x45, 0x44, // PNED
+        0x01, // version
+        0x41, 0x43, 0x47, 0x4d, // ACGM
+      ];
+      var invalidIdentifier = <int>[
+        0x50, 0x4e, 0x45, 0x44, // PNED
+        0x01, // version
+        0xff, 0xff, 0xff, 0xff, // not UTF-8
+        0x00, // metadata length 0
+      ];
+      for (var module in _modules('enigma')) {
+        for (var payload in [missingMetadataSize, invalidIdentifier]) {
+          expect(
+              () => module.decrypt(payload), throwsA(isA<CryptoException>()));
+          expect(
+            () => module.decryptWithKey(_key('enigma'), payload),
+            throwsA(isA<CryptoException>()),
+          );
+        }
+      }
+    });
+
     test('invalid payloads fail closed', () {
       var payload = hex.decode(vectors.first.payloadHex);
       var cryptor = AesGcmCryptor(_key('enigma'));
