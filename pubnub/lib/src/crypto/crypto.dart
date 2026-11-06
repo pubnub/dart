@@ -1,6 +1,7 @@
 import 'package:pubnub/core.dart';
 import 'package:pubnub/src/crypto/aesCbcCryptor.dart';
 import 'package:pubnub/src/crypto/legacyCryptor.dart';
+import 'package:pubnub/src/crypto/aes_gcm_cryptor.dart';
 import 'cryptoConfiguration.dart';
 import 'cryptorHeader.dart';
 
@@ -26,6 +27,8 @@ class CryptoModule implements ICryptoModule {
   /// New content is encrypted using the deprecated [LegacyCryptor]. Prefer
   /// [CryptoModule.aesCbcCryptoModule], which encrypts with [AesCbcCryptor]
   /// while still decrypting legacy content.
+  ///
+  /// Decryption also accepts AES-CBC and AES-256-GCM (`ACGM`) payloads.
   @Deprecated(
       'Use CryptoModule.aesCbcCryptoModule for new applications. This factory '
       'encrypts with the legacy cryptor and is retained only for '
@@ -36,9 +39,15 @@ class CryptoModule implements ICryptoModule {
         // ignore: deprecated_member_use_from_same_package
         defaultCryptor: LegacyCryptor(cipherKey,
             cryptoConfiguration: defaultCryptoConfiguration),
-        cryptors: <ICryptor>[AesCbcCryptor(cipherKey)]);
+        cryptors: <ICryptor>[
+          AesCbcCryptor(cipherKey),
+          AesGcmCryptor(cipherKey),
+        ]);
   }
 
+  /// Creates a [CryptoModule] that encrypts with [AesCbcCryptor].
+  ///
+  /// Decryption accepts AES-CBC, legacy, and AES-256-GCM (`ACGM`) payloads.
   factory CryptoModule.aesCbcCryptoModule(CipherKey cipherKey,
       {defaultCryptoConfiguration = const CryptoConfiguration()}) {
     return CryptoModule(
@@ -47,6 +56,7 @@ class CryptoModule implements ICryptoModule {
           // ignore: deprecated_member_use_from_same_package
           LegacyCryptor(cipherKey,
               cryptoConfiguration: defaultCryptoConfiguration),
+          AesGcmCryptor(cipherKey),
         ]);
   }
 
@@ -69,12 +79,7 @@ class CryptoModule implements ICryptoModule {
   List<int> decrypt(List<int> data) {
     var header = CryptorHeader.tryParse(data);
     var cryptor = _getCryptor(header);
-    var headerLength = header != null ? header.length : 0;
-    var metadata = headerLength > 0
-        ? data.sublist((headerLength - header!.metadataLength), headerLength)
-        : List<int>.empty();
-    return cryptor!
-        .decrypt(EncryptedData.from(data.sublist(headerLength), metadata));
+    return cryptor!.decrypt(_encryptedData(data, header));
   }
 
   ICryptor? _getCryptor(CryptorHeaderV1? header) {
@@ -106,6 +111,19 @@ class CryptoModule implements ICryptoModule {
   @override
   List<int> decryptWithKey(CipherKey key, List<int> input) {
     return legacyCryptoModule.decryptWithKey(key, input);
+  }
+
+  EncryptedData _encryptedData(List<int> data, CryptorHeaderV1? header) {
+    var headerLength = header != null ? header.length : 0;
+    // A parsed header can declare more bytes than the buffer holds.
+    // RangeError is not caught by subscribe or history.
+    if (headerLength > data.length) {
+      throw CryptoException('decryption error');
+    }
+    var metadata = headerLength > 0
+        ? data.sublist(headerLength - header!.metadataLength, headerLength)
+        : List<int>.empty();
+    return EncryptedData.from(data.sublist(headerLength), metadata);
   }
 
   @override

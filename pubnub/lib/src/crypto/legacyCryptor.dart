@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart' show sha256;
 import 'dart:convert' show base64;
 import 'dart:typed_data' show Uint8List;
 
+import 'aes_gcm_cryptor.dart';
 import 'cryptoConfiguration.dart';
 import 'encryption_mode.dart';
 import 'crypto.dart';
@@ -104,6 +105,8 @@ class LegacyCryptoModule implements ICryptoModule {
   @override
   List<int> decryptWithKey(CipherKey key, List<int> input,
       {CryptoConfiguration? configuration}) {
+    var gcm = AesGcmCryptor.tryDecrypt(key, input);
+    if (gcm != null) return gcm;
     var config = configuration ?? defaultConfiguration;
     if (Uint8List.fromList(input.sublist(16)).isEmpty) {
       throw CryptoException('decryption error: empty content');
@@ -163,6 +166,8 @@ class LegacyCryptoModule implements ICryptoModule {
   @override
   List<int> decryptFileData(CipherKey key, List<int> input,
       {CryptoConfiguration? configuration}) {
+    var gcm = AesGcmCryptor.tryDecrypt(key, input);
+    if (gcm != null) return gcm;
     var config = configuration ?? defaultConfiguration;
     var encrypter = crypto.Encrypter(
         crypto.AES(_getKey(key, config), mode: config.encryptionMode.value()));
