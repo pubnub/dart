@@ -1,5 +1,10 @@
 ---
 changelog:
+  - date: 2026-11-09
+    version: v9.2.0
+    changes:
+      - type: feature
+        text: "`CryptoModule.aesCbcCryptoModule` and `CryptoModule.legacyCryptoModule` decrypt AES-256-GCM (`ACGM`) message and file payloads alongside AES-CBC and legacy content. Encryption is unchanged, and AES-GCM encryption is not available."
   - date: 2026-10-12
     version: v9.1.0
     changes:
@@ -602,7 +607,7 @@ supported-platforms:
     platforms:
       - "Dart SDK >=2.6.0 <3.0.0"
     version: "PubNub Dart SDK"
-version: "9.1.0"
+version: "9.2.0"
 sdks:
   -
     full-name: PubNub Dart SDK
