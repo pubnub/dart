@@ -32,7 +32,7 @@ class CryptorHeader {
           'unknown cryptor error: header version is higher than supported versions.');
     }
 
-    var identifier;
+    List<int> identifier;
     var pos = 5 + IDENTIFIER_LENGTH;
     if (encryptedData.length >= pos) {
       identifier = encryptedData.sublist(5, pos).toList();
@@ -40,17 +40,27 @@ class CryptorHeader {
       throw CryptoException(
           'decryption error: invalid or No identifier found.');
     }
-    var metadataLength;
-    if (encryptedData.length > pos + 1) {
+    int? metadataLength;
+    if (encryptedData.length > pos) {
       metadataLength = encryptedData[pos];
     }
     pos += 1;
+    if (metadataLength == null) {
+      throw CryptoException('decryption error: invalid or no metadata size.');
+    }
     if (metadataLength == 255 && encryptedData.length >= pos + 2) {
       metadataLength = encryptedData
           .sublist(pos, pos + 2)
           .fold<int>(0, (acc, el) => (acc << 8) + el);
     }
-    return CryptorHeaderV1(utf8.decode(identifier), metadataLength);
+    String decodedIdentifier;
+    try {
+      decodedIdentifier = utf8.decode(identifier);
+    } on FormatException {
+      throw CryptoException(
+          'decryption error: invalid or No identifier found.');
+    }
+    return CryptorHeaderV1(decodedIdentifier, metadataLength);
   }
 }
 

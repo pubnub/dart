@@ -1,3 +1,9 @@
+## v9.2.0
+November 09 2026
+
+#### Added
+- `CryptoModule.aesCbcCryptoModule` and `CryptoModule.legacyCryptoModule` decrypt AES-256-GCM (`ACGM`) message and file payloads alongside AES-CBC and legacy content. Encryption is unchanged, and AES-GCM encryption is not available.
+
 ## v9.1.0
 October 12 2026
 
