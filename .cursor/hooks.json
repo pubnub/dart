@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "dart .cursor/hooks/format_lib.dart",
+        "timeout": 30
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "dart .cursor/hooks/gate_shell.dart",
+        "timeout": 20,
+        "matcher": "build_runner|acceptance_tests|\\bderry(?:\\.bat)?\\s+test\\b|\\bdart(?:\\.exe)?\\s+(?:pub\\s+run\\s+test|run\\s+test|test)\\b"
+      }
+    ]
+  }
+}
