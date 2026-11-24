@@ -1,0 +1,61 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.agents/hooks/run-dart-format-analyze.sh",
+            "timeout": 60
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.agents/hooks/check-test-conventions.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.agents/hooks/run-dart-analyze.sh",
+            "timeout": 300
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(dart analyze:*)",
+      "Bash(dart format:*)",
+      "Bash(dart test -P unit:*)",
+      "Bash(dart test test/unit:*)",
+      "Bash(dart run test -P unit:*)",
+      "Bash(dart pub get)",
+      "Bash(dart pub deps:*)",
+      "Bash(dart pub outdated:*)",
+      "Bash(dart pub global list)",
+      "Bash(dart pub publish --dry-run)",
+      "Bash(dart fix --dry-run:*)",
+      "Bash(dart doc --dry-run:*)",
+      "Bash(dart --version)",
+      "Bash(dart info)",
+      "Bash(ls:*)",
+      "Bash(which:*)",
+      "Bash(man:*)"
+    ],
+    "deny": [
+      "Bash(dart run build_runner:*)",
+      "Bash(dart pub run build_runner:*)"
+    ]
+  }
+}

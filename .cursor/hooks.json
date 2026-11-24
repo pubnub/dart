@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": ".agents/hooks/run-dart-format-analyze.sh",
+        "timeout": 60
+      }
+    ],
+    "stop": [
+      {
+        "command": ".agents/hooks/run-dart-analyze.sh",
+        "timeout": 300,
+        "loop_limit": 1
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": ".agents/hooks/gate-shell.sh",
+        "timeout": 10,
+        "matcher": "build_runner|\\bderry(?:\\.bat|\\.cmd)?\\s+test\\b|\\bdart(?:\\.exe|\\.bat)?\\s+(?:pub\\s+run\\s+test|run\\s+test|test)\\b"
+      }
+    ]
+  }
+}
